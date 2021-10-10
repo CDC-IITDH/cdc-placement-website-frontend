@@ -1,0 +1,27 @@
+.UserType-btn-parent {
+    text-align: center;
+}
+
+.UserType-btn {
+    font-size: 22px;
+    font-weight: 600;
+    padding: 7px 20px;
+    color: white;
+    background-color: #334878;
+    border: solid;
+    border-color: #334878;
+    border-radius: 10px;
+}
+
+.UserType-btn:hover {
+    color: #334878;
+    background-color: white;
+    border-color: #334878;
+}
+
+.UserType-headinfo {
+    font-weight: 700;
+    color: black;
+    font-size: 24px;
+    text-align: center
+}

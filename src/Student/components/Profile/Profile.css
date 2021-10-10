@@ -1,0 +1,133 @@
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    overflow: hidden;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.modal-field-parent {
+    padding: 5px;
+}
+
+.modal-col-resumes {
+    overflow: auto;
+    max-height: 210px;
+    border-bottom: solid 2px;
+    margin: 2%;
+}
+
+.modal-header-content {
+    font-size: 30px!important;
+    font-weight: 600;
+    margin-left: 1%;
+    color: white;
+}
+
+.modal-field-key {
+    display: inline-block;
+    margin-right: 25px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.modal-field-value {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 600;
+    color: #334878;
+}
+
+.modal-header {
+    background: rgb(51, 72, 120);
+    background: linear-gradient(90deg, rgba(51, 72, 120, 1) 25%, rgba(65, 93, 156, 1) 100%);
+}
+
+.modal-resume-pill {
+    border: solid;
+    border-radius: 15px;
+    padding: 7px;
+    border-color: #334878;
+    color: #334878;
+    cursor: pointer;
+    margin: 2%;
+}
+
+.modal-resume-content {
+    font-weight: 500;
+    font-size: 18px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.modal-resume-delete-icon {
+    /* position: relative; */
+
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 5px;
+    width: 2rem !important;
+    height: 2rem !important;
+}
+
+.modal-resume-delete-icon:hover {
+    background-color: #334878;
+    color: white
+}
+
+.modal-resume-add {
+    text-align: center;
+    padding: 0px !important;
+    background-color: #334878;
+    color: white
+}
+
+.modal-resume-add:hover {
+
+    background-color: white;
+    color: #334878;
+    border: solid #334878;
+}
+
+.modal-resume-add-content {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.modal-upload-cancel {
+    color: white;
+    background-color: #ed2626;
+    border: solid #ed2626;
+    font-weight: 600;
+    border-radius: 15px;
+}
+
+.modal-upload-cancel:hover {
+    color: #ed2626;
+    background-color: white;
+    border: solid #ed2626;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 990px) {
+    .modal-col-details {
+        margin-bottom: 20px;
+    }
+
+    .modal-resume-delete-icon {
+        /* position: absolute;
+        right: 10% */
+    }
+}

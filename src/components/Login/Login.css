@@ -1,0 +1,48 @@
+.login-parent{
+    min-height: 80vh;
+}
+
+.login-btn {
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.Button-login {
+    background-color: white !important;
+    color: #415d9b !important;
+    border: solid 3px;
+    border-radius: 10px;
+    border-color: #415d9b !important;
+    margin: 5px 10px;
+}
+
+.Button-login:hover {
+    background-color: #415d9b !important;
+    color: white !important;
+    border-color: white !important;
+}
+
+.Button-login:active {
+    background-color: #415d9b !important;
+    color: white !important;
+    border-color: white !important;
+}
+
+@media all and (max-width: 600px) {
+    .login-name h1 {
+        text-align: center;
+    }
+
+    .login-name h5 {
+        text-align: center;
+    }
+
+    .login-btn-parent {
+        text-align: center;
+    }
+    .login-parent{
+        min-height: 40vh!important;
+        margin-top: 40%!important;
+    }
+
+}

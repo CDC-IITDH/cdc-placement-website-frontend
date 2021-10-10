@@ -1,0 +1,60 @@
+.DragDrop {
+  width: 100%;
+  cursor: pointer;
+}
+
+.DragDrop-Files {
+  width: 70%;
+  display: inline-block;
+}
+
+.DragDrop-parent {
+  margin: auto;
+  background-color: #ffffff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.DragDrop-inside {
+  font-size: 18px;
+  padding: 5px;
+}
+
+.DragDrop-UploadIcon {
+  width: 60px !important;
+  height: 60px !important;
+  padding: 5px;
+}
+
+.DragUploadBtn {
+  margin: 0px 10px 10px;
+  padding: 5px 20px;
+}
+
+.DragBtnFiles {
+  background-color: #334878;
+  color: white;
+  border-color: #334878;
+  border-width: 2px;
+   border:solid;
+}
+
+.DragBtnFiles:hover {
+  background-color: white;
+  color: #334878;
+  border-width: 2px;
+  border-color: #334878;
+  border:solid;
+}
+.DragBtnFiles:active {
+  background-color: white;
+  color: #334878;
+  border-width: 2px;
+  border-color: #334878;
+  border:solid;
+}
+
+.upload-file-view {
+  padding: 10px;
+}

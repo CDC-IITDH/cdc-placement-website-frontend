@@ -1,0 +1,304 @@
+import React, { useState, Fragment, useEffect } from "react";
+import { Modal, Button } from "react-bootstrap";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import TextField from "@material-ui/core/TextField";
+import "./modal.css";
+import { PostApplication } from "../../api/dashboard";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { Alert } from "@material-ui/lab";
+
+function Modale({
+  token,
+  show,
+  setShow,
+  handleClose,
+  company,
+  designation,
+  compensation,
+  additionalInfo,
+  profileInfo,
+  type,
+  id,
+  setError,
+  setShowError,
+  setSuccess,
+  setShowSuccess,
+  setShowLoader,
+  getDashboardInfo
+}) {
+  var initialResume = "";
+  if (profileInfo && profileInfo.resumes.length) {
+    initialResume = profileInfo.resumes[0];
+  } else {
+    initialResume = null;
+  }
+  const [resume, setResume] = useState(initialResume);
+
+  const InitialAdditionalInfo = () => {
+    var data = {};
+    additionalInfo.map((item, i) => {
+      data[item] = "";
+      return true;
+    });
+    console.log(data);
+    return data;
+  };
+
+  const InitialErrorState = () => {
+    var errorState = [];
+    additionalInfo.map((item, i) => {
+      errorState[item] = false;
+      return true;
+    });
+    console.log(errorState);
+    return errorState;
+  };
+
+  const [additionalTextInfo, updateAdditionalTextInfo] = useState(
+    InitialAdditionalInfo
+  );
+
+  const [resumeErrorState, setResumeErrorState] = useState(false);
+
+  const [errorState, setErrorState] = useState(InitialErrorState);
+
+  useEffect(() => {
+    if (profileInfo && profileInfo.resumes.length) {
+      if (resume !== profileInfo.resumes[0]) setResume(profileInfo.resumes[0]);
+    } else {
+      if (resume !== null) setResume(null);
+    }
+    return true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileInfo]);
+
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+
+    if (name === "resume") {
+      console.log(value, "Resume state");
+      if (value == null) {
+        setResumeErrorState(true);
+      } else {
+        setResumeErrorState(false);
+      }
+      setResume(value);
+    } else {
+      var errorStateTemp = errorState;
+      if (value === "") {
+        errorStateTemp[name] = true;
+      } else {
+        errorStateTemp[name] = false;
+      }
+      setErrorState(errorStateTemp);
+
+      updateAdditionalTextInfo((prevValue) => {
+        return {
+          ...prevValue,
+          [name]: value,
+        };
+      });
+    }
+  }
+
+  const SendData = async () => {
+    if (token) {
+      var errorStateTemp = errorState;
+      additionalInfo.map((item, i) => {
+        if (additionalTextInfo[item] === "") {
+          errorStateTemp[item] = true;
+          return true;
+        } else {
+          errorStateTemp[item] = false;
+          return false;
+        }
+      });
+      setErrorState(errorStateTemp);
+      const allFieldsFilled = additionalInfo.every((elem) => {
+        return (
+          additionalTextInfo.hasOwnProperty(elem) &&
+          additionalTextInfo[elem] !== ""
+        );
+      });
+      if (resume == null) {
+        setResumeErrorState(true);
+      } else {
+        setResumeErrorState(false);
+      }
+      if (resume && allFieldsFilled) {
+        const data = {
+          opening_type: type === "placements" ? "Placement" : "Internship",
+          opening_id: id,
+          resume_file_name: resume,
+          additional_info: additionalTextInfo,
+        };
+        console.log(data);
+        setShowLoader(true);
+        PostApplication(token, data)
+          .then((res) => {
+            console.log(res);
+            getDashboardInfo();
+            setShow(false);
+            setShowLoader(false);
+            setSuccess("Application Submited Successfully");
+            setShowSuccess(true);
+            
+          })
+          .catch((err) => {
+            console.log(err);
+            setShow(false);
+            setShowLoader(false);
+            setError("Unable to Submit Application. Please Try Again");
+            setShowError(true);
+          });
+        
+      } else {
+        setError("Please Fill All the Fields");
+        setShowError(true);
+      }
+    }
+  };
+
+  const toProperCase = function (str) {
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
+  return profileInfo ? (
+    <Fragment>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title className="modale-title">
+            Add Additional Info
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="card-div">
+            <h4 align="center" className="modale-info-name">
+              Hello {profileInfo.name}!
+            </h4>
+
+            <div className="modal-field-parent">
+              <Container>
+                <Row>
+                  <Col xs={12} sm={6}>
+                    <div className="modale-field-key">Company:</div>
+                  </Col>
+                  <Col xs={12} sm={6}>
+                    <div className="modale-field-value">{company}</div>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+            <div className="modal-field-parent">
+              <Container>
+                <Row>
+                  <Col xs={12} sm={6}>
+                    <div className="modale-field-key">Job Description:</div>
+                  </Col>
+                  <Col xs={12} sm={6}>
+                    <div className="modale-field-value">{designation}</div>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+            <div className="modal-field-parent">
+              <Container>
+                <Row>
+                  <Col xs={12} sm={6}>
+                    <div className="modale-field-key">Compensation:</div>
+                  </Col>
+                  <Col xs={12} sm={6}>
+                    <div className="modale-field-value">{compensation}</div>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+          </div>
+          <Alert severity="warning">All fields are compulsory</Alert>
+          <br />
+
+          <form noValidate autoComplete="off">
+            {additionalInfo.map((label, i) => {
+              return (
+                <div className="Parent" key={i}>
+                  <h2 className="label">{label}</h2>
+                  <h2 className="label colon">{":"}</h2>
+                  <TextField
+                    id={"outlined-basic-" + i.toString()}
+                    label={toProperCase(label)}
+                    name={label}
+                    onChange={handleInputChange}
+                    variant="outlined"
+                    value={additionalTextInfo[label]}
+                    error={errorState[label]}
+                    required
+                  />
+                </div>
+              );
+            })}
+            {resume ? (
+              <div className="Parent">
+                <h2 className="label">Resume</h2>
+                <h2 className="label colon">{":"}</h2>
+                <NativeSelect
+                  onChange={handleInputChange}
+                  value={resume}
+                  name="resume"
+                  error={resumeErrorState}
+                  inputProps={{
+                    name: "resume",
+                    id: "resume-selector",
+                  }}
+                >
+                  {profileInfo.resumes.map((resume, i) => {
+                    return (
+                      <option value={resume} key={i}>
+                        {resume.substring(16)}
+                      </option>
+                    );
+                  })}
+                </NativeSelect>
+              </div>
+            ) : (
+              <Alert severity="error">
+                Please Upload Resume in Profile to Continue
+              </Alert>
+            )}
+          </form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {resume ? (
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={SendData}
+              disabled={false}
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={SendData}
+              disabled={true}
+            >
+              Submit
+            </Button>
+          )}
+        </Modal.Footer>
+      </Modal>
+    </Fragment>
+  ) : (
+    ""
+  );
+}
+
+export default Modale;
