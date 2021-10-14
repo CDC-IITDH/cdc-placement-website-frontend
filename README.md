@@ -1,92 +1,55 @@
-# Instructions
+# Frontend Repo for CDC Placement Website
 
-- Install and setup NodeJS. To check, running `node -v` on terminal should give a number like `v15.14.0
-`
-- Fork and clone the repo
+## Folder Structure
+
+    .src
+    ├── Student                   # Files related to Student portal
+    │   ├── api                   # APIs for fetching dashboard, profile and submitting job-application form
+    │   ├── components            # Student Portal components
+    │   ├── images 
+    │   └── App.js                # Main App for Student portal
+    ├── Admin                       # To be created...
+    │   ├── api                   
+    │   ├── components           
+    │   ├── images 
+    │   └── App.js                # Main App for Admin portal
+    ├── api
+    │   └── auth.js               # API for sign-in
+    ├── components                # Website wide used components
+    ├── images                    
+    ├── utils                     # Tools and utilities
+    ├── App.js                    # Main App for the whole web-application
+    ├── index.css
+    └── index.js
+    
+## Getting Started
+- [Watch this video to get started, if you have no clue about open source](https://youtu.be/SL5KKdmvJ1U)
+- [Forking a Repo](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
+- [Cloning a Repo](https://help.github.com/en/desktop/contributing-to-projects/creating-a-pull-request)
+- [How to create a Pull Request](https://opensource.com/article/19/7/create-pull-request-github)
+- [Getting started with Git and GitHub](https://towardsdatascience.com/getting-started-with-git-and-github-6fcd0f2d4ac6)
+
+## Quick Start
+###### **Fork it** :
+> Get your own Fork/Copy of repository by clicking `Fork` button right upper corner
+
+###### **Clone**:
+```sh
+$ git clone https://github.com/CDC-IITDH/cdc-placement-website-frontend.git
+$ cd cdc-placement-website-frontend
 ```
-git clone https://github.com/AkM-2018/cdc-recruitment-system-frontend.git
+
+###### **Branching**
+```
+$ git checkout -b [your_branch_name]
 ```
 
-- Change directory into the folder and run npm install to install all packages (could take some time)
+###### **Setting up Project**
+> Install and setup NodeJS. To check, running `node -v` on terminal should give a number like `v15.14.0
+```sh
+$ npm i
+$ npm start
 ```
-cd cdc-recruitment-system-frontend
-npm install
-```
-
-- See the running application at `http://localhost:3000/` after running this command
-```
-npm start
-```
+> See the running application at `http://localhost:3000/` after running this command
 
 
-### The below docs are auto generated.
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
