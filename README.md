@@ -52,4 +52,11 @@ $ npm start
 ```
 > See the running application at `http://localhost:3000/` after running this command
 
+<hr>
+<br>
+
+**NOTE** 
+To sign-in and start using the web-application you'll need React-Login API secret key and your email verified by the backend.
+Please show your interest in contributing by sharing your email-id on Github-issue(#9) and we will share the keys and get your email verified.
+
 
