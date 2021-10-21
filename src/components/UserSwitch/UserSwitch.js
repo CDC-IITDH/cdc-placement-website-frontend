@@ -25,7 +25,6 @@ const UserSwitch = ({
     }
   });
 
-  
   return (
     <div>
       <div>
@@ -34,22 +33,22 @@ const UserSwitch = ({
             style={{ marginTop: "10%" }}
             container
             spacing={5}
-            justify="center"
-            alignItems="center"
+            justify='center'
+            alignItems='center'
           >
             <Grid item>
-              <div className="UserType-headinfo">
+              <div className='UserType-headinfo'>
                 Please Select One of the User Profile to Proceed
               </div>
             </Grid>
           </Grid>
-          <Grid container spacing={5} justify="center" alignItems="center">
+          <Grid container spacing={5} justify='center' alignItems='center'>
             {userTypes.map((item, i) => {
               return (
                 <Grid item key={i} xs={12} sm>
-                  <div className="UserType-btn-parent" key={i}>
+                  <div className='UserType-btn-parent' key={i}>
                     <Button
-                      className="UserType-btn"
+                      className='UserType-btn'
                       onClick={() => {
                         setCurrentUserType(item);
                         setShowLoader(true);
