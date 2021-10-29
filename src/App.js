@@ -8,13 +8,14 @@ import {
 } from "react-router-dom";
 import Login from "./components/Login/Login";
 import { App as Student } from "./Student/App";
+import { App as Admin } from "./Admin/App";
 import UserSwitch from "./components/UserSwitch/UserSwitch";
 import Loader from "./components/Loader/Loader";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 const App = () => {
   const [auth, setAuth] = useState(false);
@@ -46,7 +47,7 @@ const App = () => {
           autoHideDuration={6000}
           onClose={handleErrorClose}
         >
-          <Alert onClose={handleErrorClose} severity="error">
+          <Alert onClose={handleErrorClose} severity='error'>
             {error}
           </Alert>
         </Snackbar>
@@ -56,7 +57,7 @@ const App = () => {
           autoHideDuration={6000}
           onClose={handleSuccessClose}
         >
-          <Alert onClose={handleSuccessClose} severity="success">
+          <Alert onClose={handleSuccessClose} severity='success'>
             {success}
           </Alert>
         </Snackbar>
@@ -64,7 +65,7 @@ const App = () => {
         {auth && currentUserType ? (
           <Switch>
             <Route
-              path="/student/"
+              path='/student/'
               render={() => {
                 if (
                   currentUserType !== null &&
@@ -85,19 +86,44 @@ const App = () => {
                       setShowSuccess={setShowSuccess}
                     />
                   );
-                else return <Redirect to="/" />;
+                else return <Redirect to='/' />;
               }}
             />
 
-           
+            <Route
+              path='/admin/'
+              render={() => {
+                if (
+                  currentUserType !== null &&
+                  currentUserType === "company" &&
+                  userTypes.includes(currentUserType)
+                )
+                  return (
+                    <Admin
+                      auth={auth}
+                      token={token}
+                      setAuth={setAuth}
+                      setToken={setToken}
+                      setCurrentUserType={setCurrentUserType}
+                      setShowLoader={setShowLoader}
+                      setError={setError}
+                      setShowError={setShowError}
+                      setSuccess={setSuccess}
+                      setShowSuccess={setShowSuccess}
+                    />
+                  );
+                else return <Redirect to='/' />;
+              }}
+            />
+
             <Route
               exact
-              path="*"
+              path='*'
               render={() => {
                 if (currentUserType === "student") {
-                  return <Redirect to="/student" />;
-                } else if (currentUserType === "admin") {
-                  return <Redirect to="/admin" />;
+                  return <Redirect to='/student' />;
+                } else if (currentUserType === "company") {
+                  return <Redirect to='/admin' />;
                 } else {
                   setCurrentUserType(null);
                 }
