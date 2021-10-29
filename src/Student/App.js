@@ -10,6 +10,7 @@ import Profile from "./components/Profile/Profile";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { GetDashboard, GetProfile } from "./api/dashboard";
 import Description from "./components/Dashboard/Description/Description";
+import JobDescription from "../components/JobDescription/JobDescription.js";
 
 const App = ({
   auth,
@@ -117,18 +118,21 @@ const App = ({
               exact
               path="/student"
               render={() => (
-                <Dashboard
-                  profileInfo={profileInfo}
-                  dashboardInfo={[dashboardInfo]}
-                  auth={auth}
-                  token={token}
-                  setShowLoader={setShowLoader}
-                  setError={setError}
-                  setShowError={setShowError}
-                  setSuccess={setSuccess}
-                  setShowSuccess={setShowSuccess}
-                  getDashboardInfo={getDashboardInfo}
-                />
+                <>
+                  {/* <Dashboard
+                    profileInfo={profileInfo}
+                    dashboardInfo={[dashboardInfo]}
+                    auth={auth}
+                    token={token}
+                    setShowLoader={setShowLoader}
+                    setError={setError}
+                    setShowError={setShowError}
+                    setSuccess={setSuccess}
+                    setShowSuccess={setShowSuccess}
+                    getDashboardInfo={getDashboardInfo}
+                  /> */}
+                  <JobDescription/>
+                </>
               )}
             />
             <Route exact path="*" render={() => <Redirect to="/student" />} />

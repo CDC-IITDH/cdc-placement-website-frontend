@@ -1,0 +1,88 @@
+.Description h1{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6%;
+    padding-left: 1rem;
+    font-family: 'Open Sans', sans-serif!important;
+}
+.Description {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 20px;
+    font-family: 'Open Sans', sans-serif !important;
+}
+.pre {
+    font-family: 'Open Sans', sans-serif!important;
+    font-size: 1.05rem;
+    color: #2c3e50;
+    margin-top: -0.5rem;
+}
+.a {
+    text-decoration: none;
+}
+.h-2 {
+    height: 0.1rem !important;
+    background-color: rgba(0, 0, 0, 0.90) !important;
+    border-radius: 10rem;
+}
+.h-2-full {
+    height: 0.1rem !important;
+    background-color: #2c3e50 !important;
+    border-radius: 10rem;
+}
+.paper{
+    width: fit-content;
+    padding: 1rem 2em;
+    margin-top: 1em;
+    border: 1px solid #2c3e50;
+}
+.center-space {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.center-text {
+    text-align: center;
+}
+.pad-2{
+    margin-left: -2rem !important;
+    margin-right: -2rem !important;
+}
+.mt-0 {
+    margin-top: 0;
+}
+.mb-0 {
+    margin-bottom: 0;
+}
+.UserType-btn {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 4px 10px !important;
+    color: white !important;
+    background-color: #334878 !important;
+    border: solid !important;
+    border-color: #334878 !important;
+    border-radius: 10px !important;
+}
+
+.UserType-btn:hover {
+    color: #334878 !important;
+    background-color: white !important;
+    border-color: #334878 !important;
+}
+.between {
+    display: flex;
+    justify-content: space-between;
+}
+@media all and (max-width: 800px) {
+    .center-space {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+}
