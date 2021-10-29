@@ -97,7 +97,7 @@ const App = ({
           <Switch>
             <Route
               exact
-              path="/student/dashboard/:type/:id"
+              path='/student/dashboard/:type/:id'
               render={({ match }) => (
                 <Description
                   profileInfo={profileInfo}
@@ -116,7 +116,7 @@ const App = ({
             />
             <Route
               exact
-              path="/student"
+              path='/student'
               render={() => (
                 <>
                   {/* <Dashboard
@@ -135,10 +135,10 @@ const App = ({
                 </>
               )}
             />
-            <Route exact path="*" render={() => <Redirect to="/student" />} />
+            <Route exact path='*' render={() => <Redirect to='/student' />} />
           </Switch>
         ) : (
-          <Redirect to="/" />
+          <Redirect to='/' />
         )}
       </Router>
     </>
