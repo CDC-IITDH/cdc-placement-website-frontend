@@ -3,6 +3,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import "./Dashboard.css";
 import { Redirect } from "react-router-dom";
+import Searchbar from "../SearchBar/SearchBar";
 
 const Dashboard = ({
   dashboardInfo,
@@ -17,10 +18,10 @@ const Dashboard = ({
   getDashboardInfo,
 }) => {
   const [isloading, setIsloading] = useState(true);
-
   useEffect(() => {
     setIsloading(false);
     setShowLoader(false);
+    
   }, [setShowLoader]);
 
   if (dashboardInfo[0]) {
@@ -32,7 +33,10 @@ const Dashboard = ({
           <div className='loader' />
         </div>
       ) : (
+        
         <div className='Dashboard'>
+        {dashboardInfo &&
+        <Searchbar searchBarInfo={dashboardInfo[0]} />}
           <h1>Dashboard</h1>
 
           <div className='Listing'>
