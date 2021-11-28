@@ -21,7 +21,7 @@ const Dashboard = ({
   useEffect(() => {
     setIsloading(false);
     setShowLoader(false);
-    
+
   }, [setShowLoader]);
 
   if (dashboardInfo[0]) {
@@ -33,12 +33,11 @@ const Dashboard = ({
           <div className='loader' />
         </div>
       ) : (
-        
-        <div className='Dashboard'>
-        {dashboardInfo &&
-        <Searchbar searchBarInfo={dashboardInfo[0]} />}
-          <h1>Dashboard</h1>
 
+        <div className='Dashboard'>
+          <h1>Dashboard</h1>
+          {dashboardInfo &&
+            <Searchbar searchBarInfo={dashboardInfo[0]} />}
           <div className='Listing'>
             <Tabs defaultActiveKey='ongoing'>
               <Tab eventKey='ongoing' title='Ongoing'></Tab>
