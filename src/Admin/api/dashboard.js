@@ -3,7 +3,7 @@ import API_ENDPOINT from "../../api/api_endpoint";
 const GetDashboard = (token) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
-      fetch(API_ENDPOINT + "api/student/getDashboard/", {
+      fetch(API_ENDPOINT + "api/admin/getDashboard/", {
         method: "GET",
         headers: {
           Accept: "application/json",
