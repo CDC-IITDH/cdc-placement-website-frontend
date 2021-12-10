@@ -21,8 +21,6 @@ const Dashboard = ({
   getDashboardInfo,
 }) => {
   const [isloading, setIsloading] = useState(true);
-  // const [ongoing, setOngoing] = useState([]);
-  // const [previous, setPrevious] = useState([]);
   useEffect(() => {
     setIsloading(false);
     setShowLoader(false);
@@ -66,6 +64,10 @@ const Dashboard = ({
                           description={elem.description}
                           designation={elem.designation}
                           start_date={elem.start_date}
+                          tier={elem.tier}
+                          contact_person_name = {elem.contact_person_name}
+                          phone_number = {elem.phone_number}
+                          email = {elem.email}
                           additional_info={elem.additional_info}
                           type='placements'
                           profileInfo={profileInfo}
@@ -101,7 +103,11 @@ const Dashboard = ({
                           description={elem.description}
                           designation={elem.designation}
                           start_date={elem.start_date}
-
+                          start_date={elem.start_date}
+                          tier={elem.tier}
+                          contact_person_name = {elem.contact_person_name}
+                          phone_number = {elem.phone_number}
+                          email = {elem.email}
                           additional_info={elem.additional_info}
                           type='placements'
                           profileInfo={profileInfo}

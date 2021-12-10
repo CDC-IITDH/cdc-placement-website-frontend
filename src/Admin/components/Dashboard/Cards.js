@@ -5,7 +5,11 @@ import {
   Ballot,
   Work,
   Today,
+  Reorder
 } from "@material-ui/icons";
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import PhoneIcon from '@material-ui/icons/Phone';
+import MailIcon from '@material-ui/icons/Mail';
 import "./Dashboard.css";
 import DashboardCardStyles from "./DashboardCardStyles.js";
 import { SvgIcon, Divider, Typography } from "@material-ui/core";
@@ -19,6 +23,10 @@ function Cards({
   designation,
   compensation,
   start_date,
+  tier,
+  contact_person_name,
+  phone_number,
+  email,
   additional_info,
   profileInfo,
   hasApplied,
@@ -43,10 +51,21 @@ function Cards({
           style={{ textDecoration: "none", color: "black" }}
         >
           <div className={css.basicInfo}>
-            <div className={css.companyName}>
-              <h6>
-                <SvgIcon component={Work} /> {company}
-              </h6>
+            <div className={css.upper_info}>
+              <div className={css.companyName}>
+               <h6>
+                 <SvgIcon component={Work} /> {company} (Tier-{tier})
+               </h6>
+             </div>
+              <div className={css.contact}>
+                <h6>
+                  <div className={css.contact_name}>
+                  <SvgIcon component={PermContactCalendarIcon} />
+                   {contact_person_name}
+                  </div>
+                  
+                </h6>
+                </div>
             </div>
 
             <Divider className={css.divider} variant="middle" />
@@ -70,45 +89,19 @@ function Cards({
                   <SvgIcon component={Today} /> {start_date}
                 </h6>
               </div>
-            </div>
+              <div className={css.phone_number}>
+                <h6>
+                  <SvgIcon component={PhoneIcon} /> {phone_number}
+                </h6>
+              </div>
+              <div className={css.email}>
+                <h6>
+                  <SvgIcon component={MailIcon} /> {email}
+                </h6>
+                </div>
+          </div>
           </div>
         </Link>
-
-        {/* {hasApplied ? (
-          selectionStatus === null ? (
-            <Card className={css.selectionCard}>
-              <Typography className={css.selectionStatusTitle} variant="body1">
-                APPLIED
-              </Typography>
-              <Typography
-                className={css.selectionStatusSubtitle}
-                variant="body2"
-              >
-                In Progress...
-              </Typography>
-            </Card>
-          ) : (
-            <Card
-              className={`${css.selectionCard} ${
-                selectionStatus
-                  ? css.selectionCardAccepted
-                  : css.selectionCardRejected
-              }`}
-            >
-              <Typography className={css.selectionStatusText} variant="body1">
-                {selectionStatus === true ? "ACCEPTED" : "REJECTED"}
-              </Typography>
-            </Card>
-          )
-        ) : (
-          <button
-            align="center"
-            className={css.apply_job_button}
-            onClick={handleShow}
-          >
-            Apply now
-          </button>
-        )} */}
       </Card>
     </>
   );
