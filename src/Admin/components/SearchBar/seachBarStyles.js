@@ -105,4 +105,17 @@ export default makeStyles((theme) => ({
     transform: "translateY(-50%)",
     overflow: "hidden",
   },
+  searchButton: {
+    position: "absolute",
+    right: "0.5rem",
+    top: "50%",
+    transform: "translateY(-50%)",
+    backgroundColor: "#334878",
+    color: "#fff",
+    border: "None",
+    borderRadius: "0.5rem",
+    padding: "0.2rem",
+    paddingLeft: "0.5rem",
+    paddingRight: "0.5rem",
+  },
 }));
