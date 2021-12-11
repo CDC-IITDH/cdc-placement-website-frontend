@@ -6,7 +6,7 @@ const CompOverview = ({handleSubmit, handleChange, handleBlur, values, touched, 
     <>
       <Container className="p-0 mb-5" fluid>
         <div className="w-100 position-relative banner-container">
-          <img className="fix banner p-0" src={banner}></img>
+          <img className="fix banner p-0" alt="banner" src={banner}></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">
               COMPANY OVERVIEW
@@ -78,7 +78,7 @@ const CompOverview = ({handleSubmit, handleChange, handleBlur, values, touched, 
         <Form.Check className="form-check" type="checkbox">
           <Row>
             {['Govt. Owned','MNC (Foreign Origin)','MNC (Indian Origin)','Private Sector','Public Sector','Start-Up','Other'].map((type) => (
-              <Col sm={6}>
+              <Col sm={6}  key={type}>
                 <Form.Check.Input type="checkbox" label={type} name="type" value={type} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.type && errors.type} required></Form.Check.Input>
                 <Form.Check.Label>{type}</Form.Check.Label>
               </Col>
@@ -92,7 +92,7 @@ const CompOverview = ({handleSubmit, handleChange, handleBlur, values, touched, 
         <Form.Check className="form-check" type="checkbox">
           <Row>
             {['Manufacturing','Consulting','Finance','Core (Technical)','FMCG','I.T./ITeS','Management','Education (Teaching)','NGO','Research & Development','Other'].map((nature) => (
-              <Col sm={6}>
+              <Col key={nature} sm={6}>
                 <Form.Check.Input type="checkbox" label={nature} name="nature" value={nature} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.nature && errors.nature} required></Form.Check.Input>
                 <Form.Check.Label>{nature}</Form.Check.Label>
               </Col>

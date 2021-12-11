@@ -42,103 +42,107 @@ const JNF = (setShowLoader) => {
     })
 
     function submit(values) {
-    
+      console.log('hi')
     }
 
     return (
       <>
-        <Container className="py-5 d-pink bk-container" fluid style={{
-          backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"
-        }}
-        >
+        <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
-              {(page === 1) ? (
-                <Instructions year={year} />
-              ):(<></>)}
               <Formik validationSchema={schema} onSubmit={submit} initialValues={{}}>
                 {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => (
-                  <Form onSubmit={handleSubmit}>
+                  <Form noValidate onSubmit={handleSubmit}>    
                     {(page === 1) ? (
-                        <CompOverview
-                          handleSubmit={handleSubmit}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          values={values}
-                          touched={touched}
-                          isValid={isValid}
-                          errors={errors}
-                          dirty={dirty}
-                        />
+                      <Instructions year={year} />
+                    ):(<></>)}
+                    {(page === 1) ? (
+                      <CompOverview
+                        handleSubmit={handleSubmit}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        values={values}
+                        touched={touched}
+                        isValid={isValid}
+                        errors={errors}
+                        dirty={dirty}
+                      />
                     ):(<></>)}
                     {(page === 2) ? (
-                        <JobProfile
-                          handleSubmit={handleSubmit}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          values={values}
-                          touched={touched}
-                          isValid={isValid}
-                          errors={errors}
-                          dirty={dirty}
-                        />
+                      <JobProfile
+                        handleSubmit={handleSubmit}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        values={values}
+                        touched={touched}
+                        isValid={isValid}
+                        errors={errors}
+                        dirty={dirty}
+                      />
                     ):(<></>)}
                     {(page === 3) ? (
-                        <SalaryDetails
-                          handleSubmit={handleSubmit}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          values={values}
-                          touched={touched}
-                          isValid={isValid}
-                          errors={errors}
-                          dirty={dirty}
-                        />
+                      <SalaryDetails
+                        handleSubmit={handleSubmit}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        values={values}
+                        touched={touched}
+                        isValid={isValid}
+                        errors={errors}
+                        dirty={dirty}
+                      />
                     ):(<></>)}
                     {(page === 4) ? (
-                        <SelectionProcess
-                          handleSubmit={handleSubmit}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          values={values}
-                          touched={touched}
-                          isValid={isValid}
-                          errors={errors}
-                          dirty={dirty}
-                        />
+                      <SelectionProcess
+                        handleSubmit={handleSubmit}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        values={values}
+                        touched={touched}
+                        isValid={isValid}
+                        errors={errors}
+                        dirty={dirty}
+                      />
                     ):(<></>)}
                     {(page === 5) ? (
-                        <ContactDetails
-                          handleSubmit={handleSubmit}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          values={values}
-                          touched={touched}
-                          isValid={isValid}
-                          errors={errors}
-                          dirty={dirty}
-                        />
+                      <ContactDetails
+                        handleSubmit={handleSubmit}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        values={values}
+                        touched={touched}
+                        isValid={isValid}
+                        errors={errors}
+                        dirty={dirty}
+                      />
                     ):(<></>)}
+                    <hr className="pd" />
+                    <Row>
+                      {(page!==1)? (
+                        <Col className="text-start">
+                          <Button variant="primary" onClick={()=>{setPage(page-1)}}>
+                            Back
+                          </Button>
+                        </Col>
+                      ):(<></>)}
+                      {(page!==5)? (
+                        <Col className="text-end">
+                          <Button variant="primary" onClick={()=>{setPage(page+1)}}>
+                            Next
+                          </Button>
+                        </Col>
+                      ):(<></>)}
+                      {(page===5)? (
+                        <Col className="text-end">
+                          <Button variant="primary" type="submit">
+                            Submit
+                          </Button>
+                        </Col>
+                      ):(<></>)}
+                    </Row>
                   </Form>
                 )}
               </Formik>
-              <hr className="pd" />
-              <Row>
-                <Col className="text-start">
-                  {(page!==1)? (
-                    <Button variant="primary" onClick={()=>{setPage(page-1)}}>
-                      Back
-                    </Button>
-                  ):(<></>)}
-                </Col>
-                <Col className="text-end">
-                  {(page!==5)? (
-                    <Button variant="primary" onClick={()=>{setPage(page+1)}}>
-                      Next
-                    </Button>
-                  ):(<></>)}
-                </Col>
-              </Row>
             </Col>
           </Row>
         </Container>

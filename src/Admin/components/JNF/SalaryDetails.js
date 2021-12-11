@@ -1,4 +1,4 @@
-import { Form, Row, Col, Container, FormControl } from "react-bootstrap"
+import { Form, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
 
 const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => {
@@ -6,7 +6,7 @@ const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched,
     <>
       <Container className="p-0 mb-5" fluid>
         <div className="w-100 position-relative banner-container">
-          <img className="fix banner p-0" src={banner}></img>
+          <img className="fix banner p-0" alt="banner" src={banner}></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">
               SALARY DETAILS

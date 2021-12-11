@@ -1,6 +1,6 @@
 
 import logo from "../../images/cdc_logo.png"
-import { Form, Button, Col, Container, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 
 const Instructions = ({year}) => {
   return (

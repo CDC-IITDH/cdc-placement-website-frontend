@@ -1,4 +1,4 @@
-import { Form, Row, Col, Container, FormControl } from "react-bootstrap"
+import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
 
 const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => {
@@ -6,7 +6,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
     <>
       <Container className="p-0 mb-5" fluid>
         <div className="w-100 position-relative banner-container">
-          <img className="fix banner p-0" src={banner}></img>
+          <img className="fix banner p-0" alt="banner" src={banner}></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">
               JOB PROFILE
@@ -50,7 +50,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <Form.Check className="form-check" type="radio">
           <Row>
             {['Yes','No'].map((eligible) => (
-              <Col sm={6}>
+              <Col sm={6} key={eligible}>
                 <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.research && errors.research} required></Form.Check.Input>
                 <Form.Check.Label>{eligible}</Form.Check.Label>
               </Col>
