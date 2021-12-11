@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { GetDashboard } from "./api/dashboard";
+import JNF from "./components/JNF/JNF";
 
 const App = ({
   auth,
@@ -68,6 +69,15 @@ const App = ({
                   setSuccess={setSuccess}
                   setShowSuccess={setShowSuccess}
                   getDashboardInfo={getDashboardInfo}
+                />
+              )}
+            />
+            <Route
+              exact
+              path='/admin/jnf'
+              render={() => (
+                <JNF
+                  setShowLoader={setShowLoader}
                 />
               )}
             />

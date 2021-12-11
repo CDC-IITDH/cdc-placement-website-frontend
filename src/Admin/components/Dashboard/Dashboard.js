@@ -4,6 +4,7 @@ import Tab from "react-bootstrap/Tab";
 import "./Dashboard.css";
 import { Redirect } from "react-router-dom";
 import Searchbar from "../SearchBar/SearchBar";
+import { Button } from "react-bootstrap";
 
 const Dashboard = ({
   dashboardInfo,
@@ -38,6 +39,9 @@ const Dashboard = ({
           <h1>Dashboard</h1>
           {dashboardInfo &&
             <Searchbar searchBarInfo={dashboardInfo[0]} />}
+          <div style={{marginLeft:"5%"}}> 
+            <Button href="/admin/jnf" style={{backgroundColor: "#334878", borderColor:"#334878"}}>Add Placement (JNF)</Button>
+          </div>
           <div className='Listing'>
             <Tabs defaultActiveKey='ongoing'>
               <Tab eventKey='ongoing' title='Ongoing'></Tab>

@@ -30,11 +30,11 @@ const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touch
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{errors.selectionprocess}</span>
+        <span className="select-feedback">{touched.selectionprocess? errors.selectionprocess:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Breifly explain the selection procedure (attach details)</Form.Label>
-        <Form.Control type="file" name='selection-file' onChange={(event) => {setFieldValue("selection-file", event.currentTarget.files[0])}} />
+        <Form.Control type="file" name='selection_file' onChange={(event) => {setFieldValue("selection_file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>

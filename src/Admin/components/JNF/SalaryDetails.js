@@ -20,7 +20,7 @@ const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched,
       </b></p>
       <Form.Group className="mb-5">
         <Form.Label>Salary Description</Form.Label>
-        <Form.Control type="file" name='salary-file' onChange={(event) => {setFieldValue("salary-file", event.currentTarget.files[0])}} />
+        <Form.Control type="file" name='salary_file' onChange={(event) => {setFieldValue("salary_file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>

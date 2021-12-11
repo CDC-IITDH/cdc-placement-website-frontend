@@ -27,7 +27,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Brief About the Company</Form.Label>
-        <Form.Control type="file" name='compdescription-file' onChange={(event) => {setFieldValue("compdescription-file", event.currentTarget.files[0])}} />
+        <Form.Control type="file" name='compdescription_file' onChange={(event) => {setFieldValue("compdescription_file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>
@@ -85,7 +85,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{errors.type}</span>
+        <span className="select-feedback">{touched.type? errors.type:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Nature of Business <span className="text-danger">*</span></Form.Label>
@@ -99,7 +99,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{errors.nature}</span>
+        <span className="select-feedback">{touched.nature? errors.nature:''}</span>
       </Form.Group>
     </>
   )

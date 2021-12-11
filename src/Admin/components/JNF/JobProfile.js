@@ -17,7 +17,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       <hr className="pd" />
       <Form.Group className="mb-5">
         <Form.Label>Job Description</Form.Label>
-        <Form.Control type="file" name='jobdescription-file' onChange={(event) => {setFieldValue("jobdescription-file", event.currentTarget.files[0])}} />
+        <Form.Control type="file" name='jobdescription_file' onChange={(event) => {setFieldValue("jobdescription_file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>
@@ -51,13 +51,13 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
           <Row>
             {['Yes','No'].map((eligible) => (
               <Col sm={6} key={eligible}>
-                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.research && errors.research} required></Form.Check.Input>
+                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.research && errors.research}></Form.Check.Input>
                 <Form.Check.Label>{eligible}</Form.Check.Label>
               </Col>
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{errors.research}</span>
+        <span className="select-feedback">{touched.research? errors.research:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Tentative No. of Offers</Form.Label>
