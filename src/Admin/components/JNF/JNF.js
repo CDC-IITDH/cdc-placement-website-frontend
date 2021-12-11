@@ -4,7 +4,7 @@ import CompOverview from "./CompOverview";
 import { Formik } from "formik"
 import * as yup from 'yup'
 import Instructions from "./Instructions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JobProfile from "./JobProfile";
 import SalaryDetails from "./SalaryDetails";
 import SelectionProcess from "./SelectionProcess"
@@ -14,6 +14,10 @@ const JNF = (setShowLoader) => {
     const year = "2020-2021"
 
     const [page, setPage] = useState(1)
+
+    useEffect(() => {
+      window.scrollTo(0,0)
+    }, [page])
 
     let schema = yup.object().shape({
       name: yup.string().required('Company Name is Required'),
@@ -42,7 +46,7 @@ const JNF = (setShowLoader) => {
     })
 
     function submit(values) {
-      console.log('hi')
+      console.log(values)
     }
 
     return (
@@ -50,8 +54,8 @@ const JNF = (setShowLoader) => {
         <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
-              <Formik validationSchema={schema} onSubmit={submit} initialValues={{}}>
-                {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => (
+              <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:''}}>
+                {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue}) => (
                   <Form noValidate onSubmit={handleSubmit}>    
                     {(page === 1) ? (
                       <Instructions year={year} />
@@ -66,6 +70,7 @@ const JNF = (setShowLoader) => {
                         isValid={isValid}
                         errors={errors}
                         dirty={dirty}
+                        setFieldValue={setFieldValue}
                       />
                     ):(<></>)}
                     {(page === 2) ? (
@@ -78,6 +83,7 @@ const JNF = (setShowLoader) => {
                         isValid={isValid}
                         errors={errors}
                         dirty={dirty}
+                        setFieldValue={setFieldValue}
                       />
                     ):(<></>)}
                     {(page === 3) ? (
@@ -90,6 +96,7 @@ const JNF = (setShowLoader) => {
                         isValid={isValid}
                         errors={errors}
                         dirty={dirty}
+                        setFieldValue={setFieldValue}
                       />
                     ):(<></>)}
                     {(page === 4) ? (
@@ -102,6 +109,7 @@ const JNF = (setShowLoader) => {
                         isValid={isValid}
                         errors={errors}
                         dirty={dirty}
+                        setFieldValue={setFieldValue}
                       />
                     ):(<></>)}
                     {(page === 5) ? (
@@ -132,7 +140,7 @@ const JNF = (setShowLoader) => {
                           </Button>
                         </Col>
                       ):(<></>)}
-                      {(page===5)? (
+                      {(page!==6)? (
                         <Col className="text-end">
                           <Button variant="primary" type="submit">
                             Submit

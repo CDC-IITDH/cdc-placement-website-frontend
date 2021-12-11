@@ -1,7 +1,7 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
 
-const CompOverview = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => {
+const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFieldValue}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -27,14 +27,14 @@ const CompOverview = ({handleSubmit, handleChange, handleBlur, values, touched, 
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Brief About the Company</Form.Label>
-        <Form.Control type="file" />
+        <Form.Control type="file" name='compdescription-file' onChange={(event) => {setFieldValue("compdescription-file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>or Describe in Words</Form.Label>
-        <Form.Control as="textarea" className="text-area"></Form.Control>
+        <Form.Control as="textarea" className="text-area" name="compdescription" onChange={handleChange} onBlur={handleBlur}></Form.Control>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Company Address <span className="text-danger">*</span></Form.Label>

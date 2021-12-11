@@ -1,7 +1,7 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
 
-const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => {
+const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -17,7 +17,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       <hr className="pd" />
       <Form.Group className="mb-5">
         <Form.Label>Job Description</Form.Label>
-        <Form.Control type="file" />
+        <Form.Control type="file" name='jobdescription-file' onChange={(event) => {setFieldValue("jobdescription-file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>

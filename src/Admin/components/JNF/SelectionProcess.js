@@ -1,7 +1,7 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
 
-const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => {
+const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -34,18 +34,18 @@ const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touch
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Breifly explain the selection procedure (attach details)</Form.Label>
-        <Form.Control type="file" />
+        <Form.Control type="file" name='selection-file' onChange={(event) => {setFieldValue("selection-file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>or Describe the Selection Procedure</Form.Label>
-        <Form.Control as="textarea" className="text-area"></Form.Control>
+        <Form.Control as="textarea" className="text-area" name="selection" onChange={handleChange} onBlur={handleBlur} ></Form.Control>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Academic Requirements</Form.Label>
-        <Form.Control as="textarea" className="text-area"></Form.Control>
+        <Form.Control as="textarea" className="text-area"  name="requirements" onChange={handleChange} onBlur={handleBlur}></Form.Control>
         <Form.Text className="text-muted">Mention any academic requirements such as CPI cutoff, branch, etc.</Form.Text>
       </Form.Group>
     </>

@@ -1,7 +1,7 @@
 import { Form, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
 
-const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => {
+const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, handleFieldChange,setFieldValue}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -20,7 +20,7 @@ const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched,
       </b></p>
       <Form.Group className="mb-5">
         <Form.Label>Salary Description</Form.Label>
-        <Form.Control type="file" />
+        <Form.Control type="file" name='salary-file' onChange={(event) => {setFieldValue("salary-file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>
@@ -51,7 +51,7 @@ const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched,
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Details of Bond (if any)</Form.Label>
-        <Form.Control as="textarea" className="text-area"  name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
+        <Form.Control as="textarea" className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
       </Form.Group>
     </>
   )
