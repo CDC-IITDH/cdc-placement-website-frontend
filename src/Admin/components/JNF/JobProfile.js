@@ -7,7 +7,11 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       <Container className="p-0 mb-5" fluid>
         <div className="w-100 position-relative banner-container">
           <img className="fix banner p-0" src={banner}></img>
-          <div className="fix w-100 h-100 haze text-center">JOB PROFILE</div>
+          <div className="fix w-100 h-100 haze">
+            <div className="center text-center w-100">
+              JOB PROFILE
+            </div>
+          </div>
         </div>
       </Container>
       <hr className="pd" />

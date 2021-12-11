@@ -6,6 +6,9 @@ import * as yup from 'yup'
 import Instructions from "./Instructions";
 import { useState } from "react";
 import JobProfile from "./JobProfile";
+import SalaryDetails from "./SalaryDetails";
+import SelectionProcess from "./SelectionProcess"
+import ContactDetails from "./ContactDetails";
 
 const JNF = (setShowLoader) => {
     const year = "2020-2021"
@@ -27,6 +30,15 @@ const JNF = (setShowLoader) => {
       details: yup.string().required('Details are Required'),
       date: yup.string().required('Date is Required'),
       numoffers: yup.number(),
+      ctc: yup.number().required('CTC is Required'),
+      gross: yup.number().required('Gross is Required'),
+      takehome: yup.number().required('Take Home is Required'),
+      bonus: yup.number(),
+      selectionprocess: yup.array().min(1,'Choose at least one'),
+      contact: yup.string().required('Contact is Required'),
+      email: yup.string().email('Please enter a email address (eg. john@example.com)'),
+      mobile: yup.number().required('Mobile Number is Required'),
+      telephone: yup.string()
     })
 
     function submit(values) {
@@ -44,7 +56,7 @@ const JNF = (setShowLoader) => {
               {(page === 1) ? (
                 <Instructions year={year} />
               ):(<></>)}
-              <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:''}}>
+              <Formik validationSchema={schema} onSubmit={submit} initialValues={{}}>
                 {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => (
                   <Form onSubmit={handleSubmit}>
                     {(page === 1) ? (
@@ -61,6 +73,42 @@ const JNF = (setShowLoader) => {
                     ):(<></>)}
                     {(page === 2) ? (
                         <JobProfile
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                        />
+                    ):(<></>)}
+                    {(page === 3) ? (
+                        <SalaryDetails
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                        />
+                    ):(<></>)}
+                    {(page === 4) ? (
+                        <SelectionProcess
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                        />
+                    ):(<></>)}
+                    {(page === 5) ? (
+                        <ContactDetails
                           handleSubmit={handleSubmit}
                           handleChange={handleChange}
                           handleBlur={handleBlur}
