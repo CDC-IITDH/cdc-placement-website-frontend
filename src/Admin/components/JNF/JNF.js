@@ -1,0 +1,101 @@
+import { Form, Button, Col, Container, Row } from "react-bootstrap";
+import "./form.css"
+import CompOverview from "./CompOverview";
+import { Formik } from "formik"
+import * as yup from 'yup'
+import Instructions from "./Instructions";
+import { useState } from "react";
+import JobProfile from "./JobProfile";
+
+const JNF = (setShowLoader) => {
+    const year = "2020-2021"
+
+    const [page, setPage] = useState(1)
+
+    let schema = yup.object().shape({
+      name: yup.string().required('Company Name is Required'),
+      link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
+      address: yup.string().required('Company Address is Required'),
+      city: yup.string().required('City is Required'),
+      state: yup.string().required('State is Required'),
+      country: yup.string().required('Country is Required'),
+      pincode: yup.string().required('Zip/Pin is Required'),
+      type: yup.array().min(1,'Choose at least one'),
+      nature: yup.array().min(1,'Choose at least one'),
+      designation: yup.string().required('Designation is Required'),
+      locations: yup.string().required('Loaction is Required'),
+      details: yup.string().required('Details are Required'),
+      date: yup.string().required('Date is Required'),
+      numoffers: yup.number(),
+    })
+
+    function submit(values) {
+    
+    }
+
+    return (
+      <>
+        <Container className="py-5 d-pink bk-container" fluid style={{
+          backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"
+        }}
+        >
+          <Row className="justify-content-center">
+            <Col className="l-pink p-5" lg={7} xs={11}>
+              {(page === 1) ? (
+                <Instructions year={year} />
+              ):(<></>)}
+              <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:''}}>
+                {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => (
+                  <Form onSubmit={handleSubmit}>
+                    {(page === 1) ? (
+                        <CompOverview
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                        />
+                    ):(<></>)}
+                    {(page === 2) ? (
+                        <JobProfile
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                        />
+                    ):(<></>)}
+                  </Form>
+                )}
+              </Formik>
+              <hr className="pd" />
+              <Row>
+                <Col className="text-start">
+                  {(page!==1)? (
+                    <Button variant="primary" onClick={()=>{setPage(page-1)}}>
+                      Back
+                    </Button>
+                  ):(<></>)}
+                </Col>
+                <Col className="text-end">
+                  {(page!==5)? (
+                    <Button variant="primary" onClick={()=>{setPage(page+1)}}>
+                      Next
+                    </Button>
+                  ):(<></>)}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </>
+    )
+};
+
+export default JNF
