@@ -139,14 +139,13 @@ const JNF = (setShowLoader) => {
                             Next
                           </Button>
                         </Col>
-                      ):(<></>)}
-                      {(page!==6)? (
+                      ):(
                         <Col className="text-end">
                           <Button variant="primary" type="submit">
                             Submit
                           </Button>
                         </Col>
-                      ):(<></>)}
+                      )}
                     </Row>
                   </Form>
                 )}
