@@ -7,7 +7,6 @@ import { Container } from "@material-ui/core";
 import { Fragment } from "react";
 import Cards from "./Cards";
 
-
 const Dashboard = ({
   dashboardInfo,
   auth,
@@ -30,6 +29,18 @@ const Dashboard = ({
       setShowLoader(false);
     }, [ dashboardInfo, setShowLoader]);
     console.log(dashboardInfo);
+    // format time stamp to date
+  const formatDate =  (date) => {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [day, month, year].join("-");
+  };
   if (dashboardInfo[0]) {
     if (!auth) {
       return <Redirect to='/' />;
@@ -53,17 +64,17 @@ const Dashboard = ({
                 ) : (
                   <Fragment>
                     {dashboardInfo[0]?.ongoing.map((elem) => {
-                      
+                      // convert elem.deadline_timestamp to date dd/mm/yyyy
                       return (
                         <Cards
                           key={elem.id}
                           id={elem.id}
                           token={token}
-                          company={elem.company_details.name}
-                          compensation={elem.compensation}
+                          company_name={elem.company_name}
+                          compensation_CTC={elem.compensation_CTC}
                           description={elem.description}
                           designation={elem.designation}
-                          start_date={elem.start_date}
+                          end_date={formatDate(elem.deadline_datetime)}
                           tier={elem.tier}
                           contact_person_name = {elem.contact_person_name}
                           phone_number = {elem.phone_number}
@@ -93,17 +104,17 @@ const Dashboard = ({
                 ) : (
                   <Fragment>
                     {dashboardInfo[0]?.previous.map((elem) => {
+                      console.log(elem.deadline_timestamp);
                       return (
                         <Cards
                           key={elem.id}
                           id={elem.id}
                           token={token}
-                          company={elem.company_details.name}
-                          compensation={elem.compensation}
+                          company_name={elem.company_name}
+                          compensation_CTC={elem.compensation_CTC}
                           description={elem.description}
                           designation={elem.designation}
-                          start_date={elem.start_date}
-                          start_date={elem.start_date}
+                          end_date={formatDate(elem.deadline_datetime)}
                           tier={elem.tier}
                           contact_person_name = {elem.contact_person_name}
                           phone_number = {elem.phone_number}

@@ -19,10 +19,10 @@ function Cards({
   type,
   id,
   token,
-  company,
+  company_name,
   designation,
-  compensation,
-  start_date,
+  compensation_CTC,
+  end_date,
   tier,
   contact_person_name,
   phone_number,
@@ -54,7 +54,7 @@ function Cards({
             <div className={css.upper_info}>
               <div className={css.companyName}>
                <h6>
-                 <SvgIcon component={Work} /> {company} (Tier-{tier})
+                 <SvgIcon component={Work} /> {company_name} (Tier-{tier})
                </h6>
              </div>
               <div className={css.contact}>
@@ -80,13 +80,13 @@ function Cards({
               <div className={css.compensation}>
                 <h6>
                   <SvgIcon component={AccountBalanceWalletRounded} />{" "}
-                  {compensation}
+                  CTC - INR {compensation_CTC}
                 </h6>
               </div>
 
               <div className={css.start_date}>
                 <h6>
-                  <SvgIcon component={Today} /> {start_date}
+                  <SvgIcon component={Today} /> {end_date}
                 </h6>
               </div>
               <div className={css.phone_number}>
