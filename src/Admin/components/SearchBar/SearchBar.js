@@ -17,7 +17,7 @@ const Searchbar = ({ searchBarInfo }) => {
     array = [];
     searchBarInfo.ongoing.forEach((elem) => {
       if (
-        elem.company_details.name.toLowerCase().includes(term.toLowerCase())
+        elem.company_name.toLowerCase().includes(term.toLowerCase())
       ) {
         if (array.length < 8) {
           array.push(elem);
@@ -26,7 +26,7 @@ const Searchbar = ({ searchBarInfo }) => {
     });
     searchBarInfo.previous.forEach((elem) => {
       if (
-        elem.company_details.name.toLowerCase().includes(term.toLowerCase())
+        elem.company_name.toLowerCase().includes(term.toLowerCase())
       ) {
         if (array.length < 8) {
           array.push(elem);

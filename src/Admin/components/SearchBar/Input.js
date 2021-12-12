@@ -52,14 +52,14 @@ const Input = ({
         value={term}
         disabled={searched ? searched : false}
       />
-      <button className={css.searchButton}> Search </button>
-      {/* {searched && (
+      {!searched && (<button className={css.searchButton}> Search </button>)}
+      {searched && (
         <SvgIcon
           component={Close}
           onClick={clearSearch}
           className={css.close}
         />
-      )} */}
+      )} 
     </div>
   );
 };
