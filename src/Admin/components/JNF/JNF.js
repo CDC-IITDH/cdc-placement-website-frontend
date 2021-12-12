@@ -9,7 +9,7 @@ import JobProfile from "./JobProfile";
 import SalaryDetails from "./SalaryDetails";
 import SelectionProcess from "./SelectionProcess"
 import ContactDetails from "./ContactDetails";
-var axios = require('axios');
+import API_ENDPOINT from "../../../api/api_endpoint";
 
 const JNF = ({setShowLoader}) => {
     const year = "2020-2021"
@@ -24,9 +24,32 @@ const JNF = ({setShowLoader}) => {
       window.scrollTo(0,0)
     }, [page])
 
+    const validatePDF = (value, context) => {
+      if (value) {
+        return (value.type === 'application/pdf')
+      }
+      else {
+        return true
+      }
+    }
+
+    const validateSize = (value, context) => {
+      if (value) {
+        console.log(value.size);
+        return (value.size <= 10000000)
+      }
+      else {
+        return true
+      }
+    }
+
     let schema = yup.object().shape({
-      name: yup.string().required('Company Name is Required'),
-      link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
+      // name: yup.string().required('Company Name is Required'),
+      // link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
+      compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      jobdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      salary_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      selection_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       address: yup.string().required('Company Address is Required'),
       city: yup.string().required('City is Required'),
       state: yup.string().required('State is Required'),
@@ -38,6 +61,7 @@ const JNF = ({setShowLoader}) => {
       locations: yup.string().required('Loaction is Required'),
       details: yup.string().required('Details are Required'),
       date: yup.string().required('Date is Required'),
+      branch: yup.array().min(1,'Choose at least one').required("Required"),
       research: yup.string().required("Required"),
       numoffers: yup.number(),
       ctc: yup.number().required('CTC is Required'),
@@ -53,6 +77,11 @@ const JNF = ({setShowLoader}) => {
 
     function submit(values) {
       console.log(values)
+      let is_company_details_pdf=(values.compdescription_file)?true:false
+      let is_description_pdf=(values.jobdescription_file)?true:false
+      let is_compensation_details_pdf=(values.salary_file)?true:false
+      let is_selection_procedure_details_pdf=(values.selection_file)?true:false
+
       let data = {
         company_name: values.name,
         address: values.address,
@@ -60,7 +89,7 @@ const JNF = ({setShowLoader}) => {
         nature_of_business: values.nature,
         website: values.link,
         company_details: values.compdescription,
-        is_company_details_pdf: '',
+        is_company_details_pdf: is_company_details_pdf,
         contact_person_name: values.contact,
         phone_number: values.mobile,
         email: values.email,
@@ -70,19 +99,19 @@ const JNF = ({setShowLoader}) => {
         pincode: values.pincode,
         designation: values.designation,
         description: values.details,
-        is_description_pdf: '',
-        compensation_ctc: values.ctc,
-        compensation_gross: values.gross,
-        compensation_take_home: values.takehome,
-        compensation_bonus: values.bonus,
+        is_description_pdf: is_description_pdf,
+        compensation_ctc: values.ctc*100000,
+        compensation_gross: values.gross*100000,
+        compensation_take_home: values.takehome*100000,
+        compensation_bonus: values.bonus*100000,
         compensation_details: '',
-        is_compensation_details_pdf: '',
+        is_compensation_details_pdf: is_compensation_details_pdf,
         bond_details: values.bonddetails,
         selection_procedure_rounds: values.selectionprocess,
         selection_procedure_details: values.selection,
-        is_selection_procedure_details_pdf: '',
+        is_selection_procedure_details_pdf: is_selection_procedure_details_pdf,
         tentative_date_of_joining: values.date,
-        allowed_branch: '',
+        allowed_branch: values.branch,
         tentative_no_of_offers: values.numoffers,
         other_requirements: values.requirements,
         company_details_pdf: values.compdescription_file,
@@ -91,6 +120,15 @@ const JNF = ({setShowLoader}) => {
         selection_procedure_details_pdf: values.selection_file,
       }
       console.log(data)
+
+      fetch(API_ENDPOINT+"api/company/addPlacement/", {
+        method: 'POST',
+        body: data
+      }).then((result) => {
+        console.log(result);
+      }).catch((error) => {
+        console.log(error);
+      })
     }
 
     return (
@@ -98,9 +136,9 @@ const JNF = ({setShowLoader}) => {
         <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
-              <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:''}}>
-                {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue}) => (
-                  <Form noValidate onSubmit={handleSubmit}>    
+              <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:''}}>
+                {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,submitCount}) => (
+                  <Form noValidate onSubmit={handleSubmit}>
                     {(page === 1) ? (
                       <Instructions year={year} />
                     ):(<></>)}
@@ -128,6 +166,7 @@ const JNF = ({setShowLoader}) => {
                         errors={errors}
                         dirty={dirty}
                         setFieldValue={setFieldValue}
+                        submitCount={submitCount}
                       />
                     ):(<></>)}
                     {(page === 3) ? (
@@ -185,7 +224,7 @@ const JNF = ({setShowLoader}) => {
                         </Col>
                       ):(
                         <Col className="text-end">
-                          <Button variant="primary" onClick={handleSubmit}>
+                          <Button variant="primary" onClick={handleSubmit} disabled={!(isValid && dirty)}>
                             Submit
                           </Button>
                         </Col>

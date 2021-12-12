@@ -34,7 +34,9 @@ const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touch
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Breifly explain the selection procedure (attach details)</Form.Label>
-        <Form.Control type="file" name='selection_file' onChange={(event) => {setFieldValue("selection_file", event.currentTarget.files[0])}} />
+        <Form.Control type="text" value={values.selection_file?values.selection_file.name:''} disabled />
+        <p className="select-feedback">{errors.selection_file}</p>
+        <Form.Control type="file" name='selection_file' accept="application/pdf" onChange={(event) => {setFieldValue("selection_file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>

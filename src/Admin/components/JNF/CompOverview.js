@@ -27,7 +27,9 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Brief About the Company</Form.Label>
-        <Form.Control type="file" name='compdescription_file' onChange={(event) => {setFieldValue("compdescription_file", event.currentTarget.files[0])}} />
+        <Form.Control type="text" value={values.compdescription_file?values.compdescription_file.name:''} disabled />
+        <p className="select-feedback">{errors.compdescription_file}</p>
+        <Form.Control type="file" name='compdescription_file' accept="application/pdf" onChange={(event) => {setFieldValue("compdescription_file", event.currentTarget.files[0]);}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>

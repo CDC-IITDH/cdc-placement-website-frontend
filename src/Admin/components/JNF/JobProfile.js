@@ -1,7 +1,7 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
 
-const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue}) => {
+const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue, submitCount}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -17,7 +17,9 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       <hr className="pd" />
       <Form.Group className="mb-5">
         <Form.Label>Job Description</Form.Label>
-        <Form.Control type="file" name='jobdescription_file' onChange={(event) => {setFieldValue("jobdescription_file", event.currentTarget.files[0])}} />
+        <Form.Control type="text" value={values.jobdescription_file?values.jobdescription_file.name:''} disabled />
+        <p className="select-feedback">{errors.jobdescription_file}</p>
+        <Form.Control type="file" name='jobdescription_file' accept="application/pdf" onChange={(event) => {setFieldValue("jobdescription_file", event.currentTarget.files[0])}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>
@@ -46,18 +48,32 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <Form.Control.Feedback type="invalid"> {errors.date} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
+        <Form.Label>Eligible Branches <span className="text-danger">*</span></Form.Label>
+        <Form.Check className="form-check" type="checkbox">
+          <Row>
+            {['CSE','EE','ME'].map((x) => (
+              <Col key={x} sm={6}>
+                <Form.Check.Input type="checkbox" name="branch" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.branch && errors.branch}></Form.Check.Input>
+                <Form.Check.Label>{x}</Form.Check.Label>
+              </Col>
+            ))}
+          </Row>
+        </Form.Check>
+        <span className="select-feedback">{touched.branch? errors.branch:''}</span>
+      </Form.Group>
+      <Form.Group className="mb-5">
         <Form.Label>Are MS research scholars (postgraduates) eligible to apply? <span className="text-danger">*</span></Form.Label>
         <Form.Check className="form-check" type="radio">
           <Row>
             {['Yes','No'].map((eligible) => (
               <Col sm={6} key={eligible}>
-                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.research && errors.research}></Form.Check.Input>
+                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={submitCount && errors.research}></Form.Check.Input>
                 <Form.Check.Label>{eligible}</Form.Check.Label>
               </Col>
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{touched.research? errors.research:''}</span>
+        <span className="select-feedback">{submitCount? errors.research:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Tentative No. of Offers</Form.Label>
