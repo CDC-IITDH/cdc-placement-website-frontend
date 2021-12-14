@@ -121,15 +121,12 @@ const App = () => {
               path='*'
               render={() => {
                 if (currentUserType === "student") {
-                  console.log("student");
                   return <Redirect to='/student' />;
                 } else if (currentUserType === "admin") {
                   return <Redirect to='/admin' />;
                 } else if (currentUserType === "admin") {
-                  console.log("admin");
                   return <Redirect to='/admin' />;
                 } else {
-                  console.log("not logged in");
                   setCurrentUserType(null);
                 }
               }}
