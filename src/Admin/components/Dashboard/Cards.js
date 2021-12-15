@@ -5,11 +5,11 @@ import {
   Ballot,
   Work,
   Today,
-  Reorder
+  Reorder,
 } from "@material-ui/icons";
-import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
-import PhoneIcon from '@material-ui/icons/Phone';
-import MailIcon from '@material-ui/icons/Mail';
+import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
+import PhoneIcon from "@material-ui/icons/Phone";
+import MailIcon from "@material-ui/icons/Mail";
 import "./Dashboard.css";
 import DashboardCardStyles from "./DashboardCardStyles.js";
 import { SvgIcon, Divider, Typography } from "@material-ui/core";
@@ -22,7 +22,7 @@ function Cards({
   company,
   designation,
   compensation,
-  start_date,
+  deadline_datetime,
   tier,
   contact_person_name,
   phone_number,
@@ -47,28 +47,27 @@ function Cards({
     <>
       <Card className={css.dashboardCard}>
         <Link
-          to={`admin/dashboard/${type}/${id}`}
+          to={`admin/details/${id}`}
           style={{ textDecoration: "none", color: "black" }}
         >
           <div className={css.basicInfo}>
             <div className={css.upper_info}>
               <div className={css.companyName}>
-               <h6>
-                 <SvgIcon component={Work} /> {company} (Tier-{tier})
-               </h6>
-             </div>
+                <h6>
+                  <SvgIcon component={Work} /> {company} (Tier-{tier})
+                </h6>
+              </div>
               <div className={css.contact}>
                 <h6>
                   <div className={css.contact_name}>
-                  <SvgIcon component={PermContactCalendarIcon} />
-                   {contact_person_name}
+                    <SvgIcon component={PermContactCalendarIcon} />
+                    {contact_person_name}
                   </div>
-                  
                 </h6>
-                </div>
+              </div>
             </div>
 
-            <Divider className={css.divider} variant="middle" />
+            <Divider className={css.divider} variant='middle' />
 
             <div className={css.inner_info}>
               <div className={css.designation}>
@@ -79,14 +78,15 @@ function Cards({
 
               <div className={css.compensation}>
                 <h6>
-                  <SvgIcon component={AccountBalanceWalletRounded} />{" "}
+                  <SvgIcon component={AccountBalanceWalletRounded} /> CTC -
+                  {" INR "}
                   {compensation}
                 </h6>
               </div>
 
               <div className={css.start_date}>
                 <h6>
-                  <SvgIcon component={Today} /> {start_date}
+                  <SvgIcon component={Today} /> {deadline_datetime.slice(0, 10)}
                 </h6>
               </div>
               <div className={css.phone_number}>
@@ -98,8 +98,8 @@ function Cards({
                 <h6>
                   <SvgIcon component={MailIcon} /> {email}
                 </h6>
-                </div>
-          </div>
+              </div>
+            </div>
           </div>
         </Link>
       </Card>
