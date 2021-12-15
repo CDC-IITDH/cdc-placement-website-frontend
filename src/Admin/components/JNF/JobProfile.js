@@ -53,7 +53,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
           <Row>
             {['CSE','EE','ME'].map((x) => (
               <Col key={x} sm={6}>
-                <Form.Check.Input type="checkbox" name="branch" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.branch && errors.branch}></Form.Check.Input>
+                <Form.Check.Input type="checkbox" name="branch" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.branch && errors.branch} checked={values.branch.includes(x)}></Form.Check.Input>
                 <Form.Check.Label>{x}</Form.Check.Label>
               </Col>
             ))}
@@ -67,7 +67,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
           <Row>
             {['Yes','No'].map((eligible) => (
               <Col sm={6} key={eligible}>
-                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={submitCount && errors.research}></Form.Check.Input>
+                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={submitCount && errors.research} checked={values.research.includes(eligible)}></Form.Check.Input>
                 <Form.Check.Label>{eligible}</Form.Check.Label>
               </Col>
             ))}

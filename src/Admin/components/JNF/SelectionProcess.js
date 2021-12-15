@@ -24,7 +24,7 @@ const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touch
           <Row>
             {['Resume Shortlisting','Aptitude Test','Technical Test','Pre-Placement Test','Group Discucssion','Technical Interview','HR Interview','Other'].map((x) => (
               <Col sm={6} key={x}>
-                <Form.Check.Input type="checkbox" label={x} name="selectionprocess" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.selectionprocess && errors.selectionprocess} required></Form.Check.Input>
+                <Form.Check.Input type="checkbox" label={x} name="selectionprocess" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.selectionprocess && errors.selectionprocess} checked={values.selectionprocess.includes(x)} required></Form.Check.Input>
                 <Form.Check.Label>{x}</Form.Check.Label>
               </Col>
             ))}

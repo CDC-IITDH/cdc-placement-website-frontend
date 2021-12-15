@@ -70,7 +70,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
         <Col sm={6}>
           <Form.Group className="mb-5">
             <Form.Label>Zip/Pin <span className="text-danger">*</span></Form.Label>
-            <Form.Control type="text" name='pincode' value={values.pincode} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.pincode && errors.pincode} />
+            <Form.Control type="number" name='pincode' value={values.pincode} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.pincode && errors.pincode} />
             <Form.Control.Feedback type="invalid"> {errors.pincode} </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -81,7 +81,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
           <Row>
             {['Govt. Owned','MNC (Foreign Origin)','MNC (Indian Origin)','Private Sector','Public Sector','Start-Up','Other'].map((type) => (
               <Col sm={6}  key={type}>
-                <Form.Check.Input type="checkbox" label={type} name="type" value={type} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.type && errors.type} required></Form.Check.Input>
+                <Form.Check.Input type="checkbox" label={type} name="type" value={type} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.type && errors.type} checked={values.type.includes(type)} required></Form.Check.Input>
                 <Form.Check.Label>{type}</Form.Check.Label>
               </Col>
             ))}
@@ -95,7 +95,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
           <Row>
             {['Manufacturing','Consulting','Finance','Core (Technical)','FMCG','I.T./ITeS','Management','Education (Teaching)','NGO','Research & Development','Other'].map((nature) => (
               <Col key={nature} sm={6}>
-                <Form.Check.Input type="checkbox" label={nature} name="nature" value={nature} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.nature && errors.nature} required></Form.Check.Input>
+                <Form.Check.Input type="checkbox" label={nature} name="nature" value={nature} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.nature && errors.nature} checked={values.nature.includes(nature)} required></Form.Check.Input>
                 <Form.Check.Label>{nature}</Form.Check.Label>
               </Col>
             ))}

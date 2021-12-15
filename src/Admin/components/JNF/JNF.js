@@ -35,7 +35,8 @@ const JNF = ({setShowLoader}) => {
 
     const validateSize = (value, context) => {
       if (value) {
-        console.log(value.size);
+        // console.log(value.size);
+        // console.log(value);
         return (value.size <= 10000000)
       }
       else {
@@ -44,8 +45,8 @@ const JNF = ({setShowLoader}) => {
     }
 
     let schema = yup.object().shape({
-      // name: yup.string().required('Company Name is Required'),
-      // link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
+      name: yup.string().required('Company Name is Required'),
+      link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
       compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       jobdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       salary_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
@@ -54,7 +55,7 @@ const JNF = ({setShowLoader}) => {
       city: yup.string().required('City is Required'),
       state: yup.string().required('State is Required'),
       country: yup.string().required('Country is Required'),
-      pincode: yup.string().required('Zip/Pin is Required'),
+      pincode: yup.number().required('Zip/Pin is Required'),
       type: yup.array().min(1,'Choose at least one').required("Required"),
       nature: yup.array().min(1,'Choose at least one').required("Required"),
       designation: yup.string().required('Designation is Required'),
@@ -82,53 +83,58 @@ const JNF = ({setShowLoader}) => {
       let is_compensation_details_pdf=(values.salary_file)?true:false
       let is_selection_procedure_details_pdf=(values.selection_file)?true:false
 
-      let data = {
-        company_name: values.name,
-        address: values.address,
-        company_type: values.type,
-        nature_of_business: values.nature,
-        website: values.link,
-        company_details: values.compdescription,
-        is_company_details_pdf: is_company_details_pdf,
-        contact_person_name: values.contact,
-        phone_number: values.mobile,
-        email: values.email,
-        city: values.city,
-        state: values.state,
-        country: values.country,
-        pincode: values.pincode,
-        designation: values.designation,
-        description: values.details,
-        is_description_pdf: is_description_pdf,
-        compensation_ctc: values.ctc*100000,
-        compensation_gross: values.gross*100000,
-        compensation_take_home: values.takehome*100000,
-        compensation_bonus: values.bonus*100000,
-        compensation_details: '',
-        is_compensation_details_pdf: is_compensation_details_pdf,
-        bond_details: values.bonddetails,
-        selection_procedure_rounds: values.selectionprocess,
-        selection_procedure_details: values.selection,
-        is_selection_procedure_details_pdf: is_selection_procedure_details_pdf,
-        tentative_date_of_joining: values.date,
-        allowed_branch: values.branch,
-        tentative_no_of_offers: values.numoffers,
-        other_requirements: values.requirements,
-        company_details_pdf: values.compdescription_file,
-        description_pdf: values.jobdescription_file,
-        compensation_details_pdf: values.salary_file,
-        selection_procedure_details_pdf: values.selection_file,
+      function changeDateFormat(date) {
+        const d = new Date(date)
+        return String(d.getDate())+"-"+String(d.getMonth())+"-"+String(d.getFullYear())
       }
-      console.log(data)
 
-      fetch(API_ENDPOINT+"api/company/addPlacement/", {
+      var formdata = new FormData();
+      formdata.append("company_name", values.name);
+      formdata.append("address", values.address);
+      formdata.append("company_type", JSON.stringify(values.type));
+      formdata.append("nature_of_business", JSON.stringify(values.nature));
+      formdata.append("website", values.link);
+      formdata.append("company_details", values.compdescription);
+      formdata.append("is_company_details_pdf", is_company_details_pdf);
+      formdata.append("contact_person_name", values.contact);
+      formdata.append("phone_number", values.mobile);
+      formdata.append("email", values.email);
+      formdata.append("city", values.city);
+      formdata.append("state", values.state);
+      formdata.append("country", values.country);
+      formdata.append("pincode", values.pincode);
+      formdata.append("designation", values.designation);
+      formdata.append("description", values.details);
+      formdata.append("is_description_pdf", is_description_pdf);
+      formdata.append("compensation_ctc", values.ctc*100000);
+      formdata.append("compensation_gross", values.gross*100000);
+      formdata.append("compensation_take_home", values.takehome*100000);
+      formdata.append("compensation_bonus", values.bonus*100000);
+      formdata.append("compensation_details", "");
+      formdata.append("is_compensation_details_pdf", is_compensation_details_pdf);
+      formdata.append("bond_details", values.bonddetails);
+      formdata.append("selection_procedure_rounds", JSON.stringify(values.selectionprocess));
+      formdata.append("selection_procedure_details", values.selection);
+      formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
+      formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
+      formdata.append("allowed_branch", JSON.stringify(values.branch));
+      formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
+      formdata.append("other_requirements", values.requirements);
+      formdata.append("company_details_pdf", values.compdescription_file);
+      formdata.append("description_pdf", values.jobdescription_file);
+      formdata.append("compensation_details_pdf", values.salary_file);
+      formdata.append("selection_procedure_details_pdf", values.selection_file);
+
+      var requestOptions = {
         method: 'POST',
-        body: data
-      }).then((result) => {
-        console.log(result);
-      }).catch((error) => {
-        console.log(error);
-      })
+        body: formdata,
+        redirect: 'follow'
+      };
+
+      fetch(API_ENDPOINT+"api/company/addPlacement/", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
     }
 
     return (
@@ -136,7 +142,7 @@ const JNF = ({setShowLoader}) => {
         <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
-              <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:''}}>
+              <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'',research:''}}>
                 {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,submitCount}) => (
                   <Form noValidate onSubmit={handleSubmit}>
                     {(page === 1) ? (
