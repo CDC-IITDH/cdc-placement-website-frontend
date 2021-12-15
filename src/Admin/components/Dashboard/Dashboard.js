@@ -89,6 +89,7 @@ const Dashboard = ({
                 ) : (
                   <Fragment>
                     {dashboardInfo[0]?.previous.map((elem) => {
+                      console.log(elem.deadline_timestamp);
                       return (
                         <Cards
                           key={elem.id}
