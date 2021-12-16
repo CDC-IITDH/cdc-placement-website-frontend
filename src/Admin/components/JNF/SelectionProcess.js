@@ -22,12 +22,17 @@ const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touch
         <Form.Label>Selection Process <span className="text-danger">*</span></Form.Label>
         <Form.Check className="form-check" type="checkbox">
           <Row>
-            {['Resume Shortlisting','Aptitude Test','Technical Test','Pre-Placement Test','Group Discucssion','Technical Interview','HR Interview','Other'].map((x) => (
+            {['Resume Shortlisting','Aptitude Test','Technical Test','Pre-Placement Test','Group Discucssion','Technical Interview','HR Interview'].map((x) => (
               <Col sm={6} key={x}>
-                <Form.Check.Input type="checkbox" label={x} name="selectionprocess" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.selectionprocess && errors.selectionprocess} checked={values.selectionprocess.includes(x)} required></Form.Check.Input>
+                <Form.Check.Input type="checkbox" label={x} name="selectionprocess" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.selectionprocess && errors.selectionprocess} checked={values.selectionprocess.includes(x)}></Form.Check.Input>
                 <Form.Check.Label>{x}</Form.Check.Label>
               </Col>
             ))}
+            <Col sm={6} key={"Other"} className="py-1">
+              <Form.Check.Input type="checkbox" label={"Other"} name="selectionprocess" value={"Other"} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.selectionprocess && errors.selectionprocess} checked={values.selectionprocess.includes("Other")}></Form.Check.Input>
+              <Form.Check.Label>{"Other:"}</Form.Check.Label>
+              <Form.Control type="text" name="selectionprocess_other" value={values.selectionprocess_other} onChange={handleChange} onBlur={handleBlur} className="w-75 d-inline h-63 mx-2" disabled={!values.selectionprocess.includes("Other")} />
+            </Col>
           </Row>
         </Form.Check>
         <span className="select-feedback">{touched.selectionprocess? errors.selectionprocess:''}</span>

@@ -14,6 +14,7 @@
   background-repeat: repeat-x, repeat-x, repeat-x;
   background-position-y: 0px, 240px, 480px;
   color:#52201f;
+  min-height: calc( 100vh - 96px );
 }
 
 .pd {
@@ -70,4 +71,8 @@
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+
+.h-63 {
+  height: 63%;
 }

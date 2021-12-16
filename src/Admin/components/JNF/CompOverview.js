@@ -1,7 +1,7 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
 
-const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFieldValue}) => {
+const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFieldValue, submitCount}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -80,14 +80,14 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
         <Form.Check className="form-check" type="checkbox">
           <Row>
             {['Govt. Owned','MNC (Foreign Origin)','MNC (Indian Origin)','Private Sector','Public Sector','Start-Up','Other'].map((type) => (
-              <Col sm={6}  key={type}>
-                <Form.Check.Input type="checkbox" label={type} name="type" value={type} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.type && errors.type} checked={values.type.includes(type)} required></Form.Check.Input>
+              <Col sm={6} key={type}>
+                <Form.Check.Input type="radio" label={type} name="type" value={type} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.type && errors.type} checked={values.type.includes(type)}></Form.Check.Input>
                 <Form.Check.Label>{type}</Form.Check.Label>
               </Col>
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{touched.type? errors.type:''}</span>
+        <span className="select-feedback">{submitCount?errors.type:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Nature of Business <span className="text-danger">*</span></Form.Label>
@@ -95,13 +95,13 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
           <Row>
             {['Manufacturing','Consulting','Finance','Core (Technical)','FMCG','I.T./ITeS','Management','Education (Teaching)','NGO','Research & Development','Other'].map((nature) => (
               <Col key={nature} sm={6}>
-                <Form.Check.Input type="checkbox" label={nature} name="nature" value={nature} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.nature && errors.nature} checked={values.nature.includes(nature)} required></Form.Check.Input>
+                <Form.Check.Input type="radio" label={nature} name="nature" value={nature} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.nature && errors.nature} checked={values.nature.includes(nature)}></Form.Check.Input>
                 <Form.Check.Label>{nature}</Form.Check.Label>
               </Col>
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{touched.nature? errors.nature:''}</span>
+        <span className="select-feedback">{submitCount? errors.nature:''}</span>
       </Form.Group>
     </>
   )

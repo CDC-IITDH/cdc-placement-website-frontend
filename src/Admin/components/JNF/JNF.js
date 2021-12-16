@@ -15,6 +15,8 @@ const JNF = ({setShowLoader}) => {
     const year = "2020-2021"
 
     const [page, setPage] = useState(1)
+    const [submitted, setSubmitted] = useState(0)
+    const [error, setError] = useState('')
 
     useEffect(() => {
       setShowLoader(false)
@@ -56,8 +58,8 @@ const JNF = ({setShowLoader}) => {
       state: yup.string().required('State is Required'),
       country: yup.string().required('Country is Required'),
       pincode: yup.number().required('Zip/Pin is Required'),
-      type: yup.array().min(1,'Choose at least one').required("Required"),
-      nature: yup.array().min(1,'Choose at least one').required("Required"),
+      type: yup.string().required("Required"),
+      nature: yup.string().required("Required"),
       designation: yup.string().required('Designation is Required'),
       locations: yup.string().required('Loaction is Required'),
       details: yup.string().required('Details are Required'),
@@ -71,21 +73,25 @@ const JNF = ({setShowLoader}) => {
       bonus: yup.number(),
       selectionprocess: yup.array().min(1,'Choose at least one').required("Required"),
       contact: yup.string().required('Contact is Required'),
-      email: yup.string().email('Please enter a email address (eg. john@example.com)'),
+      email: yup.string().email('Please enter a email address (eg. john@example.com)').required("Required"),
       mobile: yup.number().required('Mobile Number is Required'),
       telephone: yup.string()
     })
 
     function submit(values) {
-      console.log(values)
       let is_company_details_pdf=(values.compdescription_file)?true:false
       let is_description_pdf=(values.jobdescription_file)?true:false
       let is_compensation_details_pdf=(values.salary_file)?true:false
       let is_selection_procedure_details_pdf=(values.selection_file)?true:false
 
+      var selectionprocess=values.selectionprocess.slice()
+      if (values.selectionprocess.includes("Other")) {
+        selectionprocess[values.selectionprocess.indexOf("Other")]=values.selectionprocess_other
+      }
+
       function changeDateFormat(date) {
-        const d = new Date(date)
-        return String(d.getDate())+"-"+String(d.getMonth())+"-"+String(d.getFullYear())
+        let data = date.split('-')
+        return data[2]+"-"+data[1]+"-"+data[0]
       }
 
       var formdata = new FormData();
@@ -106,24 +112,24 @@ const JNF = ({setShowLoader}) => {
       formdata.append("designation", values.designation);
       formdata.append("description", values.details);
       formdata.append("is_description_pdf", is_description_pdf);
-      formdata.append("compensation_ctc", values.ctc*100000);
-      formdata.append("compensation_gross", values.gross*100000);
-      formdata.append("compensation_take_home", values.takehome*100000);
-      formdata.append("compensation_bonus", values.bonus*100000);
+      formdata.append("compensation_ctc", values.ctc);
+      formdata.append("compensation_gross", values.gross);
+      formdata.append("compensation_take_home", values.takehome);
+      formdata.append("compensation_bonus", (values.bonus?values.bonus:0));
       formdata.append("compensation_details", "");
       formdata.append("is_compensation_details_pdf", is_compensation_details_pdf);
       formdata.append("bond_details", values.bonddetails);
-      formdata.append("selection_procedure_rounds", JSON.stringify(values.selectionprocess));
+      formdata.append("selection_procedure_rounds", JSON.stringify(selectionprocess));
       formdata.append("selection_procedure_details", values.selection);
       formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
       formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
       formdata.append("allowed_branch", JSON.stringify(values.branch));
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
       formdata.append("other_requirements", values.requirements);
-      formdata.append("company_details_pdf", values.compdescription_file);
-      formdata.append("description_pdf", values.jobdescription_file);
-      formdata.append("compensation_details_pdf", values.salary_file);
-      formdata.append("selection_procedure_details_pdf", values.selection_file);
+      formdata.append("company_details_pdf", [values.compdescription_file]);
+      formdata.append("description_pdf", [values.jobdescription_file]);
+      formdata.append("compensation_details_pdf", [values.salary_file]);
+      formdata.append("selection_procedure_details_pdf", [values.selection_file]);
 
       var requestOptions = {
         method: 'POST',
@@ -131,10 +137,18 @@ const JNF = ({setShowLoader}) => {
         redirect: 'follow'
       };
 
+      // console.log(values.date)
+
       fetch(API_ENDPOINT+"api/company/addPlacement/", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+        .then(res => {
+          if (res.status !== 200) {
+            setError(res)
+          }
+          setSubmitted(1)
+        })
+        .catch(error => {
+          setError(error)
+        });
     }
 
     return (
@@ -142,103 +156,120 @@ const JNF = ({setShowLoader}) => {
         <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
-              <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'',research:''}}>
-                {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,submitCount}) => (
-                  <Form noValidate onSubmit={handleSubmit}>
-                    {(page === 1) ? (
-                      <Instructions year={year} />
-                    ):(<></>)}
-                    {(page === 1) ? (
-                      <CompOverview
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        values={values}
-                        touched={touched}
-                        isValid={isValid}
-                        errors={errors}
-                        dirty={dirty}
-                        setFieldValue={setFieldValue}
-                      />
-                    ):(<></>)}
-                    {(page === 2) ? (
-                      <JobProfile
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        values={values}
-                        touched={touched}
-                        isValid={isValid}
-                        errors={errors}
-                        dirty={dirty}
-                        setFieldValue={setFieldValue}
-                        submitCount={submitCount}
-                      />
-                    ):(<></>)}
-                    {(page === 3) ? (
-                      <SalaryDetails
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        values={values}
-                        touched={touched}
-                        isValid={isValid}
-                        errors={errors}
-                        dirty={dirty}
-                        setFieldValue={setFieldValue}
-                      />
-                    ):(<></>)}
-                    {(page === 4) ? (
-                      <SelectionProcess
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        values={values}
-                        touched={touched}
-                        isValid={isValid}
-                        errors={errors}
-                        dirty={dirty}
-                        setFieldValue={setFieldValue}
-                      />
-                    ):(<></>)}
-                    {(page === 5) ? (
-                      <ContactDetails
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        values={values}
-                        touched={touched}
-                        isValid={isValid}
-                        errors={errors}
-                        dirty={dirty}
-                      />
-                    ):(<></>)}
-                    <hr className="pd" />
-                    <Row>
-                      {(page!==1)? (
-                        <Col className="text-start">
-                          <Button variant="primary" onClick={()=>{setPage(page-1)}}>
-                            Back
-                          </Button>
-                        </Col>
+              {!submitted? (
+                <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'',research:'',selectionprocess_other:''}}>
+                  {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,submitCount}) => (
+                    <Form noValidate onSubmit={handleSubmit}>
+                      {(page === 1) ? (
+                        <Instructions year={year} />
                       ):(<></>)}
-                      {(page!==5)? (
-                        <Col className="text-end">
-                          <Button variant="primary" onClick={()=>{setPage(page+1)}}>
-                            Next
-                          </Button>
-                        </Col>
-                      ):(
-                        <Col className="text-end">
-                          <Button variant="primary" onClick={handleSubmit} disabled={!(isValid && dirty)}>
-                            Submit
-                          </Button>
-                        </Col>
-                      )}
-                    </Row>
-                  </Form>
+                      {(page === 1) ? (
+                        <CompOverview
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                          setFieldValue={setFieldValue}
+                          submitCount={submitCount}
+                        />
+                      ):(<></>)}
+                      {(page === 2) ? (
+                        <JobProfile
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                          setFieldValue={setFieldValue}
+                          submitCount={submitCount}
+                        />
+                      ):(<></>)}
+                      {(page === 3) ? (
+                        <SalaryDetails
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                          setFieldValue={setFieldValue}
+                        />
+                      ):(<></>)}
+                      {(page === 4) ? (
+                        <SelectionProcess
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                          setFieldValue={setFieldValue}
+                        />
+                      ):(<></>)}
+                      {(page === 5) ? (
+                        <ContactDetails
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                        />
+                      ):(<></>)}
+                      <hr className="pd" />
+                      <Row>
+                        {(page!==1)? (
+                          <Col className="text-start">
+                            <Button variant="primary" onClick={()=>{setPage(page-1)}}>
+                              Back
+                            </Button>
+                          </Col>
+                        ):(<></>)}
+                        {(page!==5)? (
+                          <Col className="text-end">
+                            <Button variant="primary" onClick={()=>{setPage(page+1)}}>
+                              Next
+                            </Button>
+                          </Col>
+                        ):(
+                          <Col className="text-end">
+                            <Button variant="primary" onClick={handleSubmit} disabled={!(isValid && dirty)}>
+                              Submit
+                            </Button>
+                          </Col>
+                        )}
+                      </Row>
+                    </Form>
+                  )}
+                </Formik>
+              ):(
+                <>
+                {error? (
+                  <>
+                    <h3 className="text-center">Something went wrong!</h3>
+                    <p className="text-center">We're really sorry, please try to fill the form again some other time.</p>
+                  </>
+                ):(
+                  <>
+                    <h3 className="text-center">Submitted Successfully!</h3>
+                    <p className="text-center">We've sent an email to verify your email ID.</p>
+                  </>
                 )}
-              </Formik>
+                </>
+              )}
             </Col>
           </Row>
         </Container>

@@ -21,7 +21,7 @@ const ContactDetails = ({handleSubmit, handleChange, handleBlur, values, touched
         <Form.Control.Feedback type="invalid"> {errors.contact} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5 w-50">
-        <Form.Label>Email</Form.Label>
+        <Form.Label>Email <span className="text-danger">*</span></Form.Label>
         <Form.Control type="text" name='email' value={values.email} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.email && errors.email} />
         <Form.Control.Feedback type="invalid"> {errors.email} </Form.Control.Feedback>
       </Form.Group> 
