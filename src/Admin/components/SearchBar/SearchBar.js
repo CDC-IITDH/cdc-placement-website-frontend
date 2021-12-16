@@ -12,24 +12,20 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
   var array = [];
   const onSearchSubmit = (term) => {
       array = [];
-      searchBarInfo.ongoing.forEach((elem) => {
-        if (
-          elem.company_name.toLowerCase().includes(term.toLowerCase())
-        ) {
-          if (array.length < 8) {
-            array.push(elem);
-          }
+      for (let i = 0; i < searchBarInfo.ongoing.length; i++) {
+       if (i < 8){
+        if (searchBarInfo.ongoing[i].company_name.toLowerCase().includes(term.toLowerCase())) {
+          array.push(searchBarInfo.ongoing[i]);
         }
-      });
-      searchBarInfo.previous.forEach((elem) => {
-        if (
-          elem.company_name.toLowerCase().includes(term.toLowerCase())
-        ) {
-          if (array.length < 8) {
-            array.push(elem);
-          }
+       }
+      }
+      for (let i = 0; i < searchBarInfo.previous.length; i++) {
+       if (i < 8){
+        if (searchBarInfo.previous[i].company_name.toLowerCase().includes(term.toLowerCase())) {
+          array.push(searchBarInfo.previous[i]);
         }
-      });
+       }
+      }
         updateSearchBarArray(array);
       console.log(searchBarArray);
   };
