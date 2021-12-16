@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import AddIcon from "@material-ui/icons/Add";
 import LocalPrintshopIcon from "@material-ui/icons/LocalPrintshop";
 import useStyles from "./styles";
 import { Divider, Typography } from "@material-ui/core";
+import { ExportAsExcel } from "../../api/details_page";
+import AddStudent from "./AddStudent";
 
-const Header = () => {
+const Header = ({ studentsApplied, openingId, token, reqJobPosting }) => {
   const classes = useStyles();
+  const [showAddStudentModal, setshowAddStudentModal] = useState(false);
+
+  const exportAsExcel = () => {
+    console.log("Export button pressed");
+    console.log(token);
+    console.log(openingId);
+    if (token) {
+      ExportAsExcel(token, openingId)
+        .then((res) => {
+          const data = res;
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("Token not present");
+    }
+  };
+
+  const handleAddStudentModal = () => {
+    setshowAddStudentModal(true);
+  };
 
   return (
     <div className={classes.mainPageContainer}>
@@ -17,7 +42,7 @@ const Header = () => {
           </div>
           <div className={classes.appliedStudentsInner}>
             <Typography className={classes.appliedText}>
-              Students Applied :{" "}
+              Students Applied :{` ${studentsApplied}`}
             </Typography>
             <Typography className={classes.appliedText}>
               Students Selected :{" "}
@@ -25,11 +50,14 @@ const Header = () => {
           </div>
         </div>
         <div className={classes.otherFunctions}>
-          <div className={classes.otherFunctionButtons}>
+          <div
+            onClick={handleAddStudentModal}
+            className={classes.otherFunctionButtons}
+          >
             <AddIcon className={classes.addIcon} />
             <Typography className={classes.buttonText}>Add Student</Typography>
           </div>
-          <div className={classes.otherFunctionButtons}>
+          <div onClick={exportAsExcel} className={classes.otherFunctionButtons}>
             <LocalPrintshopIcon className={classes.printIcon} />
             <Typography className={classes.buttonText}>
               Export as Excel
@@ -40,6 +68,11 @@ const Header = () => {
       <div className={classes.dividerContainer}>
         <Divider className={classes.divider} orientation='vertical' flexItem />
       </div>
+      <AddStudent
+        reqJobPosting={reqJobPosting}
+        show={showAddStudentModal}
+        setShow={setshowAddStudentModal}
+      />
     </div>
   );
 };
