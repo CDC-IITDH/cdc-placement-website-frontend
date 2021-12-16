@@ -1,16 +1,17 @@
 import { Fragment } from "react";
 import Card from "react-bootstrap/Card";
 import { AccountBalanceWalletRounded, Ballot, Work } from "@material-ui/icons";
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import DashboardCardStyles from "./DashboardCardStyles.js";
 import { SvgIcon, Divider, Grid, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import LabelIcon from "@material-ui/icons/Label";
 
+
 function ApplicationCard({
   type,
   id,
   company,
-  application_status,
   resume,
   additional_info,
   selected,
@@ -30,14 +31,14 @@ function ApplicationCard({
         >
           <div className={css.applicationInfo}>
             <Grid container className={css.applicationTitleGrid}>
-              <Grid item xs={6} sm={9} className={css.applicationTitleElements}>
+              <Grid item xs={12} sm={9} className={css.applicationTitleElements}>
                 <Typography variant="h5" component="h6" style={{marginLeft:"20px"}}>
                   <SvgIcon component={Work} /> {company}
                 </Typography>
               </Grid>
-              <Grid item xs={6} sm={3} className={css.applicationTitleStatus}>
+              <Grid item xs={12} sm={3} className={css.applicationTitleStatus}>
                 {selected === null ? (
-                  <Card className={css.selectionCardApplication}>
+                  <Card className={css.selectionCardOngoing}>
                     <Typography
                       className={css.selectionStatusTitle}
                       variant="body1"
@@ -60,7 +61,7 @@ function ApplicationCard({
                     }`}
                   >
                     <Typography
-                      className={css.selectionStatusText}
+                      className={css.selectionStatusSubtitle}
                       variant="body1"
                     >
                       {selected === true ? "ACCEPTED" : "REJECTED"}
@@ -77,23 +78,19 @@ function ApplicationCard({
               direction="column"
               className={css.applicationGridContainer}
             >
+
               <Grid item>
-                <h6>
-                  <SvgIcon component={Ballot} /> Status: {application_status}
-                </h6>
-              </Grid>
-              <Grid item>
-                <h6>
-                  <SvgIcon component={AccountBalanceWalletRounded} />
+                <div className='application-card-fields'>
+                  <SvgIcon component={InsertDriveFileIcon } />
                   {" Resume: "}
-                  {resume.substring(16)}
-                </h6>
+                  <a href={resume.link}>{resume.name.substring(16)}</a>
+                </div>
               </Grid>
-              {Object.entries(additional_info).map(([key, val]) => (
+              {Object.entries(JSON.parse(additional_info)).map(([key, val]) => (
                 <Grid item key={key}>
-                  <h6 key={key}>
+                  <div className='application-card-fields' key={key}>
                     <LabelIcon /> {capitalizeFirstLetter(key)}: {val}
-                  </h6>
+                  </div>
                 </Grid>
               ))}
             </Grid>
