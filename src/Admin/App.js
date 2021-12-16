@@ -38,6 +38,7 @@ const App = ({
         });
     }
   };
+
   useEffect(() => {
     getDashboardInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,11 +58,12 @@ const App = ({
           <Switch>
             <Route
               exact
-              path='/admin'
-              render={() => (
-                <Dashboard
+              path='/admin/details/:id'
+              render={({ match }) => (
+                <DetailsPage
                   dashboardInfo={[dashboardInfo]}
                   auth={auth}
+                  match={match}
                   token={token}
                   setShowLoader={setShowLoader}
                   setError={setError}
@@ -69,15 +71,16 @@ const App = ({
                   setSuccess={setSuccess}
                   setShowSuccess={setShowSuccess}
                   getDashboardInfo={getDashboardInfo}
+                  setAuth={setAuth}
+                  setToken={setToken}
                 />
               )}
             />
-
             <Route
               exact
-              path='/admin/details'
+              path='/admin'
               render={() => (
-                <DetailsPage
+                <Dashboard
                   dashboardInfo={[dashboardInfo]}
                   auth={auth}
                   token={token}

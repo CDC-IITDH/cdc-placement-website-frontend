@@ -4,6 +4,11 @@ export default makeStyles((theme) => ({
   container: {
     display: "flex",
   },
+  rightContainer: {
+    display: "flex",
+    flexDirection: "column",
+    flexGrow: 1,
+  },
   sidebar: {
     height: "100vh",
     width: "300px",
@@ -29,7 +34,6 @@ export default makeStyles((theme) => ({
   },
   mainPageContainer: {
     display: "flex",
-    flexGrow: "1",
     flexDirection: "column",
     height: "8rem",
   },
@@ -102,11 +106,17 @@ export default makeStyles((theme) => ({
     padding: "0.1rem",
     marginInline: "2rem",
     width: "95%",
-    backgroundColor: "#E5E1E1",
+    backgroundColor: "#707070",
     borderRadius: "0.25rem",
   },
   dividerContainer: {
     display: "flex",
     justifyContent: "center",
+  },
+  studentCardContainer: {
+    display: "flex",
+    flexWrap: "true",
+    marginInline: "2rem",
+    marginBlock: "3rem",
   },
 }));

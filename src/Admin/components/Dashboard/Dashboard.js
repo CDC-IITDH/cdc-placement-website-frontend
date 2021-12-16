@@ -24,23 +24,11 @@ const Dashboard = ({
     setIsloading(false);
     setShowLoader(false);
   }, [setShowLoader]);
-  useEffect(() => { 
-      setIsloading(false);
-      setShowLoader(false);
-    }, [ dashboardInfo, setShowLoader]);
-    console.log(dashboardInfo);
-    // format time stamp to date
-  const formatDate =  (date) => {
-    var d = new Date(date),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    return [day, month, year].join("-");
-  };
+  useEffect(() => {
+    setIsloading(false);
+    setShowLoader(false);
+  }, [dashboardInfo, setShowLoader]);
+  console.log(dashboardInfo);
   if (dashboardInfo[0]) {
     if (!auth) {
       return <Redirect to='/' />;
@@ -56,29 +44,27 @@ const Dashboard = ({
           <div className='Listing'>
             <Tabs defaultActiveKey='ongoing'>
               <Tab eventKey='ongoing' title='Ongoing'>
-              {dashboardInfo[0] &&
-                dashboardInfo[0]?.ongoing.length === 0 ? (
+                {dashboardInfo[0] && dashboardInfo[0]?.ongoing.length === 0 ? (
                   <Container>
                     <h4 style={{ color: "#787878" }}>No Listings Available</h4>
                   </Container>
                 ) : (
                   <Fragment>
                     {dashboardInfo[0]?.ongoing.map((elem) => {
-                      // convert elem.deadline_timestamp to date dd/mm/yyyy
                       return (
                         <Cards
                           key={elem.id}
                           id={elem.id}
                           token={token}
-                          company_name={elem.company_name}
-                          compensation_CTC={elem.compensation_CTC}
+                          company={elem.company_name}
+                          compensation={elem.compensation_CTC}
                           description={elem.description}
                           designation={elem.designation}
-                          end_date={formatDate(elem.deadline_datetime)}
+                          deadline_datetime={elem.deadline_datetime}
                           tier={elem.tier}
-                          contact_person_name = {elem.contact_person_name}
-                          phone_number = {elem.phone_number}
-                          email = {elem.email}
+                          contact_person_name={elem.contact_person_name}
+                          phone_number={elem.phone_number}
+                          email={elem.email}
                           additional_info={elem.additional_info}
                           type='placements'
                           profileInfo={profileInfo}
@@ -96,8 +82,7 @@ const Dashboard = ({
               </Tab>
 
               <Tab eventKey='previous' title='Previous'>
-              {dashboardInfo[0] &&
-                dashboardInfo[0]?.previous.length === 0 ? (
+                {dashboardInfo[0] && dashboardInfo[0]?.previous.length === 0 ? (
                   <Container>
                     <h4 style={{ color: "#787878" }}>No Listings Available</h4>
                   </Container>
@@ -110,31 +95,30 @@ const Dashboard = ({
                           key={elem.id}
                           id={elem.id}
                           token={token}
-                          company_name={elem.company_name}
-                          compensation_CTC={elem.compensation_CTC}
+                          company={elem.company_name}
+                          compensation={elem.compensation_CTC}
                           description={elem.description}
                           designation={elem.designation}
-                          end_date={formatDate(elem.deadline_datetime)}
+                          deadline_datetime={elem.deadline_datetime}
                           tier={elem.tier}
-                          contact_person_name = {elem.contact_person_name}
-                          phone_number = {elem.phone_number}
-                          email = {elem.email}
+                          contact_person_name={elem.contact_person_name}
+                          phone_number={elem.phone_number}
+                          email={elem.email}
                           additional_info={elem.additional_info}
                           type='placements'
                           profileInfo={profileInfo}
                           setError={setError}
-
                           setShowError={setShowError}
                           setSuccess={setSuccess}
                           setShowSuccess={setShowSuccess}
                           setShowLoader={setShowLoader}
                           getDashboardInfo={getDashboardInfo}
                         />
-                        );
-                      })}
-                    </Fragment>
-                  )}
-                </Tab>
+                      );
+                    })}
+                  </Fragment>
+                )}
+              </Tab>
             </Tabs>
           </div>
         </div>
