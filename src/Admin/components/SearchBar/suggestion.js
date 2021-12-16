@@ -8,7 +8,7 @@ const Suggestion = ({ suggestion }) => {
   // text suggestion
   const css = seachBarStyles();
   // ongoing is bool which is true if the suggestion's deadline is in the future
-  console.log(suggestion.deadline_datetime);
+  // console.log(suggestion.deadline_datetime);
   const deadline = new Date(suggestion.deadline_datetime);
   const ongoing = deadline > new Date();
   return (

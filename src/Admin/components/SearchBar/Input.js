@@ -18,7 +18,7 @@ const Input = ({
 }) => {
   const css = seachBarStyles();
 
-  const onClick = () => {
+  const onClick = (e) => {
     setFocused(true);
     document.getElementById("searchbar").style.border = "2px solid #334878";
   };
@@ -28,19 +28,26 @@ const Input = ({
     onSearchSubmit(term);
   };
 
-  const onBlur = () => {
+  const onBlur = (e) => {
     setFocused(false);
     document.getElementById("searchbar").style.border = "2px solid #ccc";
   };
 
   useEffect(() => {
-    if (!searched){
+    // if (!searched){
     if (term !== "") {
-      console.log("term", term);
       onSearchSubmit(term);
     }
-  }
+  // }
   }, [term]);
+
+  useEffect(() => {
+    if (focused) {
+      document.getElementById("searchbarinput").focus()
+    } else {
+      document.getElementById("searchbarinput").blur()
+    }
+  }, [focused]);
 
   const clearSearch = () => {
     setTerm("");
@@ -60,7 +67,10 @@ const Input = ({
         onBlur={onBlur}
         onChange={(e) => setTerm(e.target.value)}
         value={term}
+        autoComplete="off"
+        id="searchbarinput"
       />
+
       </form>
       {term && (
         <SvgIcon

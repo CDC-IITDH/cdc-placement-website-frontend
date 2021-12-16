@@ -19,6 +19,13 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
         }
        }
       }
+      for (let i = 0; i < searchBarInfo.new.length; i++) {
+       if (array.length < 8){
+        if (searchBarInfo.new[i].company_name.toLowerCase().includes(term.toLowerCase())) {
+          array.push(searchBarInfo.new[i]);
+        }
+       }
+      }
       for (let i = 0; i < searchBarInfo.previous.length; i++) {
        if (array.length < 8){
         if (searchBarInfo.previous[i].company_name.toLowerCase().includes(term.toLowerCase())) {
@@ -27,12 +34,10 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
        }
       }
         updateSearchBarArray(array);
-      console.log(searchBarArray);
+
   };
-  console.log(searchBarInfo);
   const on_click = (e) => {
     e.preventDefault();
-    console.log("clicked");
     // make new json object with ongoing and previous members
     var ongoing_array = [];
     searchBarInfo.ongoing.forEach((elem) => {
@@ -42,6 +47,15 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
         ongoing_array.push(elem);
       }
     });
+    var new_array = [];
+    searchBarInfo.new.forEach((elem) => {
+      if (
+        elem.company_name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) {
+        new_array.push(elem);
+      }
+    });
+
     var previous_array = [];
     searchBarInfo.previous.forEach((elem) => {
       if (
@@ -53,10 +67,11 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
     var new_json = {
       ongoing: ongoing_array,
       previous: previous_array,
+      new: new_array,
     };
     setDashboardview(new_json);
     setSearched(searchTerm);
-    setFocused(false)
+    setFocused(false);
   };
 
   return (
