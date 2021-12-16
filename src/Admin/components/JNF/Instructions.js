@@ -21,7 +21,7 @@ const Instructions = ({year}) => {
             Student's choices will be governed by the information you provide in this form. Therefore please be as clear and detailed as possible.
           </li>
           <li>
-            Before filling the form kindly refer to the <a href="#">placement brochure</a> and the <a href="#">placement website</a> for the selection process and rules & regulations.
+            Before filling the form kindly refer to the <a href="https://drive.google.com/file/d/13_qduU5w51fdu7YfOtOjGNadX3qziDDV/view">placement brochure</a> and the <a href="https://cdc.iitdh.ac.in/">placement website</a> for the selection process and rules & regulations.
           </li>
         </ul>
       </div>

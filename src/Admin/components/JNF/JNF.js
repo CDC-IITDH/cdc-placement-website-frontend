@@ -20,7 +20,7 @@ const JNF = ({setShowLoader}) => {
 
     useEffect(() => {
       setShowLoader(false)
-    }, [])
+    }, [setShowLoader])
 
     useEffect(() => {
       window.scrollTo(0,0)
