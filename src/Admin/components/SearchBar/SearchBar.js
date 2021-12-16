@@ -13,11 +13,13 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
   const onSearchSubmit = (term) => {
       array = [];
       for (let i = 0; i < searchBarInfo.ongoing.length; i++) {
-       if (array.length < 8){
+       if (array.length < 5){
         if (searchBarInfo.ongoing[i].company_name.toLowerCase().includes(term.toLowerCase())) {
           array.push(searchBarInfo.ongoing[i]);
         }
-       }
+        else{
+          break;
+        }
       }
       for (let i = 0; i < searchBarInfo.new.length; i++) {
        if (array.length < 8){
@@ -31,11 +33,14 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
         if (searchBarInfo.previous[i].company_name.toLowerCase().includes(term.toLowerCase())) {
           array.push(searchBarInfo.previous[i]);
         }
-       }
+        else{
+          break;
+        }
       }
         updateSearchBarArray(array);
 
   };
+
   const on_click = (e) => {
     e.preventDefault();
     // make new json object with ongoing and previous members
