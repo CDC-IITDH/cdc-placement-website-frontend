@@ -95,7 +95,7 @@ const App = () => {
               render={() => {
                 if (
                   currentUserType !== null &&
-                  (currentUserType === "admin" || currentUserType === "company") &&
+                  currentUserType === "admin" &&
                   userTypes.includes(currentUserType)
                 )
                   return (
@@ -123,7 +123,7 @@ const App = () => {
                 if (currentUserType === "student") {
                   console.log("student");
                   return <Redirect to='/student' />;
-                } else if (currentUserType === "company") {
+                } else if (currentUserType === "admin") {
                   return <Redirect to='/admin' />;
                 } else if (currentUserType === "admin") {
                   console.log("admin");

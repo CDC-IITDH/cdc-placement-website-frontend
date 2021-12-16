@@ -7,6 +7,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
+import DetailsPage from "./components/Details/DetailsPage";
 import { GetDashboard } from "./api/dashboard";
 import JNF from "./components/JNF/JNF";
 
@@ -72,6 +73,25 @@ const App = ({
                 />
               )}
             />
+
+            <Route
+              exact
+              path='/admin/details'
+              render={() => (
+                <DetailsPage
+                  dashboardInfo={[dashboardInfo]}
+                  auth={auth}
+                  token={token}
+                  setShowLoader={setShowLoader}
+                  setError={setError}
+                  setShowError={setShowError}
+                  setSuccess={setSuccess}
+                  setShowSuccess={setShowSuccess}
+                  getDashboardInfo={getDashboardInfo}
+                />
+              )}
+            />
+
             <Route
               exact
               path='/admin/jnf'
