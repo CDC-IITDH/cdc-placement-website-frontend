@@ -15,8 +15,13 @@ function addStudent({ show, setShow, reqJobPosting }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "#dbdbdb" }}>
-          <p>Fill the additional fields</p>
           <Form>
+            <Form.Group className='form-fields' controlId='formSchool'>
+              <Form.Label>IITDH Roll no:</Form.Label>
+              <Form.Control type='text' />
+            </Form.Group>
+            <br />
+            <p>Fill the additional fields:</p>
             {reqJobPosting && reqJobPosting?.additional_info.length !== 0 ? (
               reqJobPosting?.additional_info.map((elem) => {
                 return (
