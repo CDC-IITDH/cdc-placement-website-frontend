@@ -1,4 +1,4 @@
-import { React, useState, useMemo, useCallback } from "react";
+import { React, useState, useMemo, useCallback, useRef } from "react";
 import Input from "./Input";
 import Suggestion from "./suggestion";
 import seachBarStyles from "./seachBarStyles";
@@ -9,6 +9,7 @@ const Searchbar = ({ dashboardview, setDashboardview, searched, setSearched, das
   const [focused, setFocused] = useState(false);
   const [searchBarArray, updateSearchBarArray] = useState([]);
   const css = seachBarStyles();
+  const searchInput = useRef(null);
   var array = [];
   const onSearchSubmit = (term) => {
       array = [];
@@ -41,23 +42,7 @@ const Searchbar = ({ dashboardview, setDashboardview, searched, setSearched, das
     console.log(dashboardInfo[0]);
     console.log(dashboardview);
     console.log("clicked");
-    // make new json object with ongoing and previous members
     var ongoing_array = [];
-  //   dashboardview.ongoing.forEach((elem) => {
-  //     if (
-  //       elem.company_name.toLowerCase().includes(searchTerm.toLowerCase())
-  //     ) {
-  //       ongoing_array.push(elem);
-  //     }
-  //   });
-  //   var previous_array = [];
-  //   dashboardview.previous.forEach((elem) => {
-  //     if (
-  //       elem.company_name.toLowerCase().includes(searchTerm.toLowerCase())
-  //     ) {
-  //       previous_array.push(elem);
-  //     }
-  // });
 
     dashboardInfo[0].ongoing.forEach((elem) => {
       if (elem.company_name.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -75,7 +60,7 @@ const Searchbar = ({ dashboardview, setDashboardview, searched, setSearched, das
       previous: previous_array,
     };
     setDashboardview(new_json);
-    setFocused(false);
+    searchInput.current.blur();
     setSearched(searchTerm);
   };
 
@@ -93,6 +78,7 @@ const Searchbar = ({ dashboardview, setDashboardview, searched, setSearched, das
           on_click={on_click}
           dashboardInfo={dashboardInfo}
           setDashboardview={setDashboardview}
+          inputRef={searchInput}
         />
       }
       {searchTerm  && focused && searchBarArray.length > 0 && (

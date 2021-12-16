@@ -14,7 +14,8 @@ const Input = ({
   term,
   setTerm,
   dashboardInfo,
-  setDashboardview
+  setDashboardview,
+  inputRef
 }) => {
   const css = seachBarStyles();
 
@@ -45,7 +46,7 @@ const Input = ({
     <div className={css.searchbar} id="searchbar">
       <SvgIcon component={Search} style={{ Width: "5%" }} />
       <form className={css.form} onSubmit={on_click} >
-      <input id="searchInput"
+      <input ref={inputRef}
         className={css.searchbarinput}
         type="text"
         placeholder="Search offer by company name. . ."
