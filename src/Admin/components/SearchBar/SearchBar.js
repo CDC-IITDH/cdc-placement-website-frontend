@@ -5,45 +5,62 @@ import seachBarStyles from "./seachBarStyles";
 import { SvgIcon } from "@material-ui/core";
 import { ArrowRight } from "@material-ui/icons";
 
-const Searchbar = ({ searchBarInfo }) => {
+const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, dashboardInfo, searchTerm, setSearchTerm}) => {
   const [focused, setFocused] = useState(false);
-  const [searched, setSearched] = useState(false);
   const [searchBarArray, updateSearchBarArray] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
   const css = seachBarStyles();
   var array = [];
   const onSearchSubmit = (term) => {
-    array = [];
+      array = [];
+      searchBarInfo.ongoing.forEach((elem) => {
+        if (
+          elem.company_name.toLowerCase().includes(term.toLowerCase())
+        ) {
+          if (array.length < 8) {
+            array.push(elem);
+          }
+        }
+      });
+      searchBarInfo.previous.forEach((elem) => {
+        if (
+          elem.company_name.toLowerCase().includes(term.toLowerCase())
+        ) {
+          if (array.length < 8) {
+            array.push(elem);
+          }
+        }
+      });
+        updateSearchBarArray(array);
+      console.log(searchBarArray);
+  };
+  console.log(searchBarInfo);
+  const on_click = (e) => {
+    e.preventDefault();
+    console.log("clicked");
+    // make new json object with ongoing and previous members
+    var ongoing_array = [];
     searchBarInfo.ongoing.forEach((elem) => {
       if (
-        elem.company_name.toLowerCase().includes(term.toLowerCase())
+        elem.company_name.toLowerCase().includes(searchTerm.toLowerCase())
       ) {
-        if (array.length < 8) {
-          array.push(elem);
-        }
+        ongoing_array.push(elem);
       }
     });
+    var previous_array = [];
     searchBarInfo.previous.forEach((elem) => {
       if (
-        elem.company_name.toLowerCase().includes(term.toLowerCase())
+        elem.company_name.toLowerCase().includes(searchTerm.toLowerCase())
       ) {
-        if (array.length < 8) {
-          array.push(elem);
-        }
+        previous_array.push(elem);
       }
-    });
-    updateSearchBarArray(array);
-    console.log(searchBarArray);
-  };
-
-  const on_click = () => {
-    // console.log("onClick");
-
-    // TODO:
-    // set the order of the listing here
-
-    setSearched(true);
+  });
+    var new_json = {
+      ongoing: ongoing_array,
+      previous: previous_array,
+    };
+    setDashboardview(new_json);
+    setSearched(searchTerm);
+    setFocused(false)
   };
 
   return (
@@ -57,9 +74,12 @@ const Searchbar = ({ searchBarInfo }) => {
           setSearched={setSearched}
           term={searchTerm}
           setTerm={setSearchTerm}
+          on_click={on_click}
+          dashboardInfo={dashboardInfo}
+          setDashboardview={setDashboardview}
         />
       }
-      {searchTerm && !searched && focused && searchBarArray.length > 0 && (
+      {searchTerm  && focused && searchBarArray.length > 0 && (
         <ul className={css.suggestions}>
           {searchBarArray.map((elem) => {
             return <Suggestion key={elem.id} suggestion={elem} />;
@@ -67,8 +87,6 @@ const Searchbar = ({ searchBarInfo }) => {
           <div className={css.seemore} onMouseDown={on_click}>
             see more.. <SvgIcon component={ArrowRight} />
           </div>
-          {/* onMouseDown is similar to onClick, but it is triggered when the user releases the mouse button.
-        https://stackoverflow.com/questions/17769005/onclick-and-onblur-ordering-issue */}
         </ul>
       )}
       {searchTerm && focused && searchBarArray.length === 0 && (

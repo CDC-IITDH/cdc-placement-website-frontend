@@ -118,4 +118,7 @@ export default makeStyles((theme) => ({
     paddingLeft: "0.5rem",
     paddingRight: "0.5rem",
   },
+  form: {
+    display: "inline",
+  }
 }));

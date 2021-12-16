@@ -8,11 +8,13 @@ const Input = ({
   focused,
   setFocused,
   suggestions,
-  searchClick,
   searched,
+  on_click,
   setSearched,
   term,
   setTerm,
+  dashboardInfo,
+  setDashboardview
 }) => {
   const css = seachBarStyles();
 
@@ -21,42 +23,49 @@ const Input = ({
     document.getElementById("searchbar").style.border = "2px solid #334878";
   };
 
+  const searchClick = () => {
+    setSearched(term);
+    onSearchSubmit(term);
+  };
+
   const onBlur = () => {
     setFocused(false);
     document.getElementById("searchbar").style.border = "2px solid #ccc";
   };
 
   useEffect(() => {
+    if (!searched){
     if (term !== "") {
+      console.log("term", term);
       onSearchSubmit(term);
     }
+  }
   }, [term]);
 
   const clearSearch = () => {
     setTerm("");
-    setSearched(false);
-    // TODO:
-    // clear the order of the listings here.
+    setSearched("");
+    setDashboardview(dashboardInfo[0]);
   };
 
   return (
     <div className={css.searchbar} id="searchbar">
       <SvgIcon component={Search} style={{ Width: "5%" }} />
+      <form className={css.form} onSubmit={on_click} >
       <input
         className={css.searchbarinput}
         type="text"
         placeholder="Search offer by company name. . ."
-        onClick={onClick}
+        onFocus={onClick}
         onBlur={onBlur}
         onChange={(e) => setTerm(e.target.value)}
         value={term}
-        disabled={searched ? searched : false}
       />
-      {!searched && (<button className={css.searchButton}> Search </button>)}
-      {searched && (
+      </form>
+      {term && (
         <SvgIcon
           component={Close}
-          onClick={clearSearch}
+          onClick={() => setTerm("")}
           className={css.close}
         />
       )} 
