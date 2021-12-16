@@ -23,23 +23,16 @@ const Input = ({
     document.getElementById("searchbar").style.border = "2px solid #334878";
   };
 
-  const searchClick = () => {
-    setSearched(term);
-    onSearchSubmit(term);
-  };
-
   const onBlur = () => {
     setFocused(false);
     document.getElementById("searchbar").style.border = "2px solid #ccc";
   };
 
   useEffect(() => {
-    if (!searched){
     if (term !== "") {
       console.log("term", term);
       onSearchSubmit(term);
     }
-  }
   }, [term]);
 
   const clearSearch = () => {
@@ -52,7 +45,7 @@ const Input = ({
     <div className={css.searchbar} id="searchbar">
       <SvgIcon component={Search} style={{ Width: "5%" }} />
       <form className={css.form} onSubmit={on_click} >
-      <input
+      <input id="searchInput"
         className={css.searchbarinput}
         type="text"
         placeholder="Search offer by company name. . ."
