@@ -77,6 +77,7 @@ const App = ({
                 />
               )}
             />
+
             <Route
               exact
               path='/admin'
