@@ -129,6 +129,7 @@ const JNF = ({setShowLoader}) => {
       formdata.append("other_requirements", values.requirements);
       compdescription_file.map((file) => {
         formdata.append("company_details_pdf",file,file.name);
+        return ''
       })
       formdata.append("description_pdf", [values.jobdescription_file]);
       formdata.append("compensation_details_pdf", [values.salary_file]);
