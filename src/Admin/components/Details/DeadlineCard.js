@@ -53,7 +53,7 @@ const DeadlineCard = ({
       handleDateChange(reqJobPosting?.deadline_datetime);
     } else {
       const date = selectedDate;
-      const newDate = date.substr(0, 10) + " " + date.substr(11, 8) + " +0530";
+      const newDate = date.substr(0, 10) + " " + date.substr(11, 8) + " +0000";
 
       const data = {
         opening_id: openingId,

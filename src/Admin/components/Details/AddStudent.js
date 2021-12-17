@@ -23,9 +23,13 @@ function addStudent({ show, setShow, reqJobPosting }) {
             <br />
             <p>Fill the additional fields:</p>
             {reqJobPosting && reqJobPosting?.additional_info.length !== 0 ? (
-              reqJobPosting?.additional_info.map((elem) => {
+              reqJobPosting?.additional_info.map((elem, index) => {
                 return (
-                  <Form.Group className='form-fields' controlId='formSchool'>
+                  <Form.Group
+                    key={index}
+                    className='form-fields'
+                    controlId='formSchool'
+                  >
                     <Form.Label>{elem}</Form.Label>
                     <Form.Control type='text' />
                   </Form.Group>

@@ -71,7 +71,9 @@ const DetailsPage = ({
         return elem.id === openingId;
       });
     }
-    setreqJobPosting(...reqJob);
+    if (reqJob) {
+      setreqJobPosting(...reqJob);
+    }
   }, [dashboardInfo, openingId]);
 
   return (

@@ -18,9 +18,6 @@ const Header = ({
   const [showAddStudentModal, setshowAddStudentModal] = useState(false);
 
   const exportAsExcel = () => {
-    console.log("Export button pressed");
-    console.log(token);
-    console.log(openingId);
     if (token) {
       ExportAsExcel(token, openingId)
         .then((res) => {
