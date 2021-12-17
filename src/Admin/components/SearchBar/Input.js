@@ -40,14 +40,6 @@ const Input = ({
     }
   }, [term]);
 
-  useEffect(() => {
-    if (focused) {
-      document.getElementById("searchbarinput").focus()
-    } else {
-      document.getElementById("searchbarinput").blur()
-    }
-  }, [focused]);
-
   const clearSearch = () => {
     setTerm("");
     setSearched("");
@@ -67,7 +59,6 @@ const Input = ({
         onChange={(e) => setTerm(e.target.value)}
         value={term}
         autoComplete="off"
-        id="searchbarinput"
       />
       </form>
       {term && (
