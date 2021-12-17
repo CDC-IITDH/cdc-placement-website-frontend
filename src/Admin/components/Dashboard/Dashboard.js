@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import { Fragment } from "react";
 import Cards from "./Cards";
+import { Button } from "react-bootstrap";
 
 const Dashboard = ({
   dashboardInfo,
@@ -23,6 +24,7 @@ const Dashboard = ({
   useEffect(() => {
     setIsloading(false);
     setShowLoader(false);
+
   }, [setShowLoader]);
   useEffect(() => {
     setIsloading(false);
@@ -38,9 +40,12 @@ const Dashboard = ({
           <div className='loader' />
         </div>
       ) : (
+
         <div className='Dashboard'>
           <h1>Dashboard</h1>
-
+          <div style={{marginLeft:"5%"}}> 
+            <Button href="/admin/jnf" style={{backgroundColor: "#334878", borderColor:"#334878"}}>Add Placement (JNF)</Button>
+          </div>
           <div className='Listing'>
             <Tabs defaultActiveKey='ongoing'>
               <Tab eventKey='ongoing' title='Ongoing'>

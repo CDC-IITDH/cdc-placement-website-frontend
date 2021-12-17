@@ -9,6 +9,7 @@ import {
 import Dashboard from "./components/Dashboard/Dashboard";
 import DetailsPage from "./components/Details/DetailsPage";
 import { GetDashboard } from "./api/dashboard";
+import JNF from "./components/JNF/JNF";
 
 const App = ({
   auth,
@@ -94,6 +95,15 @@ const App = ({
               )}
             />
 
+            <Route
+              exact
+              path='/admin/jnf'
+              render={() => (
+                <JNF
+                  setShowLoader={setShowLoader}
+                />
+              )}
+            />
             <Route exact path='*' render={() => <Redirect to='/admin' />} />
           </Switch>
         ) : (
