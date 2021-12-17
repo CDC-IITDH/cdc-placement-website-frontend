@@ -59,6 +59,7 @@ export default makeStyles((theme) => ({
   },
   appliedText: {
     fontSize: "15px",
+    textAlign: "right",
   },
   peopleIcon: {
     color: "#00C3BC",

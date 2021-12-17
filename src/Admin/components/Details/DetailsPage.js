@@ -24,6 +24,7 @@ const DetailsPage = ({
   const [openingId, setopeningId] = useState(null);
   const [studentsApplied, setstudentsApplied] = useState(0);
   const [reqJobPosting, setreqJobPosting] = useState(null);
+  const [selectedStudents, setselectedStudents] = useState(0);
 
   const getApplicationsInfo = () => {
     if (token) {
@@ -31,6 +32,9 @@ const DetailsPage = ({
         .then((res) => {
           const data = res;
           setapplicationsInfo(data);
+          setselectedStudents(
+            data?.applications?.filter((elem) => elem.selected === true).length
+          );
         })
         .catch((err) => {
           console.log(err);
@@ -65,8 +69,6 @@ const DetailsPage = ({
     setreqJobPosting(...reqJob);
   }, [dashboardInfo, openingId]);
 
-  console.log(reqJobPosting);
-
   return (
     <div className={classes.container}>
       <Details />
@@ -76,8 +78,16 @@ const DetailsPage = ({
           token={token}
           openingId={openingId}
           reqJobPosting={reqJobPosting}
+          selectedStudents={selectedStudents}
         />
-        <StudentList applicationsInfo={applicationsInfo} />
+        <StudentList
+          openingId={openingId}
+          applicationsInfo={applicationsInfo}
+          token={token}
+          setapplicationsInfo={setapplicationsInfo}
+          setselectedStudents={setselectedStudents}
+          selectedStudents={selectedStudents}
+        />
       </div>
     </div>
   );

@@ -1,9 +1,16 @@
 import useStyles from "./styles";
-import React from "react";
+import React, { useEffect } from "react";
 import StudentCard from "./StudentCard";
 import { Grid, Typography } from "@material-ui/core";
 
-const StudentList = ({ applicationsInfo }) => {
+const StudentList = ({
+  applicationsInfo,
+  openingId,
+  token,
+  setapplicationsInfo,
+  selectedStudents,
+  setselectedStudents,
+}) => {
   const classes = useStyles();
 
   console.log(applicationsInfo);
@@ -26,9 +33,15 @@ const StudentList = ({ applicationsInfo }) => {
             return (
               <Grid key={elem.id} item xs={6} s={6} md={6} lg={4}>
                 <StudentCard
+                  setapplicationsInfo={setapplicationsInfo}
+                  selected={elem.selected}
+                  token={token}
+                  openingId={openingId}
+                  roll_no={elem.student_details.roll_no}
                   name={elem.student_details.name}
                   batch={elem.student_details.batch}
                   branch={elem.student_details.branch}
+                  setselectedStudents={setselectedStudents}
                 />
               </Grid>
             );
