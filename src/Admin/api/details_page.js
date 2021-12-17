@@ -82,4 +82,30 @@ const MarkStatus = async (token, data) => {
   });
 };
 
-export { GetApplications, ExportAsExcel, MarkStatus };
+const UpdateDeadline = async (token, data) => {
+  return new Promise((myResolve, myReject) => {
+    if (token) {
+      fetch(API_ENDPOINT + "api/admin/updateDeadline/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(data),
+      })
+        .then((result) => {
+          if (result.status === 200) myResolve(result.json());
+          else throw new Error("Error " + result.status);
+        })
+        .catch((err) => {
+          console.log(err);
+          myReject(false);
+        });
+    } else {
+      myReject(false);
+    }
+  });
+};
+
+export { GetApplications, ExportAsExcel, MarkStatus, UpdateDeadline };

@@ -2,7 +2,7 @@ import SideButtons from "./SideButtons";
 import DeadlineCard from "./DeadlineCard";
 import useStyles from "./styles";
 
-const Details = () => {
+const Details = ({ reqJobPosting, openingId, token, setdashboardInfo }) => {
   const classes = useStyles();
 
   return (
@@ -12,7 +12,12 @@ const Details = () => {
         <SideButtons buttonContent='Student List' />
       </div>
       <div className={classes.deadlineContainer}>
-        <DeadlineCard />
+        <DeadlineCard
+          reqJobPosting={reqJobPosting}
+          openingId={openingId}
+          token={token}
+          setdashboardInfo={setdashboardInfo}
+        />
       </div>
     </div>
   );

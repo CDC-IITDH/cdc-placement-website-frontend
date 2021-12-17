@@ -18,6 +18,7 @@ const DetailsPage = ({
   getDashboardInfo,
   setAuth,
   setToken,
+  setdashboardInfo,
 }) => {
   const classes = useStyles();
   const [applicationsInfo, setapplicationsInfo] = useState(null);
@@ -61,7 +62,11 @@ const DetailsPage = ({
         return elem.id === openingId;
       });
     }
-    if (reqJob.length === 0 && dashboardInfo[0]?.previous.length !== 0) {
+    if (
+      reqJob &&
+      reqJob.length === 0 &&
+      dashboardInfo[0]?.previous.length !== 0
+    ) {
       reqJob = dashboardInfo[0]?.previous.filter((elem) => {
         return elem.id === openingId;
       });
@@ -71,7 +76,12 @@ const DetailsPage = ({
 
   return (
     <div className={classes.container}>
-      <Details />
+      <Details
+        reqJobPosting={reqJobPosting}
+        openingId={openingId}
+        token={token}
+        setdashboardInfo={setdashboardInfo}
+      />
       <div className={classes.rightContainer}>
         <Header
           studentsApplied={studentsApplied}

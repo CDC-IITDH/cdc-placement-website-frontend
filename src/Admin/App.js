@@ -73,6 +73,7 @@ const App = ({
                   getDashboardInfo={getDashboardInfo}
                   setAuth={setAuth}
                   setToken={setToken}
+                  setdashboardInfo={setdashboardInfo}
                 />
               )}
             />
