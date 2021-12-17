@@ -17,6 +17,7 @@ const JNF = ({setShowLoader}) => {
     const [page, setPage] = useState(1)
     const [submitted, setSubmitted] = useState(0)
     const [error, setError] = useState('')
+    const [compdescription_file, setCompdescription_file] = useState([])
 
     useEffect(() => {
       setShowLoader(false)
@@ -49,7 +50,7 @@ const JNF = ({setShowLoader}) => {
     let schema = yup.object().shape({
       name: yup.string().required('Company Name is Required'),
       link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
-      compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      // compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       jobdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       salary_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       selection_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
@@ -126,7 +127,9 @@ const JNF = ({setShowLoader}) => {
       formdata.append("allowed_branch", JSON.stringify(values.branch));
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
       formdata.append("other_requirements", values.requirements);
-      formdata.append("company_details_pdf", [values.compdescription_file]);
+      compdescription_file.map((file) => {
+        formdata.append("company_details_pdf",file,file.name);
+      })
       formdata.append("description_pdf", [values.jobdescription_file]);
       formdata.append("compensation_details_pdf", [values.salary_file]);
       formdata.append("selection_procedure_details_pdf", [values.selection_file]);
@@ -175,6 +178,8 @@ const JNF = ({setShowLoader}) => {
                           dirty={dirty}
                           setFieldValue={setFieldValue}
                           submitCount={submitCount}
+                          compdescription_file={compdescription_file}
+                          setCompdescription_file={setCompdescription_file}
                         />
                       ):(<></>)}
                       {(page === 2) ? (

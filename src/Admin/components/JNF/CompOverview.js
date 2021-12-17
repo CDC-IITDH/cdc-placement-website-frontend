@@ -1,7 +1,8 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import MultipleFileInput from "./MultipleFileInput";
 
-const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFieldValue, submitCount}) => {
+const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFieldValue, submitCount, compdescription_file, setCompdescription_file}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -25,11 +26,12 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
         <Form.Control type="text" name='link' value={values.link} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.link && errors.link} />
         <Form.Control.Feedback type="invalid"> {errors.link} </Form.Control.Feedback>
       </Form.Group>
+      <MultipleFileInput stateVar={compdescription_file} setStateVar={setCompdescription_file} name="compdescription_file" />
       <Form.Group className="mb-5">
         <Form.Label>Brief About the Company</Form.Label>
         <Form.Control type="text" value={values.compdescription_file?values.compdescription_file.name:''} disabled />
         <p className="select-feedback">{errors.compdescription_file}</p>
-        <Form.Control type="file" name='compdescription_file' accept="application/pdf" onChange={(event) => {setFieldValue("compdescription_file", event.currentTarget.files[0]);}} />
+        <Form.Control type="file" name='compdescription_file' multiple={true} accept="application/pdf" onChange={(event) => {setFieldValue("compdescription_file", event.currentTarget.files);}} />
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
         </Form.Text>
