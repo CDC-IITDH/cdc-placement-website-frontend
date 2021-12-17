@@ -25,15 +25,9 @@ const Dashboard = ({
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    setIsloading(false);
-    setShowLoader(false);
-
-  }, [setShowLoader]);
-
-  useEffect(() => {
       setIsloading(false);
       setShowLoader(false);
-    }, [ dashboardInfo, setShowLoader]);
+    }, [dashboardInfo]);
     const [dashboardview, setDashboardview] = useState([]);
 
    useEffect(() => {
