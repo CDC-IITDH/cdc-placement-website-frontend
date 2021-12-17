@@ -1,6 +1,6 @@
 .Parent-addPPO {
   display: grid;
-  grid-template-columns: 33% 7% 60%;
+  grid-template-columns: 50% 50%;
   margin-bottom: 15px;
 }
 
@@ -65,6 +65,10 @@
 
 
 @media all and (max-width: 500px) {
+  .Parent-addPPO {
+  display: block;
+  margin-bottom: 15px;
+}
 
   .card-div-addPPO h5 {
     font-size: 90%;
@@ -84,5 +88,9 @@
 
   .modale-field-value {
     font-size: 17px;
+  }
+  .addPPO-textField{
+    margin-top: 10px!important;
+    width: 80%!important;
   }
 }

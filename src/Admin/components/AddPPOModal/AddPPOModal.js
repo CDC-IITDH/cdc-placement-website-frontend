@@ -145,83 +145,82 @@ const AddPPOModal = ({
                     <div className="card-div-addPPO">
                         <Container>
                             <div className="Parent-addPPO">
-                                <h2 className="label-addPPO">Student Roll No.</h2>
-                                <h2 className="label colon">{":"}</h2>
+                                <h2 className="label-addPPO">Student Roll No.:</h2>
                                 <TextField
+                                    className="addPPO-textField"
                                     id='student_id'
-                                    label="Student Roll No."
                                     name="student_id"
                                     onChange={handleInputChange}
                                     variant="outlined"
                                     value={data['student_id']}
                                     error={errorState['student_id']}
                                     size={'small'}
+                                    placeholder={'Enter Student Roll No.'}
                                     required
                                 />
                             </div>
                             <div className="Parent-addPPO">
-                                <h2 className="label-addPPO">Company Name</h2>
-                                <h2 className="label colon">{":"}</h2>
+                                <h2 className="label-addPPO">Company Name:</h2>
                                 <TextField
+                                    className="addPPO-textField"
                                     id='company_name'
-                                    label="Company Name"
                                     name="company_name"
                                     onChange={handleInputChange}
                                     variant="outlined"
                                     value={data['company_name']}
                                     error={errorState['company_name']}
                                     size={'small'}
+                                    placeholder={'Enter Company Name'}
                                     required
                                 />
                             </div>
                             <div className="Parent-addPPO">
-                                <h2 className="label-addPPO">Designation</h2>
-                                <h2 className="label colon">{":"}</h2>
+                                <h2 className="label-addPPO">Designation:</h2>
                                 <TextField
+                                    className="addPPO-textField"
                                     id='designation'
-                                    label="Designation"
                                     name="designation"
                                     onChange={handleInputChange}
                                     variant="outlined"
                                     value={data['designation']}
                                     error={errorState['designation']}
                                     size={'small'}
+                                    placeholder={'Enter Designation'}
                                     required
                                 />
                             </div>
                             <div className="Parent-addPPO">
-                                <h2 className="label-addPPO">Compensation (Gross)</h2>
-                                <h2 className="label colon">{":"}</h2>
+                                <h2 className="label-addPPO">Compensation (Gross):</h2>
                                 <TextField
+                                    className="addPPO-textField"
                                     id='compensation_gross'
-                                    label="Compensation (Gross)"
                                     name="compensation_gross"
                                     onChange={handleInputChange}
                                     variant="outlined"
                                     value={data['compensation_gross']}
                                     error={errorState['compensation_gross']}
                                     size={'small'}
+                                    placeholder={'Enter Compensation (Gross)'}
                                     required
                                 />
                             </div>
                             <div className="Parent-addPPO">
-                                <h2 className="label-addPPO">Compensation Details</h2>
-                                <h2 className="label colon">{":"}</h2>
+                                <h2 className="label-addPPO">Compensation Details:</h2>
                                 <TextField
+                                    className="addPPO-textField"
                                     id='compensation_details'
-                                    label="Compensation Details"
                                     name="compensation_details"
                                     onChange={handleInputChange}
                                     variant="outlined"
                                     value={data['compensation_details']}
                                     size={'small'}
+                                    placeholder={'Enter Compensation Details'}
                                 />
                             </div>
                             <div className="Parent-addPPO">
-                                <h2 className="label-addPPO">Accepted</h2>
-                                <h2 className="label colon">{":"}</h2>
-
+                                <h2 className="label-addPPO">Accepted:</h2>
                                 <NativeSelect
+                                    className="addPPO-textField"
                                     onChange={handleInputChange}
                                     value={data['offer_accepted']}
                                     name="offer_accepted"
@@ -240,8 +239,6 @@ const AddPPOModal = ({
                                     <option value={false} >
                                         False
                                     </option>
-
-
                                 </NativeSelect>
                             </div>
 
