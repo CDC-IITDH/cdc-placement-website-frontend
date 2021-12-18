@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 
 const baseStyle = {
@@ -28,7 +28,7 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-function DropBox(props) {
+const DropBox = ({ setresume }) => {
   const {
     getRootProps,
     getInputProps,
@@ -36,7 +36,7 @@ function DropBox(props) {
     isDragAccept,
     isDragReject,
     acceptedFiles,
-  } = useDropzone({ accept: "text/*" });
+  } = useDropzone({ accept: "application/pdf", multiple: false });
 
   const style = useMemo(
     () => ({
@@ -54,8 +54,14 @@ function DropBox(props) {
     </li>
   ));
 
+  useEffect(() => {
+    if (acceptedFiles) {
+      setresume(acceptedFiles[0]);
+    }
+  }, [acceptedFiles]);
+
   return (
-    <div className="container">
+    <div className='container'>
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
@@ -65,6 +71,6 @@ function DropBox(props) {
       </aside>
     </div>
   );
-}
+};
 
 export default DropBox;
