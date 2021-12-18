@@ -120,6 +120,7 @@ export default makeStyles((theme) => ({
   },
   form: {
     display: "inline",
+
   },
   suggestion_h5:{
 marginBottom: "0.2rem",

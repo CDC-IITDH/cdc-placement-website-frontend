@@ -40,6 +40,7 @@ const Input = ({
     }
   }, [term]);
 
+
   const clearSearch = () => {
     setTerm("");
     setSearched("");
@@ -50,6 +51,7 @@ const Input = ({
     <div className={css.searchbar} id="searchbar">
       <SvgIcon component={Search} style={{ Width: "5%" }} />
       <form className={css.form} onSubmit={on_click} >
+
       <input ref={inputRef}
         className={css.searchbarinput}
         type="text"

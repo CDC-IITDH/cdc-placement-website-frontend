@@ -1,4 +1,6 @@
+
 import { React, useState, useMemo, useCallback, useRef } from "react";
+
 import Input from "./Input";
 import Suggestion from "./suggestion";
 import seachBarStyles from "./seachBarStyles";
@@ -10,6 +12,7 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
   const [searchBarArray, updateSearchBarArray] = useState([]);
   const css = seachBarStyles();
   const searchInput = useRef(null);
+
   var array = [];
   const onSearchSubmit = (term) => {
       array = [];
@@ -39,8 +42,7 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
   };
   const on_click = (e) => {
     e.preventDefault();
-    console.log(dashboardInfo[0]);
-    console.log("clicked");
+
     var ongoing_array = [];
 
     dashboardInfo[0].ongoing.forEach((elem) => {
@@ -72,6 +74,7 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
     };
     setDashboardview(new_json);
     searchInput.current.blur();
+
     setSearched(searchTerm);
     setFocused(false);
   };
@@ -91,6 +94,7 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
           dashboardInfo={dashboardInfo}
           setDashboardview={setDashboardview}
           inputRef={searchInput}
+
         />
       }
       {searchTerm  && focused && searchBarArray.length > 0 && (

@@ -3,7 +3,6 @@ import { SvgIcon } from "@material-ui/core";
 import { Work, Ballot } from "@material-ui/icons";
 
 import seachBarStyles from "./seachBarStyles";
-import {Link} from "react-router-dom";
 
 const Suggestion = ({ suggestion }) => {
   // text suggestion
@@ -16,6 +15,7 @@ const Suggestion = ({ suggestion }) => {
     <>
       <li className={css.suggestion} >
           <h5 className={css.suggestion_h5}>
+
           {" "}
           <SvgIcon component={Ballot} /> {suggestion.company_name}
         </h5>

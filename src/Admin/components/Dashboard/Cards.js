@@ -70,6 +70,7 @@ function Cards({
                                     <Row>
                                         <Col xs={12} style={{fontSize: "18px"}}>
                                             <div style={{fontWeight: "600"}}> Tier: {tier}</div>
+
                                         </Col>
                                     </Row>
                                 </h6>
@@ -89,6 +90,7 @@ function Cards({
                                 </h6>
                             </Col>
                         </Row>
+
 
                         <Divider className={css.divider} variant="middle"/>
 
@@ -134,17 +136,14 @@ function Cards({
                                         <Col xs={11} style={{fontSize: "14px"}}>
 
                                             <div style={{fontWeight: "600"}}> Apply before:</div>
+
                                             {deadline_datetime ? new Date(deadline_datetime).toDateString() + ", " + new Date(deadline_datetime).toLocaleTimeString() : "N/A"}
                                         </Col>
                                     </Row>
                                 </h6>
 
                             </Col>
-                            {/*<div className={css.phone_number}>*/}
-                            {/*  <h6>*/}
-                            {/*    <SvgIcon component={PhoneIcon} /> {phone_number}*/}
-                            {/*  </h6>*/}
-                            {/*</div>*/}
+                            
                             <Col sm={12} md={6} lg={3} className={css.email}>
                                 <h6>
                                     <Row>
