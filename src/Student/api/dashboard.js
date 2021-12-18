@@ -3,7 +3,7 @@ import API_ENDPOINT from "../../api/api_endpoint";
 const GetDashboard = (token) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
-      fetch(API_ENDPOINT+"api/student/getDashboard/", {
+      fetch(API_ENDPOINT + "api/student/getDashboard/", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -26,7 +26,7 @@ const GetDashboard = (token) => {
 const GetProfile = async (token) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
-      fetch(API_ENDPOINT+"api/student/profile/", {
+      fetch(API_ENDPOINT + "api/student/profile/", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -49,7 +49,7 @@ const GetProfile = async (token) => {
 const PostApplication = async (token, data) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
-      fetch(API_ENDPOINT+"api/student/submitApplication/", {
+      fetch(API_ENDPOINT + "api/student/submitApplication/", {
         method: "POST",
         headers: {
           Accept: "application/json",

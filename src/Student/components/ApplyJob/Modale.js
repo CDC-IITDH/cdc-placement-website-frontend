@@ -29,8 +29,8 @@ function Modale({
   getDashboardInfo
 }) {
   var initialResume = "";
-  if (profileInfo && profileInfo.resumes.length) {
-    initialResume = profileInfo.resumes[0];
+  if (profileInfo && profileInfo.resume_list.length) {
+    initialResume = profileInfo.resume_list[0];
   } else {
     initialResume = null;
   }
@@ -65,13 +65,12 @@ function Modale({
   const [errorState, setErrorState] = useState(InitialErrorState);
 
   useEffect(() => {
-    if (profileInfo && profileInfo.resumes.length) {
-      if (resume !== profileInfo.resumes[0]) setResume(profileInfo.resumes[0]);
+    if (profileInfo && profileInfo.resume_list.length) {
+      if (resume !== profileInfo.resume_list[0]) setResume(profileInfo.resume_list[0]);
     } else {
       if (resume !== null) setResume(null);
     }
     return true;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileInfo]);
 
   function handleInputChange(event) {
@@ -131,7 +130,7 @@ function Modale({
         const data = {
           opening_type: type === "placements" ? "Placement" : "Internship",
           opening_id: id,
-          resume_file_name: resume,
+          resume_file_name: resume.name,
           additional_info: additionalTextInfo,
         };
         console.log(data);
@@ -171,7 +170,7 @@ function Modale({
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title className="modale-title">
-            Add Additional Info
+            Application
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -196,7 +195,7 @@ function Modale({
               <Container>
                 <Row>
                   <Col xs={12} sm={6}>
-                    <div className="modale-field-key">Job Description:</div>
+                    <div className="modale-field-key">Designation:</div>
                   </Col>
                   <Col xs={12} sm={6}>
                     <div className="modale-field-value">{designation}</div>
@@ -208,10 +207,14 @@ function Modale({
               <Container>
                 <Row>
                   <Col xs={12} sm={6}>
-                    <div className="modale-field-key">Compensation:</div>
+                    <div className="modale-field-key">Compensation - CTC:</div>
                   </Col>
                   <Col xs={12} sm={6}>
-                    <div className="modale-field-value">{compensation}</div>
+                    <div className="modale-field-value"> {compensation.toLocaleString('en-IN', {
+                                                style: 'currency',
+                                                currency: 'INR',
+                                                maximumFractionDigits: "0"
+                                            })}</div>
                   </Col>
                 </Row>
               </Container>
@@ -253,10 +256,10 @@ function Modale({
                     id: "resume-selector",
                   }}
                 >
-                  {profileInfo.resumes.map((resume, i) => {
+                  {profileInfo.resume_list.map((resume, i) => {
                     return (
-                      <option value={resume} key={i}>
-                        {resume.substring(16)}
+                      <option value={resume.name} key={i}>
+                        {resume.name.substring(16)}
                       </option>
                     );
                   })}

@@ -1,12 +1,19 @@
 import { Box, Button, Divider } from "@material-ui/core";
 import React, { useState } from "react";
 import useStyles from "./styles";
-
-const date = "31-12-2021";
+import {
+  KeyboardDateTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const DeadlineCard = () => {
   const classes = useStyles();
   const [status, setStatus] = useState(1);
+  const [selectedDate, handleDateChange] = useState(
+    new Date().toISOString().slice(0, 16)
+  );
+
   const form_status = {
     0: "OFF",
     1: "ON",
@@ -61,7 +68,19 @@ const DeadlineCard = () => {
             color: "#2F4050",
           }}
         >
-          {date}
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDateTimePicker
+              value={selectedDate}
+              ampm={false}
+              onChange={handleDateChange}
+              onError={console.log}
+              format='dd/MM/yy, hh:mm a'
+              disablePast
+              InputProps={{
+                style: { fontSize: 13, marginLeft: "0.5rem" },
+              }}
+            />
+          </MuiPickersUtilsProvider>
         </Box>
         <Box
           sx={{
@@ -71,7 +90,7 @@ const DeadlineCard = () => {
             fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
           }}
         >
-          DD-MM-YYYY
+          DD-MM-YY HH-MM
         </Box>
       </Box>
       <Box
