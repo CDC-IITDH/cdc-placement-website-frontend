@@ -13,6 +13,13 @@ const Header = ({
   token,
   reqJobPosting,
   selectedStudents,
+  setShowLoader,
+  setError,
+  setShowError,
+  setSuccess,
+  setShowSuccess,
+  setapplicationsInfo,
+  setselectedStudents,
 }) => {
   const classes = useStyles();
   const [showAddStudentModal, setshowAddStudentModal] = useState(false);
@@ -75,6 +82,15 @@ const Header = ({
         reqJobPosting={reqJobPosting}
         show={showAddStudentModal}
         setShow={setshowAddStudentModal}
+        token={token}
+        openingId={openingId}
+        setShowLoader={setShowLoader}
+        setError={setError}
+        setShowError={setShowError}
+        setSuccess={setSuccess}
+        setShowSuccess={setShowSuccess}
+        setapplicationsInfo={setapplicationsInfo}
+        setselectedStudents={setselectedStudents}
       />
     </div>
   );

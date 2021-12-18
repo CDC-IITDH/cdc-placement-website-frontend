@@ -96,6 +96,13 @@ const DetailsPage = ({
           openingId={openingId}
           reqJobPosting={reqJobPosting}
           selectedStudents={selectedStudents}
+          setShowLoader={setShowLoader}
+          setError={setError}
+          setShowError={setShowError}
+          setSuccess={setSuccess}
+          setShowSuccess={setShowSuccess}
+          setapplicationsInfo={setapplicationsInfo}
+          setselectedStudents={setselectedStudents}
         />
         <StudentList
           openingId={openingId}

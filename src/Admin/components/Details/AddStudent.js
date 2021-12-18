@@ -3,11 +3,41 @@ import "./AddStudent.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import DropBox from "./DropBox";
 import { Typography } from "@material-ui/core";
+import { AddStudentApplication, GetApplications } from "../../api/details_page";
 
-const AddStudent = ({ show, setShow, reqJobPosting }) => {
+const AddStudent = ({
+  show,
+  setShow,
+  reqJobPosting,
+  token,
+  openingId,
+  setShowLoader,
+  setError,
+  setShowError,
+  setSuccess,
+  setShowSuccess,
+  setapplicationsInfo,
+  setselectedStudents,
+}) => {
   const [rollno, setrollno] = useState("");
   const [formDetailsFilled, setformDetailsFilled] = useState({});
   const [resume, setresume] = useState(null);
+
+  const getApplicationsInfo = () => {
+    if (token) {
+      GetApplications(token, openingId)
+        .then((res) => {
+          const data = res;
+          setapplicationsInfo(data);
+          setselectedStudents(
+            data?.applications?.filter((elem) => elem.selected === true).length
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   const handleClose = () => {
     setrollno("");
@@ -16,11 +46,53 @@ const AddStudent = ({ show, setShow, reqJobPosting }) => {
     setShow(false);
   };
 
-  const handleSubmit = () => {
-    console.log("Form was submitted");
-    console.log(rollno);
-    console.log(formDetailsFilled);
-    console.log(resume);
+  const handleSubmit = async () => {
+    if (rollno && formDetailsFilled && resume) {
+      if (rollno === "") {
+        setError("Roll no was not filled");
+        setShowError(true);
+        return;
+      }
+
+      if (reqJobPosting && reqJobPosting?.additional_info.length !== 0) {
+        let check = false;
+        check = reqJobPosting?.additional_info.some((elem) => {
+          return (
+            formDetailsFilled.hasOwnProperty(elem) === false ||
+            formDetailsFilled.elem === ""
+          );
+        });
+        if (check) {
+          setError("Some additional fields are blank!");
+          setShowError(true);
+          return;
+        }
+      }
+
+      const data = {
+        opening_type: "Placement",
+        opening_id: openingId,
+        resume_file_name: resume?.name,
+        additional_info: {
+          ...formDetailsFilled,
+        },
+        student_id: rollno,
+      };
+
+      var result = await AddStudentApplication(token, data);
+      if (result.message === "Application Submitted") {
+        setSuccess("New student has been added");
+        setShowSuccess(true);
+        handleClose(true);
+        getApplicationsInfo();
+      } else {
+        setError("There was some error in adding the student");
+        setShowError(true);
+      }
+    } else {
+      setError("Something was not filled");
+      setShowError(true);
+    }
   };
 
   const changeField = (e) => {
