@@ -2,7 +2,17 @@ import SideButtons from "./SideButtons";
 import DeadlineCard from "./DeadlineCard";
 import useStyles from "./styles";
 
-const Details = ({ reqJobPosting, openingId, token, setdashboardInfo }) => {
+const Details = ({
+  reqJobPosting,
+  openingId,
+  token,
+  setdashboardInfo,
+  setShowLoader,
+  setError,
+  setShowError,
+  setSuccess,
+  setShowSuccess,
+}) => {
   const classes = useStyles();
 
   return (
@@ -17,6 +27,11 @@ const Details = ({ reqJobPosting, openingId, token, setdashboardInfo }) => {
           openingId={openingId}
           token={token}
           setdashboardInfo={setdashboardInfo}
+          setShowLoader={setShowLoader}
+          setError={setError}
+          setShowError={setShowError}
+          setSuccess={setSuccess}
+          setShowSuccess={setShowSuccess}
         />
       </div>
     </div>

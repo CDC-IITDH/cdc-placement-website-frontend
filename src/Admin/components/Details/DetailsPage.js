@@ -83,6 +83,11 @@ const DetailsPage = ({
         openingId={openingId}
         token={token}
         setdashboardInfo={setdashboardInfo}
+        setShowLoader={setShowLoader}
+        setError={setError}
+        setShowError={setShowError}
+        setSuccess={setSuccess}
+        setShowSuccess={setShowSuccess}
       />
       <div className={classes.rightContainer}>
         <Header
@@ -99,6 +104,11 @@ const DetailsPage = ({
           setapplicationsInfo={setapplicationsInfo}
           setselectedStudents={setselectedStudents}
           selectedStudents={selectedStudents}
+          setShowLoader={setShowLoader}
+          setError={setError}
+          setShowError={setShowError}
+          setSuccess={setSuccess}
+          setShowSuccess={setShowSuccess}
         />
       </div>
     </div>

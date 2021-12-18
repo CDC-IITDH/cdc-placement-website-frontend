@@ -14,6 +14,11 @@ const DeadlineCard = ({
   openingId,
   token,
   setdashboardInfo,
+  setShowLoader,
+  setError,
+  setShowError,
+  setSuccess,
+  setShowSuccess,
 }) => {
   const classes = useStyles();
   const [status, setStatus] = useState(1);
@@ -49,7 +54,8 @@ const DeadlineCard = ({
 
   const handleDeadlineUpdate = async () => {
     if (selectedDate < new Date().toISOString()) {
-      alert("Date has already passed. Cant select passed date");
+      setError("Date has already passed. Choose a valid date");
+      setShowError(true);
       handleDateChange(reqJobPosting?.deadline_datetime);
     } else {
       const date = selectedDate;
@@ -63,10 +69,12 @@ const DeadlineCard = ({
       var result = await UpdateDeadline(token, data);
       console.log(result);
       if (result.message === "Deadline Updated") {
-        console.log("Deadline succcessfully changed");
+        setSuccess("Deadline succcessfully changed");
+        setShowSuccess(true);
         getDashboardInfo();
       } else {
-        console.log("Something did not go right. Could not change deadline");
+        setError("Something did not go right. Could not change deadline");
+        setShowError(true);
       }
     }
     setdisabled(true);

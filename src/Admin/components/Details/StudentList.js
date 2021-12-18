@@ -10,6 +10,11 @@ const StudentList = ({
   setapplicationsInfo,
   selectedStudents,
   setselectedStudents,
+  setShowLoader,
+  setError,
+  setShowError,
+  setSuccess,
+  setShowSuccess,
 }) => {
   const classes = useStyles();
 
@@ -42,6 +47,11 @@ const StudentList = ({
                   batch={elem.student_details.batch}
                   branch={elem.student_details.branch}
                   setselectedStudents={setselectedStudents}
+                  setShowLoader={setShowLoader}
+                  setError={setError}
+                  setShowError={setShowError}
+                  setSuccess={setSuccess}
+                  setShowSuccess={setShowSuccess}
                 />
               </Grid>
             );

@@ -16,6 +16,11 @@ const StudentCard = ({
   setapplicationsInfo,
   selected,
   setselectedStudents,
+  setShowLoader,
+  setError,
+  setShowError,
+  setSuccess,
+  setShowSuccess,
 }) => {
   const classes = useStyles();
 
@@ -49,9 +54,16 @@ const StudentCard = ({
     var result = await MarkStatus(token, data);
 
     if (result.message === "Marked Status") {
+      setSuccess(
+        `Student was marked ${
+          status === "false" ? "rejected" : "selected"
+        } successfully!`
+      );
+      setShowSuccess(true);
       getApplicationsInfo();
     } else {
-      console.log("Unable to mark status");
+      setError("Unable to mark status. Try again");
+      setShowError(true);
     }
   };
 
