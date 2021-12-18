@@ -13,8 +13,9 @@ const Suggestion = ({ suggestion }) => {
   const ongoing = deadline > new Date();
   return (
     <>
-      <li className={css.suggestion}>
-        <h5>
+      <li className={css.suggestion} >
+          <h5 className={css.suggestion_h5}>
+
           {" "}
           <SvgIcon component={Ballot} /> {suggestion.company_name}
         </h5>

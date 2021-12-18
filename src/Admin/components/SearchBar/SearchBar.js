@@ -1,4 +1,6 @@
-import { React, useState, useMemo, useCallback } from "react";
+
+import { React, useState, useMemo, useCallback, useRef } from "react";
+
 import Input from "./Input";
 import Suggestion from "./suggestion";
 import seachBarStyles from "./seachBarStyles";
@@ -9,6 +11,8 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
   const [focused, setFocused] = useState(false);
   const [searchBarArray, updateSearchBarArray] = useState([]);
   const css = seachBarStyles();
+  const searchInput = useRef(null);
+
   var array = [];
   const onSearchSubmit = (term) => {
       array = [];
@@ -38,12 +42,11 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
   };
   const on_click = (e) => {
     e.preventDefault();
-    // make new json object with ongoing and previous members
+
     var ongoing_array = [];
-    searchBarInfo.ongoing.forEach((elem) => {
-      if (
-        elem.company_name.toLowerCase().includes(searchTerm.toLowerCase())
-      ) {
+
+    dashboardInfo[0].ongoing.forEach((elem) => {
+      if (elem.company_name.toLowerCase().includes(searchTerm.toLowerCase())) {
         ongoing_array.push(elem);
       }
     });
@@ -70,6 +73,8 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
       new: new_array,
     };
     setDashboardview(new_json);
+    searchInput.current.blur();
+
     setSearched(searchTerm);
     setFocused(false);
   };
@@ -88,6 +93,8 @@ const Searchbar = ({ searchBarInfo, setDashboardview, searched, setSearched, das
           on_click={on_click}
           dashboardInfo={dashboardInfo}
           setDashboardview={setDashboardview}
+          inputRef={searchInput}
+
         />
       }
       {searchTerm  && focused && searchBarArray.length > 0 && (

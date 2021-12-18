@@ -39,28 +39,26 @@ function Cards({
                    setShowLoader,
                    getDashboardInfo,
                }) {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+
     const css = DashboardCardStyles();
 
     return (
         <>
             <Card className={css.dashboardCard}>
                 <Link
-                    to={`admin/dashboard/${type}/${id}`}
+                    to={`admin/details/${id}`}
                     style={{textDecoration: "none", color: "black"}}
                 >
                     <div className={css.basicInfo}>
-                        <Row >
+                        <Row>
                             <Col sm={12} md={6} lg={4} className={css.companyName}>
                                 <h6>
 
-                                     <Row>
+                                    <Row>
                                         <Col xs={1}>
                                             <SvgIcon component={Work}/>
                                         </Col>
-                                        <Col xs={11} >
+                                        <Col xs={11}>
 
                                             {company_name}
                                         </Col>
@@ -72,12 +70,13 @@ function Cards({
                                     <Row>
                                         <Col xs={12} style={{fontSize: "18px"}}>
                                             <div style={{fontWeight: "600"}}> Tier: {tier}</div>
+
                                         </Col>
                                     </Row>
                                 </h6>
                             </Col>
 
-                            <Col  sm={12} md={6} lg={4} className={css.contact}>
+                            <Col sm={12} md={6} lg={4} className={css.contact}>
                                 <h6>
                                     <Row>
                                         <Col xs={1}>
@@ -85,12 +84,13 @@ function Cards({
                                         </Col>
                                         <Col xs={11} style={{fontSize: "14px"}}>
                                             <div style={{fontWeight: "600"}}> Contact Person Name:</div>
-                                            {contact_person_name?contact_person_name:"N/A"}
+                                            {contact_person_name ? contact_person_name : "N/A"}
                                         </Col>
                                     </Row>
                                 </h6>
                             </Col>
                         </Row>
+
 
                         <Divider className={css.divider} variant="middle"/>
 
@@ -136,17 +136,14 @@ function Cards({
                                         <Col xs={11} style={{fontSize: "14px"}}>
 
                                             <div style={{fontWeight: "600"}}> Apply before:</div>
-                                            {deadline_datetime?new Date(deadline_datetime).toDateString() + ", " + new Date(deadline_datetime).toLocaleTimeString():"N/A"}
+
+                                            {deadline_datetime ? new Date(deadline_datetime).toDateString() + ", " + new Date(deadline_datetime).toLocaleTimeString() : "N/A"}
                                         </Col>
                                     </Row>
                                 </h6>
 
                             </Col>
-                            {/*<div className={css.phone_number}>*/}
-                            {/*  <h6>*/}
-                            {/*    <SvgIcon component={PhoneIcon} /> {phone_number}*/}
-                            {/*  </h6>*/}
-                            {/*</div>*/}
+                            
                             <Col sm={12} md={6} lg={3} className={css.email}>
                                 <h6>
                                     <Row>
@@ -155,7 +152,7 @@ function Cards({
                                         </Col>
                                         <Col xs={11} style={{fontSize: "14px"}}>
                                             <div style={{fontWeight: "600"}}> Email:</div>
-                                            {email?email:"Not Available"}
+                                            {email ? email : "Not Available"}
                                         </Col>
                                     </Row>
                                 </h6>
