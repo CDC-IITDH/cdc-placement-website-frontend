@@ -133,4 +133,4 @@ const App = ({
     );
 };
 
-export {App};
+export { App };
