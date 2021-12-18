@@ -28,6 +28,7 @@ const Dashboard = ({
       setIsloading(false);
       setShowLoader(false);
     }, [dashboardInfo]);
+
     const [dashboardview, setDashboardview] = useState([]);
 
    useEffect(() => {

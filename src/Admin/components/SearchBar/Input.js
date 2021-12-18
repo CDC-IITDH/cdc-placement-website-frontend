@@ -14,7 +14,8 @@ const Input = ({
   term,
   setTerm,
   dashboardInfo,
-  setDashboardview
+  setDashboardview,
+  inputRef
 }) => {
   const css = seachBarStyles();
 
@@ -39,13 +40,6 @@ const Input = ({
     }
   }, [term]);
 
-  useEffect(() => {
-    if (focused) {
-      document.getElementById("searchbarinput").focus()
-    } else {
-      document.getElementById("searchbarinput").blur()
-    }
-  }, [focused]);
 
   const clearSearch = () => {
     setTerm("");
@@ -57,7 +51,8 @@ const Input = ({
     <div className={css.searchbar} id="searchbar">
       <SvgIcon component={Search} style={{ Width: "5%" }} />
       <form className={css.form} onSubmit={on_click} >
-      <input
+
+      <input ref={inputRef}
         className={css.searchbarinput}
         type="text"
         placeholder="Search offer by company name. . ."
@@ -66,7 +61,6 @@ const Input = ({
         onChange={(e) => setTerm(e.target.value)}
         value={term}
         autoComplete="off"
-        id="searchbarinput"
       />
       </form>
       {term && (
