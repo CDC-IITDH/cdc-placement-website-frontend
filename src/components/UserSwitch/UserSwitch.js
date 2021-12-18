@@ -33,7 +33,7 @@ const UserSwitch = ({
             style={{ marginTop: "10%" }}
             container
             spacing={5}
-            justify='center'
+            justifyContent='center'
             alignItems='center'
           >
             <Grid item>
@@ -42,7 +42,7 @@ const UserSwitch = ({
               </div>
             </Grid>
           </Grid>
-          <Grid container spacing={5} justify='center' alignItems='center'>
+          <Grid container spacing={5} justifyContent='center' alignItems='center'>
             {userTypes.map((item, i) => {
               return (
                 <Grid item key={i} xs={12} sm>

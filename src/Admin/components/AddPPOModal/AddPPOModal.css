@@ -1,0 +1,96 @@
+.Parent-addPPO {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-bottom: 15px;
+}
+
+.modale-title {
+  color: white;
+}
+
+.modale-field-key {
+  display: inline-block;
+  margin-right: 25px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modale-field-value {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 600;
+  color: #334878;
+}
+
+.card-div-addPPO {
+  width: 95%;
+  border-radius: 0.6rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  border-style: solid;
+  overflow: hidden;
+  border-color: #334878;
+      padding: 10px;
+}
+
+.label-addPPO {
+  font-size: 1em;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  text-transform: capitalize;
+}
+
+.MuiInputLabel-shrink {
+  top: 5px !important;
+}
+
+.resume-section {
+  top: 10px !important;
+}
+
+.card-div-addPPO h4 {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.h7-div {
+  color: red;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.modale-info-name{
+  font-size: 1.5rem!important;
+}
+
+
+@media all and (max-width: 500px) {
+  .Parent-addPPO {
+  display: block;
+  margin-bottom: 15px;
+}
+
+  .card-div-addPPO h5 {
+    font-size: 90%;
+  }
+
+  .Parent-addPPO h2 {
+    font-size: 105%;
+  }
+
+  .MuiInput-input option {
+    font-size: 100%;
+  }
+
+  .modale-field-key {
+    font-size: 17px;
+  }
+
+  .modale-field-value {
+    font-size: 17px;
+  }
+  .addPPO-textField{
+    margin-top: 10px!important;
+    width: 80%!important;
+  }
+}

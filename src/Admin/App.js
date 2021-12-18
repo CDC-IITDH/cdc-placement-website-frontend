@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import {
-  Route,
   BrowserRouter as Router,
-  Switch,
   Redirect,
+  Route,
+  Switch,
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import DetailsPage from "./components/Details/DetailsPage";
 import { GetDashboard } from "./api/dashboard";
+import AddPPOModal from "./components/AddPPOModal/AddPPOModal";
 
 const App = ({
   auth,
@@ -23,13 +24,17 @@ const App = ({
   setShowSuccess,
 }) => {
   const [dashboardInfo, setdashboardInfo] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [ModalType, setModalType] = useState("");
 
   const getDashboardInfo = () => {
     if (token) {
+      setShowLoader(true);
       GetDashboard(token)
         .then((res) => {
           const data = res;
           setdashboardInfo(data);
+          // setShowLoader(false);
         })
         .catch((err) => {
           setAuth(false);
@@ -52,10 +57,34 @@ const App = ({
           setAuth={setAuth}
           setToken={setToken}
           setCurrentUserType={setCurrentUserType}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          ModalType={ModalType}
+          setModalType={setModalType}
         />
 
         {auth ? (
           <Switch>
+            {showModal ? (
+              ModalType === "addPPO" ? (
+                <AddPPOModal
+                  token={token}
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                  ModalType={ModalType}
+                  setModalType={setModalType}
+                  setShowLoader={setShowLoader}
+                  setError={setError}
+                  setShowError={setShowError}
+                  setSuccess={setSuccess}
+                  setShowSuccess={setShowSuccess}
+                />
+              ) : (
+                ""
+              )
+            ) : (
+              ""
+            )}
             <Route
               exact
               path='/admin/details/:id'

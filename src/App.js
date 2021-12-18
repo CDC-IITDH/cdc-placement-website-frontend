@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Navbar from "./components/Navbar/Navbar";
 import {
   Route,
@@ -13,20 +13,22 @@ import UserSwitch from "./components/UserSwitch/UserSwitch";
 import Loader from "./components/Loader/Loader";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import JNF from "./Admin/components/JNF/JNF";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
+
 const App = () => {
-  const [auth, setAuth] = useState(false);
-  const [token, setToken] = useState(null);
-  const [currentUserType, setCurrentUserType] = useState(null);
-  const [userTypes, setUserTypes] = useState([]);
-  const [showLoader, setShowLoader] = useState(true);
-  const [error, setError] = useState(null);
-  const [showError, setShowError] = useState(false);
-  const [success, setSuccess] = useState(null);
-  const [showSuccess, setShowSuccess] = useState(false);
+    const [auth, setAuth] = useState(false);
+    const [token, setToken] = useState(null);
+    const [currentUserType, setCurrentUserType] = useState(null);
+    const [userTypes, setUserTypes] = useState([]);
+    const [showLoader, setShowLoader] = useState(true);
+    const [error, setError] = useState(null);
+    const [showError, setShowError] = useState(false);
+    const [success, setSuccess] = useState(null);
+    const [showSuccess, setShowSuccess] = useState(false);
 
   const handleErrorClose = () => {
     setError(null);
@@ -62,104 +64,132 @@ const App = () => {
           </Alert>
         </Snackbar>
 
-        {auth && currentUserType ? (
-          <Switch>
-            <Route
-              path='/student/'
-              render={() => {
-                if (
-                  currentUserType !== null &&
-                  currentUserType === "student" &&
-                  userTypes.includes(currentUserType)
-                )
-                  return (
-                    <Student
-                      auth={auth}
-                      token={token}
-                      setAuth={setAuth}
-                      setToken={setToken}
-                      setCurrentUserType={setCurrentUserType}
-                      setShowLoader={setShowLoader}
-                      setError={setError}
-                      setShowError={setShowError}
-                      setSuccess={setSuccess}
-                      setShowSuccess={setShowSuccess}
-                    />
-                  );
-                else return <Redirect to='/' />;
-              }}
-            />
+                {auth && currentUserType ? (
+                    <Switch>
+                        <Route
+                            path='/student/'
+                            render={() => {
+                                if (
+                                    currentUserType !== null &&
+                                    currentUserType === "student" &&
+                                    userTypes.includes(currentUserType)
+                                )
+                                    return (
+                                        <Student
+                                            auth={auth}
+                                            token={token}
+                                            setAuth={setAuth}
+                                            setToken={setToken}
+                                            setCurrentUserType={setCurrentUserType}
+                                            setShowLoader={setShowLoader}
+                                            setError={setError}
+                                            setShowError={setShowError}
+                                            setSuccess={setSuccess}
+                                            setShowSuccess={setShowSuccess}
+                                        />
+                                    );
+                                else return <Redirect to='/'/>;
+                            }}
+                        />
 
-            <Route
-              path='/admin/'
-              render={() => {
-                if (
-                  currentUserType !== null &&
-                  currentUserType === "admin" &&
-                  userTypes.includes(currentUserType)
-                )
-                  return (
-                    <Admin
-                      auth={auth}
-                      token={token}
-                      setAuth={setAuth}
-                      setToken={setToken}
-                      setCurrentUserType={setCurrentUserType}
-                      setShowLoader={setShowLoader}
-                      setError={setError}
-                      setShowError={setShowError}
-                      setSuccess={setSuccess}
-                      setShowSuccess={setShowSuccess}
-                    />
-                  );
-                else return <Redirect to='/' />;
-              }}
-            />
+                        <Route
+                            path='/admin/'
+                            render={() => {
+                                if (
+                                    currentUserType !== null &&
+                                    currentUserType === "admin" &&
+                                    userTypes.includes(currentUserType)
+                                )
+                                    return (
+                                        <Admin
+                                            auth={auth}
+                                            token={token}
+                                            setAuth={setAuth}
+                                            setToken={setToken}
+                                            setCurrentUserType={setCurrentUserType}
+                                            setShowLoader={setShowLoader}
+                                            setError={setError}
+                                            setShowError={setShowError}
+                                            setSuccess={setSuccess}
+                                            setShowSuccess={setShowSuccess}
+                                        />
+                                    );
+                                else return <Redirect to='/'/>;
+                            }}
+                        />
 
-            <Route
-              exact
-              path='*'
-              render={() => {
-                if (currentUserType === "student") {
-                  return <Redirect to='/student' />;
-                } else if (currentUserType === "admin") {
-                  return <Redirect to='/admin' />;
-                } else {
-                  setCurrentUserType(null);
-                }
-              }}
-            />
-          </Switch>
-        ) : (
-          <div>
-            <Navbar auth={auth} setAuth={setAuth} setToken={setToken} />
-            {auth ? (
-              <UserSwitch
-                userTypes={userTypes}
-                setAuth={setAuth}
-                currentUserType={currentUserType}
-                setCurrentUserType={setCurrentUserType}
-                auth={auth}
-                setShowLoader={setShowLoader}
-                setError={setError}
-                setShowError={setShowError}
-              />
-            ) : (
-              <Login
-                auth={auth}
-                setAuth={setAuth}
-                setToken={setToken}
-                setUserTypes={setUserTypes}
-                setShowLoader={setShowLoader}
-                setError={setError}
-                setShowError={setShowError}
-              />
-            )}
-          </div>
-        )}
-      </Router>
-    </>
-  );
+                        <Route
+                            exact
+                            path='*'
+                            render={() => {
+                                if (currentUserType === "student") {
+                                    return <Redirect to='/student'/>;
+                                } else if (currentUserType === "admin") {
+                                    return <Redirect to='/admin'/>;
+                                } else {
+                                    setCurrentUserType(null);
+                                }
+                            }}
+                        />
+                    </Switch>
+                ) : (
+                    <div>
+
+                        {auth ? (
+                            <div>
+                             <Navbar auth={auth} setAuth={setAuth} setToken={setToken}/>
+                            <UserSwitch
+                                userTypes={userTypes}
+                                setAuth={setAuth}
+                                currentUserType={currentUserType}
+                                setCurrentUserType={setCurrentUserType}
+                                auth={auth}
+                                setShowLoader={setShowLoader}
+                                setError={setError}
+                                setShowError={setShowError}
+                            />
+                                </div>
+                        ) : (
+                            <Switch>
+                                <Route
+                                    path='/jnf'
+                                    render={() => {
+                                        return (
+                                            // Return jnf component
+                                            <JNF
+                                                setShowLoader={setShowLoader}
+                                            />
+                                        );
+
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path='*'
+                                    render={() => {
+                                        return (
+                                            <div>
+                             <Navbar auth={auth} setAuth={setAuth} setToken={setToken}/>
+                                            <Login
+                                                auth={auth}
+                                                setAuth={setAuth}
+                                                setToken={setToken}
+                                                setUserTypes={setUserTypes}
+                                                setShowLoader={setShowLoader}
+                                                setError={setError}
+                                                setShowError={setShowError}
+                                            />
+                                            </div>
+                                        );
+                                    }}
+                                />
+                            </Switch>
+                        )}
+                    </div>
+                )}
+            </Router>
+        </>
+    );
 };
 
 export default App;
