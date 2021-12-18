@@ -1,9 +1,14 @@
 import {useEffect, useState} from "react";
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter as Router, Redirect, Route, Switch,} from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import Login from "./components/Login/Login";
-import {App as Student} from "./Student/App";
-import {App as Admin} from "./Admin/App";
+import { App as Student } from "./Student/App";
+import { App as Admin } from "./Admin/App";
 import UserSwitch from "./components/UserSwitch/UserSwitch";
 import Loader from "./components/Loader/Loader";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -11,7 +16,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import JNF from "./Admin/components/JNF/JNF";
 
 function Alert(props) {
-    return <MuiAlert elevation={6} variant='filled' {...props} />;
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
 const App = () => {
@@ -25,60 +30,39 @@ const App = () => {
     const [success, setSuccess] = useState(null);
     const [showSuccess, setShowSuccess] = useState(false);
 
-    const handleErrorClose = () => {
-        setError(null);
-        setShowError(false);
-    };
+  const handleErrorClose = () => {
+    setError(null);
+    setShowError(false);
+  };
 
-    const handleSuccessClose = () => {
-        setSuccess(null);
-        setShowSuccess(false);
-    };
-    useEffect(() => {
-        console.log(auth, currentUserType)
-        if (auth) {
-            console.log("in auth")
-            if (!currentUserType) {
-                //get path from url
-                const path = window.location.pathname;
-                //get user type from path
-                console.log(path);
-                const userType = path.split("/")[1];
-                //set user type(student or admin)
-                if (userType === "student") {
-                    setCurrentUserType("student");
-                } else if (userType === "admin") {
-                    setCurrentUserType("admin");
-                }
-                console.log(userType);
-            }
-        }
-    }, [auth]);
+  const handleSuccessClose = () => {
+    setSuccess(null);
+    setShowSuccess(false);
+  };
 
+  return (
+    <>
+      <Router>
+        {showLoader ? <Loader /> : ""}
+        <Snackbar
+          open={showError}
+          autoHideDuration={6000}
+          onClose={handleErrorClose}
+        >
+          <Alert onClose={handleErrorClose} severity='error'>
+            {error}
+          </Alert>
+        </Snackbar>
 
-    return (
-        <>
-            <Router>
-                {showLoader ? <Loader/> : ""}
-                <Snackbar
-                    open={showError}
-                    autoHideDuration={6000}
-                    onClose={handleErrorClose}
-                >
-                    <Alert onClose={handleErrorClose} severity='error'>
-                        {error}
-                    </Alert>
-                </Snackbar>
-
-                <Snackbar
-                    open={showSuccess}
-                    autoHideDuration={6000}
-                    onClose={handleSuccessClose}
-                >
-                    <Alert onClose={handleSuccessClose} severity='success'>
-                        {success}
-                    </Alert>
-                </Snackbar>
+        <Snackbar
+          open={showSuccess}
+          autoHideDuration={6000}
+          onClose={handleSuccessClose}
+        >
+          <Alert onClose={handleSuccessClose} severity='success'>
+            {success}
+          </Alert>
+        </Snackbar>
 
                 {auth && currentUserType ? (
                     <Switch>
