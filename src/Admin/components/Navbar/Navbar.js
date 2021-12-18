@@ -76,11 +76,6 @@ const Navbar = ({
                     Dashboard
                   </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link className={classes.links} to='/admin/details/'>
-                    Details
-                  </Link>
-                </MenuItem>
                 <MenuItem>
                   <LogOut
                     auth={auth}
@@ -96,11 +91,6 @@ const Navbar = ({
               <Button>
                 <Link className={classes.navbarLinks} to='/admin'>
                   DashBoard
-                </Link>
-              </Button>
-              <Button>
-                <Link className={classes.navbarLinks} to='/admin/details'>
-                  Details
                 </Link>
               </Button>
               <LogOut
