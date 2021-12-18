@@ -43,9 +43,9 @@ const Dashboard = ({
 
         <div className='Dashboard'>
           <h1>Dashboard</h1>
-          <div style={{marginLeft:"5%"}}> 
-            <Button href="/admin/jnf" style={{backgroundColor: "#334878", borderColor:"#334878"}}>Add Placement (JNF)</Button>
-          </div>
+          {/*<div style={{marginLeft:"5%"}}> */}
+          {/*  <Button href="/admin/jnf" style={{backgroundColor: "#334878", borderColor:"#334878"}}>Add Placement (JNF)</Button>*/}
+          {/*</div>*/}
           <div className='Listing'>
             <Tabs defaultActiveKey='ongoing'>
               <Tab eventKey='ongoing' title='Ongoing'>

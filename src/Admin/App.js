@@ -96,15 +96,15 @@ const App = ({
               )}
             />
 
-            <Route
-              exact
-              path='/admin/jnf'
-              render={() => (
-                <JNF
-                  setShowLoader={setShowLoader}
-                />
-              )}
-            />
+            {/*<Route*/}
+            {/*  exact*/}
+            {/*  path='/admin/jnf'*/}
+            {/*  render={() => (*/}
+            {/*    <JNF*/}
+            {/*      setShowLoader={setShowLoader}*/}
+            {/*    />*/}
+            {/*  )}*/}
+            {/*/>*/}
             <Route exact path='*' render={() => <Redirect to='/admin' />} />
           </Switch>
         ) : (
