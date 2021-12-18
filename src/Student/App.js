@@ -43,7 +43,6 @@ const App = ({
   };
   useEffect(() => {
     getDashboardInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setAuth, setToken, token]);
 
   const getProfileInfo = () => {
@@ -63,7 +62,6 @@ const App = ({
 
   useEffect(() => {
     getProfileInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setAuth, setToken, token]);
 
   return (

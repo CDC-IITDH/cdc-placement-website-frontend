@@ -35,8 +35,6 @@ const App = ({
                     setAuth(false);
                     setToken(null);
                     console.log(err);
-                                         // setShowLoader(false);
-
                 });
         }
     };
