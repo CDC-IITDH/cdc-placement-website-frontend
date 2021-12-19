@@ -38,14 +38,14 @@
 
 .modal-field-key {
     display: inline-block;
-    margin-right: 25px;
-    font-size: 22px;
+    margin-right: 10px;
+    font-size: 20px;
     font-weight: 600;
 }
 
 .modal-field-value {
     display: inline-block;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     color: #334878;
 }
@@ -56,11 +56,11 @@
 }
 
 .modal-resume-pill {
-    border: solid;
+    border: none;
     border-radius: 15px;
     padding: 7px;
-    border-color: #334878;
-    color: #334878;
+    border-color: #415d9c70;
+    background-color: #415d9c3d;
     cursor: pointer;
     margin: 2%;
 }

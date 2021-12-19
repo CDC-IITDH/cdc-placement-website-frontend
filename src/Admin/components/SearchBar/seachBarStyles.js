@@ -71,7 +71,7 @@ export default makeStyles((theme) => ({
     right: "0.5rem",
     top: "50%",
     transform: "translateY(-50%)",
-    backgroundColor: "green",
+    backgroundColor: "#4ba62d",
     color: "#fff",
     border: "None",
     borderRadius: "0.5rem",
@@ -83,7 +83,7 @@ export default makeStyles((theme) => ({
     right: "0.5rem",
     top: "50%",
     transform: "translateY(-50%)",
-    backgroundColor: "red",
+    backgroundColor: "#fa3737",
     color: "#fff",
     border: "None",
     borderRadius: "0.5rem",
@@ -118,4 +118,11 @@ export default makeStyles((theme) => ({
     paddingLeft: "0.5rem",
     paddingRight: "0.5rem",
   },
+  form: {
+    display: "inline",
+
+  },
+  suggestion_h5:{
+marginBottom: "0.2rem",
+  }
 }));
