@@ -80,7 +80,7 @@ const JNF = ({setShowLoader}) => {
     })
 
     function submit(values) {
-      let is_company_details_pdf=(values.compdescription_file)?true:false
+      let is_company_details_pdf=(compdescription_file.length)?true:false
       let is_description_pdf=(values.jobdescription_file)?true:false
       let is_compensation_details_pdf=(values.salary_file)?true:false
       let is_selection_procedure_details_pdf=(values.selection_file)?true:false
@@ -127,9 +127,8 @@ const JNF = ({setShowLoader}) => {
       formdata.append("allowed_branch", JSON.stringify(values.branch));
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
       formdata.append("other_requirements", values.requirements);
-      compdescription_file.map((file) => {
+      compdescription_file.forEach((file) => {
         formdata.append("company_details_pdf",file,file.name);
-        return ''
       })
       formdata.append("description_pdf", [values.jobdescription_file]);
       formdata.append("compensation_details_pdf", [values.salary_file]);
@@ -147,8 +146,9 @@ const JNF = ({setShowLoader}) => {
         .then(res => {
           if (res.status !== 200) {
             setError(res)
+            setSubmitted(1)
           }
-          setSubmitted(1)
+
         })
         .catch(error => {
           setError(error)
