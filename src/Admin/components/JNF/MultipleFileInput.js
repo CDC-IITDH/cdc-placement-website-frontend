@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useRef, useEffect} from 'react'
 import { Form } from 'react-bootstrap';
 import {Chip} from "@material-ui/core";
 import Button from '@mui/material/Button';
@@ -11,7 +11,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
   const [fileExceptions, setFileExceptions] = React.useState([])
   const [sizeExceptions, setSizeExceptions] = React.useState([])
-  
+  const fileInput = useRef()
+  // make it invisible
+  // fileInput.current.style.display = 'none'
+  useEffect(() => {
+    if (fileInput){
+
+      fileInput.current.style.display = 'none'
+    }
+  }, [fileInput])
   function addFile (file, stateVar, setStateVar) {
     let localStateVar = stateVar
     let localfileExceptions = []
@@ -53,7 +61,8 @@ const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
       />
     ))}
     <p className="select-feedback"></p>
-    <Form.Control type="file" name={name} multiple={true} accept="application/pdf" onChange={(event) => {addFile(event.currentTarget.files,stateVar,setStateVar)}} />
+    <Form.Control ref={fileInput} type="file" name={name} multiple={true} accept="application/pdf" onChange={(event) => {addFile(event.currentTarget.files,stateVar,setStateVar)}} />
+    <Button variant="contained" color="primary" onClick={() => {fileInput.current.click()}}>Upload</Button><br />
     <Form.Text className="text-muted">
       PDF (Max. 10MB)
     </Form.Text>

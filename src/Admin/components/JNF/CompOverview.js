@@ -26,7 +26,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
         <Form.Control type="text" name='link' value={values.link} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.link && errors.link} />
         <Form.Control.Feedback type="invalid"> {errors.link} </Form.Control.Feedback>
       </Form.Group>
-      <MultipleFileInput stateVar={compdescription_file} setStateVar={setCompdescription_file} name="compdescription_file" />
+      <MultipleFileInput stateVar={compdescription_file} setStateVar={setCompdescription_file} name="compdescription_file" label ="Brief About the Company" />
       <Form.Group className="mb-5">
         <Form.Label>Brief About the Company</Form.Label>
         <Form.Control type="text" value={values.compdescription_file?values.compdescription_file.name:''} disabled />
