@@ -1,7 +1,9 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import MultipleFileInput from "./MultipleFileInput";
 
-const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue}) => {
+
+const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue, selection_file, setSelection_file}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -38,13 +40,7 @@ const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touch
         <span className="select-feedback">{touched.selectionprocess? errors.selectionprocess:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
-        <Form.Label>Breifly explain the selection procedure (attach details)</Form.Label>
-        <Form.Control type="text" value={values.selection_file?values.selection_file.name:''} disabled />
-        <p className="select-feedback">{errors.selection_file}</p>
-        <Form.Control type="file" name='selection_file' accept="application/pdf" onChange={(event) => {setFieldValue("selection_file", event.currentTarget.files[0])}} />
-        <Form.Text className="text-muted">
-          PDF (Max. 10MB)
-        </Form.Text>
+      <MultipleFileInput stateVar={selection_file} setStateVar={setSelection_file} name="selction_file" label ="Breifly explain the selection procedure (attach details)" />
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>or Describe the Selection Procedure</Form.Label>

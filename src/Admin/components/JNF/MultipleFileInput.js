@@ -69,8 +69,8 @@ const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
       <DialogTitle>File Exceptions</DialogTitle>
       <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                {fileExceptions.length > 0 ? `${fileExceptions.join(', ')} is not a PDF file.` : ''}
-                {sizeExceptions.length > 0 ? `${sizeExceptions.join(', ')} is too large.` : ''}
+                {fileExceptions.length > 0 ? `${fileExceptions.join(', ')} ${fileExceptions.length>1?'are':'is'} not ${fileExceptions.length>1?'':'a'} PDF file.` : ''}
+                {sizeExceptions.length > 0 ? `${sizeExceptions.join(', ')} ${fileExceptions.length>1?'are':'is'} too large.` : ''}
               </DialogContentText>
             </DialogContent>
       <DialogActions>

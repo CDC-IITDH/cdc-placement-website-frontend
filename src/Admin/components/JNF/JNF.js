@@ -19,6 +19,8 @@ const JNF = ({setShowLoader}) => {
     const [error, setError] = useState('')
     const [compdescription_file, setCompdescription_file] = useState([])
 
+    const [selection_file,setSelection_file] = useState([])
+
     useEffect(() => {
       setShowLoader(false)
     }, [setShowLoader])
@@ -83,7 +85,7 @@ const JNF = ({setShowLoader}) => {
       let is_company_details_pdf=(compdescription_file.length)?true:false
       let is_description_pdf=(values.jobdescription_file)?true:false
       let is_compensation_details_pdf=(values.salary_file)?true:false
-      let is_selection_procedure_details_pdf=(values.selection_file)?true:false
+      let is_selection_procedure_details_pdf=(selection_file.length)?true:false
 
       var selectionprocess=values.selectionprocess.slice()
       if (values.selectionprocess.includes("Other")) {
@@ -130,6 +132,9 @@ const JNF = ({setShowLoader}) => {
       compdescription_file.forEach((file) => {
         formdata.append("company_details_pdf",file,file.name);
       })
+      selection_file.forEach((file) => {
+        formdata.append("selection_procedure_details_pdf",file,file.name);
+      })
       formdata.append("description_pdf", [values.jobdescription_file]);
       formdata.append("compensation_details_pdf", [values.salary_file]);
       formdata.append("selection_procedure_details_pdf", [values.selection_file]);
@@ -154,7 +159,7 @@ const JNF = ({setShowLoader}) => {
           setError(error)
         });
     }
-
+  
     return (
       <>
         <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
@@ -221,6 +226,8 @@ const JNF = ({setShowLoader}) => {
                           errors={errors}
                           dirty={dirty}
                           setFieldValue={setFieldValue}
+                          selection_file ={selection_file}
+                          setSelection_file={setSelection_file}
                         />
                       ):(<></>)}
                       {(page === 5) ? (
