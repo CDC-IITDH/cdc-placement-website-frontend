@@ -1,7 +1,8 @@
 import { Form, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import MultipleFileInput from "./MultipleFileInput"
 
-const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, handleFieldChange,setFieldValue}) => {
+const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, handleFieldChange, setFieldValue, salary_file, setSalary_file}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -18,15 +19,7 @@ const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched,
       <p className="mb-5 gray-blue"><b>
         <u>Note:</u> In case of different salary structures being offer to BTech and MS students, the details regarding the same are to be clearly mentioned in the fields below.
       </b></p>
-      <Form.Group className="mb-5">
-        <Form.Label>Salary Description</Form.Label>
-        <Form.Control type="text" value={values.salary_file?values.salary_file.name:''} disabled />
-        <p className="select-feedback">{errors.salary_file}</p>
-        <Form.Control type="file" name='salary_file' accept="application/pdf" onChange={(event) => {setFieldValue("salary_file", event.currentTarget.files[0])}} />
-        <Form.Text className="text-muted">
-          PDF (Max. 10MB)
-        </Form.Text>
-      </Form.Group>
+      <MultipleFileInput stateVar={salary_file} setStateVar={setSalary_file} name="salary_file" label ="Salary Description" />
       <Form.Group className="mb-5 w-50">
         <Form.Label>Cost to Company (CTC) <span className="text-danger">*</span></Form.Label>
         <Form.Control type="number" name='ctc' value={values.ctc} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.ctc && errors.ctc} />
