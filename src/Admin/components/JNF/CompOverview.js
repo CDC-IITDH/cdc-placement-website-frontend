@@ -26,16 +26,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
         <Form.Control type="text" name='link' value={values.link} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.link && errors.link} />
         <Form.Control.Feedback type="invalid"> {errors.link} </Form.Control.Feedback>
       </Form.Group>
-      <MultipleFileInput stateVar={compdescription_file} setStateVar={setCompdescription_file} name="compdescription_file" />
-      <Form.Group className="mb-5">
-        <Form.Label>Brief About the Company</Form.Label>
-        <Form.Control type="text" value={values.compdescription_file?values.compdescription_file.name:''} disabled />
-        <p className="select-feedback">{errors.compdescription_file}</p>
-        <Form.Control type="file" name='compdescription_file' multiple={true} accept="application/pdf" onChange={(event) => {setFieldValue("compdescription_file", event.currentTarget.files);}} />
-        <Form.Text className="text-muted">
-          PDF (Max. 10MB)
-        </Form.Text>
-      </Form.Group>
+      <MultipleFileInput stateVar={compdescription_file} setStateVar={setCompdescription_file} name="compdescription_file" label ="Brief About the Company" />
       <Form.Group className="mb-5">
         <Form.Label>or Describe in Words</Form.Label>
         <Form.Control as="textarea" className="text-area" name="compdescription" onChange={handleChange} onBlur={handleBlur}></Form.Control>
