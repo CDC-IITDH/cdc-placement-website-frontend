@@ -11,10 +11,11 @@
 }
 
 .bk-container {
-  background-repeat: repeat-x, repeat-x, repeat-x;
-  background-position-y: 0px, 240px, 480px;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-position: center top;
   color:#52201f;
-  min-height: calc( 100vh - 96px );
+  min-height: calc( 100vh );
 }
 
 .pd {
