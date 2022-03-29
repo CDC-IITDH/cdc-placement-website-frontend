@@ -80,7 +80,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{submitCount?errors.type:''}</span>
+        <span className="select-feedback">{errors.type && touched.type? errors.type:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Nature of Business <span className="text-danger">*</span></Form.Label>
@@ -94,7 +94,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{submitCount? errors.nature:''}</span>
+        <span className="select-feedback">{errors.nature && touched.nature? errors.nature:''}</span>
       </Form.Group>
     </>
   )

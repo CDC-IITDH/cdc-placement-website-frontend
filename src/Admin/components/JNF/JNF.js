@@ -10,6 +10,7 @@ import SalaryDetails from "./SalaryDetails";
 import SelectionProcess from "./SelectionProcess"
 import ContactDetails from "./ContactDetails";
 import API_ENDPOINT from "../../../api/api_endpoint";
+import { Alert } from "react-bootstrap";
 
 const JNF = ({setShowLoader}) => {
     const year = "2020-2021"
@@ -20,7 +21,7 @@ const JNF = ({setShowLoader}) => {
     const [compdescription_file, setCompdescription_file] = useState([])
     const [jobdescription_file, setJobdescription_file] = useState([])
     const [salary_file, setSalary_file] = useState([])
-
+    const [warning, setWarning] = useState()
     const [selection_file,setSelection_file] = useState([])
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const JNF = ({setShowLoader}) => {
 
     useEffect(() => {
       window.scrollTo(0,0)
+      setWarning()
     }, [page])
 
     const validatePDF = (value, context) => {
@@ -62,7 +64,7 @@ const JNF = ({setShowLoader}) => {
       city: yup.string().required('City is Required'),
       state: yup.string().required('State is Required'),
       country: yup.string().required('Country is Required'),
-      pincode: yup.number().required('Zip/Pin is Required'),
+      pincode: yup.number('Must be a Number').required('Zip/Pin is Required'),
       type: yup.string().required("Required"),
       nature: yup.string().required("Required"),
       designation: yup.string().required('Designation is Required'),
@@ -154,6 +156,7 @@ const JNF = ({setShowLoader}) => {
       };
 
       // console.log(values.date)
+      setShowLoader(true)
 
       fetch(API_ENDPOINT+"api/company/addPlacement/", requestOptions)
         .then(res => {
@@ -161,12 +164,87 @@ const JNF = ({setShowLoader}) => {
             setError(res)
             setSubmitted(1)
           }
+          setSubmitted(1)
+          setShowLoader(false)
 
         })
         .catch(error => {
           setError(error)
         });
     }
+
+    const handlePageChange = (setPage, page, errors, setFieldTouched, handleSubmit) => {
+      if (page === 1) {
+        if (errors.name || errors.link || errors.address || errors.city || errors.state || errors.country || errors.pincode || errors.type || errors.nature) {
+          setFieldTouched("name", true)
+          setFieldTouched("link", true)
+          setFieldTouched("address", true)
+          setFieldTouched("city", true)
+          setFieldTouched("state", true)
+          setFieldTouched("country", true)
+          setFieldTouched("pincode", true)
+          setFieldTouched("type", true)
+          setFieldTouched("nature", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          setPage(page + 1)
+        }
+      }
+      else if (page === 2) {
+        if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers) {
+          setFieldTouched("designation", true)
+          setFieldTouched("locations", true)
+          setFieldTouched("details", true)
+          setFieldTouched("date", true)
+          setFieldTouched("branch", true)
+          setFieldTouched("research", true)
+          setFieldTouched("numoffers", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          setPage(page + 1)
+        }
+      }
+      else if (page === 3) {
+        if (errors.ctc || errors.gross || errors.takehome) {
+          setFieldTouched("ctc", true)
+          setFieldTouched("gross", true)
+          setFieldTouched("takehome", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          setPage(page + 1)
+        }
+      }
+      else if (page === 4) {
+        if (errors.selectionprocess) {
+          setFieldTouched("selectionprocess", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          setPage(page + 1)
+        }
+      }
+      else if (page === 5) {
+        if (errors.contact || errors.email || errors.mobile) {
+          setFieldTouched("contact", true)
+          setFieldTouched("email", true)
+          setFieldTouched("mobile", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          console.log("Submitting");
+          handleSubmit()
+        }
+      }
+    }
+
   
     return (
       <>
@@ -174,12 +252,13 @@ const JNF = ({setShowLoader}) => {
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
               {!submitted? (
-                <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'',research:'',selectionprocess_other:''}}>
-                  {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,submitCount}) => (
+                <Formik validateOnMount={true} validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'',research:'',selectionprocess_other:''}}>
+                  {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,setFieldTouched, submitCount}) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       {(page === 1) ? (
                         <Instructions year={year} />
                       ):(<></>)}
+                      {warning?<Alert variant="danger">{warning}</Alert>:null}
                       {(page === 1) ? (
                         <CompOverview
                           handleSubmit={handleSubmit}
@@ -265,13 +344,13 @@ const JNF = ({setShowLoader}) => {
                         ):(<></>)}
                         {(page!==5)? (
                           <Col className="text-end">
-                            <Button variant="primary" onClick={()=>{setPage(page+1)}}>
+                            <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit)}>
                               Next
                             </Button>
                           </Col>
                         ):(
                           <Col className="text-end">
-                            <Button variant="primary" onClick={handleSubmit} disabled={!(isValid && dirty)}>
+                            <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit)} >
                               Submit
                             </Button>
                           </Col>

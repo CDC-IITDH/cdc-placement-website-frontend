@@ -11,6 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
   const [fileExceptions, setFileExceptions] = React.useState([])
   const [sizeExceptions, setSizeExceptions] = React.useState([])
+
   const [filenumberExceptions, setFilenumberExceptions] = React.useState(false)
 
   function addFile (files, stateVar, setStateVar) {
@@ -64,6 +65,7 @@ const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
           </svg>
           <p className='text-dark'><b>Upload Files</b><br />
           <span className="text-muted">Click here to select or drag and drop files here</span></p>
+
           <Form.Control className='position-absolute top-50 start-50 translate-middle h-100' style={{opacity: 0}} type="file" multiple={true} accept="application/pdf" onChange={(event) => {addFile(event.currentTarget.files,stateVar,setStateVar)}} title="" />
         </div>
         <Form.Text className="text-muted">
@@ -84,6 +86,7 @@ const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
               </Button>
             </DialogActions>
       </Dialog>
+
       <Dialog open={filenumberExceptions} onClose={()=>{setFilenumberExceptions(false)}} >
       <DialogTitle>File Exceptions</DialogTitle>
       <DialogContent>
