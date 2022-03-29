@@ -12,21 +12,27 @@ const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
   const [fileExceptions, setFileExceptions] = React.useState([])
   const [sizeExceptions, setSizeExceptions] = React.useState([])
 
-  function addFile (file, stateVar, setStateVar) {
+  const [filenumberExceptions, setFilenumberExceptions] = React.useState(false)
+
+  function addFile (files, stateVar, setStateVar) {
     let localStateVar = stateVar
     let localfileExceptions = []
     let localsizeExceptions = []
-    console.log(file)
-    for (let i = 0; i < file.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       // file type should be an PDF
-      if (file[i].type === 'application/pdf' && file[i].size < 104857600 ) {
-        localStateVar.push(file[i])
-      } else {
-        if (file[i].type !== 'application/pdf') {
-          localfileExceptions.push(file[i].name)
+      if (files[i].type === 'application/pdf' && files[i].size < 104857600 ) {
+        if (localStateVar.length < 3) {
+          localStateVar.push(files[i])
+        } else {
+          setFilenumberExceptions(true)
+          break
         }
-        if (file[i].size > 104857600) {
-          localsizeExceptions.push(file[i].name)
+      } else {
+        if (files[i].type !== 'application/pdf') {
+          localfileExceptions.push(files[i].name)
+        }
+        if (files[i].size > 104857600) {
+          localsizeExceptions.push(files[i].name)
         }
       }
     }
@@ -59,7 +65,8 @@ const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
           </svg>
           <p className='text-dark'><b>Upload Files</b><br />
           <span className="text-muted">Click here to select or drag and drop files here</span></p>
-          <Form.Control className='position-absolute top-50 start-50 translate-middle h-100' style={{opacity: 0}} type="file" multiple={true} accept="application/pdf" onChange={(event) => {addFile(event.currentTarget.files,stateVar,setStateVar)}} />
+
+          <Form.Control className='position-absolute top-50 start-50 translate-middle h-100' style={{opacity: 0}} type="file" multiple={true} accept="application/pdf" onChange={(event) => {addFile(event.currentTarget.files,stateVar,setStateVar)}} title="" />
         </div>
         <Form.Text className="text-muted">
           PDF (Max. 10MB)
@@ -75,6 +82,22 @@ const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
             </DialogContent>
       <DialogActions>
               <Button onClick={()=>{setFileExceptions([]);setSizeExceptions([])}} autoFocus>
+                Ok
+              </Button>
+            </DialogActions>
+      </Dialog>
+
+      <Dialog open={filenumberExceptions} onClose={()=>{setFilenumberExceptions(false)}} >
+      <DialogTitle>File Exceptions</DialogTitle>
+      <DialogContent>
+              
+              <DialogContentText id="alert-dialog-description">
+                You can only upload 3 files.
+              </DialogContentText>
+            </DialogContent>
+      <DialogActions>
+              
+              <Button onClick={()=>{setFilenumberExceptions(false)}} autoFocus>
                 Ok
               </Button>
             </DialogActions>

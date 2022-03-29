@@ -162,9 +162,11 @@ const JNF = ({setShowLoader}) => {
         .then(res => {
           if (res.status !== 200) {
             setError(res)
+            setSubmitted(1)
           }
           setSubmitted(1)
           setShowLoader(false)
+
         })
         .catch(error => {
           setError(error)
@@ -242,6 +244,7 @@ const JNF = ({setShowLoader}) => {
         }
       }
     }
+
   
     return (
       <>
