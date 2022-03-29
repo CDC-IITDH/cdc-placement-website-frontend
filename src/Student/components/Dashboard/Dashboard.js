@@ -27,13 +27,12 @@ const Dashboard = ({
   useEffect(() => {
     if (dashboardInfo[0]) {
       dashboardInfo[0]?.placementApplication.forEach((elem) => {
-        setAppliedIds((prev) => new Set(prev.add(elem.placement)));
-        setApplStatus(new Map(applStatus.set(elem.placement, elem.selected)));
+        setAppliedIds((prev) => new Set(prev.add(elem.placement.id)));
+        setApplStatus(new Map(applStatus.set(elem.placement.id, elem.selected)));
       });
       setIsloading(false);
       setShowLoader(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ dashboardInfo, setShowLoader]);
 
   if (dashboardInfo[0]) {
@@ -70,11 +69,11 @@ const Dashboard = ({
                           key={elem.id}
                           id={elem.id}
                           token={token}
-                          company={elem.company_details.name}
-                          compensation={elem.compensation}
+                          company={elem.company_name}
+                          compensation={elem.compensation_CTC}
                           description={elem.description}
                           designation={elem.designation}
-                          start_date={elem.start_date}
+                          deadline_datetime={elem.deadline_datetime}
                           additional_info={elem.additional_info}
                           type='placements'
                           profileInfo={profileInfo}
@@ -93,10 +92,10 @@ const Dashboard = ({
                 )}
               </Tab>
 
-              <Tab eventKey='applied' title='Applied'>
+              <Tab eventKey='applied' title='Your Applications'>
                
                 {dashboardInfo[0] &&
-                dashboardInfo[0]?.placementApplication.length === 0 ? (
+                dashboardInfo[0].placementApplication.length === 0 ? (
                   <Container>
                     <h4 style={{ color: "#787878" }}>No Listings Available</h4>
                   </Container>
@@ -107,9 +106,9 @@ const Dashboard = ({
                         <ApplicationCard
                           key={elem.id}
                           id={elem.id}
-                          company={elem.company_details.name}
-                          application_status={elem.application_status}
-                          resume={elem.resume}
+                          company={elem.placement.company_name}
+
+                          resume={elem.resume_link}
                           type='placements'
                           additional_info={elem.additional_info}
                           selected={elem.selected}

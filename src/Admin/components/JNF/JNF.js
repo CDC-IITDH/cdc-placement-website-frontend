@@ -17,6 +17,11 @@ const JNF = ({setShowLoader}) => {
     const [page, setPage] = useState(1)
     const [submitted, setSubmitted] = useState(0)
     const [error, setError] = useState('')
+    const [compdescription_file, setCompdescription_file] = useState([])
+    const [jobdescription_file, setJobdescription_file] = useState([])
+    const [salary_file, setSalary_file] = useState([])
+
+    const [selection_file,setSelection_file] = useState([])
 
     useEffect(() => {
       setShowLoader(false)
@@ -49,7 +54,7 @@ const JNF = ({setShowLoader}) => {
     let schema = yup.object().shape({
       name: yup.string().required('Company Name is Required'),
       link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
-      compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      // compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       jobdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       salary_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       selection_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
@@ -79,9 +84,9 @@ const JNF = ({setShowLoader}) => {
     })
 
     function submit(values) {
-      let is_company_details_pdf=(values.compdescription_file)?true:false
-      let is_description_pdf=(values.jobdescription_file)?true:false
-      let is_compensation_details_pdf=(values.salary_file)?true:false
+      let is_company_details_pdf=(compdescription_file.length)?true:false
+      let is_description_pdf=(jobdescription_file.length)?true:false
+      let is_compensation_details_pdf=(salary_file.length)?true:false
       let is_selection_procedure_details_pdf=(values.selection_file)?true:false
 
       var selectionprocess=values.selectionprocess.slice()
@@ -126,9 +131,20 @@ const JNF = ({setShowLoader}) => {
       formdata.append("allowed_branch", JSON.stringify(values.branch));
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
       formdata.append("other_requirements", values.requirements);
-      formdata.append("company_details_pdf", [values.compdescription_file]);
+      compdescription_file.forEach((file) => {
+        formdata.append("company_details_pdf",file,file.name);
+      })
+      selection_file.forEach((file) => {
+        formdata.append("selection_procedure_details_pdf",file,file.name);
+      })
       formdata.append("description_pdf", [values.jobdescription_file]);
       formdata.append("compensation_details_pdf", [values.salary_file]);
+      jobdescription_file.forEach((file) => {
+        formdata.append("job_description_pdf",file,file.name);
+      })
+      salary_file.forEach((file) => {
+        formdata.append("compensation_details_pdf",file,file.name);
+      })
       formdata.append("selection_procedure_details_pdf", [values.selection_file]);
 
       var requestOptions = {
@@ -143,14 +159,15 @@ const JNF = ({setShowLoader}) => {
         .then(res => {
           if (res.status !== 200) {
             setError(res)
+            setSubmitted(1)
           }
-          setSubmitted(1)
+
         })
         .catch(error => {
           setError(error)
         });
     }
-
+  
     return (
       <>
         <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
@@ -175,6 +192,8 @@ const JNF = ({setShowLoader}) => {
                           dirty={dirty}
                           setFieldValue={setFieldValue}
                           submitCount={submitCount}
+                          compdescription_file={compdescription_file}
+                          setCompdescription_file={setCompdescription_file}
                         />
                       ):(<></>)}
                       {(page === 2) ? (
@@ -189,6 +208,8 @@ const JNF = ({setShowLoader}) => {
                           dirty={dirty}
                           setFieldValue={setFieldValue}
                           submitCount={submitCount}
+                          jobdescription_file={jobdescription_file}
+                          setJobdescription_file={setJobdescription_file}
                         />
                       ):(<></>)}
                       {(page === 3) ? (
@@ -202,6 +223,8 @@ const JNF = ({setShowLoader}) => {
                           errors={errors}
                           dirty={dirty}
                           setFieldValue={setFieldValue}
+                          salary_file={salary_file}
+                          setSalary_file={setSalary_file}
                         />
                       ):(<></>)}
                       {(page === 4) ? (
@@ -215,6 +238,8 @@ const JNF = ({setShowLoader}) => {
                           errors={errors}
                           dirty={dirty}
                           setFieldValue={setFieldValue}
+                          selection_file ={selection_file}
+                          setSelection_file={setSelection_file}
                         />
                       ):(<></>)}
                       {(page === 5) ? (

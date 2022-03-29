@@ -11,13 +11,13 @@
 .modale-field-key {
   display: inline-block;
   margin-right: 25px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .modale-field-value {
   display: inline-block;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #334878;
 }
