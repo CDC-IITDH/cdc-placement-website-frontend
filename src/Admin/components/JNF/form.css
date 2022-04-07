@@ -81,3 +81,8 @@
 .upload-zone {
   width: 100%;
 }
+
+.Recaptcha-checkbox-border {
+  height: 17px;
+  width: 17px;
+}
