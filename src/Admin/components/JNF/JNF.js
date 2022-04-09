@@ -4,14 +4,13 @@ import CompOverview from "./CompOverview";
 import { Formik } from "formik"
 import * as yup from 'yup'
 import Instructions from "./Instructions";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import JobProfile from "./JobProfile";
 import SalaryDetails from "./SalaryDetails";
 import SelectionProcess from "./SelectionProcess"
 import ContactDetails from "./ContactDetails";
 import API_ENDPOINT from "../../../api/api_endpoint";
 import { Alert } from "react-bootstrap";
-import ReCAPTCHA from "react-google-recaptcha";
 
 const JNF = ({setShowLoader}) => {
     const year = "2020-2021"
@@ -33,9 +32,6 @@ const JNF = ({setShowLoader}) => {
       window.scrollTo(0,0)
       setWarning()
     }, [page])
-
-    const recaptchaRef = useRef(null)
-    const termsRef = useRef(null)
 
     const validatePDF = (value, context) => {
       if (value) {
@@ -152,8 +148,7 @@ const JNF = ({setShowLoader}) => {
         formdata.append("compensation_details_pdf",file,file.name);
       })
       formdata.append("selection_procedure_details_pdf", [values.selection_file]);
-      formdata.append("recaptchakey", recaptchaRef.current.getValue());
-      console.log(recaptchaRef.current.getValue())
+
       var requestOptions = {
         method: 'POST',
         body: formdata,
@@ -243,14 +238,6 @@ const JNF = ({setShowLoader}) => {
           window.scrollTo(0,0)
           setWarning("Please fill all the required fields")
         }
-        else if(termsRef.current.checked === false){
-          setWarning("Please accept the terms and conditions")
-          window.scrollTo(0,0)
-        }
-        else if(recaptchaRef.current.getValue() === ""){
-          setWarning("Please verify that you are not a robot")
-          window.scrollTo(0,0)
-        }
         else {
           console.log("Submitting");
           handleSubmit()
@@ -335,7 +322,6 @@ const JNF = ({setShowLoader}) => {
                         />
                       ):(<></>)}
                       {(page === 5) ? (
-                        <>
                         <ContactDetails
                           handleSubmit={handleSubmit}
                           handleChange={handleChange}
@@ -346,27 +332,6 @@ const JNF = ({setShowLoader}) => {
                           errors={errors}
                           dirty={dirty}
                         />
-                        <Col>
-                        
-                        
-                        <Form.Check
-                          required
-                          style={{display:"inline"}}
-                          ref={termsRef}
-                          />
-                          <span style={{display:"inline",paddingLeft:"10px"}}>
-
-                          We have read and understood the <a  href="">rules and regulations</a> put forth by the IIT Dharwad Career Development Cell 
-                          </span>
-                          
-                          </Col>
-                        <ReCAPTCHA 
-                        sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
-                        size='normal'
-                        ref={recaptchaRef}
-                        style={{marginTop:"20px",height:"50px"}}
-                        />
-                        </>
                       ):(<></>)}
                       <hr className="pd" />
                       <Row>
