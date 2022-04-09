@@ -17,11 +17,11 @@ const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touch
         </div>
       </Container>
       <p className="mb-3 text-center">
-        Describe the selection process for the students.
+        Describe the tentative selection process for the students.
       </p>
       <hr className="pd" />
       <Form.Group className="mb-5">
-        <Form.Label>Selection Process <span className="text-danger">*</span></Form.Label>
+        <Form.Label>Tentative selection Process <span className="text-danger">*</span></Form.Label>
         <Form.Check className="form-check" type="checkbox">
           <Row>
             {['Resume Shortlisting','Aptitude Test','Technical Test','Pre-Placement Test','Group Discucssion','Technical Interview','HR Interview'].map((x) => (
