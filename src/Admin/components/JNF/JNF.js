@@ -4,12 +4,14 @@ import CompOverview from "./CompOverview";
 import { Formik } from "formik"
 import * as yup from 'yup'
 import Instructions from "./Instructions";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import JobProfile from "./JobProfile";
 import SalaryDetails from "./SalaryDetails";
 import SelectionProcess from "./SelectionProcess"
 import ContactDetails from "./ContactDetails";
 import API_ENDPOINT from "../../../api/api_endpoint";
+import { Alert } from "react-bootstrap";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const JNF = ({setShowLoader}) => {
     const year = "2020-2021"
@@ -17,6 +19,11 @@ const JNF = ({setShowLoader}) => {
     const [page, setPage] = useState(1)
     const [submitted, setSubmitted] = useState(0)
     const [error, setError] = useState('')
+    const [compdescription_file, setCompdescription_file] = useState([])
+    const [jobdescription_file, setJobdescription_file] = useState([])
+    const [salary_file, setSalary_file] = useState([])
+    const [warning, setWarning] = useState()
+    const [selection_file,setSelection_file] = useState([])
 
     useEffect(() => {
       setShowLoader(false)
@@ -24,7 +31,11 @@ const JNF = ({setShowLoader}) => {
 
     useEffect(() => {
       window.scrollTo(0,0)
+      setWarning()
     }, [page])
+
+    const recaptchaRef = useRef(null)
+    const termsRef = useRef(null)
 
     const validatePDF = (value, context) => {
       if (value) {
@@ -49,7 +60,7 @@ const JNF = ({setShowLoader}) => {
     let schema = yup.object().shape({
       name: yup.string().required('Company Name is Required'),
       link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
-      compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      // compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       jobdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       salary_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       selection_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
@@ -57,7 +68,7 @@ const JNF = ({setShowLoader}) => {
       city: yup.string().required('City is Required'),
       state: yup.string().required('State is Required'),
       country: yup.string().required('Country is Required'),
-      pincode: yup.number().required('Zip/Pin is Required'),
+      pincode: yup.number('Must be a Number').required('Zip/Pin is Required'),
       type: yup.string().required("Required"),
       nature: yup.string().required("Required"),
       designation: yup.string().required('Designation is Required'),
@@ -79,9 +90,9 @@ const JNF = ({setShowLoader}) => {
     })
 
     function submit(values) {
-      let is_company_details_pdf=(values.compdescription_file)?true:false
-      let is_description_pdf=(values.jobdescription_file)?true:false
-      let is_compensation_details_pdf=(values.salary_file)?true:false
+      let is_company_details_pdf=(compdescription_file.length)?true:false
+      let is_description_pdf=(jobdescription_file.length)?true:false
+      let is_compensation_details_pdf=(salary_file.length)?true:false
       let is_selection_procedure_details_pdf=(values.selection_file)?true:false
 
       var selectionprocess=values.selectionprocess.slice()
@@ -126,11 +137,23 @@ const JNF = ({setShowLoader}) => {
       formdata.append("allowed_branch", JSON.stringify(values.branch));
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
       formdata.append("other_requirements", values.requirements);
-      formdata.append("company_details_pdf", [values.compdescription_file]);
+      compdescription_file.forEach((file) => {
+        formdata.append("company_details_pdf",file,file.name);
+      })
+      selection_file.forEach((file) => {
+        formdata.append("selection_procedure_details_pdf",file,file.name);
+      })
       formdata.append("description_pdf", [values.jobdescription_file]);
       formdata.append("compensation_details_pdf", [values.salary_file]);
+      jobdescription_file.forEach((file) => {
+        formdata.append("job_description_pdf",file,file.name);
+      })
+      salary_file.forEach((file) => {
+        formdata.append("compensation_details_pdf",file,file.name);
+      })
       formdata.append("selection_procedure_details_pdf", [values.selection_file]);
-
+      formdata.append("recaptchakey", recaptchaRef.current.getValue());
+      console.log(recaptchaRef.current.getValue())
       var requestOptions = {
         method: 'POST',
         body: formdata,
@@ -138,31 +161,117 @@ const JNF = ({setShowLoader}) => {
       };
 
       // console.log(values.date)
+      setShowLoader(true)
 
       fetch(API_ENDPOINT+"api/company/addPlacement/", requestOptions)
         .then(res => {
           if (res.status !== 200) {
             setError(res)
+            setSubmitted(1)
           }
           setSubmitted(1)
+          setShowLoader(false)
+
         })
         .catch(error => {
           setError(error)
         });
     }
 
+    const handlePageChange = (setPage, page, errors, setFieldTouched, handleSubmit) => {
+      if (page === 1) {
+        if (errors.name || errors.link || errors.address || errors.city || errors.state || errors.country || errors.pincode || errors.type || errors.nature) {
+          setFieldTouched("name", true)
+          setFieldTouched("link", true)
+          setFieldTouched("address", true)
+          setFieldTouched("city", true)
+          setFieldTouched("state", true)
+          setFieldTouched("country", true)
+          setFieldTouched("pincode", true)
+          setFieldTouched("type", true)
+          setFieldTouched("nature", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          setPage(page + 1)
+        }
+      }
+      else if (page === 2) {
+        if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers) {
+          setFieldTouched("designation", true)
+          setFieldTouched("locations", true)
+          setFieldTouched("details", true)
+          setFieldTouched("date", true)
+          setFieldTouched("branch", true)
+          setFieldTouched("research", true)
+          setFieldTouched("numoffers", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          setPage(page + 1)
+        }
+      }
+      else if (page === 3) {
+        if (errors.ctc || errors.gross || errors.takehome) {
+          setFieldTouched("ctc", true)
+          setFieldTouched("gross", true)
+          setFieldTouched("takehome", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          setPage(page + 1)
+        }
+      }
+      else if (page === 4) {
+        if (errors.selectionprocess) {
+          setFieldTouched("selectionprocess", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else {
+          setPage(page + 1)
+        }
+      }
+      else if (page === 5) {
+        if (errors.contact || errors.email || errors.mobile) {
+          setFieldTouched("contact", true)
+          setFieldTouched("email", true)
+          setFieldTouched("mobile", true)
+          window.scrollTo(0,0)
+          setWarning("Please fill all the required fields")
+        }
+        else if(termsRef.current.checked === false){
+          setWarning("Please accept the terms and conditions")
+          window.scrollTo(0,0)
+        }
+        else if(recaptchaRef.current.getValue() === ""){
+          setWarning("Please verify that you are not a robot")
+          window.scrollTo(0,0)
+        }
+        else {
+          console.log("Submitting");
+          handleSubmit()
+        }
+      }
+    }
+
+  
     return (
       <>
         <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
               {!submitted? (
-                <Formik validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'',research:'',selectionprocess_other:''}}>
-                  {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,submitCount}) => (
+                <Formik validateOnMount={true} validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'',research:'',selectionprocess_other:''}}>
+                  {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,setFieldTouched, submitCount}) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       {(page === 1) ? (
                         <Instructions year={year} />
                       ):(<></>)}
+                      {warning?<Alert variant="danger">{warning}</Alert>:null}
                       {(page === 1) ? (
                         <CompOverview
                           handleSubmit={handleSubmit}
@@ -175,6 +284,8 @@ const JNF = ({setShowLoader}) => {
                           dirty={dirty}
                           setFieldValue={setFieldValue}
                           submitCount={submitCount}
+                          compdescription_file={compdescription_file}
+                          setCompdescription_file={setCompdescription_file}
                         />
                       ):(<></>)}
                       {(page === 2) ? (
@@ -189,6 +300,8 @@ const JNF = ({setShowLoader}) => {
                           dirty={dirty}
                           setFieldValue={setFieldValue}
                           submitCount={submitCount}
+                          jobdescription_file={jobdescription_file}
+                          setJobdescription_file={setJobdescription_file}
                         />
                       ):(<></>)}
                       {(page === 3) ? (
@@ -202,6 +315,8 @@ const JNF = ({setShowLoader}) => {
                           errors={errors}
                           dirty={dirty}
                           setFieldValue={setFieldValue}
+                          salary_file={salary_file}
+                          setSalary_file={setSalary_file}
                         />
                       ):(<></>)}
                       {(page === 4) ? (
@@ -215,9 +330,12 @@ const JNF = ({setShowLoader}) => {
                           errors={errors}
                           dirty={dirty}
                           setFieldValue={setFieldValue}
+                          selection_file ={selection_file}
+                          setSelection_file={setSelection_file}
                         />
                       ):(<></>)}
                       {(page === 5) ? (
+                        <>
                         <ContactDetails
                           handleSubmit={handleSubmit}
                           handleChange={handleChange}
@@ -228,7 +346,29 @@ const JNF = ({setShowLoader}) => {
                           errors={errors}
                           dirty={dirty}
                         />
+                        <Col>
+                        
+                        
+                        <Form.Check
+                          required
+                          style={{display:"inline"}}
+                          ref={termsRef}
+                          />
+                          <span style={{display:"inline",paddingLeft:"10px"}}>
+
+                          We have read and understood the <a  href="https://drive.google.com/file/d/12hiRifBpIZUrZRJNXTqwcZb9ge_QbO4K/view">rules and regulations</a> put forth by the IIT Dharwad Career Development Cell 
+                          </span>
+                          
+                          </Col>
+                        <ReCAPTCHA 
+                        sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
+                        size='normal'
+                        ref={recaptchaRef}
+                        style={{marginTop:"20px",height:"50px"}}
+                        />
+                        </>
                       ):(<></>)}
+                      <br/>
                       <hr className="pd" />
                       <Row>
                         {(page!==1)? (
@@ -240,13 +380,13 @@ const JNF = ({setShowLoader}) => {
                         ):(<></>)}
                         {(page!==5)? (
                           <Col className="text-end">
-                            <Button variant="primary" onClick={()=>{setPage(page+1)}}>
+                            <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit)}>
                               Next
                             </Button>
                           </Col>
                         ):(
                           <Col className="text-end">
-                            <Button variant="primary" onClick={handleSubmit} disabled={!(isValid && dirty)}>
+                            <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit)} >
                               Submit
                             </Button>
                           </Col>

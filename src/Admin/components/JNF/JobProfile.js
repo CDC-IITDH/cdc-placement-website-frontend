@@ -1,7 +1,8 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import MultipleFileInput from "./MultipleFileInput";
 
-const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue, submitCount}) => {
+const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue, submitCount, jobdescription_file, setJobdescription_file}) => {
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -15,15 +16,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         </div>
       </Container>
       <hr className="pd" />
-      <Form.Group className="mb-5">
-        <Form.Label>Job Description</Form.Label>
-        <Form.Control type="text" value={values.jobdescription_file?values.jobdescription_file.name:''} disabled />
-        <p className="select-feedback">{errors.jobdescription_file}</p>
-        <Form.Control type="file" name='jobdescription_file' accept="application/pdf" onChange={(event) => {setFieldValue("jobdescription_file", event.currentTarget.files[0])}} />
-        <Form.Text className="text-muted">
-          PDF (Max. 10MB)
-        </Form.Text>
-      </Form.Group>
+      <MultipleFileInput stateVar={jobdescription_file} setStateVar={setJobdescription_file} name="jobdescription_file" label ="Job Description" />
       <Form.Group className="mb-5">
         <Form.Label>Job Designation Offered <span className="text-danger">*</span></Form.Label>
         <Form.Control type="text" name='designation' value={values.designation} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.designation && errors.designation} />
@@ -67,13 +60,13 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
           <Row>
             {['Yes','No'].map((eligible) => (
               <Col sm={6} key={eligible}>
-                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={submitCount && errors.research} checked={values.research.includes(eligible)}></Form.Check.Input>
+                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.research && errors.research} checked={values.research.includes(eligible)}></Form.Check.Input>
                 <Form.Check.Label>{eligible}</Form.Check.Label>
               </Col>
             ))}
           </Row>
         </Form.Check>
-        <span className="select-feedback">{submitCount? errors.research:''}</span>
+        <span className="select-feedback">{errors.research && touched.research? errors.research:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Tentative No. of Offers</Form.Label>
