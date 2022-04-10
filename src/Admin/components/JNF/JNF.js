@@ -368,6 +368,7 @@ const JNF = ({setShowLoader}) => {
                         />
                         </>
                       ):(<></>)}
+                      <br/>
                       <hr className="pd" />
                       <Row>
                         {(page!==1)? (
