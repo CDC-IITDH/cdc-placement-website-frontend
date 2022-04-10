@@ -356,7 +356,7 @@ const JNF = ({setShowLoader}) => {
                           />
                           <span style={{display:"inline",paddingLeft:"10px"}}>
 
-                          We have read and understood the <a  href="">rules and regulations</a> put forth by the IIT Dharwad Career Development Cell 
+                          We have read and understood the <a  href="https://drive.google.com/file/d/12hiRifBpIZUrZRJNXTqwcZb9ge_QbO4K/view">rules and regulations</a> put forth by the IIT Dharwad Career Development Cell 
                           </span>
                           
                           </Col>
