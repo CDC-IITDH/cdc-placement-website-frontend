@@ -14,6 +14,7 @@ import Loader from "./components/Loader/Loader";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import JNF from "./Admin/components/JNF/JNF";
+import VerifyEmail from "./Admin/components/VerifyEmail/VerifyEmail";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -162,6 +163,16 @@ const App = () => {
                                         );
 
                                     }}
+                                />
+                                <Route
+                                    path='/company/verifyemail'
+                                     render={() => {
+                                        return (
+                                        <VerifyEmail
+                                        setShowLoader={setShowLoader}
+                                        />
+                                        )}
+                                }
                                 />
                                 <Route
                                     exact
