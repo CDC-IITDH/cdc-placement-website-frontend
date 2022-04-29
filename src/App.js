@@ -170,6 +170,7 @@ const App = () => {
                                         return (
                                         <VerifyEmail
                                         setShowLoader={setShowLoader}
+                                        setError={setError}
                                         />
                                         )}
                                 }
