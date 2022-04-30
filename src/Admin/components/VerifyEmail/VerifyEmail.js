@@ -4,13 +4,11 @@ import { Row, Col} from "react-bootstrap"
 import logo from "../../images/cdc_logo.png";
 import {Link} from "react-router-dom";
 
-const VerifyEmail = ({setShowLoader}) => {
+const VerifyEmail = ({setShowLoader,setError}) => {
     const token = new URLSearchParams(window.location.search).get("token")
     console.log(token)
     const [ res , setRes ] = useState(null)
-    useEffect(() => {
-        setShowLoader(false)
-      }, [res, setShowLoader]) 
+
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -23,13 +21,24 @@ const VerifyEmail = ({setShowLoader}) => {
         }),
         redirect: 'follow'
         };
+        
         useEffect(() => {
-        fetch(`${API_ENDPOINT}api/company/verifyEmail/`, requestOptions).then(
-            res => {
-                    setRes(res.status)
-            }
-        )
+            fetch(API_ENDPOINT+"api/company/verifyEmail/", requestOptions)
+            .then(response =>()=>{
+                return response.status})
+            .then(result => {
+                setRes(result)
+                setShowLoader(false)
+            })
+            .catch(error => {
+                console.log('error', error);
+                setError(error)
+                setRes(500)
+                setShowLoader(false)
+            });
         }, [])
+        
+
     return (
         <div className="container-fluid p-0">
             <nav className=" d-flex justify-content-center" style={{
@@ -55,14 +64,19 @@ const VerifyEmail = ({setShowLoader}) => {
                     )}
                 
                     <h1 className="text-center text-dark">
-                        {res === 200 && "Email verified successfully"}
+
+                        {res === 200 && "Email verified successfully.Check your mail for more details"}
                         {res === 400 && "URL is not valid"}
-                        {res === 404 && " Some Error Occurred, Email not verified"}
+                        {res === 404 && "Some Error Occurred, Email not verified"}
+                        {res === 500 && "Some Error Occurred, Email not verified"}
+
                     </h1>
                     <p className="text-center text-dark">
                         {res === 200 && "Check email for further details"}
                         {res === 400 && "Check the URL and try again"}
                         {res === 404 && "Contact CDC if problem persists"}
+                        {res === 500 && "Please, try again after sometime. Contact CDC if problem persists"}
+
                     </p>
                 </Col>
             </Row>
