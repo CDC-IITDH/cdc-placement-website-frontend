@@ -8,6 +8,7 @@ const VerifyEmail = ({setShowLoader,setError}) => {
     const token = new URLSearchParams(window.location.search).get("token")
     console.log(token)
     const [ res , setRes ] = useState(null)
+
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -37,6 +38,7 @@ const VerifyEmail = ({setShowLoader,setError}) => {
             });
         }, [])
         
+
     return (
         <div className="container-fluid p-0">
             <nav className=" d-flex justify-content-center" style={{
@@ -62,16 +64,19 @@ const VerifyEmail = ({setShowLoader,setError}) => {
                     )}
                 
                     <h1 className="text-center text-dark">
+
                         {res === 200 && "Email verified successfully.Check your mail for more details"}
                         {res === 400 && "URL is not valid"}
-                        {res === 404 && " Some Error Occurred, Email not verified"}
-                        {res === 500 && "Server Error Occurred, Email not verified"}
+                        {res === 404 && "Some Error Occurred, Email not verified"}
+                        {res === 500 && "Some Error Occurred, Email not verified"}
+
                     </h1>
                     <p className="text-center text-dark">
                         {res === 200 && "Check email for further details"}
                         {res === 400 && "Check the URL and try again"}
                         {res === 404 && "Contact CDC if problem persists"}
                         {res === 500 && "Please, try again after sometime. Contact CDC if problem persists"}
+
                     </p>
                 </Col>
             </Row>

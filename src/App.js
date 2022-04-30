@@ -171,6 +171,7 @@ const App = () => {
                                         <VerifyEmail
                                         setShowLoader={setShowLoader}
                                         setError={setError}
+
                                         />
                                         )}
                                 }
