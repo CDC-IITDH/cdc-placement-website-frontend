@@ -56,4 +56,63 @@ const ExportAsExcel = (token, opening_id) => {
   });
 };
 
-export { GetApplications, ExportAsExcel };
+
+const ChangeOffer = (token, opening_id, offer_accepted) => {
+  return new Promise((myResolve, myReject) => {
+    if (token) {
+      fetch(API_ENDPOINT + "api/admin/updateOfferAccepted/", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          opening_id: opening_id,
+          offer_accepted: offer_accepted,
+        }),
+      })
+        .then((result) => {
+          if (result.status === 200) myResolve(result.json());
+          else throw new Error("Error " + result.status);
+        })
+        .catch((err) => {
+          myReject(false);
+        });
+    } else {
+      myReject(false);
+    }
+  });
+};
+
+const UpdateDeadline = (token, deadline,opening_id) => {
+  return new Promise((myResolve, myReject) => {
+    if (token) {
+      fetch(API_ENDPOINT + "api/admin/updateDeadline/", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          deadline_datetime: deadline,
+          opening_id: opening_id,
+
+        }),
+      })
+        .then((result) => {
+          if (result.status === 200) myResolve(result.json());
+          else throw new Error("Error " + result.status);
+        })
+        .catch((err) => {
+          myReject(false);
+        });
+    } else {
+      myReject(false);
+    }
+  });
+};
+
+
+export { GetApplications, ExportAsExcel, ChangeOffer, UpdateDeadline };

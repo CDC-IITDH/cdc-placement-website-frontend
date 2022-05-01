@@ -25,6 +25,7 @@ const AddPPOModal = ({
         designation: false,
         compensation_gross: false,
         accepted: false,
+        tier: false,
     });
     const [isError, setIsError] = useState(false);
     // find if at least one in true in errorState
@@ -45,6 +46,7 @@ const AddPPOModal = ({
         compensation_gross: '',
         compensation_details: '',
         offer_accepted: '',
+        tier:1,
     });
     const handleClose = () => {
         setShowModal(false);
@@ -54,6 +56,7 @@ const AddPPOModal = ({
             designation: false,
             compensation_gross: false,
             offer_accepted: false,
+            tier: false,
         });
         setModalType('');
     };
@@ -218,6 +221,42 @@ const AddPPOModal = ({
                                 />
                             </div>
                             <div className="Parent-addPPO">
+                                <h2 className="label-addPPO">Tier:</h2>
+                                <NativeSelect
+                                    className="addPPO-textField"
+                                    onChange={handleInputChange}
+                                    value={data['tier']}
+                                    name="tier"
+                                    error={errorState['tier']}
+                                    inputProps={{
+                                        name: "tier",
+                                        id: "tier-selector",
+                                    }}
+                                >
+                                     <option value={1} >
+                                        1
+                                    </option>
+                                    <option value={2} >
+                                        2
+                                    </option>
+                                    <option value={3} >
+                                        3
+                                    </option>
+                                    <option value={4} >
+                                        4
+                                    </option>
+                                    <option value={5} >
+                                        5
+                                    </option>
+                                    <option value={6} >
+                                        6
+                                    </option>
+                                    <option value={7} >
+                                        7
+                                    </option>
+                                </NativeSelect>
+                            </div>
+                            <div className="Parent-addPPO">
                                 <h2 className="label-addPPO">Accepted:</h2>
                                 <NativeSelect
                                     className="addPPO-textField"
@@ -241,6 +280,7 @@ const AddPPOModal = ({
                                     </option>
                                 </NativeSelect>
                             </div>
+
 
                         </Container>
                     </div>
