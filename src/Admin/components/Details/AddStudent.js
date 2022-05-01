@@ -17,6 +17,7 @@ function addStudent({ show, setShow, reqJobPosting }) {
         <Modal.Body style={{ backgroundColor: "#dbdbdb" }}>
           <p>Fill the additional fields</p>
           <Form>
+
             {reqJobPosting && reqJobPosting?.additional_info.length !== 0 ? (
               reqJobPosting?.additional_info.map((elem) => {
                 return (

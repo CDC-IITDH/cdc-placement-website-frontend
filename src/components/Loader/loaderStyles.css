@@ -1,9 +1,10 @@
 .spinner {
   text-align: center;
-  padding: 49vh calc(50vw - 27px);
+  padding: 49vh calc(49vw - 27px);
   background: white;
   position: fixed;
   z-index: 2000;
+  width:100%;
   }
   
   .spinner > div {

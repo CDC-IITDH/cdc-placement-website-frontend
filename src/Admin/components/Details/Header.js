@@ -20,6 +20,12 @@ const Header = ({ studentsApplied, openingId, token, reqJobPosting }) => {
         .then((res) => {
           const data = res;
           console.log(data);
+          // if url in data
+          if (data.file) {
+            window.open(data.file);
+          }
+
+
         })
         .catch((err) => {
           console.log(err);

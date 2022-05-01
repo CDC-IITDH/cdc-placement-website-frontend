@@ -5,6 +5,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import DetailsPage from "./components/Details/DetailsPage";
 import {GetDashboard} from "./api/dashboard";
 import AddPPOModal from "./components/AddPPOModal/AddPPOModal";
+import Description from "./components/Description/Description";
 
 const App = ({
                  auth,
@@ -24,12 +25,12 @@ const App = ({
 
     const getDashboardInfo = () => {
         if (token) {
-             setShowLoader(true);
+            setShowLoader(true);
             GetDashboard(token)
                 .then((res) => {
                     const data = res;
                     setdashboardInfo(data);
-                     // setShowLoader(false);
+                    // setShowLoader(false);
                 })
                 .catch((err) => {
                     setAuth(false);
@@ -54,14 +55,14 @@ const App = ({
                     setToken={setToken}
                     setCurrentUserType={setCurrentUserType}
                     showModal={showModal}
-                                            setShowModal={setShowModal}
-                                            ModalType={ModalType}
-                                            setModalType={setModalType}
+                    setShowModal={setShowModal}
+                    ModalType={ModalType}
+                    setModalType={setModalType}
                 />
 
                 {auth ? (
                     <Switch>
-                         {
+                        {
                             showModal ? (
                                     ModalType === "addPPO" ? (
                                         <AddPPOModal
@@ -85,7 +86,7 @@ const App = ({
                         }
                         <Route
                             exact
-                            path='/admin/details/:id'
+                            path='/admin/details/:type/:id'
                             render={({match}) => (
                                 <DetailsPage
                                     dashboardInfo={[dashboardInfo]}
@@ -100,6 +101,25 @@ const App = ({
                                     getDashboardInfo={getDashboardInfo}
                                     setAuth={setAuth}
                                     setToken={setToken}
+                                />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path='/admin/description/:type/:id'
+                            render={({match}) => (
+                                <Description
+                                    // profileInfo={profileInfo}
+                                    dashboardInfo={[dashboardInfo]}
+                                    match={match}
+                                    auth={auth}
+                                    token={token}
+                                    setShowLoader={setShowLoader}
+                                    setError={setError}
+                                    setShowError={setShowError}
+                                    setSuccess={setSuccess}
+                                    setShowSuccess={setShowSuccess}
+                                    getDashboardInfo={getDashboardInfo}
                                 />
                             )}
                         />
@@ -133,4 +153,4 @@ const App = ({
     );
 };
 
-export { App };
+export {App};

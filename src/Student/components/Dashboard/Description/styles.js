@@ -70,8 +70,8 @@ export default makeStyles((theme) => ({
   },
   branchCard: {
     display: "flex",
-    width: "6rem",
-    height: "50px",
+    width: "5rem",
+    height: "45px",
     alignItems: "center",
     marginTop: "1rem",
     marginInline: "0.5rem",
@@ -86,8 +86,8 @@ export default makeStyles((theme) => ({
   },
   batchCard: {
     display: "flex",
-    width: "8rem",
-    height: "50px",
+    width: "6rem",
+    height: "48px",
     alignItems: "center",
     justifyContent: "center",
     marginTop: "1rem",

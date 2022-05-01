@@ -143,14 +143,25 @@ const Profile = ({
                                             <div className="modal-field-value">{profileInfo.cpi}</div>
                                         </div>
 
-
+                                        {
+                                            profileInfo.offers && profileInfo.offers.length ?
+                                                <div className="modal-field-key" style={{marginTop: "15px"}}>
+                                                    Current Offers:
+                                                </div> : ""
+                                        }
                                         {
                                             profileInfo.offers.map((offer, index) => {
                                                 return (
                                                     <div className="modal-field-parent">
                                                         <div className="modal-field-key">Offer {index + 1} at</div>
                                                         <div className="modal-field-value">
-                                                            <a href={APPLICATION_ENDPOINT + offer.application_id}>{offer.company_name}</a>
+                                                            {offer.placement_offer_type === 'PPO' ?
+                                                                <span>{offer.company_name} (PPO)</span>
+                                                                :
+                                                                <a href={APPLICATION_ENDPOINT + offer.application_id}>{offer.company_name}</a>
+
+                                                            }
+
                                                         </div>
                                                     </div>
                                                 );

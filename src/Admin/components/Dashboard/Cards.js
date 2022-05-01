@@ -46,7 +46,7 @@ function Cards({
         <>
             <Card className={css.dashboardCard}>
                 <Link
-                    to={`admin/details/${id}`}
+                    to={`admin/details/${type}/${id}`}
                     style={{textDecoration: "none", color: "black"}}
                 >
                     <div className={css.basicInfo}>

@@ -1,10 +1,14 @@
 import { Box, Typography } from "@material-ui/core";
 import React from "react";
+import {Link} from "react-router-dom";
 
-const SideButtons = ({ buttonContent }) => {
+const SideButtons = ({ buttonContent, type, id }) => {
   const changeScreen = () => {};
-
+console.log(`/admin/description/${type}/${id}`);
   return (
+
+      <Link  to={`/admin/description/${type}/${id}`}
+                    style={{textDecoration: "none", color: "black"}}>
     <Box
       onClick={changeScreen}
       sx={{
@@ -26,6 +30,7 @@ const SideButtons = ({ buttonContent }) => {
     >
       <Typography>{buttonContent}</Typography>
     </Box>
+          </Link>
   );
 };
 
