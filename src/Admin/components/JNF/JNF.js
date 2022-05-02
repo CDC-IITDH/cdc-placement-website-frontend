@@ -143,10 +143,10 @@ const JNF = ({setShowLoader}) => {
       selection_file.forEach((file) => {
         formdata.append("selection_procedure_details_pdf",file,file.name);
       })
-      formdata.append("description_pdf", [values.jobdescription_file]);
-      formdata.append("compensation_details_pdf", [values.salary_file]);
+      // formdata.append("description_pdf", [values.jobdescription_file]);
+      // formdata.append("compensation_details_pdf", [values.salary_file]);
       jobdescription_file.forEach((file) => {
-        formdata.append("job_description_pdf",file,file.name);
+        formdata.append("description_pdf",file,file.name);
       })
       salary_file.forEach((file) => {
         formdata.append("compensation_details_pdf",file,file.name);
