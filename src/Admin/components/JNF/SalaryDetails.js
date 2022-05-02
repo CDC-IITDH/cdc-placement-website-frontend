@@ -46,7 +46,7 @@ const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched,
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Details of Bond (if any)</Form.Label>
-        <Form.Control as="textarea" className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
+        <Form.Control as="textarea" maxLength="1000" className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
       </Form.Group>
     </>
   )
