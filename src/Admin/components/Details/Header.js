@@ -61,7 +61,7 @@ const Header = ({ studentsApplied, openingId, token, reqJobPosting }) => {
             className={classes.otherFunctionButtons}
           >
             <AddIcon className={classes.addIcon} />
-            <Typography className={classes.buttonText}>Add Student</Typography>
+            <Typography className={classes.buttonText}>Add/Edit <br/>Application</Typography>
           </div>
           <div onClick={exportAsExcel} className={classes.otherFunctionButtons}>
             <LocalPrintshopIcon className={classes.printIcon} />
@@ -78,6 +78,7 @@ const Header = ({ studentsApplied, openingId, token, reqJobPosting }) => {
         reqJobPosting={reqJobPosting}
         show={showAddStudentModal}
         setShow={setshowAddStudentModal}
+        token={token}
       />
     </div>
   );
