@@ -3,7 +3,7 @@ import React from "react";
 import StudentCard from "./StudentCard";
 import { Grid, Typography } from "@material-ui/core";
 
-const StudentList = ({ applicationsInfo }) => {
+const StudentList = ({ applicationsInfo, reqJobPosting, token }) => {
   const classes = useStyles();
 
   console.log(applicationsInfo);
@@ -29,6 +29,12 @@ const StudentList = ({ applicationsInfo }) => {
                   name={elem.student_details.name}
                   batch={elem.student_details.batch}
                   branch={elem.student_details.branch}
+                  student_id = {elem.student}
+                  resume_list = {elem.student_details.resume_list}
+                  additional_info = {elem.additional_info}
+                  token = {token}
+                  reqJobPosting = {reqJobPosting}
+                  application_id = {elem.id}
                 />
               </Grid>
             );

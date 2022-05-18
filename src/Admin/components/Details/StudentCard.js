@@ -1,11 +1,18 @@
-import React from "react";
+import { useState } from "react";
 import useStyles from "./styles";
 import { Box, Typography } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
+import EditIcon from "@material-ui/icons/Edit";
+import EditStudent from "./editStudent";
 
-const StudentCard = ({ name, branch, batch }) => {
+const StudentCard = ({ name, branch, batch, student_id, resume_list, additional_info, token, reqJobPosting, application_id }) => {
+  const [show, setShow] = useState(false);
   const classes = useStyles();
+
+  const hanldeModal = () => {
+    setShow(true);
+  };
 
   return (
     <Box
@@ -23,6 +30,19 @@ const StudentCard = ({ name, branch, batch }) => {
         paddingInline: "0.5rem",
       }}
     >
+      <EditStudent
+                show={show}
+                setShow={setShow}
+                reqJobPosting={reqJobPosting}
+                token={token}
+                student_name = {name}
+                student_batch = {batch}
+                student_branch = {branch}
+                student_id = {student_id}
+                resume_file_names = {resume_list}
+                application_id = {application_id}
+                additional_info = {additional_info}
+              />
       <Box
         sx={{
           marginBlock: "0.5rem",
@@ -67,6 +87,23 @@ const StudentCard = ({ name, branch, batch }) => {
           sx={{
             borderRadius: "50%",
             color: "white",
+            backgroundColor: "#00C3BC",
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "2rem",
+            width: "2rem",
+          }}
+        >
+          <EditIcon 
+            onClick={hanldeModal}
+          />
+        </Box>
+        <Box
+          sx={{
+            borderRadius: "50%",
+            color: "white",
             backgroundColor: "#66C971",
             cursor: "pointer",
             display: "flex",
@@ -80,6 +117,7 @@ const StudentCard = ({ name, branch, batch }) => {
         </Box>
       </Box>
     </Box>
+    
   );
 };
 

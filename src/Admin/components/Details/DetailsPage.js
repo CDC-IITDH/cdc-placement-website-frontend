@@ -81,7 +81,7 @@ const DetailsPage = ({
   }, [dashboardInfo, openingId]);
 
 
-
+  
   return (
     <div className={classes.container}>
       <Details opening={reqJobPosting} setShowLoader = {setShowLoader} token ={token} getDashboardInfo={getDashboardInfo} type={openingType}/>
@@ -92,7 +92,7 @@ const DetailsPage = ({
           openingId={openingId}
           reqJobPosting={reqJobPosting}
         />
-        <StudentList applicationsInfo={applicationsInfo}  />
+        <StudentList applicationsInfo={applicationsInfo} reqJobPosting={reqJobPosting} token={token} />
       </div>
     </div>
   );
