@@ -32,7 +32,7 @@ const DeadlineCard = (
 
     const updateDeadlineFun = () => {
         // selectedDate in '%Y-%m-%d %H:%M:%S %z'
-            const deadline_datetime = selectedDate.toISOString().slice(0, 19).replace('T', ' ') + " +0000";
+        const deadline_datetime = selectedDate.toISOString().slice(0, 19).replace('T', ' ') + " +0000";
 
         // var deadline_datetime = String.toString(selectedDate).replace('T', ' ');
 
@@ -41,7 +41,7 @@ const DeadlineCard = (
             console.log(res);
 
             getDashboardInfo();
-                        setShowLoader(false);
+            setShowLoader(false);
 
         });
         setShowLoader(true);

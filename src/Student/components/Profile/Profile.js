@@ -35,10 +35,10 @@ const Profile = ({
     }, [profileInfo, setShowLoader]);
 
     if (profileInfo && show) {
-        const OpenResume = (resume_name) => {
+        const OpenResume = (resume_link) => {
 
             window.open(
-                RESUME_ENDPOINT + resume_name
+                resume_link
             );
         };
 

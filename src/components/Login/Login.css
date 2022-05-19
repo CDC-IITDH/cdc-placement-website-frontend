@@ -1,4 +1,4 @@
-.login-parent{
+.login-parent {
     min-height: 80vh;
 }
 
@@ -40,9 +40,10 @@
     .login-btn-parent {
         text-align: center;
     }
-    .login-parent{
-        min-height: 40vh!important;
-        margin-top: 40%!important;
+
+    .login-parent {
+        min-height: 40vh !important;
+        margin-top: 40% !important;
     }
 
 }

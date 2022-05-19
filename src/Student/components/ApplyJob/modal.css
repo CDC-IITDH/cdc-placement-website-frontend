@@ -1,87 +1,88 @@
 .Parent {
-  display: grid;
-  grid-template-columns: 33% 7% 60%;
-  margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: 33% 7% 60%;
+    margin-bottom: 15px;
 }
 
 .modale-title {
-  color: white;
+    color: white;
 }
 
 .modale-field-key {
-  display: inline-block;
-  margin-right: 25px;
-  font-size: 16px;
-  font-weight: 600;
+    display: inline-block;
+    margin-right: 25px;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .modale-field-value {
-  display: inline-block;
-  font-size: 16px;
-  font-weight: 600;
-  color: #334878;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #334878;
 }
 
 .card-div {
-  width: 95%;
-  border-radius: 0.6rem;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 10px;
-  border-style: solid;
-  overflow: hidden;
-  border-color: #334878;
+    width: 95%;
+    border-radius: 0.6rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    border-style: solid;
+    overflow: hidden;
+    border-color: #334878;
 }
 
 .label {
-  font-size: 1.2em;
-  margin-top: auto !important;
-  margin-bottom: auto !important;
-  text-transform: capitalize;
+    font-size: 1.2em;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+    text-transform: capitalize;
 }
 
 .MuiInputLabel-shrink {
-  top: 5px !important;
+    top: 5px !important;
 }
 
 .resume-section {
-  top: 10px !important;
+    top: 10px !important;
 }
 
 .card-div h4 {
-  margin-bottom: 10px;
-  margin-top: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .h7-div {
-  color: red;
-  margin-bottom: 20px;
-  text-align: left;
+    color: red;
+    margin-bottom: 20px;
+    text-align: left;
 }
-.modale-info-name{
-  font-size: 1.5rem!important;
+
+.modale-info-name {
+    font-size: 1.5rem !important;
 }
 
 
 @media all and (max-width: 500px) {
 
-  .card-div h5 {
-    font-size: 90%;
-  }
+    .card-div h5 {
+        font-size: 90%;
+    }
 
-  .Parent h2 {
-    font-size: 105%;
-  }
+    .Parent h2 {
+        font-size: 105%;
+    }
 
-  .MuiInput-input option {
-    font-size: 100%;
-  }
+    .MuiInput-input option {
+        font-size: 100%;
+    }
 
-  .modale-field-key {
-    font-size: 17px;
-  }
+    .modale-field-key {
+        font-size: 17px;
+    }
 
-  .modale-field-value {
-    font-size: 17px;
-  }
+    .modale-field-value {
+        font-size: 17px;
+    }
 }
