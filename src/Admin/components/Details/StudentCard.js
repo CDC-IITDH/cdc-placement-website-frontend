@@ -4,7 +4,7 @@ import { Box, Typography } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
 
-const StudentCard = ({ name, branch, batch }) => {
+const StudentCard = ({ name, branch, batch, roll_no }) => {
   const classes = useStyles();
 
   return (
@@ -31,6 +31,8 @@ const StudentCard = ({ name, branch, batch }) => {
       >
         <Typography className={classes.studentCardText}>
           Name : {name}
+        </Typography><Typography className={classes.studentCardText}>
+          Roll No. : {roll_no}
         </Typography>
         <Typography className={classes.studentCardText}>
           Batch : {batch}

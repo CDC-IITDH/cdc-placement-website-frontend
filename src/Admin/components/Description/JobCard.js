@@ -60,7 +60,9 @@ const JobCard = ({
                      created_at,
                      co_op,
                      duration,
-
+                     contact_person_name,
+                     contact_person_email,
+                     contact_person_phone,
                      setError,
                      setShowError,
                      setSuccess,
@@ -424,6 +426,23 @@ const JobCard = ({
                             </div>:""
                         }
                         {other_requirements || other_requirements || tentative_no_of_offers ?<hr/>:"" }
+                        {
+                            contact_person_name || contact_person_email || contact_person_phone ?
+                                <div>
+                                    <Typography variant="h5" component="h5" style={{margin: "10px 0 5px"}}>
+                                        Contact Person Information
+                                    </Typography>
+                                    {contact_person_name ? (<Typography variant="body1" component="p">
+                                        <b>Name: </b> {contact_person_name}
+                                    </Typography>) : ""}
+                                    {contact_person_email ? (<Typography variant="body1" component="p">
+                                        <b>Email: </b> {contact_person_email}
+                                    </Typography>) : ""}
+                                    {contact_person_phone ? (<Typography variant="body1" component="p">
+                                        <b>Phone: </b> {contact_person_phone}
+                                    </Typography>) : ""}
+                                </div>:""
+                        }
 
                     </Box>
                 </Grid>

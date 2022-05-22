@@ -65,7 +65,6 @@ const Dashboard = ({
       ) : (
 
         <div className='Dashboard'>
-          <h1>Dashboard</h1>
             {dashboardview &&
               <Searchbar searchBarInfo={dashboardInfo[0]} setDashboardview={setDashboardview} setSearched = {setSearched} searched = {searched} dashboardInfo= {dashboardInfo} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />}
              {searched && <p style={{"padding-left": "5%"}} >Showing search results for <Chip label={searched} onDelete={clearSearch} /> </p>  }

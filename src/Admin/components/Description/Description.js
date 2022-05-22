@@ -124,12 +124,16 @@ const Description = ({
               duration={
                 match.params.type === "internships" ? elem.duration : ""
               }
+              contact_person_name={elem.contact_person_name}
+              contact_person_email={elem.email}
+              contact_person_phone={elem.phone_number}
               setError={setError}
               setShowError={setShowError}
               setSuccess={setSuccess}
               setShowSuccess={setShowSuccess}
               setShowLoader={setShowLoader}
               getDashboardInfo={getDashboardInfo}
+
             />
           );
         })

@@ -29,6 +29,7 @@ const StudentList = ({ applicationsInfo }) => {
                   name={elem.student_details.name}
                   batch={elem.student_details.batch}
                   branch={elem.student_details.branch}
+                  roll_no={elem.student_details.roll_no}
                 />
               </Grid>
             );
