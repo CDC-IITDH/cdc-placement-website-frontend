@@ -4,11 +4,21 @@ import { Box, Typography } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
 import EditIcon from "@material-ui/icons/Edit";
-import EditStudent from "./editStudent";
+import AddStudent from "./AddStudent";
 
-const StudentCard = ({ name, branch, batch, student_id, resume_list, additional_info, token, reqJobPosting, application_id }) => {
+const StudentCard = ({ name, branch, batch, student_id, resume_list, additional_info, token, reqJobPosting, application_id, resume, setError,setShowError,setSuccess, setShowSuccess, getApplicationsInfo }) => {
   const [show, setShow] = useState(false);
   const classes = useStyles();
+
+  const application_details = {
+    "student_name": student_id,
+    "student_branch": branch,
+    "student_batch": batch,
+    "additional_info": additional_info,
+    "available_resumes": resume_list,
+    "resume": resume,
+    "application_id": application_id,
+  };
 
   const hanldeModal = () => {
     setShow(true);
@@ -30,7 +40,7 @@ const StudentCard = ({ name, branch, batch, student_id, resume_list, additional_
         paddingInline: "0.5rem",
       }}
     >
-      <EditStudent
+      <AddStudent
                 show={show}
                 setShow={setShow}
                 reqJobPosting={reqJobPosting}
@@ -42,6 +52,13 @@ const StudentCard = ({ name, branch, batch, student_id, resume_list, additional_
                 resume_file_names = {resume_list}
                 application_id = {application_id}
                 additional_info = {additional_info}
+                setError={setError}
+                setShowError={setShowError}
+                setSuccess={setSuccess}
+                setShowSuccess={setShowSuccess}
+                id={student_id}
+                application_details={application_details}
+                getApplicationsInfo={getApplicationsInfo}
               />
       <Box
         sx={{

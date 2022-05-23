@@ -8,32 +8,45 @@ import getApplication from "../../api/getApplication";
 import editApplication from "../../api/editApplication";
 
 
-const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
-  const [student_id, setStudentId] = useState("");
-  const [getApplicationResponse, setGetApplicationResponse] = useState(null);
-  const [searchedId, setSearchedId] = useState(null);
-  const [resume, setResume] = useState("");
-  const [editoradd, setEditoradd] = useState("");
+const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, id, application_details, getApplicationsInfo  }) => {
+  let initalResume = application_details ? application_details.resume.name : "";
+  let initialAdditionalInfo = application_details ? JSON.parse(application_details.additional_info) : {};
+  let initialEditoradd = id ? "Edit" : "";
 
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  
+  const [student_id, setStudentId] = useState(id);
+  const [getApplicationResponse, setGetApplicationResponse] = useState(application_details);
+  const [searchedId, setSearchedId] = useState(id);
+  const [resume, setResume] = useState(initalResume);
+  const [editoradd, setEditoradd] = useState(initialEditoradd);
+  const [additionalTextInfo, updateAdditionalTextInfo] = useState(initialAdditionalInfo);
+
+  useEffect(() => {
+    initalResume = application_details ? application_details.resume.name : "";
+    initialAdditionalInfo = application_details ? JSON.parse(application_details.additional_info) : {};
+    initialEditoradd = id ? "Edit" : "";
+    setGetApplicationResponse(application_details);
+    updateAdditionalTextInfo(initialAdditionalInfo);
+    setResume(initalResume);
+    setEditoradd(initialEditoradd);
+    setSearchedId(id);
+    setStudentId(id);
+  }, [application_details]);
 
   const [student_id_error, setStudentIdError] = useState(false);
-  
-
+  const [loading, setLoading] = useState(false);
   const [resumeErrorState, setResumeErrorState] = useState(false);
   const [errorState, setErrorState] = useState({});
-  const [additionalTextInfo, updateAdditionalTextInfo] = useState({});
+
+
 
   const handleClose = () =>{
     setShow(false);
-    setSearchedId(null);
-    updateAdditionalTextInfo({});
-    setSuccess(false);
-    setStudentId("");
-    setError(null);
+    setSearchedId(id);
+    updateAdditionalTextInfo(initialAdditionalInfo);
+    setStudentId(id);
     setErrorState({});
+    setStudentIdError(false);
   }
 
   function handleInputChange(event) {
@@ -82,7 +95,9 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
       opening_id: reqJobPosting.id,
     };
     if (student_id === "") {
+      setStudentIdError(true);
       setError("Student ID cannot be empty");
+      setShowError(true);
       setLoading(false);
       return;
     }
@@ -90,6 +105,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
     getApplication(token = token, data = data).then((res) => {
       if (res.available_resumes.length === 0) {
         setError("No resume found for student");
+        setShowError(true);
         setLoading(false);
         return;
       }
@@ -99,20 +115,21 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
       }
       if(res.found==="true"){
         setEditoradd("Edit");
+        setResume(res.resume.name);
       } else {
         setEditoradd("Add");
+        setResume(res.available_resumes[0].name);
       }
-      setResume(res.available_resumes[0]);
       setSearchedId(student_id);
       setLoading(false);
       }
   ).catch((err) => {
-    console.log(err.message);
     if (err.message === "400") {
       setError("Student ID not found");
     } else {
       setError("Something went wrong");
     }
+    setShowError(true);
     setLoading(false);
   })
   };
@@ -120,6 +137,9 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
   const submitEdit = () => {
     setLoading(true);
     let app_id = getApplicationResponse.application_id? getApplicationResponse.application_id : "";
+    if(id){
+      app_id = application_details.application_id;
+    }
     var data = {
       application_id: app_id,
       student_id: searchedId,
@@ -137,6 +157,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
           };
         });
         setError("Please fill all the fields");
+        setShowError(true);
         setLoading(false);
         return;
       }
@@ -144,12 +165,16 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
 
 
     editApplication(token = token, data = data).then((res) => {
-    setSuccess(true);
-    setLoading(false);
+      setSuccess("Application"+editoradd+"successfully");
+      setShowSuccess(true);
+      setLoading(false);
+      getApplicationsInfo();
+      handleClose();
   }).catch((err) => {
     console.log(err);
     setError("Something went wrong");
-    setLoading(false);
+    setShowError(true);
+    setLoading(false)
   })
   }
 
@@ -167,14 +192,12 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
           <Modal.Title>
             <b style={{color: "white"}}>
             {
-              success ? "Successfully "+ editoradd +"ed Application" : <> {
-                loading ? "Loading..." : "Add Student"
-              } </>
+                loading ? "Loading..." : "Add/Edit Student"
             }
               </b>
           </Modal.Title>
         </Modal.Header>
-      { !success && !loading && <>
+      { !loading && <>
         <Modal.Body style={{ backgroundColor: "#dbdbdb" }}>
           <Form>
             
@@ -274,8 +297,8 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
                 >
                   {getApplicationResponse.available_resumes.map((resume, i) => {
                     return (
-                      <option value={resume} key={i}>
-                        {resume.substring(16)}
+                      <option value={resume.name} key={i}>
+                        {resume.name.substring(16)}
                       </option>
                     );
                   })}
@@ -286,9 +309,6 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
             )}
             <br />
           </Form>
-          <Alert variant="danger" show={error}>
-            {error}
-          </Alert>
         </Modal.Body>
         </>}
         {loading && <Modal.Body style={{ backgroundColor: "#dbdbdb" }}>
@@ -297,14 +317,11 @@ const AddStudent = ({ show, setShow, reqJobPosting, token }) => {
           </div>
         </Modal.Body>}
         <Modal.Footer style={{ backgroundColor: "#dbdbdb" }}>
-         { !searchedId && !success && !loading && <Button onClick={idSubmit} className='btn-submit'>
+         { !searchedId && !loading && <Button onClick={idSubmit} className='btn-submit'>
             ADD STUDENT
           </Button>}
-          {searchedId && !success &&  <Button onClick={submitEdit} className='btn-submit'>
+          {!loading && searchedId &&  <Button onClick={submitEdit} className='btn-submit'>
             {editoradd} application
-          </Button>}  
-        {success && <Button onClick={handleClose} className='btn-submit'>
-            CLOSE
           </Button>}
         </Modal.Footer>
       </Modal>

@@ -4,7 +4,7 @@ import API_ENDPOINT from "../../api/api_endpoint";
 const editApplication = (token, data) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
-      fetch(API_ENDPOINT + "api/admin/editstudentapplication/", {
+      fetch(API_ENDPOINT + "api/admin/submitApplication/", {
         method: "POST",
         headers: {
           Accept: "application/json",

@@ -91,8 +91,23 @@ const DetailsPage = ({
           token={token}
           openingId={openingId}
           reqJobPosting={reqJobPosting}
+          setError={setError}
+          setShowError={setShowError}
+          setSuccess={setSuccess}
+          setShowSuccess={setShowSuccess}
+          getApplicationsInfo={getApplicationsInfo}
         />
-        <StudentList applicationsInfo={applicationsInfo} reqJobPosting={reqJobPosting} token={token} />
+        <StudentList 
+        applicationsInfo={applicationsInfo} 
+        reqJobPosting={reqJobPosting} 
+        token={token}
+        setError={setError}
+        setShowError={setShowError}
+        setSuccess={setSuccess}
+        setShowSuccess={setShowSuccess}
+        getApplicationsInfo={getApplicationsInfo}
+        
+        />
       </div>
     </div>
   );
