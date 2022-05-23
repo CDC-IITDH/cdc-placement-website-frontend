@@ -46,6 +46,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
     setStudentId("");
     setErrorState({});
     setStudentIdError(false);
+    setLoading(false);
   }
 
   function handleInputChange(event) {
@@ -109,7 +110,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
         return;
       }
       setGetApplicationResponse(res);
-      if(res.application_info.additional_info){ 
+      if(res.application_found === "true"){ 
       updateAdditionalTextInfo(JSON.parse(res.application_info.additional_info));
       }
       if(res.application_found === "true"){
@@ -136,7 +137,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
 
   const submitEdit = () => {
     setLoading(true);
-    let app_id = getApplicationResponse.application_info.id? getApplicationResponse.application_info.id : "";
+    let app_id = getApplicationResponse.application_info ? getApplicationResponse.application_info.id : "";
     if(id){
       app_id = application_details.application_info.id;
     }
@@ -199,7 +200,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
         </Modal.Header>
       { !loading && <>
         <Modal.Body style={{ backgroundColor: "#dbdbdb" }}>
-          <Form>
+          <Form onSubmit={e => { e.preventDefault(); }}>
             
             {searchedId ? (
               <></>
@@ -213,6 +214,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
                   variant="outlined"
                   onChange={handleInputChange}
                   error={student_id_error}
+                  onSubmit={idSubmit}
                   required
                 />
                 </div>

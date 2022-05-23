@@ -70,7 +70,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
       </Row>
       <Form.Group className="mb-5">
         <Form.Label>Type of Organisation <span className="text-danger">*</span></Form.Label>
-        <Form.Check className="form-check" type="checkbox">
+        <Form.Check className="form-check" type="radio">
           <Row>
             {['Govt. Owned','MNC (Foreign Origin)','MNC (Indian Origin)','Private Sector','Public Sector','Start-Up','Other'].map((type) => (
               <Col sm={6} key={type}>
@@ -84,7 +84,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Nature of Business <span className="text-danger">*</span></Form.Label>
-        <Form.Check className="form-check" type="checkbox">
+        <Form.Check className="form-check" type="radio">
           <Row>
             {['Manufacturing','Consulting','Finance','Core (Technical)','FMCG','I.T./ITeS','Management','Education (Teaching)','NGO','Research & Development','Other'].map((nature) => (
               <Col key={nature} sm={6}>

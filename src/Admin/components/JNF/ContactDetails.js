@@ -30,11 +30,11 @@ const ContactDetails = ({handleSubmit, handleChange, handleBlur, values, touched
         <Form.Control type="number" name='mobile' value={values.mobile} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.mobile && errors.mobile} />
         <Form.Control.Feedback type="invalid"> {errors.mobile} </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-5 w-50">
+      {/* <Form.Group className="mb-5 w-50">
         <Form.Label>Telephone</Form.Label>
         <Form.Control maxLength="75" type="text" placeholder="(000) 000-0000" name='telephone' value={values.telephone} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.telephone && errors.telephone} />
         <Form.Control.Feedback type="invalid"> {errors.telephone} </Form.Control.Feedback>
-      </Form.Group> 
+      </Form.Group>  */}
     </>
   )
 }
