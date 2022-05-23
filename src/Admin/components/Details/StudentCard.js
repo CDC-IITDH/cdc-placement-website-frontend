@@ -10,14 +10,21 @@ const StudentCard = ({ name, branch, batch, student_id, resume_list, additional_
   const [show, setShow] = useState(false);
   const classes = useStyles();
 
-  const application_details = {
-    "student_name": student_id,
-    "student_branch": branch,
-    "student_batch": batch,
+  const student_details = {
+    "name": name,
+    "branch": branch,
+    "batch": batch,
+    "resume_list": resume_list,
+  };
+  const application_info = {
     "additional_info": additional_info,
-    "available_resumes": resume_list,
     "resume": resume,
-    "application_id": application_id,
+    "id": application_id,
+  };
+
+  const application_details = {
+    "student_details": student_details,
+    "application_info": application_info,
   };
 
   const hanldeModal = () => {
