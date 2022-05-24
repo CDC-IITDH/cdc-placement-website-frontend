@@ -101,8 +101,8 @@ export default makeStyles((theme) => ({
             },
 
         },
-         [theme.breakpoints.up(596)]: {
-                marginTop: "15px",
-            },
+        [theme.breakpoints.up(596)]: {
+            marginTop: "15px",
+        },
     }
 }));

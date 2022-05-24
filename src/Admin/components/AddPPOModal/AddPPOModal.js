@@ -5,8 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import './AddPPOModal.css';
 import NativeSelect from "@material-ui/core/NativeSelect";
 import addPPO from "./../../api/addPPO";
+
 const AddPPOModal = ({
-    token,
+                         token,
                          showModal,
                          setShowModal,
                          ModalType,
@@ -46,7 +47,7 @@ const AddPPOModal = ({
         compensation_gross: '',
         compensation_details: '',
         offer_accepted: '',
-        tier:1,
+        tier: 1,
     });
     const handleClose = () => {
         setShowModal(false);
@@ -63,28 +64,27 @@ const AddPPOModal = ({
     const handleInputChange = (e) => {
         const {name, value} = e.target;
         console.log(name, value);
-    if(name !== 'compensation_details'){
-         if (value.length > 0 ) {
-            setErrorState({
-                ...errorState,
-                [name]: false,
-            });
-            console.log(errorState);
-        }else{
-            setErrorState({
-                ...errorState,
-                [name]: true,
-            });
+        if (name !== 'compensation_details') {
+            if (value.length > 0) {
+                setErrorState({
+                    ...errorState,
+                    [name]: false,
+                });
+                console.log(errorState);
+            } else {
+                setErrorState({
+                    ...errorState,
+                    [name]: true,
+                });
+            }
+            console.log(checkError())
+            setIsError(checkError());
         }
-        console.log(checkError())
-        setIsError(checkError());
-    }
 
         setData({
             ...data,
             [name]: value,
         });
-
 
 
     };
@@ -94,39 +94,39 @@ const AddPPOModal = ({
 
         setShowLoader(true);
         var temp_error = {...errorState};
-         var error = Object.keys(errorState).map((elem) => {
-             if (elem === 'compensation_details'){
-                 return false;
-             }
-             if (data.hasOwnProperty(elem)){
-                 if(data[elem].length === 0){
-                     temp_error[elem] = true;
-                     console.log(elem, data[elem], errorState[elem], 'error');
-                     return true;
-                 }else{
-                     temp_error[elem] = false;
-                                          console.log(elem, data[elem], errorState[elem], 'no error');
+        var error = Object.keys(errorState).map((elem) => {
+            if (elem === 'compensation_details') {
+                return false;
+            }
+            if (data.hasOwnProperty(elem)) {
+                if (data[elem].length === 0) {
+                    temp_error[elem] = true;
+                    console.log(elem, data[elem], errorState[elem], 'error');
+                    return true;
+                } else {
+                    temp_error[elem] = false;
+                    console.log(elem, data[elem], errorState[elem], 'no error');
 
-                     return false;
-                 }
-             }
-         })
-         setErrorState(temp_error);
+                    return false;
+                }
+            }
+        })
+        setErrorState(temp_error);
 
-        if(error.includes(true)){
+        if (error.includes(true)) {
             setShowError(true);
             setError('Please fill all the fields');
             setShowLoader(false);
             return;
         }
 
-       addPPO(token, data)
+        addPPO(token, data)
             .then(res => {
-                    setShowSuccess(true);
-                    setSuccess("Pre Placement Offer added successfully");
-                    setShowLoader(false);
-                    setShowModal(false);
-                    setModalType('');
+                setShowSuccess(true);
+                setSuccess("Pre Placement Offer added successfully");
+                setShowLoader(false);
+                setShowModal(false);
+                setModalType('');
 
             })
             .catch(err => {
@@ -233,25 +233,25 @@ const AddPPOModal = ({
                                         id: "tier-selector",
                                     }}
                                 >
-                                     <option value={1} >
+                                    <option value={1}>
                                         1
                                     </option>
-                                    <option value={2} >
+                                    <option value={2}>
                                         2
                                     </option>
-                                    <option value={3} >
+                                    <option value={3}>
                                         3
                                     </option>
-                                    <option value={4} >
+                                    <option value={4}>
                                         4
                                     </option>
-                                    <option value={5} >
+                                    <option value={5}>
                                         5
                                     </option>
-                                    <option value={6} >
+                                    <option value={6}>
                                         6
                                     </option>
-                                    <option value={7} >
+                                    <option value={7}>
                                         7
                                     </option>
                                 </NativeSelect>
@@ -269,13 +269,13 @@ const AddPPOModal = ({
                                         id: "offer_accepted-selector",
                                     }}
                                 >
-                                     <option value={null} >
+                                    <option value={null}>
                                         Null
                                     </option>
-                                    <option value={true} >
+                                    <option value={true}>
                                         True
                                     </option>
-                                    <option value={false} >
+                                    <option value={false}>
                                         False
                                     </option>
                                 </NativeSelect>

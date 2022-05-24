@@ -56,12 +56,12 @@ function Cards({
                         <Row className={css.inner_info}>
                             <Col sm={12} md={6} lg={4} className={css.designation}>
                                 <h6>
-                                     <Row >
+                                    <Row>
                                         <Col xs={1}>
                                             <SvgIcon component={Ballot}/>
                                         </Col>
                                         <Col xs={11} style={{fontSize: "14px"}}>
-                                             <div style={{fontWeight: "600"}}> Designation:</div>
+                                            <div style={{fontWeight: "600"}}> Designation:</div>
                                             {designation}
                                         </Col>
                                     </Row>
@@ -91,7 +91,7 @@ function Cards({
 
                             <Col sm={12} md={6} lg={4} className={css.deadline_datetime}>
                                 <h6>
-                                    <Row >
+                                    <Row>
                                         <Col xs={1}>
                                             <SvgIcon component={Today}/>
                                         </Col>

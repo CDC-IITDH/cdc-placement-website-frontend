@@ -12,7 +12,7 @@ const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboard
         if (buttonContent === "Offer Declined" || buttonContent === "Offer Approval Pending") {
             offer_accepted = true;
         } else {
-return ;
+            return;
         }
         ChangeOffer(token, opening, offer_accepted).then(res => {
             console.log(res);

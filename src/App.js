@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 import Navbar from "./components/Navbar/Navbar";
 import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
+    Route,
+    BrowserRouter as Router,
+    Switch,
+    Redirect,
 } from "react-router-dom";
 import Login from "./components/Login/Login";
-import { App as Student } from "./Student/App";
-import { App as Admin } from "./Admin/App";
+import {App as Student} from "./Student/App";
+import {App as Admin} from "./Admin/App";
 import UserSwitch from "./components/UserSwitch/UserSwitch";
 import Loader from "./components/Loader/Loader";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -17,7 +17,7 @@ import JNF from "./Admin/components/JNF/JNF";
 import VerifyEmail from "./Admin/components/VerifyEmail/VerifyEmail";
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />;
+    return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
 const App = () => {
@@ -31,39 +31,39 @@ const App = () => {
     const [success, setSuccess] = useState(null);
     const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleErrorClose = () => {
-    setError(null);
-    setShowError(false);
-  };
+    const handleErrorClose = () => {
+        setError(null);
+        setShowError(false);
+    };
 
-  const handleSuccessClose = () => {
-    setSuccess(null);
-    setShowSuccess(false);
-  };
+    const handleSuccessClose = () => {
+        setSuccess(null);
+        setShowSuccess(false);
+    };
 
-  return (
-    <>
-      <Router>
-        {showLoader ? <Loader /> : ""}
-        <Snackbar
-          open={showError}
-          autoHideDuration={6000}
-          onClose={handleErrorClose}
-        >
-          <Alert onClose={handleErrorClose} severity='error'>
-            {error}
-          </Alert>
-        </Snackbar>
+    return (
+        <>
+            <Router>
+                {showLoader ? <Loader/> : ""}
+                <Snackbar
+                    open={showError}
+                    autoHideDuration={6000}
+                    onClose={handleErrorClose}
+                >
+                    <Alert onClose={handleErrorClose} severity='error'>
+                        {error}
+                    </Alert>
+                </Snackbar>
 
-        <Snackbar
-          open={showSuccess}
-          autoHideDuration={6000}
-          onClose={handleSuccessClose}
-        >
-          <Alert onClose={handleSuccessClose} severity='success'>
-            {success}
-          </Alert>
-        </Snackbar>
+                <Snackbar
+                    open={showSuccess}
+                    autoHideDuration={6000}
+                    onClose={handleSuccessClose}
+                >
+                    <Alert onClose={handleSuccessClose} severity='success'>
+                        {success}
+                    </Alert>
+                </Snackbar>
 
                 {auth && currentUserType ? (
                     <Switch>
@@ -138,18 +138,18 @@ const App = () => {
 
                         {auth ? (
                             <div>
-                             <Navbar auth={auth} setAuth={setAuth} setToken={setToken}/>
-                            <UserSwitch
-                                userTypes={userTypes}
-                                setAuth={setAuth}
-                                currentUserType={currentUserType}
-                                setCurrentUserType={setCurrentUserType}
-                                auth={auth}
-                                setShowLoader={setShowLoader}
-                                setError={setError}
-                                setShowError={setShowError}
-                            />
-                                </div>
+                                <Navbar auth={auth} setAuth={setAuth} setToken={setToken}/>
+                                <UserSwitch
+                                    userTypes={userTypes}
+                                    setAuth={setAuth}
+                                    currentUserType={currentUserType}
+                                    setCurrentUserType={setCurrentUserType}
+                                    auth={auth}
+                                    setShowLoader={setShowLoader}
+                                    setError={setError}
+                                    setShowError={setShowError}
+                                />
+                            </div>
                         ) : (
                             <Switch>
                                 <Route
@@ -166,15 +166,16 @@ const App = () => {
                                 />
                                 <Route
                                     path='/company/verifyemail'
-                                     render={() => {
+                                    render={() => {
                                         return (
-                                        <VerifyEmail
-                                        setShowLoader={setShowLoader}
-                                        setError={setError}
+                                            <VerifyEmail
+                                                setShowLoader={setShowLoader}
+                                                setError={setError}
 
-                                        />
-                                        )}
-                                }
+                                            />
+                                        )
+                                    }
+                                    }
                                 />
                                 <Route
                                     exact
@@ -182,16 +183,16 @@ const App = () => {
                                     render={() => {
                                         return (
                                             <div>
-                             <Navbar auth={auth} setAuth={setAuth} setToken={setToken}/>
-                                            <Login
-                                                auth={auth}
-                                                setAuth={setAuth}
-                                                setToken={setToken}
-                                                setUserTypes={setUserTypes}
-                                                setShowLoader={setShowLoader}
-                                                setError={setError}
-                                                setShowError={setShowError}
-                                            />
+                                                <Navbar auth={auth} setAuth={setAuth} setToken={setToken}/>
+                                                <Login
+                                                    auth={auth}
+                                                    setAuth={setAuth}
+                                                    setToken={setToken}
+                                                    setUserTypes={setUserTypes}
+                                                    setShowLoader={setShowLoader}
+                                                    setError={setError}
+                                                    setShowError={setShowError}
+                                                />
                                             </div>
                                         );
                                     }}

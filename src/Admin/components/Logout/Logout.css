@@ -1,7 +1,8 @@
-.logout-btn{
+.logout-btn {
     font-weight: 700;
 }
-.Button-logout{
+
+.Button-logout {
     background-color: white;
     color: #415d9b;
     border: solid 3px;
@@ -9,9 +10,10 @@
     border-color: #415d9b;
     margin: 5px 10px;
 }
-.Button-logout:hover{
+
+.Button-logout:hover {
     background-color: #415d9b;
     color: white;
     border-color: white;
-   
+
 }

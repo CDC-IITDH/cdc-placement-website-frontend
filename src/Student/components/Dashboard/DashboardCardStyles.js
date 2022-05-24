@@ -236,7 +236,7 @@ export default makeStyles((theme) => ({
             width: "50%",
 
         },
-         [theme.breakpoints.between(410, 596)]: {
+        [theme.breakpoints.between(410, 596)]: {
             // position: "relative",
             // left: "60%",
             // width: "25%",
@@ -287,7 +287,7 @@ export default makeStyles((theme) => ({
         },
         [theme.breakpoints.down(475)]: {
             marginInline: "0",
-             textAlign: "center",
+            textAlign: "center",
 
         },
     },
@@ -341,7 +341,7 @@ export default makeStyles((theme) => ({
         },
 
 
-    },selectionCardAcceptedCard: {
+    }, selectionCardAcceptedCard: {
         color: "#46b069!important",
         border: "3px solid #46b069!important",
         width: "fit-content",
@@ -399,7 +399,7 @@ export default makeStyles((theme) => ({
         //     width: "50%",
 
         // },
-         [theme.breakpoints.between(410, 596)]: {
+        [theme.breakpoints.between(410, 596)]: {
             // position: "relative",
             // left: "60%",
             // width: "25%",

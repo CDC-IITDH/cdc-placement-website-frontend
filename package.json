@@ -36,6 +36,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux": "^4.1.0",
+    "sweetalert2": "^11.4.14",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.11"
   },
