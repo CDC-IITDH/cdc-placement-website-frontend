@@ -24,9 +24,8 @@ const Profile = ({
     var [show, setShow] = useState(true);
     var [screen, setScreen] = useState(1);
     var [screen_message, setScreenMessage] = useState("");
-    const RESUME_ENDPOINT = process.env.STORAGE_RESUMES_ENDPOINT;
     const APPLICATION_ENDPOINT = process.env.REACT_APP_STUDENT_APPLICATIONS_ENDPOINT;
-
+    console.log(process.env);
 
     useEffect(() => {
         if (profileInfo) {
@@ -38,7 +37,7 @@ const Profile = ({
         const OpenResume = (resume_name) => {
 
             window.open(
-                RESUME_ENDPOINT + resume_name
+                resume_name
             );
         };
 

@@ -7,7 +7,7 @@ import { Divider, Typography } from "@material-ui/core";
 import { ExportAsExcel } from "../../api/details_page";
 import AddStudent from "./AddStudent";
 
-const Header = ({ studentsApplied, openingId, token, reqJobPosting, setError, setShowError, setSuccess, setShowSuccess, getApplicationsInfo }) => {
+const Header = ({ studentsApplied, countStudentsSelected, openingId, token, reqJobPosting, setError, setShowError, setSuccess, setShowSuccess, getApplicationsInfo }) => {
   const classes = useStyles();
   const [showAddStudentModal, setshowAddStudentModal] = useState(false);
 
@@ -51,7 +51,7 @@ const Header = ({ studentsApplied, openingId, token, reqJobPosting, setError, se
               Students Applied :{` ${studentsApplied}`}
             </Typography>
             <Typography className={classes.appliedText}>
-              Students Selected :{" "}
+              Students Selected :{` ${countStudentsSelected}`}
             </Typography>
           </div>
         </div>

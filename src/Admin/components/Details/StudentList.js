@@ -3,7 +3,8 @@ import React from "react";
 import StudentCard from "./StudentCard";
 import { Grid, Typography } from "@material-ui/core";
 
-const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, getApplicationsInfo }) => {
+const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, setShowLoader,
+  openingId, getApplicationsInfo }) => {
   const classes = useStyles();
 
   console.log(applicationsInfo);
@@ -30,6 +31,8 @@ const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShow
                   batch={elem.student_details.batch}
                   branch={elem.student_details.branch}
                   student_id = {elem.student}
+                  selected={elem.selected}
+                  opening_id={openingId}
                   resume_list = {elem.student_details.resume_list}
                   additional_info = {elem.additional_info}
                   token = {token}
@@ -40,6 +43,7 @@ const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShow
                   setShowError={setShowError}
                   setSuccess={setSuccess}
                   setShowSuccess={setShowSuccess}
+                  setShowLoader={setShowLoader}
                   getApplicationsInfo={getApplicationsInfo}
                 />
               </Grid>

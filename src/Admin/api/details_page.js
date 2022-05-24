@@ -114,5 +114,37 @@ const UpdateDeadline = (token, deadline,opening_id) => {
   });
 };
 
+const MarkStatus = (token, opening_id, student_id, status) => {
+    return new Promise((myResolve, myReject) => {
+        if (token) {
+            fetch(API_ENDPOINT + "api/admin/markStatus/", {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "opening_id": opening_id,
+                    "student_list": [
+                        {
+                            "student_id": student_id,
+                            "student_selected": status
+                        }
+                    ]
+                }),
+            })
+                .then((result) => {
+                    if (result.status === 200) myResolve(result.json());
+                    else throw new Error("Error " + result.status);
+                })
+                .catch((err) => {
+                    myReject(false);
+                });
+        } else {
+            myReject(false);
+        }
+    });
+};
 
-export { GetApplications, ExportAsExcel, ChangeOffer, UpdateDeadline };
+export { GetApplications, ExportAsExcel, ChangeOffer, UpdateDeadline, MarkStatus };
