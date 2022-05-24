@@ -103,6 +103,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
     }
     setError(null);
     getApplication(token = token, data = data).then((res) => {
+      console.log(res, "getApplication");
       if (res.student_details.resume_list.length === 0) {
         setError("No resume found for student");
         setShowError(true);
@@ -124,7 +125,8 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
       setLoading(false);
       }
   ).catch((err) => {
-    if (err.message === "400") {
+    console.log(err, "gihh");
+    if (err.message === "404") {
       setError("Student ID not found");
     } else {
       // setError("Something went wrong");

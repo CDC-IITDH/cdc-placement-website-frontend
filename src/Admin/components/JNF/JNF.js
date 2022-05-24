@@ -110,6 +110,7 @@ const JNF = ({setShowLoader}) => {
       formdata.append("address", values.address);
       formdata.append("company_type", values.type);
       formdata.append("nature_of_business", values.nature);
+      formdata.append("type_of_organisation", values.type);
       formdata.append("website", values.link);
       formdata.append("company_details", values.compdescription);
       formdata.append("is_company_details_pdf", is_company_details_pdf);
@@ -124,7 +125,7 @@ const JNF = ({setShowLoader}) => {
       formdata.append("designation", values.designation);
       formdata.append("description", values.details);
       formdata.append("is_description_pdf", is_description_pdf);
-      formdata.append("job_locations", values.locations);
+      formdata.append("job_location", values.locations);
       formdata.append("compensation_ctc", values.ctc);
       formdata.append("compensation_gross", values.gross);
       formdata.append("compensation_take_home", values.takehome);
