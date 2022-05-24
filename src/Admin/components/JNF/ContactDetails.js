@@ -17,12 +17,12 @@ const ContactDetails = ({handleSubmit, handleChange, handleBlur, values, touched
       <hr className="pd" />
       <Form.Group className="mb-5 w-50">
         <Form.Label>Contact Person <span className="text-danger">*</span></Form.Label>
-        <Form.Control type="text" name='contact' value={values.contact} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.contact && errors.contact} />
+        <Form.Control maxLength="75" type="text" name='contact' value={values.contact} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.contact && errors.contact} />
         <Form.Control.Feedback type="invalid"> {errors.contact} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5 w-50">
         <Form.Label>Email <span className="text-danger">*</span></Form.Label>
-        <Form.Control type="text" name='email' value={values.email} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.email && errors.email} />
+        <Form.Control maxLength="75" type="text" name='email' value={values.email} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.email && errors.email} />
         <Form.Control.Feedback type="invalid"> {errors.email} </Form.Control.Feedback>
       </Form.Group> 
       <Form.Group className="mb-5 w-50">
@@ -30,11 +30,11 @@ const ContactDetails = ({handleSubmit, handleChange, handleBlur, values, touched
         <Form.Control type="number" name='mobile' value={values.mobile} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.mobile && errors.mobile} />
         <Form.Control.Feedback type="invalid"> {errors.mobile} </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-5 w-50">
+      {/* <Form.Group className="mb-5 w-50">
         <Form.Label>Telephone</Form.Label>
-        <Form.Control type="text" placeholder="(000) 000-0000" name='telephone' value={values.telephone} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.telephone && errors.telephone} />
+        <Form.Control maxLength="75" type="text" placeholder="(000) 000-0000" name='telephone' value={values.telephone} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.telephone && errors.telephone} />
         <Form.Control.Feedback type="invalid"> {errors.telephone} </Form.Control.Feedback>
-      </Form.Group> 
+      </Form.Group>  */}
     </>
   )
 }

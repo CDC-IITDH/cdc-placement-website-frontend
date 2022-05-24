@@ -93,7 +93,7 @@ const JNF = ({setShowLoader}) => {
       let is_company_details_pdf=(compdescription_file.length)?true:false
       let is_description_pdf=(jobdescription_file.length)?true:false
       let is_compensation_details_pdf=(salary_file.length)?true:false
-      let is_selection_procedure_details_pdf=(values.selection_file)?true:false
+      let is_selection_procedure_details_pdf=(selection_file.length)?true:false
 
       var selectionprocess=values.selectionprocess.slice()
       if (values.selectionprocess.includes("Other")) {
@@ -108,8 +108,9 @@ const JNF = ({setShowLoader}) => {
       var formdata = new FormData();
       formdata.append("company_name", values.name);
       formdata.append("address", values.address);
-      formdata.append("company_type", JSON.stringify(values.type));
-      formdata.append("nature_of_business", JSON.stringify(values.nature));
+      formdata.append("company_type", values.type);
+      formdata.append("nature_of_business", values.nature);
+      formdata.append("type_of_organisation", values.type);
       formdata.append("website", values.link);
       formdata.append("company_details", values.compdescription);
       formdata.append("is_company_details_pdf", is_company_details_pdf);
@@ -120,14 +121,15 @@ const JNF = ({setShowLoader}) => {
       formdata.append("state", values.state);
       formdata.append("country", values.country);
       formdata.append("pincode", values.pincode);
+      formdata.append("company_type", values.type);
       formdata.append("designation", values.designation);
       formdata.append("description", values.details);
       formdata.append("is_description_pdf", is_description_pdf);
+      formdata.append("job_location", values.locations);
       formdata.append("compensation_ctc", values.ctc);
       formdata.append("compensation_gross", values.gross);
       formdata.append("compensation_take_home", values.takehome);
       formdata.append("compensation_bonus", (values.bonus?values.bonus:0));
-      formdata.append("compensation_details", "");
       formdata.append("is_compensation_details_pdf", is_compensation_details_pdf);
       formdata.append("bond_details", values.bonddetails);
       formdata.append("selection_procedure_rounds", JSON.stringify(selectionprocess));
@@ -135,6 +137,7 @@ const JNF = ({setShowLoader}) => {
       formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
       formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
       formdata.append("allowed_branch", JSON.stringify(values.branch));
+      formdata.append("rs_eligible", values.research);
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
       formdata.append("other_requirements", values.requirements);
       compdescription_file.forEach((file) => {
@@ -143,17 +146,16 @@ const JNF = ({setShowLoader}) => {
       selection_file.forEach((file) => {
         formdata.append("selection_procedure_details_pdf",file,file.name);
       })
-      formdata.append("description_pdf", [values.jobdescription_file]);
-      formdata.append("compensation_details_pdf", [values.salary_file]);
+      // formdata.append("description_pdf", [values.jobdescription_file]);
+      // formdata.append("compensation_details_pdf", [values.salary_file]);
       jobdescription_file.forEach((file) => {
-        formdata.append("job_description_pdf",file,file.name);
+        formdata.append("description_pdf",file,file.name);
       })
       salary_file.forEach((file) => {
         formdata.append("compensation_details_pdf",file,file.name);
       })
       formdata.append("selection_procedure_details_pdf", [values.selection_file]);
       formdata.append("recaptchakey", recaptchaRef.current.getValue());
-      console.log(recaptchaRef.current.getValue())
       var requestOptions = {
         method: 'POST',
         body: formdata,

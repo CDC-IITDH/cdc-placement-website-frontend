@@ -3,7 +3,7 @@ import React from "react";
 import StudentCard from "./StudentCard";
 import { Grid, Typography } from "@material-ui/core";
 
-const StudentList = ({ applicationsInfo }) => {
+const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, getApplicationsInfo }) => {
   const classes = useStyles();
 
   console.log(applicationsInfo);
@@ -30,6 +30,19 @@ const StudentList = ({ applicationsInfo }) => {
                   batch={elem.student_details.batch}
                   branch={elem.student_details.branch}
                   roll_no={elem.student_details.roll_no}
+                  student_id = {elem.student}
+                  resume_list = {elem.student_details.resume_list}
+                  additional_info = {elem.additional_info}
+                  token = {token}
+                  reqJobPosting = {reqJobPosting}
+                  application_id = {elem.id}
+                  resume = {elem.resume_link}
+                  setError={setError}
+                  setShowError={setShowError}
+                  setSuccess={setSuccess}
+                  setShowSuccess={setShowSuccess}
+                  getApplicationsInfo={getApplicationsInfo}
+
                 />
               </Grid>
             );

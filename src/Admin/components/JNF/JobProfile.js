@@ -19,17 +19,17 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       <MultipleFileInput stateVar={jobdescription_file} setStateVar={setJobdescription_file} name="jobdescription_file" label ="Job Description" />
       <Form.Group className="mb-5">
         <Form.Label>Job Designation Offered <span className="text-danger">*</span></Form.Label>
-        <Form.Control type="text" name='designation' value={values.designation} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.designation && errors.designation} />
+        <Form.Control maxLength="75" type="text" name='designation' value={values.designation} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.designation && errors.designation} />
         <Form.Control.Feedback type="invalid"> {errors.designation} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Location(s) of Job <span className="text-danger">*</span></Form.Label>
-        <Form.Control type="text" name='locations' value={values.locations} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.locations && errors.locations} />
+        <Form.Control maxLength="75" type="text" name='locations' value={values.locations} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.locations && errors.locations} />
         <Form.Control.Feedback type="invalid"> {errors.locations} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Job Details <span className="text-danger">*</span></Form.Label>
-        <Form.Control as="textarea" className="text-area"  name='details' value={values.details} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.details && errors.details}></Form.Control>
+        <Form.Control as="textarea" maxLength="1000" className="text-area"  name='details' value={values.details} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.details && errors.details}></Form.Control>
         <Form.Text className="text-muted">
           Short descriptions of job being offered and skills required
         </Form.Text>
