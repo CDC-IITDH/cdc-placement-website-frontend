@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import Details from "./Details";
-import Header from "./Header";
-import useStyles from "./styles";
-import { GetApplications } from "../../api/details_page";
-import StudentList from "./StudentList";
+import { useState, useEffect } from 'react';
+import Details from './Details';
+import Header from './Header';
+import useStyles from './styles';
+import { GetApplications } from '../../api/details_page';
+import StudentList from './StudentList';
 
 const DetailsPage = ({
   dashboardInfo,
@@ -25,6 +25,7 @@ const DetailsPage = ({
   const [openingType, setopeningType] = useState(null);
   const [studentsApplied, setstudentsApplied] = useState(0);
   const [reqJobPosting, setreqJobPosting] = useState(null);
+  const [countStudentsSelected, setCountStudentSelected] = useState(0);
 
   const getApplicationsInfo = () => {
     if (token) {
@@ -47,15 +48,21 @@ const DetailsPage = ({
   }, [match, token, openingId]);
 
   useEffect(() => {
-    if (applicationsInfo != null && applicationsInfo.message === "Data Found") {
+    if (applicationsInfo && applicationsInfo.applications) {
       setstudentsApplied(applicationsInfo.applications.length);
+      setCountStudentSelected(
+        applicationsInfo.applications.filter((obj) => {
+          if (obj.selected === true) return true;
+          else return false;
+        }).length
+      );
     }
   }, [applicationsInfo]);
 
   useEffect(() => {
     console.log(!dashboardInfo[0]);
-    if (!dashboardInfo[0]){
-      return ;
+    if (!dashboardInfo[0]) {
+      return;
     }
     let reqJob = [];
     if (dashboardInfo && dashboardInfo[0]?.ongoing.length !== 0) {
@@ -65,12 +72,20 @@ const DetailsPage = ({
     }
     console.log(reqJob);
     console.log(dashboardInfo);
-    if (reqJob.length === 0 && dashboardInfo[0] && dashboardInfo[0]?.previous.length !== 0) {
+    if (
+      reqJob.length === 0 &&
+      dashboardInfo[0] &&
+      dashboardInfo[0]?.previous.length !== 0
+    ) {
       reqJob = dashboardInfo[0]?.previous.filter((elem) => {
         return elem.id === openingId;
       });
     }
-    if (reqJob.length === 0 && dashboardInfo && dashboardInfo[0]?.new.length !== 0) {
+    if (
+      reqJob.length === 0 &&
+      dashboardInfo &&
+      dashboardInfo[0]?.new.length !== 0
+    ) {
       reqJob = dashboardInfo[0]?.new.filter((elem) => {
         return elem.id === openingId;
       });
@@ -78,21 +93,37 @@ const DetailsPage = ({
     setreqJobPosting(...reqJob);
 
     setShowLoader(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dashboardInfo, openingId]);
-
-
 
   return (
     <div className={classes.container}>
-      <Details opening={reqJobPosting} setShowLoader = {setShowLoader} token ={token} getDashboardInfo={getDashboardInfo} type={openingType}/>
+      <Details
+        opening={reqJobPosting}
+        setShowLoader={setShowLoader}
+        token={token}
+        getDashboardInfo={getDashboardInfo}
+        type={openingType}
+      />
       <div className={classes.rightContainer}>
         <Header
           studentsApplied={studentsApplied}
+          countStudentsSelected={countStudentsSelected}
           token={token}
           openingId={openingId}
           reqJobPosting={reqJobPosting}
         />
-        <StudentList applicationsInfo={applicationsInfo}  />
+        <StudentList
+          applicationsInfo={applicationsInfo}
+          setError={setError}
+          setShowError={setShowError}
+          setSuccess={setSuccess}
+          setShowSuccess={setShowSuccess}
+          setShowLoader={setShowLoader}
+          openingId={openingId}
+          token={token}
+          getApplicationsInfo={getApplicationsInfo}
+        />
       </div>
     </div>
   );

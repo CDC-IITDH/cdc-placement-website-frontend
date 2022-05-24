@@ -1,32 +1,87 @@
-import React from "react";
-import useStyles from "./styles";
-import { Box, Typography } from "@material-ui/core";
-import CheckIcon from "@material-ui/icons/Check";
-import ClearIcon from "@material-ui/icons/Clear";
+import React from 'react';
+import useStyles from './styles';
+import { Box, Typography } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
+import { MarkStatus } from '../../api/details_page';
+import Swal from 'sweetalert2'
 
-const StudentCard = ({ name, branch, batch }) => {
+const StudentCard = ({
+  name,
+  branch,
+  batch,
+  student_id,
+  opening_id,
+  token,
+  selected,
+  setShowLoader,
+  setError,
+  setShowError,
+  setSuccess,
+  setShowSuccess,
+  getApplicationsInfo,
+}) => {
   const classes = useStyles();
+
+  const markStudentStatus = (status) => {
+    if (opening_id && status !== null) {
+
+      Swal.fire({
+        title: 'Do you want to update the status to '+ status + ' ?',
+        showCancelButton: true,
+        confirmButtonText: 'Update',
+        denyButtonText: `Cancel`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          MarkStatus(token, opening_id, student_id, status)
+          .then((res) => {
+            if (status) {
+              setSuccess('Student marked as selected');
+            } else{
+              setSuccess('Student marked as not selected')
+            }
+            setShowSuccess(true);
+            getApplicationsInfo();
+            setShowLoader(false);
+  
+          })
+          .catch((err) => {
+            setError('Something went wrong. Please try again after sometime');
+            setShowError(true);
+            setShowLoader(false);
+          });
+        setShowLoader(true);
+        } 
+      })
+     
+    } else {
+      setError('Error!, Invalid Opening. Please reload.');
+      setShowError(true);
+    }
+  };
 
   return (
     <Box
       sx={{
-        bgcolor: "#E5E1E1",
+        
+        bgcolor: selected === null ? '#E5E1E1' : ( selected === true ?('#9be1a6'): ('#f19a9a')),
         boxShadow: 1,
         borderRadius: 20,
-        height: "150px",
+        height: '150px',
         p: 1,
-        margin: "0.25rem",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingBlock: "0.5rem",
-        paddingInline: "0.5rem",
+        margin: '0.25rem',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingBlock: '0.5rem',
+        paddingInline: '0.5rem',
       }}
     >
       <Box
         sx={{
-          marginBlock: "0.5rem",
-          marginInline: "0.5rem",
+          marginBlock: '0.5rem',
+          marginInline: '0.5rem',
         }}
       >
         <Typography className={classes.studentCardText}>
@@ -41,43 +96,60 @@ const StudentCard = ({ name, branch, batch }) => {
       </Box>
       <Box
         sx={{
-          paddingInline: "0.5rem",
-          paddingBlock: "0.5rem",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+          paddingInline: '0.5rem',
+          paddingBlock: '0.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
-        <Box
-          sx={{
-            borderRadius: "50%",
-            color: "white",
-            backgroundColor: "#FF7C86",
-            cursor: "pointer",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "2rem",
-            width: "2rem",
-          }}
-        >
-          <ClearIcon />
-        </Box>
-        <Box
-          sx={{
-            borderRadius: "50%",
-            color: "white",
-            backgroundColor: "#66C971",
-            cursor: "pointer",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "2rem",
-            width: "2rem",
-          }}
-        >
-          <CheckIcon />
-        </Box>
+        {selected === null || selected == false ? (
+          <Box
+            sx={{
+              borderRadius: '50%',
+              color: 'white',
+              backgroundColor: '#FF7C86',
+              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '2rem',
+              width: '2rem',
+            }}
+          >
+            <ClearIcon
+              onClick={() => {
+                markStudentStatus(false);
+              }}
+            />
+          </Box>
+        ) : (
+          ''
+        )}
+
+        {selected === null || selected === false ? (
+          <Box
+            sx={{
+              borderRadius: '50%',
+              color: 'white',
+              backgroundColor: '#66C971',
+              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '2rem',
+              width: '2rem',
+            }}
+          >
+            <CheckIcon
+              onClick={() => {
+                markStudentStatus(true);
+              }}
+            />
+          </Box>
+        ) : (
+          ''
+        )}
       </Box>
     </Box>
   );
