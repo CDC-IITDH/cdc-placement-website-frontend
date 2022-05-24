@@ -136,7 +136,7 @@ const JNF = ({setShowLoader}) => {
       formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
       formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
       formdata.append("allowed_branch", JSON.stringify(values.branch));
-      formdata.append("are_ms_allowed", values.research);
+      formdata.append("rs_eligible", values.research);
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
       formdata.append("other_requirements", values.requirements);
       compdescription_file.forEach((file) => {
