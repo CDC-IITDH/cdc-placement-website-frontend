@@ -81,7 +81,7 @@ const DetailsPage = ({
   }, [dashboardInfo, openingId]);
 
 
-
+  
   return (
     <div className={classes.container}>
       <Details opening={reqJobPosting} setShowLoader = {setShowLoader} token ={token} getDashboardInfo={getDashboardInfo} type={openingType}/>
@@ -91,8 +91,23 @@ const DetailsPage = ({
           token={token}
           openingId={openingId}
           reqJobPosting={reqJobPosting}
+          setError={setError}
+          setShowError={setShowError}
+          setSuccess={setSuccess}
+          setShowSuccess={setShowSuccess}
+          getApplicationsInfo={getApplicationsInfo}
         />
-        <StudentList applicationsInfo={applicationsInfo}  />
+        <StudentList 
+        applicationsInfo={applicationsInfo} 
+        reqJobPosting={reqJobPosting} 
+        token={token}
+        setError={setError}
+        setShowError={setShowError}
+        setSuccess={setSuccess}
+        setShowSuccess={setShowSuccess}
+        getApplicationsInfo={getApplicationsInfo}
+        
+        />
       </div>
     </div>
   );
