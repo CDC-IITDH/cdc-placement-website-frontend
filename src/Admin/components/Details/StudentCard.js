@@ -12,17 +12,7 @@ const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resu
                          setShowLoader, getApplicationsInfo }) => {
   const [show, setShow] = useState(false);
   const classes = useStyles();
-  const student_details = {
-    "name": name,
-    "branch": branch,
-    "batch": batch,
-    "resume_list": resume_list,
-  };
-  const application_info = {
-    "additional_info": additional_info,
-    "resume": resume,
-    "id": application_id,
-  };
+
    const markStudentStatus = (status) => {
         if (opening_id && status !== null) {
             Swal.fire({
@@ -59,7 +49,6 @@ const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resu
             setShowError(true);
         }
     };
-
     const student_details = {
         "name": name,
         "branch": branch,
