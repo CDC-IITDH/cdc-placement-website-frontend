@@ -8,32 +8,23 @@ import AddStudent from "./AddStudent";
 import Swal from 'sweetalert2'
 import {MarkStatus} from '../../api/details_page';
 
-const StudentCard = ({
-                         name,
-                         branch,
-                         batch,
-                         student_id,
-                         opening_id,
-                         resume_list,
-                         additional_info,
-                         token,
-                         reqJobPosting,
-                         application_id,
-                         resume,
-                         setError,
-                         setShowError,
-                         setSuccess,
-                         setShowSuccess,
-                         selected,
-                         setShowLoader,
-                         getApplicationsInfo
-                     }) => {
-    const [show, setShow] = useState(false);
-    const classes = useStyles();
-
-    const markStudentStatus = (status) => {
+const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resume_list, additional_info, token, reqJobPosting, application_id, resume, setError,setShowError,setSuccess, setShowSuccess,selected,
+                         setShowLoader, getApplicationsInfo }) => {
+  const [show, setShow] = useState(false);
+  const classes = useStyles();
+  const student_details = {
+    "name": name,
+    "branch": branch,
+    "batch": batch,
+    "resume_list": resume_list,
+  };
+  const application_info = {
+    "additional_info": additional_info,
+    "resume": resume,
+    "id": application_id,
+  };
+   const markStudentStatus = (status) => {
         if (opening_id && status !== null) {
-
             Swal.fire({
                 title: 'Do you want to update the status to ' + status + ' ?',
                 showCancelButton: true,
@@ -211,6 +202,7 @@ const StudentCard = ({
                 }
 
             </Box>
+
         </Box>
 
     );
