@@ -29,6 +29,7 @@ const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShow
                   name={elem.student_details.name}
                   batch={elem.student_details.batch}
                   branch={elem.student_details.branch}
+                  roll_no={elem.student_details.roll_no}
                   student_id = {elem.student}
                   resume_list = {elem.student_details.resume_list}
                   additional_info = {elem.additional_info}
@@ -41,6 +42,7 @@ const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShow
                   setSuccess={setSuccess}
                   setShowSuccess={setShowSuccess}
                   getApplicationsInfo={getApplicationsInfo}
+
                 />
               </Grid>
             );

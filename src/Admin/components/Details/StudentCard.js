@@ -6,10 +6,9 @@ import ClearIcon from "@material-ui/icons/Clear";
 import EditIcon from "@material-ui/icons/Edit";
 import AddStudent from "./AddStudent";
 
-const StudentCard = ({ name, branch, batch, student_id, resume_list, additional_info, token, reqJobPosting, application_id, resume, setError,setShowError,setSuccess, setShowSuccess, getApplicationsInfo }) => {
+const StudentCard = ({ name, branch, batch, roll_no, student_id, resume_list, additional_info, token, reqJobPosting, application_id, resume, setError,setShowError,setSuccess, setShowSuccess, getApplicationsInfo }) => {
   const [show, setShow] = useState(false);
   const classes = useStyles();
-
   const student_details = {
     "name": name,
     "branch": branch,
@@ -75,6 +74,8 @@ const StudentCard = ({ name, branch, batch, student_id, resume_list, additional_
       >
         <Typography className={classes.studentCardText}>
           Name : {name}
+        </Typography><Typography className={classes.studentCardText}>
+          Roll No. : {roll_no}
         </Typography>
         <Typography className={classes.studentCardText}>
           Batch : {batch}
