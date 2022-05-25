@@ -25,6 +25,8 @@ const DetailsPage = ({
   const [openingType, setopeningType] = useState(null);
   const [studentsApplied, setstudentsApplied] = useState(0);
   const [reqJobPosting, setreqJobPosting] = useState(null);
+  const [countStudentsSelected, setCountStudentSelected] = useState(0);
+
 
   const getApplicationsInfo = () => {
     if (token) {
@@ -47,8 +49,14 @@ const DetailsPage = ({
   }, [match, token, openingId]);
 
   useEffect(() => {
-    if (applicationsInfo != null && applicationsInfo.message === "Data Found") {
+    if (applicationsInfo && applicationsInfo.applications) {
       setstudentsApplied(applicationsInfo.applications.length);
+      setCountStudentSelected(
+        applicationsInfo.applications.filter((obj) => {
+          if (obj.selected === true) return true;
+          else return false;
+        }).length
+      );
     }
   }, [applicationsInfo]);
 
@@ -88,6 +96,7 @@ const DetailsPage = ({
       <div className={classes.rightContainer}>
         <Header
           studentsApplied={studentsApplied}
+          countStudentsSelected={countStudentsSelected}
           token={token}
           openingId={openingId}
           reqJobPosting={reqJobPosting}
@@ -101,10 +110,12 @@ const DetailsPage = ({
         applicationsInfo={applicationsInfo} 
         reqJobPosting={reqJobPosting} 
         token={token}
+        openingId={openingId}
         setError={setError}
         setShowError={setShowError}
         setSuccess={setSuccess}
         setShowSuccess={setShowSuccess}
+        setShowLoader={setShowLoader}
         getApplicationsInfo={getApplicationsInfo}
         
         />
