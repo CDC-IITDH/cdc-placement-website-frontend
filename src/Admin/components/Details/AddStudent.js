@@ -151,19 +151,24 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
       additional_info: additionalTextInfo,
     };
     // check null values in additional info
-    for (var key in additionalTextInfo) {
-      if (additionalTextInfo[key] === "") {
+    let isAnyError = false;
+    console.log(reqJobPosting, "reqJobPosting");
+    reqJobPosting.additional_info.forEach((key) => {
+      if(!additionalTextInfo[key]) {
+        isAnyError = true;
         setErrorState((prevValue) => {
           return {
             ...prevValue,
             [key]: true,
           };
         });
-        setError("Please fill all the fields");
-        setShowError(true);
-        setLoading(false);
-        return;
       }
+    })
+    if (isAnyError) {
+      setError("Please fill all the fields");
+      setShowError(true);
+      setLoading(false);
+      return;
     }
 
 
