@@ -49,7 +49,7 @@ const Input = ({
 
   return (
     <div className={css.searchbar} id="searchbar">
-      <SvgIcon component={Search} style={{ Width: "5%" }} />
+      <SvgIcon component={Search} style={{ Width: "5%" }} className={css.searchbarico}/>
       <form className={css.form} onSubmit={on_click} >
 
       <input ref={inputRef}

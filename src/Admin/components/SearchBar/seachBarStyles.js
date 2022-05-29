@@ -122,6 +122,14 @@ export default makeStyles((theme) => ({
     display: "inline",
 
   },
+  searchbarico: {
+    color: "#bbb",
+    cursor:"pointer",
+    "&:hover": {
+      color: "#000",
+    },
+    overflow: "hidden",
+  },
   suggestion_h5:{
 marginBottom: "0.2rem",
   }
