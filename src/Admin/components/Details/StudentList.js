@@ -3,36 +3,25 @@ import React,{ useState} from "react";
 import StudentCard from "./StudentCard";
 import { Grid, Typography } from "@material-ui/core";
 import ReactPaginate from "react-paginate";
-
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, setShowLoader,
   openingId, getApplicationsInfo }) => {
   const classes = useStyles();
-
   console.log(applicationsInfo);
- 
-  const [pageNumber, setPageNumber] = useState(0);
 
+  //paginations
+  const [page, setPage] = React.useState(1);
   const usersPerPage = 6;
-  const pagesVisited = pageNumber * usersPerPage;
-
-  // const displayUsers = users
-  //   .slice(pagesVisited, pagesVisited + usersPerPage)
-  //   .map((user) => {
-  //     return (
-  //       <div className="user">
-  //         <h3>{user.firstName}</h3>
-  //         <h3>{user.lastName}</h3>
-  //         <h3>{user.email}</h3>
-  //       </div>
-  //     );
-  //   });
-let  length=applicationsInfo?applicationsInfo.applications.length:0;
-  const pageCount = Math.ceil( length/ usersPerPage);
-
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
+  const pagesVisited = (page-1) * usersPerPage;
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
   };
+
+let  length=applicationsInfo?applicationsInfo.applications.length:0;
+const pageCount = Math.ceil( length/ usersPerPage);
+
 
   return (
     <div className={classes.studentCardContainer}>
@@ -48,7 +37,7 @@ let  length=applicationsInfo?applicationsInfo.applications.length:0;
             </Typography>
           </Grid>
         ) : (
-          applicationsInfo&& applicationsInfo.applications.slice(pagesVisited, pagesVisited + usersPerPage).map((elem) => {
+          applicationsInfo&& applicationsInfo.applications.slice(pagesVisited,pagesVisited+usersPerPage).map((elem) => {
             return (
               <Grid   key={elem.id} item xs={6} s={6} md={6} lg={4}>
                 <StudentCard
@@ -78,18 +67,8 @@ let  length=applicationsInfo?applicationsInfo.applications.length:0;
           })
         )}
        {applicationsInfo&& (
-         <div>
- <ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
-        pageCount={pageCount}
-        onPageChange={changePage}
-        containerClassName={"paginationBttns"}
-        previousLinkClassName={"previousBttn"}
-        nextLinkClassName={"nextBttn"}
-        disabledClassName={"paginationDisabled"}
-        activeClassName={"paginationActive"}
-      />
+         <div style={{margin: 'auto'}}>
+      <Pagination count={pageCount} page={page} onChange={handleChange} color="secondary" />
          </div>
        )
   }
