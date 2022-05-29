@@ -101,9 +101,14 @@ export default makeStyles((theme) => ({
   close: {
     position: "absolute",
     right: "0.5rem",
+    cursor:"pointer",
     top: "50%",
+    color: "#aaa",
     transform: "translateY(-50%)",
     overflow: "hidden",
+    "&:hover": {
+      color: "#000",
+    },
   },
   searchButton: {
     position: "absolute",
