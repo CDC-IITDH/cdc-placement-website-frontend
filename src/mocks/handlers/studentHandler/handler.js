@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import API_ENDPOINT from "../../api/api_endpoint";
+import API_ENDPOINT from "../../../api/api_endpoint";
 
 const profileDetails = {
     id: "190010036",
