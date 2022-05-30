@@ -7,7 +7,7 @@ export const handlers = [
             ctx.json({
                 action: "Login",
                 message: "Verified",
-                user_type: ["student"],
+                user_type: ["student", “admin”],
             })
         );
     }),
