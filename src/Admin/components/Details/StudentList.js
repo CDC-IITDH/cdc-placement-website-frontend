@@ -67,7 +67,7 @@ const pageCount = Math.ceil( length/ usersPerPage);
           })
         )}
        {applicationsInfo&& (
-         <div style={{margin: 'auto'}}>
+         <div style={{margin: 'auto',position:'absolute',top:'650px',left:'50%'}}>
       <Pagination count={pageCount} page={page} onChange={handleChange} color="secondary" />
          </div>
        )
