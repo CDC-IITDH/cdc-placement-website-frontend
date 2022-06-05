@@ -14,16 +14,14 @@ const UserSwitch = ({
   useEffect(() => {
     if (auth) {
       if (!currentUserType) {
-        if("student" === window.location.pathname.slice(-7)) 
-          setCurrentUserType("student");
-        else if("admin" === window.location.pathname.slice(-5))
-          setCurrentUserType("admin");
         if (!userTypes.length) {
           setAuth(false);
         } else if (userTypes.length === 1) {
           setCurrentUserType(userTypes[0]);
         } else {
-          setShowLoader(false);
+          var path = window.location.pathname.split("/").length > 1 ? window.location.pathname.split("/")[1] : null;  
+          if (path && userTypes.includes(path))   setCurrentUserType(path);
+          else setShowLoader(false);
         }
       }
     }
