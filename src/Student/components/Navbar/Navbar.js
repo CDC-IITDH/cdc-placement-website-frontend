@@ -87,6 +87,9 @@ const Navbar = ({
                   </div>
                 </MenuItem>
                 <MenuItem>
+                  <a style={{color: 'black', textDecoration:'none'}} target="_blank" href="https://drive.google.com/file/d/1-v1KiMw0-hlvEnmUEQJc2rAQJTgH3xPg/view?usp=drivesdk" rel="noreferrer noopener" >Placement Rules</a>
+                </MenuItem>
+                <MenuItem>
                   <LogOut
                     auth={auth}
                     setAuth={setAuth}
@@ -112,6 +115,9 @@ const Navbar = ({
                 >
                   Profile
                 </div>
+              </Button>
+              <Button>
+                <a style={{color: 'white', textDecoration:'none'}} target="_blank" href="https://drive.google.com/file/d/1-v1KiMw0-hlvEnmUEQJc2rAQJTgH3xPg/view?usp=drivesdk" className={classes.navbarLinks} rel="noreferrer noopener">Placement Rules</a>
               </Button>
               <LogOut
                 auth={auth}
