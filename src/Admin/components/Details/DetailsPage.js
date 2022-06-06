@@ -27,7 +27,6 @@ const DetailsPage = ({
   const [reqJobPosting, setreqJobPosting] = useState(null);
   const [countStudentsSelected, setCountStudentSelected] = useState(0);
 
-
   const getApplicationsInfo = () => {
     if (token) {
       GetApplications(token, openingId)
@@ -62,8 +61,8 @@ const DetailsPage = ({
 
   useEffect(() => {
     console.log(!dashboardInfo[0]);
-    if (!dashboardInfo[0]){
-      return ;
+    if (!dashboardInfo[0]) {
+      return;
     }
     let reqJob = [];
     if (dashboardInfo && dashboardInfo[0]?.ongoing.length !== 0) {
@@ -73,12 +72,20 @@ const DetailsPage = ({
     }
     console.log(reqJob);
     console.log(dashboardInfo);
-    if (reqJob.length === 0 && dashboardInfo[0] && dashboardInfo[0]?.previous.length !== 0) {
+    if (
+      reqJob.length === 0 &&
+      dashboardInfo[0] &&
+      dashboardInfo[0]?.previous.length !== 0
+    ) {
       reqJob = dashboardInfo[0]?.previous.filter((elem) => {
         return elem.id === openingId;
       });
     }
-    if (reqJob.length === 0 && dashboardInfo && dashboardInfo[0]?.new.length !== 0) {
+    if (
+      reqJob.length === 0 &&
+      dashboardInfo &&
+      dashboardInfo[0]?.new.length !== 0
+    ) {
       reqJob = dashboardInfo[0]?.new.filter((elem) => {
         return elem.id === openingId;
       });
@@ -88,11 +95,19 @@ const DetailsPage = ({
     setShowLoader(false);
   }, [dashboardInfo, openingId]);
 
-
-  
   return (
     <div className={classes.container}>
-      <Details opening={reqJobPosting} setShowLoader = {setShowLoader} token ={token} getDashboardInfo={getDashboardInfo} type={openingType}/>
+      <Details
+        opening={reqJobPosting}
+        setShowLoader={setShowLoader}
+        token={token}
+        getDashboardInfo={getDashboardInfo}
+        type={openingType}
+        setError={setError}
+        setShowError={setShowError}
+        setSuccess={setSuccess}
+        setShowSuccess={setShowSuccess}
+      />
       <div className={classes.rightContainer}>
         <Header
           studentsApplied={studentsApplied}
@@ -106,18 +121,17 @@ const DetailsPage = ({
           setShowSuccess={setShowSuccess}
           getApplicationsInfo={getApplicationsInfo}
         />
-        <StudentList 
-        applicationsInfo={applicationsInfo} 
-        reqJobPosting={reqJobPosting} 
-        token={token}
-        openingId={openingId}
-        setError={setError}
-        setShowError={setShowError}
-        setSuccess={setSuccess}
-        setShowSuccess={setShowSuccess}
-        setShowLoader={setShowLoader}
-        getApplicationsInfo={getApplicationsInfo}
-        
+        <StudentList
+          applicationsInfo={applicationsInfo}
+          reqJobPosting={reqJobPosting}
+          token={token}
+          openingId={openingId}
+          setError={setError}
+          setShowError={setShowError}
+          setSuccess={setSuccess}
+          setShowSuccess={setShowSuccess}
+          setShowLoader={setShowLoader}
+          getApplicationsInfo={getApplicationsInfo}
         />
       </div>
     </div>

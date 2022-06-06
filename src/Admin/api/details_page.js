@@ -147,4 +147,60 @@ const MarkStatus = (token, opening_id, student_id, status) => {
     });
 };
 
-export { GetApplications, ExportAsExcel, ChangeOffer, UpdateDeadline, MarkStatus };
+const DeleteAdditionalInfo = (token, opening_id, field) => {
+  return new Promise((myResolve, myReject) => {
+      if (token) {
+          fetch(API_ENDPOINT + "api/admin/deleteAdditionalInfo/", {
+              method: "POST",
+              headers: {
+                  Authorization: "Bearer " + token,
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  "opening_id": opening_id,
+                  "field": field
+              }),
+          })
+              .then((result) => {
+                  if (result.status === 200) myResolve(result.json());
+                  else throw new Error("Error " + result.status);
+              })
+              .catch((err) => {
+                  myReject(false);
+              });
+      } else {
+          myReject(false);
+      }
+  });
+};
+
+const AddAdditionalInfo = (token, opening_id, field) => {
+  return new Promise((myResolve, myReject) => {
+      if (token) {
+          fetch(API_ENDPOINT + "api/admin/addAdditionalInfo/", {
+              method: "POST",
+              headers: {
+                  Authorization: "Bearer " + token,
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  "opening_id": opening_id,
+                  "field": field
+              }),
+          })
+              .then((result) => {
+                  if (result.status === 200) myResolve(result.json());
+                  else throw new Error("Error " + result.status);
+              })
+              .catch((err) => {
+                  myReject(false);
+              });
+      } else {
+          myReject(false);
+      }
+  });
+};
+
+export { GetApplications, ExportAsExcel, ChangeOffer, UpdateDeadline, MarkStatus, DeleteAdditionalInfo, AddAdditionalInfo };
