@@ -67,7 +67,20 @@ const ManageAdditionalInfo = ({
         }
       }
     })
-    console.log(field);
+    AddAdditionalInfo(token, opening_id, field)
+      .then((result) => {
+        setSuccess("Additional info added successfully");
+        getDashboardInfo();
+        setShowLoader(false);
+        setShowSuccess(true);
+      })
+      .catch((err) => {
+        setError("Error deleting additional info");
+        getDashboardInfo();
+        setShowLoader(false);
+        setShowError(true);
+      });
+    setShowLoader(true);
     
   }
 
@@ -81,11 +94,13 @@ const ManageAdditionalInfo = ({
         width: "200px",
         textAlign: "center",
         margin: "0.25rem",
+        
       }}
+     
     >
-      <div style ={{fontSize:'19px', color: "#334878", fontWeight:"600"}}> AdditionalInfo
+      <div style ={{fontSize:'19px', color: "#334878", fontWeight:"600"}}> Additional Info
       <span
-        className={classes.additionalInfoClearBtn}
+        className={classes.additionalInfoAddBtn}
         onClick={() => addHandler()}
       >
         {" "}
@@ -93,7 +108,7 @@ const ManageAdditionalInfo = ({
       </span>
       
        </div>
-      <div className={classes.additionalInfo}>
+      <div className={classes.additionalInfo} >
         {additional_info.map((field, i) => {
           return (
             <AdditionalInfoCard

@@ -120,9 +120,9 @@ export default makeStyles((theme) => ({
     marginBlock: "3rem",
   },
   additionalInfoCardParent: {
-    padding: '5px 10px',
-    backgroundColor: '#e5e1e1',
-    margin: '5px',
+    padding: "5px 10px",
+    backgroundColor: "#e5e1e1",
+    margin: "5px",
     borderRadius: "15px",
     color: "black",
   },
@@ -132,6 +132,24 @@ export default makeStyles((theme) => ({
     "&:hover": {
       transition: "0.2s",
       color: "#334878",
-    }
-  }
+    },
+  },
+  additionalInfoAddBtn: {
+    float: "right",
+    cursor: "pointer",
+    "&:hover": {
+      transition: "0.2s",
+      color: "black",
+    },
+  },
+  additionalInfoContainer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    padding: "0.5rem",
+  },
+  additionalInfo: {
+    maxHeight: "200px",
+    overflow: "auto",
+  },
 }));

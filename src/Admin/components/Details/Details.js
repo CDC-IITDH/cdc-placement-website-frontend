@@ -85,7 +85,7 @@ const Details = ({
       <div className={classes.dropdownContainer}>
         {opening ? offerBtn() : ""}
       </div>
-      <div className={classes.deadlineContainer}>
+      <div className={classes.additionalInfoContainer}>
         {opening && opening.offer_accepted !== true ? (
           <ManageAdditionalInfo
             additional_info={opening.additional_info}
