@@ -6,13 +6,16 @@ export default makeStyles((theme) => ({
   },
   rightContainer: {
     display: "flex",
+    height: "100vh",
     flexDirection: "column",
+    overflowY:"scroll",
     flexGrow: 1,
   },
   sidebar: {
     height: "100vh",
     width: "300px",
     backgroundColor: "#e5e1e1",
+    overflowY:"scroll",
   },
   dropdownContainer: {
     display: "flex",
