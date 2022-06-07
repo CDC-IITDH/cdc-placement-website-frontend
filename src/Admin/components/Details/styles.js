@@ -122,4 +122,37 @@ export default makeStyles((theme) => ({
     marginInline: "2rem",
     marginBlock: "3rem",
   },
+  additionalInfoCardParent: {
+    padding: "5px 10px",
+    backgroundColor: "#e5e1e1",
+    margin: "5px",
+    borderRadius: "15px",
+    color: "black",
+  },
+  additionalInfoClearBtn: {
+    float: "right",
+    cursor: "pointer",
+    "&:hover": {
+      transition: "0.2s",
+      color: "#334878",
+    },
+  },
+  additionalInfoAddBtn: {
+    float: "right",
+    cursor: "pointer",
+    "&:hover": {
+      transition: "0.2s",
+      color: "black",
+    },
+  },
+  additionalInfoContainer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    padding: "0.5rem",
+  },
+  additionalInfo: {
+    maxHeight: "200px",
+    overflow: "auto",
+  },
 }));
