@@ -2,9 +2,8 @@ import useStyles from "./styles";
 import React,{ useState} from "react";
 import StudentCard from "./StudentCard";
 import { Grid, Typography } from "@material-ui/core";
-import ReactPaginate from "react-paginate";
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+
 
 const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, setShowLoader,
   openingId, getApplicationsInfo }) => {
@@ -15,7 +14,7 @@ const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShow
   const [page, setPage] = React.useState(1);
   const usersPerPage = 6;
   const pagesVisited = (page-1) * usersPerPage;
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = (event, value) => {
     setPage(value);
   };
 
