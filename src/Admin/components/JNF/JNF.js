@@ -200,7 +200,7 @@ const JNF = ({setShowLoader}) => {
         }
       }
       else if (page === 2) {
-        if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers) {
+        if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers || errors.ctc || errors.gross || errors.takehome) {
           setFieldTouched("designation", true)
           setFieldTouched("locations", true)
           setFieldTouched("details", true)
@@ -208,15 +208,6 @@ const JNF = ({setShowLoader}) => {
           setFieldTouched("branch", true)
           setFieldTouched("research", true)
           setFieldTouched("numoffers", true)
-          window.scrollTo(0,0)
-          setWarning("Please fill all the required fields")
-        }
-        else {
-          setPage(page + 1)
-        }
-      }
-      else if (page === 3) {
-        if (errors.ctc || errors.gross || errors.takehome) {
           setFieldTouched("ctc", true)
           setFieldTouched("gross", true)
           setFieldTouched("takehome", true)
@@ -227,7 +218,7 @@ const JNF = ({setShowLoader}) => {
           setPage(page + 1)
         }
       }
-      else if (page === 4) {
+      else if (page === 3) {
         if (errors.selectionprocess) {
           setFieldTouched("selectionprocess", true)
           window.scrollTo(0,0)
@@ -237,7 +228,7 @@ const JNF = ({setShowLoader}) => {
           setPage(page + 1)
         }
       }
-      else if (page === 5) {
+      else if (page === 4) {
         if (errors.contact || errors.email || errors.mobile) {
           setFieldTouched("contact", true)
           setFieldTouched("email", true)
@@ -304,24 +295,11 @@ const JNF = ({setShowLoader}) => {
                           submitCount={submitCount}
                           jobdescription_file={jobdescription_file}
                           setJobdescription_file={setJobdescription_file}
+                          salary_file = {salary_file}
+                          setSalary_file = {setSalary_file}
                         />
                       ):(<></>)}
                       {(page === 3) ? (
-                        <SalaryDetails
-                          handleSubmit={handleSubmit}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          values={values}
-                          touched={touched}
-                          isValid={isValid}
-                          errors={errors}
-                          dirty={dirty}
-                          setFieldValue={setFieldValue}
-                          salary_file={salary_file}
-                          setSalary_file={setSalary_file}
-                        />
-                      ):(<></>)}
-                      {(page === 4) ? (
                         <SelectionProcess
                           handleSubmit={handleSubmit}
                           handleChange={handleChange}
@@ -336,7 +314,7 @@ const JNF = ({setShowLoader}) => {
                           setSelection_file={setSelection_file}
                         />
                       ):(<></>)}
-                      {(page === 5) ? (
+                      {(page === 4) ? (
                         <>
                         <ContactDetails
                           handleSubmit={handleSubmit}
@@ -380,7 +358,7 @@ const JNF = ({setShowLoader}) => {
                             </Button>
                           </Col>
                         ):(<></>)}
-                        {(page!==5)? (
+                        {(page!==4)? (
                           <Col className="text-end">
                             <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit)}>
                               Next
@@ -407,7 +385,7 @@ const JNF = ({setShowLoader}) => {
                 ):(
                   <>
                     <h3 className="text-center">Submitted Successfully!</h3>
-                    <p className="text-center">We've sent an email to verify your email ID.</p>
+                    <p className="text-center"><b>To Finish up this process, please check your inbox for our verification email. Verify your email within 24 hours of the submission to complete this process. </b></p>
                   </>
                 )}
                 </>

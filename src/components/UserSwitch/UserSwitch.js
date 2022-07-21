@@ -19,7 +19,9 @@ const UserSwitch = ({
         } else if (userTypes.length === 1) {
           setCurrentUserType(userTypes[0]);
         } else {
-          setShowLoader(false);
+          var path = window.location.pathname.split("/").length > 1 ? window.location.pathname.split("/")[1] : null;  
+          if (path && userTypes.includes(path))   setCurrentUserType(path);
+          else setShowLoader(false);
         }
       }
     }
