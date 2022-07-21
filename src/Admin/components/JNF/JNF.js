@@ -385,7 +385,7 @@ const JNF = ({setShowLoader}) => {
                 ):(
                   <>
                     <h3 className="text-center">Submitted Successfully!</h3>
-                    <p className="text-center"><b>We've sent an email to verify your email ID.</b></p>
+                    <p className="text-center"><b>To Finish up this process, please check your inbox for our verification email. Verify your email within 24 hours of the submission to complete this process. </b></p>
                   </>
                 )}
                 </>
