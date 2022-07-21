@@ -1,13 +1,26 @@
 import useStyles from "./styles";
-import React from "react";
+import React,{ useState} from "react";
 import StudentCard from "./StudentCard";
 import { Grid, Typography } from "@material-ui/core";
+import Pagination from '@mui/material/Pagination';
+
 
 const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, setShowLoader,
   openingId, getApplicationsInfo }) => {
   const classes = useStyles();
-
   console.log(applicationsInfo);
+
+  //paginations
+  const [page, setPage] = React.useState(1);
+  const usersPerPage = 6;
+  const pagesVisited = (page-1) * usersPerPage;
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+let  length=applicationsInfo?applicationsInfo.applications.length:0;
+const pageCount = Math.ceil( length/ usersPerPage);
+
 
   return (
     <div className={classes.studentCardContainer}>
@@ -23,9 +36,9 @@ const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShow
             </Typography>
           </Grid>
         ) : (
-          applicationsInfo?.applications.map((elem) => {
+          applicationsInfo&& applicationsInfo.applications.slice(pagesVisited,pagesVisited+usersPerPage).map((elem) => {
             return (
-              <Grid key={elem.id} item xs={6} s={6} md={6} lg={4}>
+              <Grid   key={elem.id} item xs={6} s={6} md={6} lg={4}>
                 <StudentCard
                   name={elem.student_details.name}
                   batch={elem.student_details.batch}
@@ -46,12 +59,19 @@ const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShow
                   setShowSuccess={setShowSuccess}
                   setShowLoader={setShowLoader}
                   getApplicationsInfo={getApplicationsInfo}
-
                 />
               </Grid>
+              
             );
           })
         )}
+       {applicationsInfo&& (
+         <div style={{margin: 'auto',position:'absolute',top:'650px',left:'50%'}}>
+      <Pagination count={pageCount} page={page} onChange={handleChange} color="secondary" />
+         </div>
+       )
+  }
+      
       </Grid>
     </div>
   );
