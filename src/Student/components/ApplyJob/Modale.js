@@ -83,7 +83,10 @@ function Modale({
       } else {
         setResumeErrorState(false);
       }
-      setResume(value);
+      const resume_obj = profileInfo.resume_list.find(
+        resume => resume.name === value
+      );
+      setResume(resume_obj);
     } else {
       var errorStateTemp = errorState;
       if (value === "") {
