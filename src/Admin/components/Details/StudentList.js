@@ -65,11 +65,11 @@ const pageCount = Math.ceil( length/ usersPerPage);
             );
           })
         )}
-       {applicationsInfo&& (
+       {applicationsInfo && applicationsInfo?.applications.length !== 0 ? (
          <div style={{margin: 'auto',position:'absolute',top:'650px',left:'50%'}}>
       <Pagination count={pageCount} page={page} onChange={handleChange} color="secondary" />
          </div>
-       )
+       ):""
   }
       
       </Grid>
