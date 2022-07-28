@@ -10,12 +10,14 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     overflowY:"scroll",
     flexGrow: 1,
+    maxWidth:"calc(100% - 300px)",
   },
   sidebar: {
     height: "100vh",
     width: "300px",
     backgroundColor: "#e5e1e1",
     overflowY:"scroll",
+    maxWidth:"300px",
   },
   dropdownContainer: {
     display: "flex",

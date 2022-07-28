@@ -84,6 +84,7 @@ const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resu
                 justifyContent: "space-between",
                 paddingBlock: "0.5rem",
                 paddingInline: "0.5rem",
+                maxWidth: "300px"
             }}
         >
             <AddStudent
@@ -110,6 +111,9 @@ const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resu
                 sx={{
                     marginBlock: "0.5rem",
                     marginInline: "0.5rem",
+                }}
+                style={{
+                    width: '200px'
                 }}
             >
                 <Typography className={classes.studentCardText}>
