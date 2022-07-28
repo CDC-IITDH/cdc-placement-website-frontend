@@ -34,7 +34,6 @@ const Description = ({
       const infoType = match.params.type;
       let desc = dashboardInfo[0][infoType].filter(
         (elem) => {
-          console.log(elem.id, match.params.id, elem.id === match.params.id);
           return(elem.id.toString() === match.params.id.toString())
         }
       );
@@ -42,17 +41,13 @@ const Description = ({
 
         desc = dashboardInfo[0]['placementApplication'].filter(
             (elem) => {
-              console.log(elem.id, match.params.id, elem.id === match.params.id);
               return (elem.id.toString() === match.params.id.toString())
             }
         );
         for (let i = 0; i < desc.length; i++) {
-          console.log("hui");
-
           desc[i] = desc[i]['placement'];
         }
       }
-      console.log("desc, ", desc);
       if (desc.length !== 0) {
         setDesc(desc);
         if (infoType === "internships") {
@@ -83,9 +78,6 @@ const Description = ({
             i < dashboardInfo[0].placementApplication.length;
             i++
           ) {
-            console.log(dashboardInfo[0].placementApplication[i].id,  dashboardInfo[0].placementApplication[i].id.toString() ===
-              match.params.id.toString() ||  dashboardInfo[0].placementApplication[i]['placement'].id.toString() ===
-              match.params.id.toString(), "selec");
             if (
                 (dashboardInfo[0].placementApplication[i].id.toString() ===
               match.params.id.toString() ||  dashboardInfo[0].placementApplication[i]['placement'].id.toString() ===
@@ -105,8 +97,6 @@ const Description = ({
           }
         }
       } else {
-
-        console.log("Searched url does not match anything.");
         window.location.href = "/dashboard";
       }
       setLoading(false);

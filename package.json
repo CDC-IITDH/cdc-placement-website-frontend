@@ -70,5 +70,6 @@
   },
   "msw": {
     "workerDirectory": "public"
-  }
+  },
+  "homepage": "/webPortal"
 }

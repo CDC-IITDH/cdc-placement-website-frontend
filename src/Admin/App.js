@@ -35,7 +35,6 @@ const App = ({
                 .catch((err) => {
                     setAuth(false);
                     setToken(null);
-                    console.log(err);
                 });
         }
     };
@@ -48,7 +47,7 @@ const App = ({
 
     return (
         <>
-            <Router>
+            <Router basename="webPortal">
                 <Navbar
                     auth={auth}
                     setAuth={setAuth}

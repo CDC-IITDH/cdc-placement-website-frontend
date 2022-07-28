@@ -60,7 +60,6 @@ const DetailsPage = ({
   }, [applicationsInfo]);
 
   useEffect(() => {
-    console.log(!dashboardInfo[0]);
     if (!dashboardInfo[0]) {
       return;
     }
@@ -70,8 +69,6 @@ const DetailsPage = ({
         return elem.id === openingId;
       });
     }
-    console.log(reqJob);
-    console.log(dashboardInfo);
     if (
       reqJob.length === 0 &&
       dashboardInfo[0] &&

@@ -48,8 +48,6 @@ const JNF = ({setShowLoader}) => {
 
     const validateSize = (value, context) => {
       if (value) {
-        // console.log(value.size);
-        // console.log(value);
         return (value.size <= 10000000)
       }
       else {
@@ -162,7 +160,6 @@ const JNF = ({setShowLoader}) => {
         redirect: 'follow'
       };
 
-      // console.log(values.date)
       setShowLoader(true)
 
       fetch(API_ENDPOINT+"api/company/addPlacement/", requestOptions)
@@ -245,7 +242,6 @@ const JNF = ({setShowLoader}) => {
           window.scrollTo(0,0)
         }
         else {
-          console.log("Submitting");
           handleSubmit()
         }
       }

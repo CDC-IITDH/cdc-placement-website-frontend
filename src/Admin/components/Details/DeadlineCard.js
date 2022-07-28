@@ -38,7 +38,6 @@ const DeadlineCard = (
 
 
         UpdateDeadline(token, deadline_datetime, opening_id).then((res) => {
-            console.log(res);
 
             getDashboardInfo();
                         setShowLoader(false);

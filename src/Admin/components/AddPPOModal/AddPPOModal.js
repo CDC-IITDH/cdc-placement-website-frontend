@@ -62,21 +62,18 @@ const AddPPOModal = ({
     };
     const handleInputChange = (e) => {
         const {name, value} = e.target;
-        console.log(name, value);
     if(name !== 'compensation_details'){
          if (value.length > 0 ) {
             setErrorState({
                 ...errorState,
                 [name]: false,
             });
-            console.log(errorState);
         }else{
             setErrorState({
                 ...errorState,
                 [name]: true,
             });
         }
-        console.log(checkError())
         setIsError(checkError());
     }
 
@@ -90,7 +87,6 @@ const AddPPOModal = ({
     };
 
     const SendData = () => {
-        console.log("im here")
 
         setShowLoader(true);
         var temp_error = {...errorState};
@@ -101,11 +97,9 @@ const AddPPOModal = ({
              if (data.hasOwnProperty(elem)){
                  if(data[elem].length === 0){
                      temp_error[elem] = true;
-                     console.log(elem, data[elem], errorState[elem], 'error');
                      return true;
                  }else{
                      temp_error[elem] = false;
-                                          console.log(elem, data[elem], errorState[elem], 'no error');
 
                      return false;
                  }

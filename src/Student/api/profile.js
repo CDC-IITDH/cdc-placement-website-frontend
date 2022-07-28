@@ -16,7 +16,6 @@ const addResume = async (token, file) => {
             body: formData
           }
         );
-        console.log(result, "Add Profile APi", result.status);
         if (result.status === 200) {
           const data = await result.json();
           return data;
@@ -25,7 +24,6 @@ const addResume = async (token, file) => {
         }
       }
     } catch (error) {
-      console.log(error);
       return false;
     }
   };
@@ -55,7 +53,6 @@ const addResume = async (token, file) => {
         }
       }
     } catch (error) {
-      console.log(error);
       return false
     }
   };

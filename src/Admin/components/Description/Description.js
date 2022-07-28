@@ -25,11 +25,9 @@ const Description = ({
       dashboardInfo[0] !== null &&
       dashboardInfo[0].message === "Data Found"
     ) {
-      console.log(dashboardInfo);
       const infoType = match.params.type;
       let desc = dashboardInfo[0]['new'].filter(
         (elem) => {
-          console.log(elem.id, match.params.id, elem.id === match.params.id);
           return(elem.id.toString() === match.params.id.toString())
         }
       );
@@ -37,7 +35,6 @@ const Description = ({
 
         desc = dashboardInfo[0]['ongoing'].filter(
             (elem) => {
-              console.log(elem.id, match.params.id, elem.id === match.params.id);
               return (elem.id.toString() === match.params.id.toString())
             }
         );
@@ -47,19 +44,16 @@ const Description = ({
 
         desc = dashboardInfo[0]['previous'].filter(
             (elem) => {
-              console.log(elem.id, match.params.id, elem.id === match.params.id);
               return (elem.id.toString() === match.params.id.toString())
             }
         );
 
       }
-      console.log("desc, ", desc);
       if (desc.length !== 0) {
         setDesc(desc);
 
       } else {
 
-        console.log("Searched url does not match anything.");
         window.location.href = "/";
       }
       setLoading(false);

@@ -15,7 +15,6 @@ const getApplication = (token, data) => {
       })
         .then((result) => {
           const res = result.json().then((res) => {
-            console.log(res);
             if (result.status === 200) myResolve(res);
             else if (result.status === 404 && res.application_found=="false") myResolve(res);
             else throw new Error(result.status);

@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 
 const SideButtons = ({ buttonContent, type, id }) => {
   const changeScreen = () => {};
-console.log(`/admin/description/${type}/${id}`);
   return (
 
       <Link  to={`/admin/description/${type}/${id}`}

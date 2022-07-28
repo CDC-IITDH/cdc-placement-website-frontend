@@ -43,7 +43,7 @@ const App = () => {
 
   return (
     <>
-      <Router>
+      <Router basename="webPortal">
         {showLoader ? <Loader /> : ""}
         <Snackbar
           open={showError}

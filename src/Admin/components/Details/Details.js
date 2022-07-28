@@ -18,7 +18,6 @@ const Details = ({
   const classes = useStyles();
 
   const offerBtn = () => {
-    console.log(opening.id, opening.offer_accepted === true);
 
     if (opening && opening.offer_accepted === true) {
       return (

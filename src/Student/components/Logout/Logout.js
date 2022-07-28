@@ -9,7 +9,6 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 function Logout({ auth, setAuth, setToken, setCurrentUserType }) {
   const history = useHistory();
   const onSuccess = (res) => {
-    console.log(res);
     setAuth(false);
     setToken(null);
     setCurrentUserType(null);

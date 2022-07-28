@@ -15,7 +15,6 @@ const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboard
 return ;
         }
         ChangeOffer(token, opening, offer_accepted).then(res => {
-            console.log(res);
             getDashboardInfo();
 
             setShowLoader(false);
