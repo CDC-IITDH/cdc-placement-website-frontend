@@ -64,7 +64,7 @@ const App = ({
 
   return (
     <>
-      <Router basename="webPortal">
+      <Router basename="portal">
         <Navbar
           auth={auth}
           setAuth={setAuth}
