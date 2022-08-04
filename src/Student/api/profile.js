@@ -1,4 +1,5 @@
 import API_ENDPOINT from "../../api/api_endpoint";
+import { getCookie } from "../../utils/getCookie";
 
 const addResume = async (token, file) => {
     try {
@@ -12,6 +13,7 @@ const addResume = async (token, file) => {
             headers: {
               Accept: "application/json",
               Authorization: "Bearer " + token,
+          'X-CSRFToken': getCookie('csrftoken')
             },
             body: formData
           }
@@ -39,6 +41,7 @@ const addResume = async (token, file) => {
               Accept: "*/*",
               'Content-Type':"application/json",
               Authorization: "Bearer " + token,
+              'X-CSRFToken': getCookie('csrftoken')
             },
             body: JSON.stringify({
               'resume_file_name':file_name

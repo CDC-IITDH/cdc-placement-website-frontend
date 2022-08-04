@@ -1,5 +1,5 @@
 import API_ENDPOINT from "../../api/api_endpoint";
-
+import { getCookie } from "../../utils/getCookie";
 
 const getApplication = (token, data) => {
   return new Promise((myResolve, myReject) => {
@@ -10,6 +10,7 @@ const getApplication = (token, data) => {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
+          'X-CSRFToken': getCookie('csrftoken')
         },
         body: JSON.stringify(data),
       })

@@ -12,6 +12,7 @@ import ContactDetails from "./ContactDetails";
 import API_ENDPOINT from "../../../api/api_endpoint";
 import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
+import { getCookie } from "../../../utils/getCookie";
 
 const JNF = ({setShowLoader}) => {
     const year = "2020-2021"
@@ -157,7 +158,10 @@ const JNF = ({setShowLoader}) => {
       var requestOptions = {
         method: 'POST',
         body: formdata,
-        redirect: 'follow'
+        redirect: 'follow',
+        headers:{
+          'X-CSRFToken': getCookie('csrftoken')
+        }
       };
 
       setShowLoader(true)
