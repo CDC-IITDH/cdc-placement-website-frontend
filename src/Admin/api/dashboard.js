@@ -1,4 +1,5 @@
 import API_ENDPOINT from "../../api/api_endpoint";
+import { getCookie } from "../../utils/getCookie";
 
 const GetDashboard = (token) => {
   return new Promise((myResolve, myReject) => {
@@ -8,6 +9,7 @@ const GetDashboard = (token) => {
         headers: {
           Accept: "application/json",
           Authorization: "Bearer " + token,
+          'X-CSRFToken': getCookie('csrftoken')
         },
       })
         .then((result) => {
