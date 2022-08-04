@@ -1,3 +1,4 @@
+import { getCookie } from "../utils/getCookie";
 import API_ENDPOINT from "./api_endpoint";
 
 const SignIn = (token) => {
@@ -8,6 +9,7 @@ const SignIn = (token) => {
         headers: {
           Accept: "application/json",
           Authorization: "Bearer " + token,
+          'X-CSRFToken': getCookie('csrftoken')
         },
       })
         .then((result) => {

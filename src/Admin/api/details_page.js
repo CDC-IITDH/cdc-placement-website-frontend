@@ -1,4 +1,5 @@
 import API_ENDPOINT from "../../api/api_endpoint";
+import { getCookie } from "../../utils/getCookie";
 
 const GetApplications = (token, opening_id) => {
   return new Promise((myResolve, myReject) => {
@@ -10,6 +11,7 @@ const GetApplications = (token, opening_id) => {
           headers: {
             Accept: "application/json",
             Authorization: "Bearer " + token,
+            'X-CSRFToken': getCookie('csrftoken')
           },
         }
       )
@@ -36,6 +38,7 @@ const ExportAsExcel = (token, opening_id) => {
           Authorization: "Bearer " + token,
           Accept: "application/json",
           "Content-Type": "application/json",
+          'X-CSRFToken': getCookie('csrftoken')
         },
         body: JSON.stringify({ opening_id: opening_id }),
       })
@@ -66,6 +69,7 @@ const ChangeOffer = (token, opening_id, offer_accepted) => {
           Authorization: "Bearer " + token,
           Accept: "application/json",
           "Content-Type": "application/json",
+          'X-CSRFToken': getCookie('csrftoken')
         },
         body: JSON.stringify({
           opening_id: opening_id,
@@ -94,6 +98,7 @@ const UpdateDeadline = (token, deadline,opening_id) => {
           Authorization: "Bearer " + token,
           Accept: "application/json",
           "Content-Type": "application/json",
+          'X-CSRFToken': getCookie('csrftoken')
         },
         body: JSON.stringify({
           deadline_datetime: deadline,
@@ -123,6 +128,7 @@ const MarkStatus = (token, opening_id, student_id, status) => {
                     Authorization: "Bearer " + token,
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    'X-CSRFToken': getCookie('csrftoken')
                 },
                 body: JSON.stringify({
                     "opening_id": opening_id,
@@ -156,6 +162,7 @@ const DeleteAdditionalInfo = (token, opening_id, field) => {
                   Authorization: "Bearer " + token,
                   Accept: "application/json",
                   "Content-Type": "application/json",
+                  'X-CSRFToken': getCookie('csrftoken')
               },
               body: JSON.stringify({
                   "opening_id": opening_id,
@@ -184,6 +191,7 @@ const AddAdditionalInfo = (token, opening_id, field) => {
                   Authorization: "Bearer " + token,
                   Accept: "application/json",
                   "Content-Type": "application/json",
+                  'X-CSRFToken': getCookie('csrftoken')
               },
               body: JSON.stringify({
                   "opening_id": opening_id,

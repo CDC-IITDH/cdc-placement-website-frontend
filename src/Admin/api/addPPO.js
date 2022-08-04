@@ -1,4 +1,5 @@
 import API_ENDPOINT from "../../api/api_endpoint";
+import { getCookie } from "../../utils/getCookie";
 
 
 const AddPPO = async (token, data) => {
@@ -10,6 +11,7 @@ const AddPPO = async (token, data) => {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
+          'X-CSRFToken': getCookie('csrftoken')
         },
         body: JSON.stringify(data),
       })

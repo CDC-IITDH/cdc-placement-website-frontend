@@ -1,4 +1,5 @@
 import API_ENDPOINT from "../../api/api_endpoint";
+import { getCookie } from "../../utils/getCookie";
 
 const GetDashboard = (token) => {
   return new Promise((myResolve, myReject) => {
@@ -8,6 +9,7 @@ const GetDashboard = (token) => {
         headers: {
           Accept: "application/json",
           Authorization: "Bearer " + token,
+          'X-CSRFToken': getCookie('csrftoken')
         },
       })
         .then((result) => {
@@ -31,6 +33,7 @@ const GetProfile = async (token) => {
         headers: {
           Accept: "application/json",
           Authorization: "Bearer " + token,
+          'X-CSRFToken': getCookie('csrftoken')
         },
       })
         .then((result) => {
@@ -55,6 +58,7 @@ const PostApplication = async (token, data) => {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
+          'X-CSRFToken': getCookie('csrftoken')
         },
         body: JSON.stringify(data),
       })

@@ -3,6 +3,7 @@ import API_ENDPOINT from "../../../api/api_endpoint"
 import { Row, Col} from "react-bootstrap"
 import logo from "../../images/cdc_logo.png";
 import {Link} from "react-router-dom";
+import { getCookie } from "../../../utils/getCookie"
 
 const VerifyEmail = ({setShowLoader,setError}) => {
     const token = new URLSearchParams(window.location.search).get("token")
@@ -13,7 +14,8 @@ const VerifyEmail = ({setShowLoader,setError}) => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
           },    
         body: 
             JSON.stringify({
