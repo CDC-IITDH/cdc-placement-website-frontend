@@ -15,7 +15,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 
 const JNF = ({setShowLoader}) => {
-    const year = "2020-2021"
+    const year = "2022-2023"
 
     const [page, setPage] = useState(1)
     const [submitted, setSubmitted] = useState(0)
