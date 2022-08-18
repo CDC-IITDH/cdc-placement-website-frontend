@@ -45,7 +45,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <Form.Label>Eligible Branches <span className="text-danger">*</span></Form.Label>
         <Form.Check className="form-check" type="checkbox">
           <Row>
-            {['CSE','EE','ME'].map((x) => (
+            {['CSE','EE','MMAE'].map((x) => (
               <Col key={x} sm={6}>
                 <Form.Check.Input type="checkbox" name="branch" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.branch && errors.branch} checked={values.branch.includes(x)}></Form.Check.Input>
                 <Form.Check.Label>{x}</Form.Check.Label>
