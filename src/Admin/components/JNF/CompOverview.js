@@ -1,5 +1,6 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./limit_constants";
 import MultipleFileInput from "./MultipleFileInput";
 
 const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFieldValue, submitCount, compdescription_file, setCompdescription_file}) => {
@@ -18,36 +19,36 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
       <hr className="pd" />
       <Form.Group className="mb-5">
         <Form.Label>Company Name <span className="text-danger">*</span></Form.Label>
-        <Form.Control maxLength="75" type="text" name='name' value={values.name} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.name && errors.name} />
+        <Form.Control maxLength={jnf_smalltext_max_character_count} type="text" name='name' value={values.name} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.name && errors.name} />
         <Form.Control.Feedback type="invalid"> {errors.name} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Website Link <span className="text-danger">*</span></Form.Label>
-        <Form.Control maxLength="75" type="text" name='link' value={values.link} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.link && errors.link} />
+        <Form.Control maxLength={jnf_text_max_character_count} type="text" name='link' value={values.link} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.link && errors.link} />
         <Form.Control.Feedback type="invalid"> {errors.link} </Form.Control.Feedback>
       </Form.Group>
       <MultipleFileInput stateVar={compdescription_file} setStateVar={setCompdescription_file} name="compdescription_file" label ="Brief About the Company" />
       <Form.Group className="mb-5">
         <Form.Label>or Describe in Words</Form.Label>
-        <Form.Control as="textarea" maxLength="1000"  className="text-area" name="compdescription" onChange={handleChange} onBlur={handleBlur}></Form.Control>
+        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count}  className="text-area" name="compdescription" onChange={handleChange} onBlur={handleBlur}></Form.Control>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Company Address <span className="text-danger">*</span></Form.Label>
-        <Form.Control as="textarea" maxLength="1000" className="text-area"  name='address' value={values.address} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.address && errors.address}></Form.Control>
+        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area"  name='address' value={values.address} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.address && errors.address}></Form.Control>
         <Form.Control.Feedback type="invalid"> {errors.address} </Form.Control.Feedback>
       </Form.Group>
       <Row>
         <Col sm={6}>
           <Form.Group className="mb-5">
             <Form.Label>City <span className="text-danger">*</span></Form.Label>
-            <Form.Control maxLength="75" type="text" name='city' value={values.city} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.city && errors.city} />
+            <Form.Control maxLength={jnf_smalltext_max_character_count} type="text" name='city' value={values.city} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.city && errors.city} />
             <Form.Control.Feedback type="invalid"> {errors.city} </Form.Control.Feedback>
           </Form.Group>
         </Col>
         <Col sm={6}>
           <Form.Group className="mb-5">
             <Form.Label>State <span className="text-danger">*</span></Form.Label>
-            <Form.Control maxLength="75" type="text" name='state' value={values.state} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.state && errors.state} />
+            <Form.Control maxLength={jnf_smalltext_max_character_count} type="text" name='state' value={values.state} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.state && errors.state} />
             <Form.Control.Feedback type="invalid"> {errors.state} </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -56,7 +57,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
         <Col sm={6}>
           <Form.Group className="mb-5">
             <Form.Label>Country <span className="text-danger">*</span></Form.Label>
-            <Form.Control maxLength="75" type="text" name='country' value={values.country} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.country && errors.country} />
+            <Form.Control maxLength={jnf_smalltext_max_character_count} type="text" name='country' value={values.country} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.country && errors.country} />
             <Form.Control.Feedback type="invalid"> {errors.country} </Form.Control.Feedback>
           </Form.Group>
         </Col>

@@ -1,5 +1,6 @@
 import { Form, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import { jnf_textarea_max_character_count } from "./limit_constants"
 import MultipleFileInput from "./MultipleFileInput"
 
 const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, handleFieldChange, setFieldValue, salary_file, setSalary_file}) => {
@@ -46,7 +47,7 @@ const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched,
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Details of Bond (if any)</Form.Label>
-        <Form.Control as="textarea" maxLength="1000" className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
+        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
       </Form.Group>
     </>
   )

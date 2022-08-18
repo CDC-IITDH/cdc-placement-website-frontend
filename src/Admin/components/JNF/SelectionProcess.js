@@ -1,5 +1,6 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import { jnf_textarea_max_character_count } from "./limit_constants";
 import MultipleFileInput from "./MultipleFileInput";
 
 
@@ -44,11 +45,11 @@ const SelectionProcess = ({handleSubmit, handleChange, handleBlur, values, touch
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>or Describe the Selection Procedure</Form.Label>
-        <Form.Control as="textarea" maxLength="1000" className="text-area" name="selection" onChange={handleChange} onBlur={handleBlur} ></Form.Control>
+        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area" name="selection" onChange={handleChange} onBlur={handleBlur} ></Form.Control>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Academic Requirements</Form.Label>
-        <Form.Control as="textarea" maxLength="1000" className="text-area"  name="requirements" onChange={handleChange} onBlur={handleBlur}></Form.Control>
+        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area"  name="requirements" onChange={handleChange} onBlur={handleBlur}></Form.Control>
         <Form.Text className="text-muted">Mention any academic requirements such as CPI cutoff, branch, etc.</Form.Text>
       </Form.Group>
     </>
