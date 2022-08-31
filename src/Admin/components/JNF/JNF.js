@@ -6,7 +6,6 @@ import * as yup from 'yup'
 import Instructions from "./Instructions";
 import { useState, useEffect, useRef } from "react";
 import JobProfile from "./JobProfile";
-import SalaryDetails from "./SalaryDetails";
 import SelectionProcess from "./SelectionProcess"
 import ContactDetails from "./ContactDetails";
 import API_ENDPOINT from "../../../api/api_endpoint";
@@ -168,13 +167,12 @@ const JNF = ({setShowLoader}) => {
 
       fetch(API_ENDPOINT+"api/company/addPlacement/", requestOptions)
         .then(res => {
-          if (res.status !== 200) {
+          if (!(res.status === 200 || res.status === 400) ) {
             setError(res)
             setSubmitted(1)
           }
           setSubmitted(1)
           setShowLoader(false)
-
         })
         .catch(error => {
           setError(error)
@@ -241,10 +239,10 @@ const JNF = ({setShowLoader}) => {
           setWarning("Please accept the terms and conditions")
           window.scrollTo(0,0)
         }
-        else if(recaptchaRef.current.getValue() === ""){
-          setWarning("Please verify that you are not a robot")
-          window.scrollTo(0,0)
-        }
+        // else if(recaptchaRef.current.getValue() === ""){
+        //   setWarning("Please verify that you are not a robot")
+        //   window.scrollTo(0,0)
+        // }
         else {
           handleSubmit()
         }
