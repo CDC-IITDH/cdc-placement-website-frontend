@@ -379,8 +379,8 @@ const JNF = ({setShowLoader}) => {
                 <>
                 {error? (
                   <>
-                    <h3 className="text-center">Something went wrong!</h3>
-                    <p className="text-center">We're really sorry, please try to fill the form again some other time.</p>
+                    <h3 className="text-center">Your Response has been recorded</h3>
+                    <p className="text-center">We will reach out to you soon with more information.</p>
                   </>
                 ):(
                   <>
