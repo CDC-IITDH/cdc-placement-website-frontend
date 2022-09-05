@@ -239,10 +239,10 @@ const JNF = ({setShowLoader}) => {
           setWarning("Please accept the terms and conditions")
           window.scrollTo(0,0)
         }
-        // else if(recaptchaRef.current.getValue() === ""){
-        //   setWarning("Please verify that you are not a robot")
-        //   window.scrollTo(0,0)
-        // }
+        else if(recaptchaRef.current.getValue() === ""){
+          setWarning("Please verify that you are not a robot")
+          window.scrollTo(0,0)
+        }
         else {
           handleSubmit()
         }
