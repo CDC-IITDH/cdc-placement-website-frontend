@@ -16,7 +16,12 @@ const DeadlineCard = (
         setShowLoader,
         getDashboardInfo,
         token,
-        opening_id
+        opening_id,
+        setError,
+        setShowError,
+        setSuccess,
+        setShowSuccess,
+
     }
 ) => {
     const classes = useStyles();
@@ -39,12 +44,14 @@ const DeadlineCard = (
 
             getDashboardInfo();
             setShowLoader(false);
-            swal("Success!", "Deadline updated successfully", "success");
+            setSuccess("Deadline Updated Successfully");
+            setShowSuccess(true);
 
         }).catch((err) => {
             console.log(err);
             setShowLoader(false);
-            swal("Error!", "Deadline update failed", "error");
+            setError("Unable to update deadline, please try again later");
+            setShowError(true);
         });
     };
 
