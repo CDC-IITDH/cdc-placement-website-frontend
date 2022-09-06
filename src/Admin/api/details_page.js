@@ -76,10 +76,10 @@ const ChangeOffer = (token, opening_id, offer_accepted) => {
           else throw new Error("Error " + result.status);
         })
         .catch((err) => {
-          myReject(false);
+          myReject(err);
         });
     } else {
-      myReject(false);
+      myReject("No token");
     }
   });
 };

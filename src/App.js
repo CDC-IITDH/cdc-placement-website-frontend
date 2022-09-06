@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import Navbar from "./components/Navbar/Navbar";
 import {
   Route,
@@ -19,6 +19,8 @@ import VerifyEmail from "./Admin/components/VerifyEmail/VerifyEmail";
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
+
+export const userTypesContext = createContext();
 
 const App = () => {
     const [auth, setAuth] = useState(false);
@@ -102,6 +104,7 @@ const App = () => {
                                     userTypes.includes(currentUserType)
                                 )
                                     return (
+                                        <userTypesContext.Provider value={userTypes}>
                                         <Admin
                                             auth={auth}
                                             token={token}
@@ -114,6 +117,7 @@ const App = () => {
                                             setSuccess={setSuccess}
                                             setShowSuccess={setShowSuccess}
                                         />
+                                        </userTypesContext.Provider>
                                     );
                                 else return <Redirect to='/'/>;
                             }}

@@ -10,34 +10,24 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import CircularProgress from '@mui/material/CircularProgress';
 import swal from "sweetalert";
+import { userTypesContext } from "../../../App.js";
 import { Route } from "react-router-dom";
 
 const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboardInfo}) => {
 
     const [open, setOpen] = useState(false);
+    const [dialog_loading, setDialogLoading] = useState(false);
 
-    // const handleClickOpen = () => {
-
-    //     var offer_accepted = null;
-    //     if (buttonContent === "Offer Declined" || buttonContent === "Offer Approval Pending") {
-    //         offer_accepted = true;
-    //     } else {
-    //         return ;
-    //     }
-    //     ChangeOffer(token, opening, offer_accepted).then(res => {
-    //         getDashboardInfo();
-
-    //         setShowLoader(false);
-
-    //     });
-    //     setShowLoader(true);
-
-    // };
+    const userTypes = React.useContext(userTypesContext);
 
     const handleClickOpen = () => {
-        if (buttonContent === "Offer Approval Pending") {
+        if (buttonContent === "Offer Approval Pending" && userTypes.includes("s_admin")) {
             setOpen(true);
+        }
+        else if (buttonContent === "Offer Approval Pending" && ! (userTypes.includes("s_admin"))) {
+            swal("Error!","You are not authorized to perform this action","error");
         }
     };
 
@@ -103,6 +93,12 @@ const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboard
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">{"Offer Approval"}</DialogTitle>
+                {dialog_loading ?
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <CircularProgress />
+                    </div>
+                :(
+                <>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         NOTE: If you decline the offer, opening will not be visible anymore.
@@ -122,12 +118,19 @@ const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboard
                                 if (willDelete) {
                                 let offer_accepted = "false";
                                 ChangeOffer(token, opening, offer_accepted).then(res => {
+                                    swal("Offer Declined!", {
+                                        icon: "success",
+                                    });
+                                    setDialogLoading(false);
                                     getDashboardInfo();
+                                    handleClose();
+                                }).catch(err => {
+                                    console.log(err);
+                                    swal("Error!", "Something went wrong!", "error");
+                                    setDialogLoading(false);
+                                    handleClose();
                                 });
-                                handleClose();
-                                swal("Offer Declined!", {
-                                    icon: "success",
-                                });
+                                setDialogLoading(true);
                                 }else{
                                     handleClose();
                                 }
@@ -150,11 +153,18 @@ const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboard
                                 let offer_accepted = "true";
                                 ChangeOffer(token, opening, offer_accepted).then(res => {
                                     getDashboardInfo();
+                                    swal("Offer Accepted!", {
+                                        icon: "success",
+                                    });
+                                    setDialogLoading(false);
+                                    handleClose();
+                                }).catch(err => {
+                                    console.log(err);
+                                    swal("Error!", "Something went wrong!", "error");
+                                    setDialogLoading(false);
+                                    handleClose();
                                 });
-                                handleClose();
-                                swal("Offer Accepted!", {
-                                    icon: "success",
-                                });
+                                setDialogLoading(true);
                                 } else {
                                 handleClose();
                                 }
@@ -165,6 +175,8 @@ const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboard
                         Accept
                     </Button>
                 </DialogActions>
+                </>
+                )}
             </Dialog>
         </div>
     );
