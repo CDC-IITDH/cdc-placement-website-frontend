@@ -6,7 +6,6 @@ import * as yup from 'yup'
 import Instructions from "./Instructions";
 import { useState, useEffect, useRef } from "react";
 import JobProfile from "./JobProfile";
-import SalaryDetails from "./SalaryDetails";
 import SelectionProcess from "./SelectionProcess"
 import ContactDetails from "./ContactDetails";
 import API_ENDPOINT from "../../../api/api_endpoint";
@@ -15,7 +14,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 
 const JNF = ({setShowLoader}) => {
-    const year = "2020-2021"
+    const year = "2022-2023"
 
     const [page, setPage] = useState(1)
     const [submitted, setSubmitted] = useState(0)
@@ -49,8 +48,6 @@ const JNF = ({setShowLoader}) => {
 
     const validateSize = (value, context) => {
       if (value) {
-        // console.log(value.size);
-        // console.log(value);
         return (value.size <= 10000000)
       }
       else {
@@ -69,7 +66,7 @@ const JNF = ({setShowLoader}) => {
       city: yup.string().required('City is Required'),
       state: yup.string().required('State is Required'),
       country: yup.string().required('Country is Required'),
-      pincode: yup.number('Must be a Number').required('Zip/Pin is Required'),
+      pincode: yup.number('Must be a Number').required('Zip/Pin is Required').min(100000, 'Must be at least 6 digits').max(999999, 'Must be at most 6 digits'),
       type: yup.string().required("Required"),
       nature: yup.string().required("Required"),
       designation: yup.string().required('Designation is Required'),
@@ -78,15 +75,15 @@ const JNF = ({setShowLoader}) => {
       date: yup.string().required('Date is Required'),
       branch: yup.array().min(1,'Choose at least one').required("Required"),
       research: yup.string().required("Required"),
-      numoffers: yup.number(),
-      ctc: yup.number().required('CTC is Required'),
-      gross: yup.number().required('Gross is Required'),
-      takehome: yup.number().required('Take Home is Required'),
-      bonus: yup.number(),
+      numoffers: yup.number().min(0,'Must be positive'),
+      ctc: yup.number().required('CTC is Required').min(0,'Must be positive'),
+      gross: yup.number().required('Gross is Required').min(0,'Must be positive'),
+      takehome: yup.number().required('Take Home is Required').min(0,'Must be positive'),
+      bonus: yup.number().min(0,'Must be positive'),
       selectionprocess: yup.array().min(1,'Choose at least one').required("Required"),
       contact: yup.string().required('Contact is Required'),
       email: yup.string().email('Please enter a email address (eg. john@example.com)').required("Required"),
-      mobile: yup.number().required('Mobile Number is Required'),
+      mobile: yup.number().required('Mobile Number is Required').min(1000000000,'Must be 10 digits').max(9999999999,'Must be 10 digits'),
       telephone: yup.string()
     })
 
@@ -166,18 +163,16 @@ const JNF = ({setShowLoader}) => {
         }
       };
 
-      // console.log(values.date)
       setShowLoader(true)
 
       fetch(API_ENDPOINT+"api/company/addPlacement/", requestOptions)
         .then(res => {
-          if (res.status !== 200) {
+          if (!(res.status === 200 || res.status === 400) ) {
             setError(res)
             setSubmitted(1)
           }
           setSubmitted(1)
           setShowLoader(false)
-
         })
         .catch(error => {
           setError(error)
@@ -249,7 +244,6 @@ const JNF = ({setShowLoader}) => {
           window.scrollTo(0,0)
         }
         else {
-          console.log("Submitting");
           handleSubmit()
         }
       }
@@ -383,8 +377,8 @@ const JNF = ({setShowLoader}) => {
                 <>
                 {error? (
                   <>
-                    <h3 className="text-center">Something went wrong!</h3>
-                    <p className="text-center">We're really sorry, please try to fill the form again some other time.</p>
+                    <h3 className="text-center">Your Response has been recorded</h3>
+                    <p className="text-center">We will reach out to you soon with more information.</p>
                   </>
                 ):(
                   <>

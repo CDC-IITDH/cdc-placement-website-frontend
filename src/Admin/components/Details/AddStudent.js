@@ -62,7 +62,6 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
     }
     else{
     if (name === "resume") {
-      console.log(value, "Resume state");
       if (value == null) {
         setResumeErrorState(true);
       } else {
@@ -103,7 +102,6 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
     }
     setError(null);
     getApplication(token = token, data = data).then((res) => {
-      console.log(res, "getApplication");
       if (res.student_details.resume_list.length === 0) {
         setError("No resume found for student");
         setShowError(true);
@@ -125,7 +123,6 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
       setLoading(false);
       }
   ).catch((err) => {
-    console.log(err, "gihh");
     if (err.message === "404") {
       setError("Student ID not found");
     } else {
@@ -152,7 +149,6 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
     };
     // check null values in additional info
     let isAnyError = false;
-    console.log(reqJobPosting, "reqJobPosting");
     reqJobPosting.additional_info.forEach((key) => {
       if(!additionalTextInfo[key]) {
         isAnyError = true;
@@ -179,7 +175,6 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
       getApplicationsInfo();
       handleClose();
   }).catch((err) => {
-    console.log(err);
     setError("Something went wrong");
     setShowError(true);
     setLoading(false)

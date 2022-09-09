@@ -1,5 +1,6 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./limit_constants";
 import MultipleFileInput from "./MultipleFileInput";
 
 const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue, submitCount, jobdescription_file, setJobdescription_file,  salary_file, setSalary_file}) => {
@@ -19,17 +20,17 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       <MultipleFileInput stateVar={jobdescription_file} setStateVar={setJobdescription_file} name="jobdescription_file" label ="Job Description" />
       <Form.Group className="mb-5">
         <Form.Label>Job Designation Offered <span className="text-danger">*</span></Form.Label>
-        <Form.Control maxLength="75" type="text" name='designation' value={values.designation} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.designation && errors.designation} />
+        <Form.Control maxLength={jnf_text_max_character_count} type="text" name='designation' value={values.designation} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.designation && errors.designation} />
         <Form.Control.Feedback type="invalid"> {errors.designation} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Location(s) of Job <span className="text-danger">*</span></Form.Label>
-        <Form.Control maxLength="75" type="text" name='locations' value={values.locations} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.locations && errors.locations} />
+        <Form.Control maxLength={jnf_smalltext_max_character_count} type="text" name='locations' value={values.locations} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.locations && errors.locations} />
         <Form.Control.Feedback type="invalid"> {errors.locations} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Job Details <span className="text-danger">*</span></Form.Label>
-        <Form.Control as="textarea" maxLength="1000" className="text-area"  name='details' value={values.details} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.details && errors.details}></Form.Control>
+        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area"  name='details' value={values.details} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.details && errors.details}></Form.Control>
         <Form.Text className="text-muted">
           Short descriptions of job being offered and skills required
         </Form.Text>
@@ -44,7 +45,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <Form.Label>Eligible Branches <span className="text-danger">*</span></Form.Label>
         <Form.Check className="form-check" type="checkbox">
           <Row>
-            {['CSE','EE','ME'].map((x) => (
+            {['CSE','EE','MMAE'].map((x) => (
               <Col key={x} sm={6}>
                 <Form.Check.Input type="checkbox" name="branch" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.branch && errors.branch} checked={values.branch.includes(x)}></Form.Check.Input>
                 <Form.Check.Label>{x}</Form.Check.Label>
@@ -106,7 +107,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Details of Bond (if any)</Form.Label>
-        <Form.Control as="textarea" maxLength="1000" className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
+        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
       </Form.Group>
     </>
   )

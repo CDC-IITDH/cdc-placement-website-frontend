@@ -18,7 +18,6 @@ const Details = ({
   const classes = useStyles();
 
   const offerBtn = () => {
-    console.log(opening.id, opening.offer_accepted === true);
 
     if (opening && opening.offer_accepted === true) {
       return (
@@ -77,6 +76,10 @@ const Details = ({
             token={token}
             getDashboardInfo={getDashboardInfo}
             opening_id={opening.id}
+            setError={setError}
+            setShowError={setShowError}
+            setSuccess={setSuccess}
+            setShowSuccess={setShowSuccess}
           />
         ) : (
           ""

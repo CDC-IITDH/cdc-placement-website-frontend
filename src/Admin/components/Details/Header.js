@@ -12,26 +12,18 @@ const Header = ({ studentsApplied, countStudentsSelected, openingId, token, reqJ
   const [showAddStudentModal, setshowAddStudentModal] = useState(false);
 
   const exportAsExcel = () => {
-    console.log("Export button pressed");
-    console.log(token);
-    console.log(openingId);
     if (token) {
       ExportAsExcel(token, openingId)
         .then((res) => {
           const data = res;
-          console.log(data);
           // if url in data
           if (data.file) {
             window.open(data.file);
           }
-
-
         })
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      console.log("Token not present");
     }
   };
 

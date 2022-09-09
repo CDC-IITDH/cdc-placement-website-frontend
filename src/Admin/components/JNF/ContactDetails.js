@@ -1,5 +1,6 @@
 import { Form, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
+import { jnf_smalltext_max_character_count, jnf_text_max_character_count } from "./limit_constants"
 
 const ContactDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => {
   return (
@@ -17,12 +18,12 @@ const ContactDetails = ({handleSubmit, handleChange, handleBlur, values, touched
       <hr className="pd" />
       <Form.Group className="mb-5 w-50">
         <Form.Label>Contact Person <span className="text-danger">*</span></Form.Label>
-        <Form.Control maxLength="75" type="text" name='contact' value={values.contact} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.contact && errors.contact} />
+        <Form.Control maxLength={jnf_text_max_character_count} type="text" name='contact' value={values.contact} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.contact && errors.contact} />
         <Form.Control.Feedback type="invalid"> {errors.contact} </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5 w-50">
         <Form.Label>Email <span className="text-danger">*</span></Form.Label>
-        <Form.Control maxLength="75" type="text" name='email' value={values.email} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.email && errors.email} />
+        <Form.Control maxLength={jnf_smalltext_max_character_count} type="text" name='email' value={values.email} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.email && errors.email} />
         <Form.Control.Feedback type="invalid"> {errors.email} </Form.Control.Feedback>
       </Form.Group> 
       <Form.Group className="mb-5 w-50">

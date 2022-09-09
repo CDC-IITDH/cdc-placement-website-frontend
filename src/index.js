@@ -10,5 +10,3 @@ if (process.env.NODE_ENV === "development") {
 }
 
 ReactDOM.render( < App / > , document.getElementById("root"));
-
-//   //"proxy": "https://cdc-iitdh.herokuapp.com"

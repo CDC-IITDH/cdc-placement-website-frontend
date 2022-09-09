@@ -46,6 +46,7 @@ const UserSwitch = ({
           </Grid>
           <Grid container spacing={5} justifyContent='center' alignItems='center'>
             {userTypes.map((item, i) => {
+              if (item === 's_admin') return null;
               return (
                 <Grid item key={i} xs={12} sm>
                   <div className='UserType-btn-parent' key={i}>

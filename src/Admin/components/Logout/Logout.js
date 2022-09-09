@@ -10,7 +10,6 @@ const Logout = ({ auth, setAuth, setToken, setCurrentUserType }) => {
   const history = useHistory();
 
   const onSuccess = (res) => {
-    console.log(res);
     setAuth(false);
     setToken(null);
     setCurrentUserType(null);

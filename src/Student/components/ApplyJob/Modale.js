@@ -42,7 +42,6 @@ function Modale({
       data[item] = "";
       return true;
     });
-    console.log(data);
     return data;
   };
 
@@ -52,7 +51,6 @@ function Modale({
       errorState[item] = false;
       return true;
     });
-    console.log(errorState);
     return errorState;
   };
 
@@ -77,7 +75,6 @@ function Modale({
     const { name, value } = event.target;
 
     if (name === "resume") {
-      console.log(value, "Resume state");
       if (value == null) {
         setResumeErrorState(true);
       } else {
@@ -136,11 +133,9 @@ function Modale({
           resume_file_name: resume.name,
           additional_info: additionalTextInfo,
         };
-        console.log(data);
         setShowLoader(true);
         PostApplication(token, data)
           .then((res) => {
-            console.log(res);
             getDashboardInfo();
             setShow(false);
             setShowLoader(false);
@@ -149,7 +144,6 @@ function Modale({
             
           })
           .catch((err) => {
-            console.log(err);
             setShow(false);
             setShowLoader(false);
             setError("Unable to Submit Application. Please Try Again");

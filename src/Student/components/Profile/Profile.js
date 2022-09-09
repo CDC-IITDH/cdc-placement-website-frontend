@@ -25,7 +25,6 @@ const Profile = ({
     var [screen, setScreen] = useState(1);
     var [screen_message, setScreenMessage] = useState("");
     const APPLICATION_ENDPOINT = process.env.REACT_APP_STUDENT_APPLICATIONS_ENDPOINT;
-    console.log(process.env);
 
     useEffect(() => {
         if (profileInfo) {
@@ -47,7 +46,6 @@ const Profile = ({
             var data = await deleteResume(token, resume);
 
             if (data) {
-                console.log(data);
                 setScreen(1);
                 getProfileInfo();
                 setShowSuccess(true);
@@ -58,14 +56,11 @@ const Profile = ({
         };
 
         const AddResume = async (file) => {
-            console.log(file);
             if (file) {
                 setScreenMessage("Adding Resume...");
                 setScreen(3);
                 var data = await addResume(token, file);
-                console.log(data, "Profile State");
                 if (data) {
-                    console.log(data);
                     setScreen(1);
                     setShowSuccess(true);
                     setSuccess("Resume Added Successfully");

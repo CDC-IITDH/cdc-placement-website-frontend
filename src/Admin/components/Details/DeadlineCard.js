@@ -7,6 +7,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import {UpdateDeadline} from "../../api/details_page";
+import swal from "sweetalert";
 
 const DeadlineCard = (
     {
@@ -15,7 +16,12 @@ const DeadlineCard = (
         setShowLoader,
         getDashboardInfo,
         token,
-        opening_id
+        opening_id,
+        setError,
+        setShowError,
+        setSuccess,
+        setShowSuccess,
+
     }
 ) => {
     const classes = useStyles();
@@ -32,19 +38,21 @@ const DeadlineCard = (
 
     const updateDeadlineFun = () => {
         // selectedDate in '%Y-%m-%d %H:%M:%S %z'
-            const deadline_datetime = selectedDate.toISOString().slice(0, 19).replace('T', ' ') + " +0000";
-
+        const deadline_datetime = selectedDate.toISOString().slice(0, 19).replace('T', ' ') + " +0000";
         // var deadline_datetime = String.toString(selectedDate).replace('T', ' ');
-
-
         UpdateDeadline(token, deadline_datetime, opening_id).then((res) => {
-            console.log(res);
 
             getDashboardInfo();
-                        setShowLoader(false);
+            setShowLoader(false);
+            setSuccess("Deadline Updated Successfully");
+            setShowSuccess(true);
 
+        }).catch((err) => {
+            console.log(err);
+            setShowLoader(false);
+            setError("Unable to update deadline, please try again later");
+            setShowError(true);
         });
-        setShowLoader(true);
     };
 
 

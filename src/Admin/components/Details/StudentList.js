@@ -8,7 +8,6 @@ import Pagination from '@mui/material/Pagination';
 const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, setShowLoader,
   openingId, getApplicationsInfo }) => {
   const classes = useStyles();
-  console.log(applicationsInfo);
 
   //paginations
   const [page, setPage] = React.useState(1);
