@@ -1,0 +1,4 @@
+git clone https://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@github.com/aravindd7/projtherbe.git
+npm install --save --legacy-peer-deps
+npx react-native start --reset-cache
+react-native run-android --active-arch-only

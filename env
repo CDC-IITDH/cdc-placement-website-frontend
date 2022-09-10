@@ -1,0 +1,5 @@
+REACT_APP_CLIENT_ID=628308091838-nvfn455vabbq7j0odd797sls8itpplmr.apps.googleusercontent.com
+REACT_APP_API_ENDPOINT=http://localhost:8000
+REACT_APP_RECAPTCHA_KEY=6LfpadYhAAAAAK542Zum3yUAOq3ZrH6vDBqi4leN
+REACT_APP_STUDENT_APPLICATIONS_ENDPOINT=https://localhost:8000/portal/student/dashboard/placements/
+NODE_ENV=production
