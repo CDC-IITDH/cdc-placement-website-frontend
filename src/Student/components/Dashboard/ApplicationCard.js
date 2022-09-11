@@ -32,7 +32,7 @@ function ApplicationCard({
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
-	const withDrawApplication = (e) => {
+	const withDraw = (e) => {
 		Swal.fire({
 			title: 'WithDraw Application?',
 			text: 'Once WithDrawn, you can apply again before the deadline',
@@ -40,8 +40,8 @@ function ApplicationCard({
 			confirmButtonText: 'WithDraw',
 			denyButtonText: `Cancel`,
 			icon: 'warning',
-		}).then((willDelete) => {
-			if (willDelete) {
+		}).then((res) => {
+			if (res.isConfirmed) {
 				const data = {
 					application_id: id,
 				};
@@ -159,7 +159,7 @@ function ApplicationCard({
 						<Grid item style={{ textAlign: 'center' }}>
 							<Button
 								className={css.withDrewButton}
-								onClick={withDrawApplication}
+								onClick={withDraw}
 							>
 								<Typography variant='subtitle2'>
 									Withdraw Application
