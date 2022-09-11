@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import useStyles from "./styles";
 import {Box, Typography} from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
@@ -7,11 +7,14 @@ import EditIcon from "@material-ui/icons/Edit";
 import AddStudent from "./AddStudent";
 import Swal from 'sweetalert2'
 import {MarkStatus} from '../../api/details_page';
+import {userTypesContext} from '../../../App.js';
 
 const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resume_list, additional_info, token, reqJobPosting, application_id, resume, setError,setShowError,setSuccess, setShowSuccess,selected,
                          setShowLoader, getApplicationsInfo }) => {
   const [show, setShow] = useState(false);
   const classes = useStyles();
+  const userTypes = useContext(userTypesContext);
+  const is_s_admin = userTypes.includes("s_admin");
 
    const markStudentStatus = (status) => {
         if (opening_id && status !== null) {
@@ -135,7 +138,7 @@ const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resu
                     justifyContent: "space-between",
                 }}
             >
-                {selected === null || selected == false ?
+                {is_s_admin && (selected === null || selected == false) ?
                 <Box
                     sx={{
                         borderRadius: "50%",
@@ -172,7 +175,7 @@ const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resu
                         onClick={hanldeModal}
                     />
                 </Box>
-                {selected === null || selected === false ?
+                {is_s_admin && (selected === null || selected === false) ?
                     <Box
                         sx={{
                             borderRadius: "50%",

@@ -1,7 +1,6 @@
 import {Box, Typography} from "@material-ui/core";
 import React from "react";
-import {useEffect, useState} from "react";
-import API_ENDPOINT from "../../../api/api_endpoint.js";
+import {useState} from "react";
 import {ChangeOffer} from "../../api/details_page";
 
 import Button from '@mui/material/Button';
@@ -13,7 +12,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CircularProgress from '@mui/material/CircularProgress';
 import swal from "sweetalert";
 import { userTypesContext } from "../../../App.js";
-import { Route } from "react-router-dom";
 
 const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboardInfo}) => {
 
