@@ -67,7 +67,7 @@ const StudentList = ({ applicationsInfo, reqJobPosting, token, setError, setShow
           )}
         </Grid>
         {applicationsInfo && applicationsInfo?.applications.length !== 0 ? (
-          <div style={{ margin: 'auto', position: 'absolute', top: '650px', left: '50%' }}>
+          <div style={{ margin: 'auto', padding: '20px' }}>
             <Pagination count={pageCount} page={page} onChange={handleChange} color="secondary" />
           </div>
         ) : ""
