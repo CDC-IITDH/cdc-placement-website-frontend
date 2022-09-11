@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Alert } from "@material-ui/lab";
-
+import Swal from "sweetalert2";
 function Modale({
   token,
   show,
@@ -278,7 +278,28 @@ function Modale({
             <Button
               variant="primary"
               type="submit"
-              onClick={SendData}
+              onClick={() => {
+                Swal
+                  .fire({
+                    title: "Submit Application?",
+                    text: "Once submitted, you will not be able to make any change!",
+                    icon: "warning",
+                    buttons: true,
+                    showCancelButton: true,
+                    dangerMode: true,
+                  })
+                  .then((submit) => {
+                    if (submit.isConfirmed) {
+                      SendData().then(() => {
+                        setSuccess("Application Submited Successfully");
+                        setShowSuccess(true);
+                      }).catch((err) => {
+                        setError("Unable to Submit Application. Please Try Again");
+                        setShowError(true);
+                      });
+                    }
+                  });
+              }}
               disabled={false}
             >
               Submit
