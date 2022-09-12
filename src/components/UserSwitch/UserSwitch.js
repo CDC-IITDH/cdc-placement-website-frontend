@@ -19,8 +19,8 @@ const UserSwitch = ({
         } else if (userTypes.length === 1) {
           setCurrentUserType(userTypes[0]);
         } else {
-          var path = window.location.pathname.split("/").length > 1 ? window.location.pathname.split("/")[1] : null;  
-          if (path && userTypes.includes(path))   setCurrentUserType(path);
+          var path = window.location.pathname.split("/").length > 2 ? window.location.pathname.split("/")[2] : null;  
+          if (path && userTypes.includes(path) && path !== 's_admin')   setCurrentUserType(path);
           else setShowLoader(false);
         }
       }
