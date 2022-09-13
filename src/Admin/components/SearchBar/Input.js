@@ -24,10 +24,10 @@ const Input = ({
     document.getElementById("searchbar").style.border = "2px solid #334878";
   };
 
-  const searchClick = () => {
-    setSearched(term);
-    onSearchSubmit(term);
-  };
+  // const searchClick = () => {
+  //   setSearched(term);
+  //   onSearchSubmit(term);
+  // };
 
   const onBlur = () => {
     setFocused(false);
@@ -41,11 +41,11 @@ const Input = ({
   }, [term]);
 
 
-  const clearSearch = () => {
-    setTerm("");
-    setSearched("");
-    setDashboardview(dashboardInfo[0]);
-  };
+  // const clearSearch = () => {
+  //   setTerm("");
+  //   setSearched("");
+  //   setDashboardview(dashboardInfo[0]);
+  // };
 
   return (
     <div className={css.searchbar} id="searchbar">

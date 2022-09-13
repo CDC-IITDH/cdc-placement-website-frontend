@@ -25,13 +25,13 @@ const Description = ({
       dashboardInfo[0] !== null &&
       dashboardInfo[0].message === "Data Found"
     ) {
-      const infoType = match.params.type;
+      // const infoType = match.params.type;
       let desc = dashboardInfo[0]['new'].filter(
         (elem) => {
           return(elem.id.toString() === match.params.id.toString())
         }
       );
-      if (desc.length == 0) {
+      if (desc.length === 0) {
 
         desc = dashboardInfo[0]['ongoing'].filter(
             (elem) => {
@@ -40,7 +40,7 @@ const Description = ({
         );
 
       }
-       if (desc.length == 0) {
+       if (desc.length === 0) {
 
         desc = dashboardInfo[0]['previous'].filter(
             (elem) => {

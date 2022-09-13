@@ -7,7 +7,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import {UpdateDeadline} from "../../api/details_page";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 
 const DeadlineCard = (
     {

@@ -1,5 +1,7 @@
 
-import { React, useState, useMemo, useCallback, useRef } from "react";
+import { React, useState,
+  //  useMemo, useCallback,
+   useRef } from "react";
 
 import Input from "./Input";
 import Suggestion from "./suggestion";
