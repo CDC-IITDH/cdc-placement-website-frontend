@@ -245,7 +245,7 @@ function Modale({
                 <h2 className="label colon">{":"}</h2>
                 <NativeSelect
                   onChange={handleInputChange}
-                  value={resume}
+                  value={resume.name}
                   name="resume"
                   error={resumeErrorState}
                   inputProps={{
