@@ -154,6 +154,7 @@ const AddPPOModal = ({
                                     size={'small'}
                                     placeholder={'Enter Student Roll No.'}
                                     required
+                                    type='number'
                                 />
                             </div>
                             <div className="Parent-addPPO">
@@ -199,6 +200,7 @@ const AddPPOModal = ({
                                     size={'small'}
                                     placeholder={'Enter Compensation (Gross)'}
                                     required
+                                    type='number'
                                 />
                             </div>
                             <div className="Parent-addPPO">
