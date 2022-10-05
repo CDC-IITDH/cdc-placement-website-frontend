@@ -6,6 +6,7 @@ import DetailsPage from "./components/Details/DetailsPage";
 import {GetDashboard} from "./api/dashboard";
 import AddPPOModal from "./components/AddPPOModal/AddPPOModal";
 import Description from "./components/Description/Description";
+import ShowTables from "./components/stats";
 
 const App = ({
                  auth,
@@ -139,6 +140,17 @@ const App = ({
                                 />
                             )}
                         />
+                        <Route exact path='/admin/statistics' render={()=>(
+                            <ShowTables
+                                token={token}
+                                setShowLoader={setShowLoader}
+                                setError={setError}
+                                setShowError={setShowError}
+                                setSuccess={setSuccess}
+                                setShowSuccess={setShowSuccess}
+                                />
+                        )
+                        }/>
 
                         <Route exact path='*' render={() => <Redirect to='/admin'/>}/>
 
