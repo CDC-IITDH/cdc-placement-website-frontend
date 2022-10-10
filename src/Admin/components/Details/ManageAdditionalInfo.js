@@ -1,8 +1,6 @@
 import { Box
-  // , Button, Divider
  } from "@material-ui/core";
 import React
-// ,{ useState }
  from "react";
 import useStyles from "./styles";
 import { DeleteAdditionalInfo, AddAdditionalInfo } from "../../api/details_page";

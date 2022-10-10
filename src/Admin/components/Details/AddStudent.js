@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./AddStudent.css";
 import { Modal, Button, Form,
-  // Alert,
    Container, Row, Col } from "react-bootstrap";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { CircularProgress } from "@mui/material";

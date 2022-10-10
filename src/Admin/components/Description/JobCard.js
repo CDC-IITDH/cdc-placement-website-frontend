@@ -5,19 +5,12 @@ import {
     Card,
     CardContent,
     Divider
-    // ,Stepper,
-    // Step,
-    // StepLabel,
-    // StepContent,
 } from "@material-ui/core";
 import React from "react";
 import useStyles from "./styles";
 import LinkIcon from "@material-ui/icons/Link";
 import {
-    // Fragment,
      useState} from "react";
-// import InfoIcon from "@material-ui/icons/Info";
-
 
 const JobCard = ({
                      id,
@@ -73,19 +66,6 @@ const JobCard = ({
                      getDashboardInfo
                  }) => {
     const classes = useStyles();
-    // const [show, setShow] = useState(false);
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
-
-    // function capitalizeFirstLetter(string) {
-    //     return string.charAt(0).toUpperCase() + string.slice(1);
-    // }
-
-    // const openResume = () => {
-    //     window.open(
-    //         "https://www.nationalgeographic.com/mediakit/assets/img/downloads/2020/NGM_2020_Media_Kit.pdf"
-    //     );
-    // };
 
     return (
         <Box className={classes.container}>

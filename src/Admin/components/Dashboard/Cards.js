@@ -1,19 +1,19 @@
-// import {useState} from "react";
+
 import Card from "react-bootstrap/Card";
 import {
     AccountBalanceWalletRounded,
     Ballot,
     Work,
     Today
-    // ,Reorder
+
 } from "@material-ui/icons";
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
-// import PhoneIcon from '@material-ui/icons/Phone';
+
 import MailIcon from '@material-ui/icons/Mail';
 import "./Dashboard.css";
 import DashboardCardStyles from "./DashboardCardStyles.js";
 import {SvgIcon, Divider
-    // , Typography
+
 } from "@material-ui/core";
 import {Link} from "react-router-dom";
 import {Col, Row} from "react-bootstrap";

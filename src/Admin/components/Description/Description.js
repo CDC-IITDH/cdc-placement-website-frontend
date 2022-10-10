@@ -25,7 +25,6 @@ const Description = ({
       dashboardInfo[0] !== null &&
       dashboardInfo[0].message === "Data Found"
     ) {
-      // const infoType = match.params.type;
       let desc = dashboardInfo[0]['new'].filter(
         (elem) => {
           return(elem.id.toString() === match.params.id.toString())
