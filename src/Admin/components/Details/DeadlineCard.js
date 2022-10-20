@@ -27,7 +27,7 @@ const DeadlineCard = (
     const [selectedDate, handleDateChange] = useState(
         new Date(deadline_datetime)
     );
-    const [status, setStatus] = useState(selectedDate - new Date() ? 1 : 0);
+    const status = selectedDate - new Date() ? 1 : 0;
 
 
     const form_status = {
@@ -38,7 +38,7 @@ const DeadlineCard = (
     const updateDeadlineFun = () => {
         // selectedDate in '%Y-%m-%d %H:%M:%S %z'
         const deadline_datetime = selectedDate.toISOString().slice(0, 19).replace('T', ' ') + " +0000";
-        UpdateDeadline(token, deadline_datetime, opening_id).then((res) => {
+        UpdateDeadline(token, deadline_datetime, opening_id).then(() => {
 
             getDashboardInfo();
             setShowLoader(false);

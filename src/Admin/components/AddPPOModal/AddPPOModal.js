@@ -27,18 +27,6 @@ const AddPPOModal = ({
         accepted: false,
         tier: false,
     });
-    const [isError, setIsError] = useState(false);
-    // find if at least one in true in errorState
-    const checkError = () => {
-        let check = false;
-        for (let key in errorState) {
-            if (errorState[key]) {
-                check = true;
-                break;
-            }
-        }
-        return check;
-    };
     const [data, setData] = useState({
         student_id: '',
         company_name: '',
@@ -74,7 +62,6 @@ const AddPPOModal = ({
                 [name]: true,
             });
         }
-        setIsError(checkError());
     }
 
         setData({

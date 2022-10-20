@@ -9,8 +9,7 @@ import {
 import React from "react";
 import useStyles from "./styles";
 import LinkIcon from "@material-ui/icons/Link";
-import {
-     useState} from "react";
+
 
 const JobCard = ({
                      id,
