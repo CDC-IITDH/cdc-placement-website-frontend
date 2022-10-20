@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import Card from 'react-bootstrap/Card';
-import { AccountBalanceWalletRounded, Ballot, Work } from '@material-ui/icons';
+import { Work } from '@material-ui/icons';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import DashboardCardStyles from './DashboardCardStyles.js';
 import { SvgIcon, Divider, Grid, Typography } from '@material-ui/core';
@@ -157,10 +157,7 @@ function ApplicationCard({
 					<div>
 						<Divider />
 						<Grid item style={{ textAlign: 'center' }}>
-							<Button
-								className={css.withDrewButton}
-								onClick={withDraw}
-							>
+							<Button className={css.withDrewButton} onClick={withDraw}>
 								<Typography variant='subtitle2'>
 									Withdraw Application
 								</Typography>
