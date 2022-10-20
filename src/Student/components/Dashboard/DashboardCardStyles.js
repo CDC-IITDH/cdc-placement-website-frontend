@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
 	dashboardCard: {
@@ -405,8 +405,8 @@ export default makeStyles((theme) => ({
 		marginTop: '15px',
 		marginBottom: '15px',
 		backgroundColor: 'white',
-        outline: 'none!important',
-        boxShadow: 'none!important',
+		outline: 'none!important',
+		boxShadow: 'none!important',
 		'&:hover': {
 			backgroundColor: '#c1b31a!important',
 			color: 'white!important',

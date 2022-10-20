@@ -1,84 +1,98 @@
-import React, { useState } from "react";
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
-import AddIcon from "@material-ui/icons/Add";
-import LocalPrintshopIcon from "@material-ui/icons/LocalPrintshop";
-import useStyles from "./styles";
-import { Divider, Typography } from "@material-ui/core";
-import { ExportAsExcel } from "../../api/details_page";
-import AddStudent from "./AddStudent";
+import React, { useState } from 'react';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import AddIcon from '@material-ui/icons/Add';
+import LocalPrintshopIcon from '@material-ui/icons/LocalPrintshop';
+import useStyles from './styles';
+import { Divider, Typography } from '@material-ui/core';
+import { ExportAsExcel } from '../../api/details_page';
+import AddStudent from './AddStudent';
 
-const Header = ({ studentsApplied, countStudentsSelected, openingId, token, reqJobPosting, setError, setShowError, setSuccess, setShowSuccess, getApplicationsInfo }) => {
-  const classes = useStyles();
-  const [showAddStudentModal, setshowAddStudentModal] = useState(false);
+const Header = ({
+	studentsApplied,
+	countStudentsSelected,
+	openingId,
+	token,
+	reqJobPosting,
+	setError,
+	setShowError,
+	setSuccess,
+	setShowSuccess,
+	getApplicationsInfo,
+}) => {
+	const classes = useStyles();
+	const [showAddStudentModal, setshowAddStudentModal] = useState(false);
 
-  const exportAsExcel = () => {
-    if (token) {
-      ExportAsExcel(token, openingId)
-        .then((res) => {
-          const data = res;
-          // if url in data
-          if (data.file) {
-            window.open(data.file);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
+	const exportAsExcel = () => {
+		if (token) {
+			ExportAsExcel(token, openingId)
+				.then((res) => {
+					const data = res;
+					// if url in data
+					if (data.file) {
+						window.open(data.file);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	};
 
-  const handleAddStudentModal = () => {
-    setshowAddStudentModal(true);
-  };
+	const handleAddStudentModal = () => {
+		setshowAddStudentModal(true);
+	};
 
-  return (
-    <div className={classes.mainPageContainer}>
-      <div className={classes.headerContainer}>
-        <div className={classes.appliedStudents}>
-          <div className={classes.appliedStudentsInner}>
-            <PeopleAltIcon className={classes.peopleIcon} />
-          </div>
-          <div className={classes.appliedStudentsInner}>
-            <Typography className={classes.appliedText}>
-              Students Applied :{` ${studentsApplied}`}
-            </Typography>
-            <Typography className={classes.appliedText}>
-              Students Selected :{` ${countStudentsSelected}`}
-            </Typography>
-          </div>
-        </div>
-        <div className={classes.otherFunctions}>
-          <div
-            onClick={handleAddStudentModal}
-            className={classes.otherFunctionButtons}
-          >
-            <AddIcon className={classes.addIcon} />
-            <Typography className={classes.buttonText}>Add/Edit <br/>Application</Typography>
-          </div>
-          <div onClick={exportAsExcel} className={classes.otherFunctionButtons}>
-            <LocalPrintshopIcon className={classes.printIcon} />
-            <Typography className={classes.buttonText}>
-              Export as Excel
-            </Typography>
-          </div>
-        </div>
-      </div>
-      <div className={classes.dividerContainer}>
-        <Divider className={classes.divider} orientation='vertical' flexItem />
-      </div>
-      <AddStudent
-        reqJobPosting={reqJobPosting}
-        show={showAddStudentModal}
-        setShow={setshowAddStudentModal}
-        token={token}
-        setError={setError}
-        setShowError={setShowError}
-        setSuccess={setSuccess}
-        setShowSuccess={setShowSuccess}
-        getApplicationsInfo={getApplicationsInfo}
-      />
-    </div>
-  );
+	return (
+		<div className={classes.mainPageContainer}>
+			<div className={classes.headerContainer}>
+				<div className={classes.appliedStudents}>
+					<div className={classes.appliedStudentsInner}>
+						<PeopleAltIcon className={classes.peopleIcon} />
+					</div>
+					<div className={classes.appliedStudentsInner}>
+						<Typography className={classes.appliedText}>
+							Students Applied :{` ${studentsApplied}`}
+						</Typography>
+						<Typography className={classes.appliedText}>
+							Students Selected :{` ${countStudentsSelected}`}
+						</Typography>
+					</div>
+				</div>
+				<div className={classes.otherFunctions}>
+					<div
+						onClick={handleAddStudentModal}
+						className={classes.otherFunctionButtons}
+					>
+						<AddIcon className={classes.addIcon} />
+						<Typography className={classes.buttonText}>
+							Add/Edit <br />
+							Application
+						</Typography>
+					</div>
+					<div onClick={exportAsExcel} className={classes.otherFunctionButtons}>
+						<LocalPrintshopIcon className={classes.printIcon} />
+						<Typography className={classes.buttonText}>
+							Export as Excel
+						</Typography>
+					</div>
+				</div>
+			</div>
+			<div className={classes.dividerContainer}>
+				<Divider className={classes.divider} orientation='vertical' flexItem />
+			</div>
+			<AddStudent
+				reqJobPosting={reqJobPosting}
+				show={showAddStudentModal}
+				setShow={setshowAddStudentModal}
+				token={token}
+				setError={setError}
+				setShowError={setShowError}
+				setSuccess={setSuccess}
+				setShowSuccess={setShowSuccess}
+				getApplicationsInfo={getApplicationsInfo}
+			/>
+		</div>
+	);
 };
 
 export default Header;
