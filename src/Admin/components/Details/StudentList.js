@@ -1,5 +1,6 @@
 import useStyles from "./styles";
-import React, { useState } from "react";
+import React
+from "react";
 import StudentCard from "./StudentCard";
 import { Grid, Typography } from "@material-ui/core";
 import Pagination from '@mui/material/Pagination';

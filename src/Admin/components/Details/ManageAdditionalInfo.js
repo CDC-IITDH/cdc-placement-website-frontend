@@ -1,5 +1,7 @@
-import { Box, Button, Divider } from "@material-ui/core";
-import React, { useState } from "react";
+import { Box
+ } from "@material-ui/core";
+import React
+ from "react";
 import useStyles from "./styles";
 import { DeleteAdditionalInfo, AddAdditionalInfo } from "../../api/details_page";
 import ClearIcon from "@mui/icons-material/Clear";

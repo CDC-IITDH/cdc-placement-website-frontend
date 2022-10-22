@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./AddStudent.css";
-import { Modal, Button, Form, Alert, Container, Row, Col } from "react-bootstrap";
+import { Modal, Button, Form,
+   Container, Row, Col } from "react-bootstrap";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { CircularProgress } from "@mui/material";
 import TextField from "@material-ui/core/TextField";
@@ -101,7 +102,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
       return;
     }
     setError(null);
-    getApplication(token = token, data = data).then((res) => {
+    getApplication(token, data).then((res) => {
       if (res.student_details.resume_list.length === 0) {
         setError("No resume found for student");
         setShowError(true);
@@ -168,7 +169,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
     }
 
 
-    editApplication(token = token, data = data).then((res) => {
+    editApplication(token, data).then((res) => {
       setSuccess("Application "+editoradd+" successfully");
       setShowSuccess(true);
       setLoading(false);

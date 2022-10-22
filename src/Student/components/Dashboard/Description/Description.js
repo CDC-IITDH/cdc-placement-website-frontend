@@ -37,7 +37,7 @@ const Description = ({
           return(elem.id.toString() === match.params.id.toString())
         }
       );
-      if (desc.length == 0) {
+      if (desc.length === 0) {
 
         desc = dashboardInfo[0]['placementApplication'].filter(
             (elem) => {

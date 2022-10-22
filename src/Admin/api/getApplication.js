@@ -15,9 +15,9 @@ const getApplication = (token, data) => {
         body: JSON.stringify(data),
       })
         .then((result) => {
-          const res = result.json().then((res) => {
+          result.json().then((res) => {
             if (result.status === 200) myResolve(res);
-            else if (result.status === 404 && res.application_found=="false") myResolve(res);
+            else if (result.status === 404 && res.application_found==="false") myResolve(res);
             else throw new Error(result.status);
           }).catch((err) => {
             myReject(err);

@@ -138,7 +138,7 @@ const StudentCard = ({ name, branch, batch, roll_no, student_id,opening_id, resu
                     justifyContent: "space-between",
                 }}
             >
-                {is_s_admin && (selected === null || selected == false) ?
+                {is_s_admin && (selected === null || selected === false) ?
                 <Box
                     sx={{
                         borderRadius: "50%",
