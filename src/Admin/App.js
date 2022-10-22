@@ -31,7 +31,7 @@ const App = ({
                 .then((res) => {
                     const data = res;
                     setdashboardInfo(data);
-                    // setShowLoader(false);
+                    setShowLoader(false);
                 })
                 .catch((err) => {
                     setAuth(false);
