@@ -68,7 +68,8 @@
     ]
   },
   "devDependencies": {
-    "msw": "^0.41.0"
+    "msw": "^0.41.0",
+    "react-error-overlay": "^6.0.9"
   },
   "msw": {
     "workerDirectory": "public"
