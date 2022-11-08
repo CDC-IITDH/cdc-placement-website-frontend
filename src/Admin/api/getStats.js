@@ -1,6 +1,6 @@
 import API_ENDPOINT from "../../api/api_endpoint";
 
-const GetStats = async (token,searchTerm) => {
+const GetStats = async (token, searchTerm) => {
     return new Promise((myResolve, myReject) => {
         if (token) {
             if(searchTerm){

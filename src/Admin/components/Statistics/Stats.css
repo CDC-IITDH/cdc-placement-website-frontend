@@ -1,0 +1,42 @@
+.offer-present {
+    background-color: #92d3e8
+
+}
+.offer-present:hover {
+
+    background-color:#65c5e6!important;
+}
+
+.offer-completed {
+     background-color:#9cdbac;
+}
+.offer-completed:hover {
+    
+    background-color:#71bf84!important;
+}
+
+.stats-parent-frame{
+    margin: 1%;
+    background-color: white;
+    border-radius: 15px;
+}
+.bar-chart{
+    width: 90% !important;;
+    height:100% !important;
+}
+.stats-table{
+    margin: 15px;
+    width: 90%!important;
+}
+
+.stats-table-label{
+    font-size: 1.2em !important;
+    font-weight: 700 !important;
+    color: #3c3c3c !important;
+    margin: 10px !important;
+}
+
+.stats-table-value{
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+}
