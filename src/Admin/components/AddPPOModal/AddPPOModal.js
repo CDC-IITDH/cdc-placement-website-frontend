@@ -176,7 +176,7 @@ const AddPPOModal = ({
                                 />
                             </div>
                             <div className="Parent-addPPO">
-                                <h2 className="label-addPPO">Compensation (Gross):</h2>
+                                <h2 className="label-addPPO">Compensation (CTC):</h2>
                                 <TextField
                                     className="addPPO-textField"
                                     id='compensation_gross'
@@ -186,7 +186,7 @@ const AddPPOModal = ({
                                     value={data['compensation_gross']}
                                     error={errorState['compensation_gross']}
                                     size={'small'}
-                                    placeholder={'Enter Compensation (Gross)'}
+                                    placeholder={'Enter Compensation (CTC)'}
                                     required
                                     type='number'
                                 />
