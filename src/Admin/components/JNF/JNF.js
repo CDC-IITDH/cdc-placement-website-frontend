@@ -5,13 +5,16 @@ import { Formik } from "formik"
 import * as yup from 'yup'
 import Instructions from "./Instructions";
 import { useState, useEffect, useRef } from "react";
-import JobProfile from "./JobProfile";
 import SelectionProcess from "./SelectionProcess"
 import ContactDetails from "./ContactDetails";
 import API_ENDPOINT from "../../../api/api_endpoint";
 import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
+
+import WorkType from "./WorkType";
+import JobProfile from "./JobProfile";
+import InternProfile from "./InternProfile";
 
 const JNF = ({setShowLoader}) => {
     const year = "2022-2023"
@@ -73,6 +76,8 @@ const JNF = ({setShowLoader}) => {
       locations: yup.string().required('Loaction is Required'),
       details: yup.string().required('Details are Required'),
       date: yup.string().required('Date is Required'),
+      work_type: yup.array().min(1, 'Choose atleast one').required("Required"),
+      batch: yup.array().min(1, 'Choose at least one batch').required("Required"),
       branch: yup.array().min(1,'Choose at least one').required("Required"),
       research: yup.string().required("Required"),
       numoffers: yup.number().min(0,'Must be positive'),
@@ -104,6 +109,8 @@ const JNF = ({setShowLoader}) => {
       }
 
       var formdata = new FormData();
+
+      formdata.append("work_type", JSON.stringify(values.work_type))
       formdata.append("company_name", values.name);
       formdata.append("address", values.address);
       formdata.append("company_type", values.type);
@@ -134,6 +141,7 @@ const JNF = ({setShowLoader}) => {
       formdata.append("selection_procedure_details", values.selection);
       formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
       formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
+      formdata.append("allowed_batch", JSON.stringify(values.batch)); /* batch field */
       formdata.append("allowed_branch", JSON.stringify(values.branch));
       formdata.append("rs_eligible", values.research);
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
@@ -179,8 +187,9 @@ const JNF = ({setShowLoader}) => {
         });
     }
 
-    const handlePageChange = (setPage, page, errors, setFieldTouched, handleSubmit) => {
+    const handlePageChange = (setPage, page, errors, setFieldTouched, handleSubmit, values, back) => {
       if (page === 1) {
+
         if (errors.name || errors.link || errors.address || errors.city || errors.state || errors.country || errors.pincode || errors.type || errors.nature) {
           setFieldTouched("name", true)
           setFieldTouched("link", true)
@@ -197,37 +206,108 @@ const JNF = ({setShowLoader}) => {
         else {
           setPage(page + 1)
         }
+
+      } else if (page === 2) { // work type
+        if (back) {
+          setPage(page-1);
+        } else {
+          if (errors.work_type) { 
+            setFieldTouched("work_type", true)
+            window.scrollTo(0, 0);
+            setWarning("Please choose atleast one option")
+          } else {
+            if (values.work_type.includes("JOB")) {
+              setPage(page+1)
+            } else if (values.work_type.includes("INTERN")) {
+              setPage(page+2)
+            }
+          }
+        }
+      } else if (page === 3) {
+        // JOB
+        if (back) {
+          setPage(page-1);
+        } else {
+          if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers || errors.ctc || errors.gross || errors.takehome) {
+            
+            setFieldTouched("designation", true)
+            setFieldTouched("locations", true)
+            setFieldTouched("details", true)
+            setFieldTouched("date", true)
+            setFieldTouched("batch", true)
+            setFieldTouched("branch", true)
+            setFieldTouched("research", true)
+            setFieldTouched("numoffers", true)
+            setFieldTouched("ctc", true)
+            setFieldTouched("gross", true)
+            setFieldTouched("takehome", true)
+            window.scrollTo(0,0)
+            setWarning("Please fill all the required fields")
+
+          }
+          else {
+            if (values.work_type.includes("INTERN")) {
+              setPage(page+1)
+            } else {
+              setPage(page+2)
+            }
+          }
+        }
+       
+      } else if (page === 4) {
+        // INTERN
+        if (back) {
+          if (values.work_type.includes("JOB")) {
+            setPage(page-1);
+          } else {
+            setPage(page-2);
+          }
+        } else {
+          if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers || errors.ctc || errors.gross || errors.takehome) {
+            
+            setFieldTouched("designation", true)
+            setFieldTouched("locations", true)
+            setFieldTouched("details", true)
+            setFieldTouched("date", true)
+            setFieldTouched("batch", true)
+            setFieldTouched("branch", true)
+            setFieldTouched("research", true)
+            setFieldTouched("numoffers", true)
+            setFieldTouched("ctc", true)
+            setFieldTouched("gross", true)
+            setFieldTouched("takehome", true)
+            window.scrollTo(0,0)
+            setWarning("Please fill all the required fields")
+          
+          } else {
+            setPage(page+1)
+          }
+        }
       }
-      else if (page === 2) {
-        if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers || errors.ctc || errors.gross || errors.takehome) {
-          setFieldTouched("designation", true)
-          setFieldTouched("locations", true)
-          setFieldTouched("details", true)
-          setFieldTouched("date", true)
-          setFieldTouched("branch", true)
-          setFieldTouched("research", true)
-          setFieldTouched("numoffers", true)
-          setFieldTouched("ctc", true)
-          setFieldTouched("gross", true)
-          setFieldTouched("takehome", true)
-          window.scrollTo(0,0)
-          setWarning("Please fill all the required fields")
-        }
-        else {
-          setPage(page + 1)
-        }
-      }
-      else if (page === 3) {
-        if (errors.selectionprocess) {
-          setFieldTouched("selectionprocess", true)
-          window.scrollTo(0,0)
-          setWarning("Please fill all the required fields")
-        }
-        else {
-          setPage(page + 1)
+
+      else if (page === 5) {
+
+        if (back) {
+          if (values.work_type.includes("INTERN")) {
+            setPage(page-1)
+          } else if (values.work_type.includes("JOB")) {
+            setPage(page-2)
+          } else {
+            setPage(page-3)
+          }
+        } else {
+          if (errors.selectionprocess) {
+            setFieldTouched("selectionprocess", true)
+            window.scrollTo(0,0)
+            setWarning("Please fill all the required fields")
+          }
+          else {
+            setPage(page + 1)
+          }  
         }
       }
-      else if (page === 4) {
+      else if (page === 6) {
+
         if (errors.contact || errors.email || errors.mobile) {
           setFieldTouched("contact", true)
           setFieldTouched("email", true)
@@ -246,6 +326,7 @@ const JNF = ({setShowLoader}) => {
         else {
           handleSubmit()
         }
+
       }
     }
 
@@ -256,7 +337,7 @@ const JNF = ({setShowLoader}) => {
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
               {!submitted? (
-                <Formik validateOnMount={true} validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'',research:'',selectionprocess_other:''}}>
+                <Formik validateOnMount={true} validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'', batch:'',research:'',selectionprocess_other:'', work_type:''}}>
                   {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,setFieldTouched, submitCount}) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       {(page === 1) ? (
@@ -279,8 +360,53 @@ const JNF = ({setShowLoader}) => {
                           setCompdescription_file={setCompdescription_file}
                         />
                       ):(<></>)}
-                      {(page === 2) ? (
-                        <JobProfile
+
+                      {
+                        // work type
+                        (page === 2)? 
+                        (<WorkType
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                          setFieldValue={setFieldValue}
+                          submitCount={submitCount}
+                          jobdescription_file={jobdescription_file}
+                          setJobdescription_file={setJobdescription_file}
+                          salary_file = {salary_file}
+                          setSalary_file = {setSalary_file}
+                        />
+                        ) : 
+                        (<></>)
+                      }
+                      { // job
+                        (page === 3)? 
+                        (<JobProfile
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                          setFieldValue={setFieldValue}
+                          submitCount={submitCount}
+                          jobdescription_file={jobdescription_file}
+                          setJobdescription_file={setJobdescription_file}
+                          salary_file = {salary_file}
+                          setSalary_file = {setSalary_file}
+                        />) 
+                        : (<></>)
+                      }
+
+                      {(page === 4) ? (
+                        // intern
+                        <InternProfile
                           handleSubmit={handleSubmit}
                           handleChange={handleChange}
                           handleBlur={handleBlur}
@@ -297,7 +423,7 @@ const JNF = ({setShowLoader}) => {
                           setSalary_file = {setSalary_file}
                         />
                       ):(<></>)}
-                      {(page === 3) ? (
+                      {(page === 5) ? (
                         <SelectionProcess
                           handleSubmit={handleSubmit}
                           handleChange={handleChange}
@@ -312,7 +438,7 @@ const JNF = ({setShowLoader}) => {
                           setSelection_file={setSelection_file}
                         />
                       ):(<></>)}
-                      {(page === 4) ? (
+                      {(page === 6) ? (
                         <>
                         <ContactDetails
                           handleSubmit={handleSubmit}
@@ -351,20 +477,20 @@ const JNF = ({setShowLoader}) => {
                       <Row>
                         {(page!==1)? (
                           <Col className="text-start">
-                            <Button variant="primary" onClick={()=>{setPage(page-1)}}>
+                            <Button variant="primary" onClick={()=>{handlePageChange(setPage,page,errors, setFieldTouched, handleSubmit, values, true)}}>
                               Back
                             </Button>
                           </Col>
                         ):(<></>)}
                         {(page!==4)? (
                           <Col className="text-end">
-                            <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit)}>
+                            <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit, values, false)}>
                               Next
                             </Button>
                           </Col>
                         ):(
                           <Col className="text-end">
-                            <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit)} >
+                            <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit, values, false)} >
                               Submit
                             </Button>
                           </Col>

@@ -3,20 +3,23 @@ import banner from '../../../images/banner.jpg'
 import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./limit_constants";
 import MultipleFileInput from "./MultipleFileInput";
 
-const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue, submitCount, jobdescription_file, setJobdescription_file,  salary_file, setSalary_file}) => {
+const InternProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue, submitCount, jobdescription_file, setJobdescription_file,  salary_file, setSalary_file}) => {
   return (
     <>
+      
       <Container className="p-0 mb-5" fluid>
         <div className="w-100 position-relative banner-container">
           <img className="fix banner p-0" alt="banner" src={banner}></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">
-              JOB PROFILE
+              INTERN PROFILE
             </div>
           </div>
         </div>
       </Container>
+
       <hr className="pd" />
+      
       <MultipleFileInput stateVar={jobdescription_file} setStateVar={setJobdescription_file} name="jobdescription_file" label ="Job Description" />
       <Form.Group className="mb-5">
         <Form.Label>Job Designation Offered <span className="text-danger">*</span></Form.Label>
@@ -132,4 +135,4 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
   )
 }
 
-export default JobProfile
+export default InternProfile
