@@ -59,9 +59,9 @@ const JNF = ({setShowLoader}) => {
     }
 
     let schema = yup.object().shape({
+
       name: yup.string().required('Company Name is Required'),
       link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
-      // compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       jobdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       salary_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       selection_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
@@ -77,7 +77,6 @@ const JNF = ({setShowLoader}) => {
       details: yup.string().required('Details are Required'),
       date: yup.string().required('Date is Required'),
       work_type: yup.array().min(1, 'Choose atleast one').required("Required"),
-      batch: yup.array().min(1, 'Choose at least one batch').required("Required"),
       branch: yup.array().min(1,'Choose at least one').required("Required"),
       research: yup.string().required("Required"),
       numoffers: yup.number().min(0,'Must be positive'),
@@ -89,7 +88,17 @@ const JNF = ({setShowLoader}) => {
       contact: yup.string().required('Contact is Required'),
       email: yup.string().email('Please enter a email address (eg. john@example.com)').required("Required"),
       mobile: yup.number().required('Mobile Number is Required').min(1000000000,'Must be 10 digits').max(9999999999,'Must be 10 digits'),
-      telephone: yup.string()
+      telephone: yup.string(),
+      
+      // intern propeties
+      internship_season: yup.array().required("Required"),
+      internship_type: yup.string().required("Required"),
+      batch: yup.array().min(1, 'Choose at least one batch').required("Required"),
+      sophomores: yup.string().required('Required'),
+      stipend: yup.number().required('Stipend is required').min(0, 'Must be positive'),
+      internship_other_facilities: yup.string()
+      
+      // compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
     })
 
     function submit(values) {
@@ -141,11 +150,19 @@ const JNF = ({setShowLoader}) => {
       formdata.append("selection_procedure_details", values.selection);
       formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
       formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
-      formdata.append("allowed_batch", JSON.stringify(values.batch)); /* batch field */
       formdata.append("allowed_branch", JSON.stringify(values.branch));
       formdata.append("rs_eligible", values.research);
       formdata.append("tentative_no_of_offers", (values.numoffers?values.numoffers:0));
       formdata.append("other_requirements", values.requirements);
+      
+      // internship
+      formdata.append("allowed_batch", JSON.stringify(values.batch)); 
+      formdata.append("internship_season",values.internship_season);
+      formdata.append("internship_type", JSON.stringify(values.internship_type));
+      formdata.append("sophomores", values.sophomores);
+      formdata.append("internship_other_facilities", values.internship_other_facilities);
+      formdata.append("stipend", values.stipend);
+
       compdescription_file.forEach((file) => {
         formdata.append("company_details_pdf",file,file.name);
       })
@@ -190,7 +207,8 @@ const JNF = ({setShowLoader}) => {
     const handlePageChange = (setPage, page, errors, setFieldTouched, handleSubmit, values, back) => {
       if (page === 1) {
 
-        if (errors.name || errors.link || errors.address || errors.city || errors.state || errors.country || errors.pincode || errors.type || errors.nature) {
+        if (errors.name || errors.link || errors.address || errors.city || errors.state || errors.country || errors.pincode || errors.type || errors.nature) 
+        {  
           setFieldTouched("name", true)
           setFieldTouched("link", true)
           setFieldTouched("address", true)
@@ -200,144 +218,172 @@ const JNF = ({setShowLoader}) => {
           setFieldTouched("pincode", true)
           setFieldTouched("type", true)
           setFieldTouched("nature", true)
+          
           window.scrollTo(0,0)
           setWarning("Please fill all the required fields")
         }
-        else {
+        else 
+        {
           setPage(page + 1)
         }
 
-      } else if (page === 2) { // work type
-        if (back) {
+      } 
+      else if (page === 2) // work type
+      {
+        if (back) 
+        {
           setPage(page-1);
-        } else {
-          if (errors.work_type) { 
+        } 
+        else 
+        {
+          if (errors.work_type || errors.jobdescription_file || errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.numoffers) 
+          { 
             setFieldTouched("work_type", true)
             window.scrollTo(0, 0);
             setWarning("Please choose atleast one option")
-          } else {
-            if (values.work_type.includes("JOB")) {
+          } 
+          else 
+          {
+            if (values.work_type.includes("JOB")) 
+            {
               setPage(page+1)
-            } else if (values.work_type.includes("INTERN")) {
+            } 
+            else if (values.work_type.includes("INTERN")) 
+            {
               setPage(page+2)
             }
           }
         }
-      } else if (page === 3) {
-        // JOB
-        if (back) {
+      } 
+      else if (page === 3) // job description
+      {
+        if (back) 
+        {
           setPage(page-1);
-        } else {
-          if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers || errors.ctc || errors.gross || errors.takehome) {
-            
-            setFieldTouched("designation", true)
-            setFieldTouched("locations", true)
-            setFieldTouched("details", true)
-            setFieldTouched("date", true)
-            setFieldTouched("batch", true)
-            setFieldTouched("branch", true)
+        } 
+        else 
+        {
+          if (errors.research || errors.numoffers || errors.ctc || errors.gross || errors.takehome || errors.salary_file) 
+          {  
             setFieldTouched("research", true)
             setFieldTouched("numoffers", true)
             setFieldTouched("ctc", true)
             setFieldTouched("gross", true)
             setFieldTouched("takehome", true)
+                       
             window.scrollTo(0,0)
             setWarning("Please fill all the required fields")
-
           }
-          else {
-            if (values.work_type.includes("INTERN")) {
+          else 
+          {
+            if (values.work_type.includes("INTERN")) 
+            {
               setPage(page+1)
-            } else {
+            } 
+            else 
+            {
               setPage(page+2)
             }
           }
         }
-       
-      } else if (page === 4) {
-        // INTERN
-        if (back) {
-          if (values.work_type.includes("JOB")) {
+      } 
+      else if (page === 4) // internship 
+      {
+        if (back) 
+        {
+          if (values.work_type.includes("JOB")) 
+          {
             setPage(page-1);
-          } else {
+          } else 
+          {
             setPage(page-2);
           }
-        } else {
-          if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers || errors.ctc || errors.gross || errors.takehome) {
-            
+        } 
+        else 
+        {
+          if (errors.designation || errors.locations || errors.details || errors.date || errors.branch || errors.research || errors.numoffers || errors.ctc || errors.gross || errors.takehome) 
+          {  
             setFieldTouched("designation", true)
             setFieldTouched("locations", true)
             setFieldTouched("details", true)
-            setFieldTouched("date", true)
             setFieldTouched("batch", true)
             setFieldTouched("branch", true)
-            setFieldTouched("research", true)
-            setFieldTouched("numoffers", true)
-            setFieldTouched("ctc", true)
-            setFieldTouched("gross", true)
-            setFieldTouched("takehome", true)
+            setFieldTouched("internship_type", true)
+
             window.scrollTo(0,0)
             setWarning("Please fill all the required fields")
-          
-          } else {
+          } 
+          else 
+          {
             setPage(page+1)
           }
         }
       }
-
       else if (page === 5) {
-
-        if (back) {
-          if (values.work_type.includes("INTERN")) {
+        if (back) 
+        {
+          if (values.work_type.includes("INTERN")) 
+          {
             setPage(page-1)
-          } else if (values.work_type.includes("JOB")) {
+          } 
+          else if (values.work_type.includes("JOB")) 
+          {
             setPage(page-2)
-          } else {
+          } 
+          else 
+          {
             setPage(page-3)
           }
-        } else {
-          if (errors.selectionprocess) {
+        } 
+        else 
+        {
+          if (errors.selectionprocess) 
+          {
             setFieldTouched("selectionprocess", true)
             window.scrollTo(0,0)
             setWarning("Please fill all the required fields")
           }
-          else {
+          else 
+          {
             setPage(page + 1)
           }  
         }
       }
-      else if (page === 6) {
-
-        if (errors.contact || errors.email || errors.mobile) {
+      else if (page === 6) 
+      {
+        if (errors.contact || errors.email || errors.mobile) 
+        {
           setFieldTouched("contact", true)
           setFieldTouched("email", true)
           setFieldTouched("mobile", true)
+          
           window.scrollTo(0,0)
           setWarning("Please fill all the required fields")
         }
-        else if(termsRef.current.checked === false){
+        else if(termsRef.current.checked === false)
+        {
           setWarning("Please accept the terms and conditions")
           window.scrollTo(0,0)
         }
-        else if(recaptchaRef.current.getValue() === ""){
+        else if(recaptchaRef.current.getValue() === "")
+        {
           setWarning("Please verify that you are not a robot")
           window.scrollTo(0,0)
         }
-        else {
+        else 
+        {
           handleSubmit()
         }
-
       }
     }
 
-  
     return (
       <>
         <Container className="py-5 d-pink bk-container" fluid style={{backgroundImage: "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)"}}>
           <Row className="justify-content-center">
             <Col className="l-pink p-5" lg={7} xs={11}>
               {!submitted? (
-                <Formik validateOnMount={true} validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'', batch:'',research:'',selectionprocess_other:'', work_type:''}}>
+                <Formik validateOnMount={true} validationSchema={schema} onSubmit={submit} initialValues={{name:'',link:'',address:'',city:'',state:'',country:'',pincode:'',type:'',nature:'',designation:'',locations:'',details:'',date:'',numoffers:'',ctc:'',gross:'',takehome:'',bonus:'',selectionprocess:'',contact:'',email:'',mobile:'',telephone:'',compdescription:'',bonddetails:'',requirements:'',selection:'',compdescription_file:'',jobdescription_file:'',salary_file:'',selection_file:'',branch:'', batch:'',research:'',selectionprocess_other:'', work_type:'', internship_other_facilities:'', internship_type:'', internship_season:'', stipend:'', sophomores:''}}>
                   {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty,setFieldValue,setFieldTouched, submitCount}) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       {(page === 1) ? (
@@ -383,7 +429,9 @@ const JNF = ({setShowLoader}) => {
                         ) : 
                         (<></>)
                       }
-                      { // job
+                      
+                      { 
+                        // job description
                         (page === 3)? 
                         (<JobProfile
                           handleSubmit={handleSubmit}
@@ -405,7 +453,7 @@ const JNF = ({setShowLoader}) => {
                       }
 
                       {(page === 4) ? (
-                        // intern
+                        // internship
                         <InternProfile
                           handleSubmit={handleSubmit}
                           handleChange={handleChange}
@@ -482,7 +530,7 @@ const JNF = ({setShowLoader}) => {
                             </Button>
                           </Col>
                         ):(<></>)}
-                        {(page!==4)? (
+                        {(page!==6)? (
                           <Col className="text-end">
                             <Button variant="primary" onClick={() => handlePageChange(setPage,page,errors,setFieldTouched, handleSubmit, values, false)}>
                               Next
