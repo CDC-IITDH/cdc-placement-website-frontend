@@ -60,11 +60,9 @@ const JNF = ({setShowLoader}) => {
 
     let schema = yup.object().shape({
 
+      // company overview
       name: yup.string().required('Company Name is Required'),
       link: yup.string().url('Please enter a valid url (eg. https://example.com)').required('Website Link is Required'),
-      jobdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
-      salary_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
-      selection_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       address: yup.string().required('Company Address is Required'),
       city: yup.string().required('City is Required'),
       state: yup.string().required('State is Required'),
@@ -72,32 +70,136 @@ const JNF = ({setShowLoader}) => {
       pincode: yup.number('Must be a Number').required('Zip/Pin is Required').min(100000, 'Must be at least 6 digits').max(999999, 'Must be at most 6 digits'),
       type: yup.string().required("Required"),
       nature: yup.string().required("Required"),
+
+      // work type
+      work_type: yup.array().min(1, 'Choose atleast one').required("Required"),
+      jobdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
       designation: yup.string().required('Designation is Required'),
       locations: yup.string().required('Loaction is Required'),
       details: yup.string().required('Details are Required'),
       date: yup.string().required('Date is Required'),
-      work_type: yup.array().min(1, 'Choose atleast one').required("Required"),
       branch: yup.array().min(1,'Choose at least one').required("Required"),
-      research: yup.string().required("Required"),
       numoffers: yup.number().min(0,'Must be positive'),
-      ctc: yup.number().required('CTC is Required').min(0,'Must be positive'),
-      gross: yup.number().required('Gross is Required').min(0,'Must be positive'),
-      takehome: yup.number().required('Take Home is Required').min(0,'Must be positive'),
-      bonus: yup.number().min(0,'Must be positive'),
+      
+      // Job Profile
+      research: yup.string().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Job')) {
+          return schema.required('Required')
+        }
+        else {
+          return schema
+        }
+      }),
+      salary_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      ctc: yup.number().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Job')) {
+          return schema.required('CTC is Required').min(0,'Must be positive')
+        }
+        else {
+          return schema
+        }
+      }),
+      gross: yup.number().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Job')) {
+          return schema.required('Gross is Required').min(0,'Must be positive')
+        }
+        else {
+          return schema
+        }
+      }),
+      takehome: yup.number().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Job')) {
+          return schema.required('Take Home is Required').min(0,'Must be positive')
+        }
+        else {
+          return schema
+        }
+      }),
+      bonus: yup.number().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Job')) {
+          return schema.min(0,'Must be positive')
+        }
+        else {
+          return schema
+        }
+      }),
+
+      
+      // ctc: yup.number().required('CTC is Required').min(0,'Must be positive'),
+      // gross: yup.number().required('Gross is Required').min(0,'Must be positive'),
+      // takehome: yup.number().required('Take Home is Required').min(0,'Must be positive'),
+      // bonus: yup.number().min(0,'Must be positive'),
+      
+      // Internship Profile
+      internship_season: yup.array().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Internship')) {
+          return schema.required('Required')
+        }
+        else {
+          return schema
+        }
+      }),
+      batch: yup.array().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Internship')) {
+          return schema.min(1, 'Choose at least one batch').required("Required")
+        }
+        else {
+          return schema
+        }
+      }),
+      internship_type: yup.string().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Internship')) {
+          return schema.required("Required")
+        }
+        else {
+          return schema
+        }
+      }),
+      sophomores: yup.string().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : []
+        if (work_type.includes('Internship')) {
+          return schema.required('Required')
+        }
+        else {
+          return schema
+        }
+      }),
+      stipend: yup.number().when('work_type', (work_type, schema) => {
+        work_type = (work_type) ? work_type : [] 
+        if (work_type.includes('Internship')) {
+          return schema.required('Stipend is required').min(0, 'Must be positive')
+        }
+        else {
+          return schema
+        }
+      }),
+      internship_other_facilities: yup.string(),
+
+
+      // internship_season: yup.array().required("Required"),
+      // batch: yup.array().min(1, 'Choose at least one batch').required("Required"),
+      // internship_type: yup.string().required("Required"),
+      // sophomores: yup.string().required('Required'),
+      // stipend: yup.number().required('Stipend is required').min(0, 'Must be positive'),
+      
+      // Selection process
       selectionprocess: yup.array().min(1,'Choose at least one').required("Required"),
+      selection_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      
+      // Company Contact Details
       contact: yup.string().required('Contact is Required'),
       email: yup.string().email('Please enter a email address (eg. john@example.com)').required("Required"),
       mobile: yup.number().required('Mobile Number is Required').min(1000000000,'Must be 10 digits').max(9999999999,'Must be 10 digits'),
-      telephone: yup.string(),
-      
-      // intern propeties
-      internship_season: yup.array().required("Required"),
-      internship_type: yup.string().required("Required"),
-      batch: yup.array().min(1, 'Choose at least one batch').required("Required"),
-      sophomores: yup.string().required('Required'),
-      stipend: yup.number().required('Stipend is required').min(0, 'Must be positive'),
-      internship_other_facilities: yup.string()
-      
+      telephone: yup.string()
+            
       // compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
     })
 
