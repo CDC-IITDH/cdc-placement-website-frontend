@@ -2,10 +2,10 @@
 
 ### Go to User model in django admin and set the privileges of the user to super admin
 - Go to User model in django admin `"http://localhost:8000/admin/APIs/user/"`
-![admin_privileges](./wflow_images/me.png)
+- ![admin_privileges](./wflow_images/Screenshot(132).png)
 
 ### Now you can login as super admin by selecting the admin option in the login page
-- ![admin_login](wflow_images/Screenshot(135).png)
+- ![admin_login](wflow_images/me.png)
 
 ### Admin can accept the offer , can set deadline for the same and  can add additional information to the offer
 <!-- 123 to 128 images -->
