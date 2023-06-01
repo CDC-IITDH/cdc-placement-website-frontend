@@ -7,7 +7,7 @@
 <!-- - ![admin_privileges](wflow_images/Screenshot(132).png) -->
 <!-- https://github.com/CDC-IITDH/cdc-placement-website-frontend/blob/whole_workflow/workflow/wflow_images/Screenshot%20(132).png -->
 <!-- insert image using img -->
-<img src="https://github.com/CDC-IITDH/cdc-placement-website-frontend/blob/whole_workflow/workflow/wflow_images/Screenshot%20(132).png" height=50% width=50%>
+<img src="https://github.com/CDC-IITDH/cdc-placement-website-frontend/blob/whole_workflow/workflow/wflow_images/Screenshot%20(132).png" height=60% width=60%>
 
 ### Now you can login as super admin by selecting the admin option in the login page
 - ![admin_login](wflow_images/Screenshot(135).png)
