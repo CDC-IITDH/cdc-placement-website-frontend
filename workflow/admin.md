@@ -2,7 +2,7 @@
 
 ### Go to User model in django admin and set the privileges of the user to super admin
 - Go to User model in django admin `"http://localhost:8000/admin/APIs/user/"`
-![admin_privileges](./wflow_images/Screenshot(132).png)
+![admin_privileges](./wflow_images/me.png)
 
 ### Now you can login as super admin by selecting the admin option in the login page
 - ![admin_login](wflow_images/Screenshot(135).png)
