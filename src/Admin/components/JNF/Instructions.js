@@ -40,7 +40,7 @@ const Instructions = ({ year, updateData }) => {
               for the selection process and rules & regulations.
             </li>
             <li>
-              To prefill the JNF form{" "}
+              If you have filled jnf already for some other roles, you can save time by prefilling the JNF form by company ID{" "}
               <Link to="" onClick={handleClick}>
                 {" "}
                 click here

@@ -330,7 +330,6 @@ const JNF = ({ setShowLoader }) => {
                 initialValues={{
                   name: preFill?.placement_data.company_name || "",
                   link: preFill?.placement_data.website || "",
-                  //not working
                   compdescription:
                     preFill?.placement_data.company_details || "",
                   address: preFill?.placement_data.address || "",
@@ -341,42 +340,27 @@ const JNF = ({ setShowLoader }) => {
                   type: preFill?.placement_data.company_type || "",
                   nature: preFill?.placement_data.nature_of_business || "",
 
-                  designation: preFill?.placement_data.designation || "",
-                  locations: preFill?.placement_data.job_location || "",
-                  details: preFill?.placement_data.description || "",
-                  date: preFill?.placement_data.tentative_date_of_joining || "",
-                  branch: preFill?.placement_data.allowed_branch || "",
-                  research:
-                    (preFill?.placement_data?.rs_eligible ? "Yes" : "No") || "",
-                  numoffers:
-                    preFill?.placement_data.tentative_no_of_offers || "",
-                  ctc: preFill?.placement_data.compensation_CTC || "",
-                  gross: preFill?.placement_data.compensation_gross || "",
-                  takehome:
-                    preFill?.placement_data.compensation_take_home || "",
-                  bonus: preFill?.placement_data.compensation_bonus || "",
-                  bonddetails: preFill?.placement_data.bond_details || "",
-                  selectionprocess:
-                    preFill?.placement_data.selection_procedure_rounds || "",
-
-                  selection:
-                    preFill?.placement_data.selection_procedure_details || "",
-                  // not working
-                  requirements:
-                    preFill?.placement_data.other_requirements || "",
+                  designation:  "",
+                  locations: "",
+                  details:  "",
+                  date: "",
+                  branch: "",
+                  research: "",
+                  numoffers: "",
+                  ctc: "",
+                  gross: "",
+                  takehome: "",
+                  bonus: "",
+                  bonddetails: "",
+                  selectionprocess: "",
+                  selection: "",
+                  requirements: "",
+                  
                   contact: preFill?.placement_data.contact_person_name || "",
                   email: preFill?.placement_data.email || "",
                   mobile: preFill?.placement_data.phone_number || "",
                   telephone: preFill?.placement_data.telephone || "",
 
-                  // compdescription_file:
-                  //   preFill?.placement_data.company_details_pdf_names || "",
-                  // jobdescription_file:
-                  //   preFill?.placement_data.jobdescription_file || "",
-                  // salary_file: preFill?.placement_data.salary_file || "",
-                  // selection_file: preFill?.placement_data.selection_file || "",
-                  // selectionprocess_other:
-                  //   preFill?.placement_data?.selectionprocess_other || "",
                 }}
               >
                 {({

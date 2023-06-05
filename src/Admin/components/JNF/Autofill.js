@@ -5,7 +5,8 @@ const Autofill = (e, updateData) => {
   e.preventDefault();
 
   Swal.fire({
-    title: "Enter your ID",
+    title: "Enter your placement ID",
+    html: "Check the form response mail you received after filling the form in the past.",
     input: "text",
     inputAttributes: {
       autocapitalize: "off",
@@ -35,6 +36,7 @@ const Autofill = (e, updateData) => {
         Swal.fire({
           icon: "success",
           title: "Data Found",
+          html: "Your data has been prefilled except for job profile related fields and PDF files. Please check the prefilled data and fill the rest of the form.",
         });
       } else {
         Swal.fire({
