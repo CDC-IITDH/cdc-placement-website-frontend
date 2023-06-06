@@ -339,7 +339,6 @@ const JNF = ({ setShowLoader }) => {
                   pincode: preFill?.placement_data.pin_code || "",
                   type: preFill?.placement_data.company_type || "",
                   nature: preFill?.placement_data.nature_of_business || "",
-
                   designation:  "",
                   locations: "",
                   details:  "",
@@ -355,12 +354,15 @@ const JNF = ({ setShowLoader }) => {
                   selectionprocess: "",
                   selection: "",
                   requirements: "",
-                  
                   contact: preFill?.placement_data.contact_person_name || "",
                   email: preFill?.placement_data.email || "",
                   mobile: preFill?.placement_data.phone_number || "",
-                  telephone: preFill?.placement_data.telephone || "",
-
+                  telephone: preFill?.placement_data.telephone || "",           
+                  compdescription_file: "" ,
+                  jobdescription_file: "",
+                   salary_file: "",
+                   selection_file:"",
+                   selectionprocess_other: "",
                 }}
               >
                 {({
