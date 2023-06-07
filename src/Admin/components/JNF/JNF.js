@@ -4,6 +4,7 @@ import CompOverview from "./CompOverview";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Instructions from "./Instructions";
+import { useFormikContext } from "formik";
 import { useState, useEffect, useRef } from "react";
 import JobProfile from "./JobProfile";
 import SelectionProcess from "./SelectionProcess";
@@ -15,7 +16,43 @@ import { getCookie } from "../../../utils/getCookie";
 
 const JNF = ({ setShowLoader }) => {
   const year = "2022-2023";
-  const [preFill, setPreFill] = useState();
+  var initialValues = {
+    name: "",
+    link: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    pincode: "",
+    type: "",
+    nature: "",
+    designation: "",
+    locations: "",
+    details: "",
+    date: "",
+    numoffers: "",
+    ctc: "",
+    gross: "",
+    takehome: "",
+    bonus: "",
+    selectionprocess: "",
+    contact: "",
+    email: "",
+    mobile: "",
+    telephone: "",
+    compdescription: "",
+    bonddetails: "",
+    requirements: "",
+    selection: "",
+    compdescription_file: "",
+    jobdescription_file: "",
+    salary_file: "",
+    selection_file: "",
+    branch: "",
+    research: "",
+    selectionprocess_other: "",
+  };
+  const LOCAL_STORAGE_KEY = "vals";
   const [page, setPage] = useState(1);
   const [submitted, setSubmitted] = useState(0);
   const [error, setError] = useState("");
@@ -24,6 +61,8 @@ const JNF = ({ setShowLoader }) => {
   const [salary_file, setSalary_file] = useState([]);
   const [warning, setWarning] = useState();
   const [selection_file, setSelection_file] = useState([]);
+  var valsFromUseEffect =
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValues;
 
   useEffect(() => {
     setShowLoader(false);
@@ -53,6 +92,22 @@ const JNF = ({ setShowLoader }) => {
     }
   };
 
+  const AutoSubmitToken = () => {
+    const { values, submitForm } = useFormikContext();
+
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+
+    return null;
+  };
   let schema = yup.object().shape({
     name: yup.string().required("Company Name is Required"),
     link: yup
@@ -205,20 +260,26 @@ const JNF = ({ setShowLoader }) => {
       },
     };
 
-    setShowLoader(true);
+    // setShowLoader(true);
 
-    fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
-      .then((res) => {
-        if (!(res.status === 200 || res.status === 400)) {
-          setError(res);
-          setSubmitted(1);
-        }
-        setSubmitted(1);
-        setShowLoader(false);
-      })
-      .catch((error) => {
-        setError(error);
-      });
+    // fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
+    //   .then((res) => {
+    //     if (!(res.status === 200 || res.status === 400)) {
+    //       setError(res);
+    //       setSubmitted(1);
+    //     }
+    //     setSubmitted(1);
+    //     setShowLoader(false);
+    //   })
+    //   .catch((error) => {
+    //     setError(error);
+    //   });
+
+    window.localStorage.removeItem(LOCAL_STORAGE_KEY);
+    window.localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify(initialValues)
+    );
   }
 
   const handlePageChange = (
@@ -323,47 +384,10 @@ const JNF = ({ setShowLoader }) => {
           <Col className="l-pink p-5" lg={7} xs={11}>
             {!submitted ? (
               <Formik
-                enableReinitialize={true}
                 validateOnMount={true}
                 validationSchema={schema}
                 onSubmit={submit}
-                initialValues={{
-                  name: preFill?.placement_data.company_name || "",
-                  link: preFill?.placement_data.website || "",
-                  compdescription:
-                    preFill?.placement_data.company_details || "",
-                  address: preFill?.placement_data.address || "",
-                  city: preFill?.placement_data.city || "",
-                  state: preFill?.placement_data.state || "",
-                  country: preFill?.placement_data.country || "",
-                  pincode: preFill?.placement_data.pin_code || "",
-                  type: preFill?.placement_data.company_type || "",
-                  nature: preFill?.placement_data.nature_of_business || "",
-                  designation:  "",
-                  locations: "",
-                  details:  "",
-                  date: "",
-                  branch: "",
-                  research: "",
-                  numoffers: "",
-                  ctc: "",
-                  gross: "",
-                  takehome: "",
-                  bonus: "",
-                  bonddetails: "",
-                  selectionprocess: "",
-                  selection: "",
-                  requirements: "",
-                  contact: preFill?.placement_data.contact_person_name || "",
-                  email: preFill?.placement_data.email || "",
-                  mobile: preFill?.placement_data.phone_number || "",
-                  telephone: preFill?.placement_data.telephone || "",           
-                  compdescription_file: "" ,
-                  jobdescription_file: "",
-                   salary_file: "",
-                   selection_file:"",
-                   selectionprocess_other: "",
-                }}
+                initialValues={valsFromUseEffect}
               >
                 {({
                   handleSubmit,
@@ -379,11 +403,8 @@ const JNF = ({ setShowLoader }) => {
                   submitCount,
                 }) => (
                   <Form noValidate onSubmit={handleSubmit}>
-                    {page === 1 ? (
-                      <Instructions year={year} updateData={setPreFill} />
-                    ) : (
-                      <></>
-                    )}
+                    <AutoSubmitToken />
+                    {page === 1 ? <Instructions year={year} /> : <></>}
                     {warning ? <Alert variant="danger">{warning}</Alert> : null}
                     {page === 1 ? (
                       <CompOverview
