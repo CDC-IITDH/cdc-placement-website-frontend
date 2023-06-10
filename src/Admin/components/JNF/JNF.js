@@ -13,6 +13,7 @@ import API_ENDPOINT from "../../../api/api_endpoint";
 import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
+import swal from "sweetalert2";
 
 const JNF = ({ setShowLoader }) => {
   const year = "2022-2023";
@@ -55,6 +56,7 @@ const JNF = ({ setShowLoader }) => {
   const LOCAL_STORAGE_KEY = "vals";
   const [page, setPage] = useState(1);
   const [submitted, setSubmitted] = useState(0);
+  const [removeData, setRemoveData] = useState(0);
   const [error, setError] = useState("");
   const [compdescription_file, setCompdescription_file] = useState([]);
   const [jobdescription_file, setJobdescription_file] = useState([]);
@@ -62,7 +64,44 @@ const JNF = ({ setShowLoader }) => {
   const [warning, setWarning] = useState();
   const [selection_file, setSelection_file] = useState([]);
   var valsFromUseEffect =
-    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValues;
+    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValues;
+  const [showComponents, setShowComponents] = useState(false);
+  const HandleBeforeLoad = () => {
+    const handleAlert = () => {
+      swal
+        .fire({
+          title: "Do you want to resume filling the JNF?",
+          text: "Files will not be saved",
+          icon: "question",
+          showDenyButton: true,
+          confirmButtonText: "Yes",
+          denyButtonText: `No`,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            valsFromUseEffect =
+              JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) ||
+              initialValues;
+            swal.fire("You can continue filling the JNF");
+            setShowComponents(true);
+          } else if (result.isDenied) {
+            valsFromUseEffect = initialValues;
+            window.localStorage.setItem(
+              LOCAL_STORAGE_KEY,
+              JSON.stringify(initialValues)
+            );
+            console.log("selected denied");
+            setShowComponents(true);
+          }
+        });
+    };
+
+    window.addEventListener("load", handleAlert);
+
+    return () => {
+      window.removeEventListener("load", handleAlert);
+    };
+  };
 
   useEffect(() => {
     setShowLoader(false);
@@ -92,12 +131,20 @@ const JNF = ({ setShowLoader }) => {
     }
   };
 
-  const AutoSubmitToken = () => {
+  const AutoSave = () => {
     const { values, submitForm } = useFormikContext();
 
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
+      console.log("hihihihi   ", submitted);
+      if (!removeData) {
+        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
+      } else {
+        window.localStorage.setItem(
+          LOCAL_STORAGE_KEY,
+          JSON.stringify(initialValues)
+        );
+      }
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -105,8 +152,6 @@ const JNF = ({ setShowLoader }) => {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-
-    return null;
   };
   let schema = yup.object().shape({
     name: yup.string().required("Company Name is Required"),
@@ -260,20 +305,21 @@ const JNF = ({ setShowLoader }) => {
       },
     };
 
-    // setShowLoader(true);
+    setShowLoader(true);
 
-    // fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
-    //   .then((res) => {
-    //     if (!(res.status === 200 || res.status === 400)) {
-    //       setError(res);
-    //       setSubmitted(1);
-    //     }
-    //     setSubmitted(1);
-    //     setShowLoader(false);
-    //   })
-    //   .catch((error) => {
-    //     setError(error);
-    //   });
+    fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
+      .then((res) => {
+        if (!(res.status === 200 || res.status === 400)) {
+          setError(res);
+          setSubmitted(1);
+        }
+        setSubmitted(1);
+        setRemoveData(1);
+        setShowLoader(false);
+      })
+      .catch((error) => {
+        setError(error);
+      });
 
     window.localStorage.removeItem(LOCAL_STORAGE_KEY);
     window.localStorage.setItem(
@@ -372,98 +418,46 @@ const JNF = ({ setShowLoader }) => {
 
   return (
     <>
-      <Container
-        className="py-5 d-pink bk-container"
-        fluid
-        style={{
-          backgroundImage:
-            "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)",
-        }}
-      >
-        <Row className="justify-content-center">
-          <Col className="l-pink p-5" lg={7} xs={11}>
-            {!submitted ? (
-              <Formik
-                validateOnMount={true}
-                validationSchema={schema}
-                onSubmit={submit}
-                initialValues={valsFromUseEffect}
-              >
-                {({
-                  handleSubmit,
-                  handleChange,
-                  handleBlur,
-                  values,
-                  touched,
-                  isValid,
-                  errors,
-                  dirty,
-                  setFieldValue,
-                  setFieldTouched,
-                  submitCount,
-                }) => (
-                  <Form noValidate onSubmit={handleSubmit}>
-                    <AutoSubmitToken />
-                    {page === 1 ? <Instructions year={year} /> : <></>}
-                    {warning ? <Alert variant="danger">{warning}</Alert> : null}
-                    {page === 1 ? (
-                      <CompOverview
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        values={values}
-                        touched={touched}
-                        isValid={isValid}
-                        errors={errors}
-                        dirty={dirty}
-                        setFieldValue={setFieldValue}
-                        submitCount={submitCount}
-                        compdescription_file={compdescription_file}
-                        setCompdescription_file={setCompdescription_file}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                    {page === 2 ? (
-                      <JobProfile
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        values={values}
-                        touched={touched}
-                        isValid={isValid}
-                        errors={errors}
-                        dirty={dirty}
-                        setFieldValue={setFieldValue}
-                        submitCount={submitCount}
-                        jobdescription_file={jobdescription_file}
-                        setJobdescription_file={setJobdescription_file}
-                        salary_file={salary_file}
-                        setSalary_file={setSalary_file}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                    {page === 3 ? (
-                      <SelectionProcess
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        values={values}
-                        touched={touched}
-                        isValid={isValid}
-                        errors={errors}
-                        dirty={dirty}
-                        setFieldValue={setFieldValue}
-                        selection_file={selection_file}
-                        setSelection_file={setSelection_file}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                    {page === 4 ? (
-                      <>
-                        <ContactDetails
+      <HandleBeforeLoad />
+      {showComponents && (
+        <Container
+          className="py-5 d-pink bk-container"
+          fluid
+          style={{
+            backgroundImage:
+              "url(/Form_Banner.jpeg), url(/Form_Banner.jpeg), url(/Form_Banner.jpeg)",
+          }}
+        >
+          <Row className="justify-content-center">
+            <Col className="l-pink p-5" lg={7} xs={11}>
+              {!submitted ? (
+                <Formik
+                  validateOnMount={true}
+                  validationSchema={schema}
+                  onSubmit={submit}
+                  initialValues={valsFromUseEffect}
+                >
+                  {({
+                    handleSubmit,
+                    handleChange,
+                    handleBlur,
+                    values,
+                    touched,
+                    isValid,
+                    errors,
+                    dirty,
+                    setFieldValue,
+                    setFieldTouched,
+                    submitCount,
+                  }) => (
+                    <Form noValidate onSubmit={handleSubmit}>
+                      <AutoSave />
+                      {page === 1 ? <Instructions year={year} /> : <></>}
+                      {warning ? (
+                        <Alert variant="danger">{warning}</Alert>
+                      ) : null}
+                      {page === 1 ? (
+                        <CompOverview
                           handleSubmit={handleSubmit}
                           handleChange={handleChange}
                           handleBlur={handleBlur}
@@ -472,117 +466,175 @@ const JNF = ({ setShowLoader }) => {
                           isValid={isValid}
                           errors={errors}
                           dirty={dirty}
+                          setFieldValue={setFieldValue}
+                          submitCount={submitCount}
+                          compdescription_file={compdescription_file}
+                          setCompdescription_file={setCompdescription_file}
                         />
-                        <Col>
-                          <Form.Check
-                            required
-                            style={{ display: "inline" }}
-                            ref={termsRef}
-                          />
-                          <span
-                            style={{ display: "inline", paddingLeft: "10px" }}
-                          >
-                            We have read and understood the{" "}
-                            <a href="https://drive.google.com/file/d/12hiRifBpIZUrZRJNXTqwcZb9ge_QbO4K/view">
-                              rules and regulations
-                            </a>{" "}
-                            put forth by the IIT Dharwad Career Development Cell
-                          </span>
-                        </Col>
-                        <ReCAPTCHA
-                          sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
-                          size="normal"
-                          ref={recaptchaRef}
-                          style={{ marginTop: "20px", height: "50px" }}
-                        />
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                    <br />
-                    <hr className="pd" />
-                    <Row>
-                      {page !== 1 ? (
-                        <Col className="text-start">
-                          <Button
-                            variant="primary"
-                            onClick={() => {
-                              setPage(page - 1);
-                            }}
-                          >
-                            Back
-                          </Button>
-                        </Col>
                       ) : (
                         <></>
                       )}
-                      {page !== 4 ? (
-                        <Col className="text-end">
-                          <Button
-                            variant="primary"
-                            onClick={() =>
-                              handlePageChange(
-                                setPage,
-                                page,
-                                errors,
-                                setFieldTouched,
-                                handleSubmit
-                              )
-                            }
-                          >
-                            Next
-                          </Button>
-                        </Col>
+                      {page === 2 ? (
+                        <JobProfile
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                          setFieldValue={setFieldValue}
+                          submitCount={submitCount}
+                          jobdescription_file={jobdescription_file}
+                          setJobdescription_file={setJobdescription_file}
+                          salary_file={salary_file}
+                          setSalary_file={setSalary_file}
+                        />
                       ) : (
-                        <Col className="text-end">
-                          <Button
-                            variant="primary"
-                            onClick={() =>
-                              handlePageChange(
-                                setPage,
-                                page,
-                                errors,
-                                setFieldTouched,
-                                handleSubmit
-                              )
-                            }
-                          >
-                            Submit
-                          </Button>
-                        </Col>
+                        <></>
                       )}
-                    </Row>
-                  </Form>
-                )}
-              </Formik>
-            ) : (
-              <>
-                {error ? (
-                  <>
-                    <h3 className="text-center">
-                      Your Response has been recorded
-                    </h3>
-                    <p className="text-center">
-                      We will reach out to you soon with more information.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-center">Submitted Successfully!</h3>
-                    <p className="text-center">
-                      <b>
-                        To Finish up this process, please check your inbox for
-                        our verification email. Verify your email within 24
-                        hours of the submission to complete this process.{" "}
-                      </b>
-                    </p>
-                  </>
-                )}
-              </>
-            )}
-          </Col>
-        </Row>
-      </Container>
+                      {page === 3 ? (
+                        <SelectionProcess
+                          handleSubmit={handleSubmit}
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                          values={values}
+                          touched={touched}
+                          isValid={isValid}
+                          errors={errors}
+                          dirty={dirty}
+                          setFieldValue={setFieldValue}
+                          selection_file={selection_file}
+                          setSelection_file={setSelection_file}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                      {page === 4 ? (
+                        <>
+                          <ContactDetails
+                            handleSubmit={handleSubmit}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            values={values}
+                            touched={touched}
+                            isValid={isValid}
+                            errors={errors}
+                            dirty={dirty}
+                          />
+                          <Col>
+                            <Form.Check
+                              required
+                              style={{ display: "inline" }}
+                              ref={termsRef}
+                            />
+                            <span
+                              style={{ display: "inline", paddingLeft: "10px" }}
+                            >
+                              We have read and understood the{" "}
+                              <a href="https://drive.google.com/file/d/12hiRifBpIZUrZRJNXTqwcZb9ge_QbO4K/view">
+                                rules and regulations
+                              </a>{" "}
+                              put forth by the IIT Dharwad Career Development
+                              Cell
+                            </span>
+                          </Col>
+                          <ReCAPTCHA
+                            sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
+                            size="normal"
+                            ref={recaptchaRef}
+                            style={{ marginTop: "20px", height: "50px" }}
+                          />
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      <br />
+                      <hr className="pd" />
+                      <Row>
+                        {page !== 1 ? (
+                          <Col className="text-start">
+                            <Button
+                              variant="primary"
+                              onClick={() => {
+                                setPage(page - 1);
+                              }}
+                            >
+                              Back
+                            </Button>
+                          </Col>
+                        ) : (
+                          <></>
+                        )}
+                        {page !== 4 ? (
+                          <Col className="text-end">
+                            <Button
+                              variant="primary"
+                              onClick={() =>
+                                handlePageChange(
+                                  setPage,
+                                  page,
+                                  errors,
+                                  setFieldTouched,
+                                  handleSubmit
+                                )
+                              }
+                            >
+                              Next
+                            </Button>
+                          </Col>
+                        ) : (
+                          <Col className="text-end">
+                            <Button
+                              variant="primary"
+                              onClick={() =>
+                                handlePageChange(
+                                  setPage,
+                                  page,
+                                  errors,
+                                  setFieldTouched,
+                                  handleSubmit
+                                )
+                              }
+                            >
+                              Submit
+                            </Button>
+                          </Col>
+                        )}
+                      </Row>
+                    </Form>
+                  )}
+                </Formik>
+              ) : (
+                <>
+                  {error ? (
+                    <>
+                      <h3 className="text-center">
+                        Your Response has been recorded
+                      </h3>
+                      <p className="text-center">
+                        We will reach out to you soon with more information.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h3 className="text-center">Submitted Successfully!</h3>
+                      <p className="text-center">
+                        <b>
+                          To Finish up this process, please check your inbox for
+                          our verification email. Verify your email within 24
+                          hours of the submission to complete this process.{" "}
+                        </b>
+                      </p>
+                    </>
+                  )}
+                </>
+              )}
+            </Col>
+          </Row>
+        </Container>
+      )}
     </>
   );
 };
