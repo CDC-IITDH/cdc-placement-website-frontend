@@ -122,7 +122,7 @@ function ApplicationCard({
 											className={css.selectionStatusSubtitle}
 											variant='body1'
 										>
-											{selected === true ? 'ACCEPTED' : 'REJECTED'}
+											{selected === true ? 'SELECTED' : 'REJECTED'}
 										</Typography>
 									</Card>
 								)}

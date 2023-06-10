@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import './Dashboard.css';
-import Cards from './Cards';
 import { Container } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { Fragment } from 'react';
 import ApplicationCard from './ApplicationCard';
+import Cards from './Cards';
 
 const Dashboard = ({
 	dashboardInfo,
@@ -81,6 +81,8 @@ const Dashboard = ({
 													profileInfo={profileInfo}
 													hasApplied={hasApplied}
 													selectionStatus={selectionStatus}
+													hasChoosen={true}
+													offerStatus={false}
 													setError={setError}
 													setShowError={setShowError}
 													setSuccess={setSuccess}
