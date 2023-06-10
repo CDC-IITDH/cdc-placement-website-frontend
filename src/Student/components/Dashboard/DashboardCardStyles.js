@@ -98,6 +98,29 @@ export default makeStyles((theme) => ({
 		marginBottom: '15px',
 		marginTop: '10px',
 	},
+	choose_offer:{
+		margin: 'auto',
+		backgroundColor: ' #334878',
+		border: '1px solid #c7c7c7',
+		borderRadius: '0.8rem',
+		color: ' #ffffff',
+		display: 'inline-block',
+		textAlign: 'center',
+		padding: '0.3rem 1rem',
+		fontSize: '0.75rem',
+		marginRight: '1.6rem',
+		height: 'fit-content',
+		paddingTop: '0.5rem',
+		paddingBottom: '0.5rem',
+
+		[theme.breakpoints.down(640)]: {
+			width: '40%',
+			margin: 'auto',
+			fontSize: '1rem',
+			padding: '0.2rem 1rem',
+			height: 'auto',
+		},
+	},
 	apply_job_button: {
 		margin: 'auto',
 		backgroundColor: ' #334878',
@@ -159,6 +182,22 @@ export default makeStyles((theme) => ({
 		marginTop: '10px',
 		marginBottom: '10px',
 
+	},wholeCardchoose:{
+		color: '#ffffff',
+		// border: '3px solid #46b069!important',
+		backgroundColor: '#415d9b',
+		border: '1px solid #c7c7c7',
+		width: 'fit-content',
+		height: 'auto',
+		padding: '0.3rem 0.7rem',
+		borderRadius: '10px',
+		minWidth: '105px!important',
+		marginTop: '10px',
+		marginBottom: '10px',
+		'&:hover': {
+			backgroundColor: ' #021a4d',
+			color: 'white!important',
+		}
 	},
 	selectionCard: {
 		marginTop: 'auto',

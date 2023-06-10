@@ -37,6 +37,9 @@ function Cards({
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [offerChooseShow, setOfferChooseShow]= useState(false);
+  const handleChooseClose = () => setOfferChooseShow(false);
+  const handleChooseShow = () => setOfferChooseShow(true);
   const css = DashboardCardStyles();
 
   return (
@@ -113,7 +116,7 @@ function Cards({
         {hasApplied ? (
           selectionStatus === null ? (
             <Card className={css.selectionCard}>
-              <Typography className={css.selectionStatusTitle} variant="body1">
+              <Typography className={css.selectionStatusTitle} variant="body1" >
                 APPLIED
               </Typography>
               <Typography
@@ -125,27 +128,29 @@ function Cards({
             </Card>
           ) : !selectionStatus ? (
             <Card className={css.selectionCardRejectedCard}>
-              <Typography className={css.selectionStatusTitle} variant="body2">
+              <Typography className={css.selectionStatusTitle} variant="body2" align="center">
                 STATUS
               </Typography>
               {/* <Divider className={css.divider} variant="middle" /> */}
-              <Typography className={css.selectionStatusText} variant="body1">
+              <Typography className={css.selectionStatusText} variant="body1" align="center">
                 {(selectionStatus = "REJECTED")}
               </Typography>
             </Card>
-          ) : hasChoosen ? (
-            offerStatus ? ( //if offer accepted
+          ) : !hasChoosen ? (
+            !offerStatus ? ( //if offer accepted
               <Card className={css.wholeCard}>
                 <div className={css.wholeCardAccepted}>
                   <Typography
                     className={css.selectionStatusTitle}
                     variant="body2"
+                    align="center"
                   >
                     STATUS
                   </Typography>
                   <Typography
                     className={css.selectionStatusText}
                     variant="body1"
+                    align="center"
                   >
                     {(selectionStatus = "SELECTED")}
                   </Typography>
@@ -154,12 +159,14 @@ function Cards({
                   <Typography
                     className={css.selectionStatusTitle}
                     variant="body2"
+                    align="center"
                   >
                     OFFER
                   </Typography>
                   <Typography
                     className={css.selectionStatusText}
                     variant="body1"
+                    align="center"
                   >
                     {(selectionStatus = "ACCEPTED")}
                   </Typography>
@@ -172,12 +179,14 @@ function Cards({
                   <Typography
                     className={css.selectionStatusTitle}
                     variant="body2"
+                    align="center"
                   >
                     STATUS
                   </Typography>
                   <Typography
                     className={css.selectionStatusText}
                     variant="body1"
+                    align="center"
                   >
                     {(selectionStatus = "SELECTED")}
                   </Typography>
@@ -186,12 +195,14 @@ function Cards({
                   <Typography
                     className={css.selectionStatusTitle}
                     variant="body2"
+                    align="center"
                   >
                     OFFER
                   </Typography>
                   <Typography
                     className={css.selectionStatusText}
                     variant="body1"
+                    align="center"
                   >
                     {(selectionStatus = "DENIED")}
                   </Typography>
@@ -202,21 +213,33 @@ function Cards({
             // we have to ask for the student's opinion
             <Card className={css.wholeCard}>
               <div className={css.wholeCardAccepted}>
-                  <Typography
-                    className={css.selectionStatusTitle}
-                    variant="body2"
-                  >
-                    STATUS
-                  </Typography>
-                  <Typography
-                    className={css.selectionStatusText}
-                    variant="body1"
-                  >
-                    {(selectionStatus = "SELECTED")}
-                  </Typography>
-                </div>
-                
-              <button>Accept or Reject ?</button>
+                <Typography
+                  className={css.selectionStatusTitle}
+                  variant="body2"
+                  align="center"
+                >
+                  STATUS
+                </Typography>
+                <Typography className={css.selectionStatusText} variant="body1" align="center">
+                  {(selectionStatus = "SELECTED")}
+                </Typography>
+              </div>
+              <button
+                align="center"
+                className={css.wholeCardchoose}
+                onClick={handleChooseShow}
+              >
+                <Typography
+                  className={css.selectionStatusTitle}
+                  variant="body2"
+                  align="center"
+                >
+                  OFFER
+                </Typography>
+                <Typography className={css.selectionStatusText} variant="body1" align="center">
+                  {(selectionStatus = "ACCEPT  ?")}
+                </Typography>
+              </button>
             </Card>
           )
         ) : (
