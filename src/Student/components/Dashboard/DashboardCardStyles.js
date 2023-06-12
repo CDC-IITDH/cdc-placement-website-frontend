@@ -195,8 +195,9 @@ export default makeStyles((theme) => ({
 		marginTop: '10px',
 		marginBottom: '10px',
 		'&:hover': {
-			backgroundColor: ' #021a4d',
-			color: 'white!important',
+			backgroundColor: ' #ffffff',
+			color: '#415d9b',
+			border: '3px solid #415d9b',
 		}
 	},
 	selectionCard: {
