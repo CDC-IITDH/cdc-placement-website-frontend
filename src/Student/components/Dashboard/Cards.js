@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Modale from "../ApplyJob/Modale.js";
+import PopOver from "../AcceptJob/PopOver.js";
 import {
   AccountBalanceWalletRounded,
   Ballot,
@@ -252,6 +253,32 @@ function Cards({
           </button>
         )}
       </Card>
+
+      {offerChooseShow ? (
+        <PopOver
+          show={offerChooseShow}
+          setShow={setOfferChooseShow}
+          token={token}
+          type={type}
+          id={id}
+          offerStatus={offerStatus}
+          hasChoosen={hasChoosen}
+          handleClose={handleChooseClose}
+          company={company}
+          designation={designation}
+          compensation={compensation}
+          additionalInfo={additional_info}
+          profileInfo={profileInfo}
+          setError={setError}
+          setShowError={setShowError}
+          setSuccess={setSuccess}
+          setShowSuccess={setShowSuccess}
+          setShowLoader={setShowLoader}
+          getDashboardInfo={getDashboardInfo}
+        />
+      ) : (
+        ""
+      )}
 
       {show ? (
         <Modale
