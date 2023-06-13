@@ -5,18 +5,42 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { AcceptOffer } from "../../api/dashboard";
 //import style
-import "./PopOver.css";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "relative",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '5px solid #000',
+  bgcolor: "background.paper",
   boxShadow: 24,
+  borderRadius: "10px",
+  border: '5px solid #415d9b',
   p: 4,
+  display: "flex",
+  //placeItems: "center",
+  justifyContent: "space-around",
+};
+
+const buttonAccept = {
+  position: "relative",
+  alignItems: "center",
+  backgroundColor: "lightgreen",
+  color: "black",
+  // border: '5px solid #415d9b',
+  "&:hover": {
+    backgroundColor: "green",
+    color: "white",
+  },
+};
+
+const buttonReject = {
+  backgroundColor: "lightcoral",
+  color: "black",
+  "&:hover": {
+    backgroundColor: "red",
+    color: "white",
+  },
 };
 
 function PopOver({
@@ -58,12 +82,13 @@ function PopOver({
       setSuccess("Offer Accepted Successfully");
       setShowSuccess(true);
       setShowLoader(false);
+      handleClose();
       getDashboardInfo(); // Call the function to refresh dashboard info after successful acceptance
     } catch (error) {
       setShowLoader(false);
       setError("Error Accepting Offer");
       setShowError(true);
-      console.error('Error accepting offer:', error);
+      console.error("Error accepting offer:", error);
     }
   };
 
@@ -85,12 +110,13 @@ function PopOver({
       setSuccess("Offer Denied Successfully");
       setShowSuccess(true);
       setShowLoader(false);
+      handleClose();
       getDashboardInfo(); // Call the function to refresh dashboard info after successful rejection
     } catch (error) {
       setShowLoader(false);
       setError("Error Rejecting Offer");
       setShowError(true);
-      console.error('Error rejecting offer:', error);
+      console.error("Error rejecting offer:", error);
     }
   };
 
@@ -103,9 +129,21 @@ function PopOver({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+        
         <Box sx={style}>
-          <Button onClick={handleAccept}>Accept</Button>
-          <Button onClick={handleReject}>Reject</Button>
+
+          <Button
+            onClick={handleAccept}
+            sx={buttonAccept}
+          >
+            Accept
+          </Button>
+          <Button
+            onClick={handleReject}
+            sx={buttonReject}
+          >
+            Reject
+          </Button>
         </Box>
       </Modal>
     </div>

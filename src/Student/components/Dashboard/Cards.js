@@ -137,7 +137,7 @@ function Cards({
                 {(selectionStatus = "REJECTED")}
               </Typography>
             </Card>
-          ) : !hasChoosen ? (
+          ) : hasChoosen ? (
             offerStatus ? ( //if offer accepted
               <Card className={css.wholeCard}>
                 <div className={css.wholeCardAccepted}>
