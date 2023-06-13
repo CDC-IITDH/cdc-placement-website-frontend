@@ -30,15 +30,16 @@ const Dashboard = ({
 		if (dashboardInfo[0]) {
 			const ids = new Set();
 			const status = new Map();
-			const offerStatus = new Map();
+			const offer_Status = new Map();
 
 			dashboardInfo[0]?.placementApplication.forEach((elem) => {
 				ids.add(elem.placement.id);
 				status.set(elem.placement.id, elem.selected);
-				offerStatus.set(elem.placement.id, elem.offer_accepted);
+				offer_Status.set(elem.placement.id, elem.offer_accepted);
 			});
 			setAppliedIds(ids);
 			setApplStatus(status);
+			setOfferStatus(offer_Status);
 
 			setIsloading(false);
 			setShowLoader(false);
@@ -70,6 +71,10 @@ const Dashboard = ({
 											let selectionStatus = hasApplied
 												? applStatus.get(elem.id)
 												: null;
+											if(selectionStatus){
+												let offerstatus=offerStatus.get(elem.id);
+												console.log(offerstatus);
+											}
 											return (
 												<Cards
 													key={elem.id}
