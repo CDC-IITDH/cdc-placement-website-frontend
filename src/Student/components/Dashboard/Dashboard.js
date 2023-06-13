@@ -23,15 +23,19 @@ const Dashboard = ({
 	const [isloading, setIsloading] = useState(true);
 	const [appliedIds, setAppliedIds] = useState(new Set());
 	const [applStatus, setApplStatus] = useState(new Map());
+	const [offerStatus, setOfferStatus] = useState(new Map());
+
 
 	useEffect(() => {
 		if (dashboardInfo[0]) {
 			const ids = new Set();
 			const status = new Map();
+			const offerStatus = new Map();
 
 			dashboardInfo[0]?.placementApplication.forEach((elem) => {
 				ids.add(elem.placement.id);
 				status.set(elem.placement.id, elem.selected);
+				offerStatus.set(elem.placement.id, elem.offer_accepted);
 			});
 			setAppliedIds(ids);
 			setApplStatus(status);
