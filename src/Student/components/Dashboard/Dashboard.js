@@ -71,9 +71,14 @@ const Dashboard = ({
 											let selectionStatus = hasApplied
 												? applStatus.get(elem.id)
 												: null;
+												let offerstatus,haschoosen;
 											if(selectionStatus){
-												let offerstatus=offerStatus.get(elem.id);
-												console.log(offerstatus);
+												offerstatus=offerStatus.get(elem.id);
+												if(offerstatus===null){
+													haschoosen=false;
+												}else{
+													haschoosen=true;
+												}
 											}
 											return (
 												<Cards
@@ -90,8 +95,8 @@ const Dashboard = ({
 													profileInfo={profileInfo}
 													hasApplied={hasApplied}
 													selectionStatus={selectionStatus}
-													hasChoosen={true}
-													offerStatus={false}
+													hasChoosen={haschoosen}
+													offerStatus={offerstatus}
 													setError={setError}
 													setShowError={setShowError}
 													setSuccess={setSuccess}

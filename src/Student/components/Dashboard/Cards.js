@@ -138,7 +138,7 @@ function Cards({
               </Typography>
             </Card>
           ) : !hasChoosen ? (
-            !offerStatus ? ( //if offer accepted
+            offerStatus ? ( //if offer accepted
               <Card className={css.wholeCard}>
                 <div className={css.wholeCardAccepted}>
                   <Typography
