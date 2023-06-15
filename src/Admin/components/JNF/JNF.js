@@ -68,6 +68,15 @@ const JNF = ({ setShowLoader }) => {
   const [showComponents, setShowComponents] = useState(false);
   const HandleBeforeLoad = () => {
     const handleAlert = () => {
+      if (
+        window.localStorage.getItem(LOCAL_STORAGE_KEY) ==
+          JSON.stringify(initialValues) ||
+        !window.localStorage.getItem(LOCAL_STORAGE_KEY)
+      ) {
+        setShowComponents(true);
+
+        return;
+      }
       swal
         .fire({
           title: "Do you want to resume filling the JNF?",
