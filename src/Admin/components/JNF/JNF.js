@@ -79,8 +79,13 @@ const JNF = ({ setShowLoader }) => {
       }
       swal
         .fire({
-          title: "Do you want to resume filling the JNF?",
-          text: "Files will not be saved",
+          title: "Do you want to resume your prevous filling of the JNF?",
+          text: "We have saved your previous progress. You can continue filling the JNF from where you left off. Note that you can only resume your previous filling once.",
+          html: `
+          We have saved your previous progress. You can continue filling the JNF from where you left off.
+          <p style="color:red">Note that you can only resume your previous filling once.
+          PDFs uploaded will not be saved.</p>
+          `,
           icon: "question",
           showDenyButton: true,
           confirmButtonText: "Yes",
@@ -145,15 +150,15 @@ const JNF = ({ setShowLoader }) => {
 
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      console.log("hihihihi   ", submitted);
       if (!removeData) {
         window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
       } else {
         window.localStorage.setItem(
           LOCAL_STORAGE_KEY,
           JSON.stringify(initialValues)
-        );
-      }
+          );
+        }
+        return null;
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
