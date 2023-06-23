@@ -54,10 +54,9 @@ const JNF = ({ setShowLoader }) => {
     research: "",
     selectionprocess_other: "",
   };
-  const LOCAL_STORAGE_KEY = "vals";
+  const LOCAL_STORAGE_KEY = "vals_jnf";
   const [page, setPage] = useState(1);
   const [submitted, setSubmitted] = useState(0);
-  const [removeData, setRemoveData] = useState(0);
   const [error, setError] = useState("");
   const [compdescription_file, setCompdescription_file] = useState([]);
   const [jobdescription_file, setJobdescription_file] = useState([]);
@@ -67,6 +66,7 @@ const JNF = ({ setShowLoader }) => {
   var valsFromUseEffect =
     JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValues;
   const [showComponents, setShowComponents] = useState(false);
+  var removeData = 0;
   const HandleBeforeLoad = () => {
     const handleAlert = () => {
       if (
@@ -80,8 +80,13 @@ const JNF = ({ setShowLoader }) => {
       }
       swal
         .fire({
-          title: "Do you want to resume filling the JNF?",
-          text: "Files will not be saved",
+          title: "Do you want to resume your prevous filling of the JNF?",
+          text: "We have saved your previous progress. You can continue filling the JNF from where you left off. Note that you can only resume your previous filling once.",
+          html: `
+          We have saved your previous progress. You can continue filling the JNF from where you left off.
+          <p style="color:red">Note that you can only resume your previous filling once.
+          PDFs uploaded will not be saved.</p>
+          `,
           icon: "question",
           showDenyButton: true,
           confirmButtonText: "Yes",
@@ -146,8 +151,8 @@ const JNF = ({ setShowLoader }) => {
 
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      console.log("hihihihi   ", submitted);
-      if (!removeData) {
+
+      if (!removeData && !submitted) {
         window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
       } else {
         window.localStorage.setItem(
@@ -324,7 +329,7 @@ const JNF = ({ setShowLoader }) => {
           setSubmitted(1);
         }
         setSubmitted(1);
-        setRemoveData(1);
+        removeData = 1;
         setShowLoader(false);
       })
       .catch((error) => {
