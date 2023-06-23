@@ -4,6 +4,7 @@ import CompOverview from "./CompOverview";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Instructions from "./Instructions";
+import TierTable from "./TierTable";
 import { useFormikContext } from "formik";
 import { useState, useEffect, useRef } from "react";
 import JobProfile from "./JobProfile";
@@ -53,10 +54,9 @@ const JNF = ({ setShowLoader }) => {
     research: "",
     selectionprocess_other: "",
   };
-  const LOCAL_STORAGE_KEY = "vals";
+  const LOCAL_STORAGE_KEY = "vals_jnf";
   const [page, setPage] = useState(1);
   const [submitted, setSubmitted] = useState(0);
-  const [removeData, setRemoveData] = useState(0);
   const [error, setError] = useState("");
   const [compdescription_file, setCompdescription_file] = useState([]);
   const [jobdescription_file, setJobdescription_file] = useState([]);
@@ -66,6 +66,7 @@ const JNF = ({ setShowLoader }) => {
   var valsFromUseEffect =
     JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValues;
   const [showComponents, setShowComponents] = useState(false);
+  var removeData = 0;
   const HandleBeforeLoad = () => {
     const handleAlert = () => {
       if (
@@ -150,15 +151,15 @@ const JNF = ({ setShowLoader }) => {
 
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      if (!removeData) {
+
+      if (!removeData && !submitted) {
         window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
       } else {
         window.localStorage.setItem(
           LOCAL_STORAGE_KEY,
           JSON.stringify(initialValues)
-          );
-        }
-        return null;
+        );
+      }
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -319,21 +320,21 @@ const JNF = ({ setShowLoader }) => {
       },
     };
 
-    setShowLoader(true);
+    // setShowLoader(true);
 
-    fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
-      .then((res) => {
-        if (!(res.status === 200 || res.status === 400)) {
-          setError(res);
-          setSubmitted(1);
-        }
-        setSubmitted(1);
-        setRemoveData(1);
-        setShowLoader(false);
-      })
-      .catch((error) => {
-        setError(error);
-      });
+    // fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
+    //   .then((res) => {
+    //     if (!(res.status === 200 || res.status === 400)) {
+    //       setError(res);
+    //       setSubmitted(1);
+    //     }
+    setSubmitted(1);
+    removeData = 1;
+    setShowLoader(false);
+    // })
+    // .catch((error) => {
+    //   setError(error);
+    // });
 
     window.localStorage.removeItem(LOCAL_STORAGE_KEY);
     window.localStorage.setItem(
@@ -466,7 +467,14 @@ const JNF = ({ setShowLoader }) => {
                   }) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       <AutoSave />
-                      {page === 1 ? <Instructions year={year} /> : <></>}
+                      {page === 1 ? (
+                        <>
+                          {" "}
+                          <Instructions year={year} /> <TierTable />
+                        </>
+                      ) : (
+                        <></>
+                      )}
                       {warning ? (
                         <Alert variant="danger">{warning}</Alert>
                       ) : null}
