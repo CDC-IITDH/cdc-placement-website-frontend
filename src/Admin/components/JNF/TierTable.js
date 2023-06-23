@@ -1,8 +1,9 @@
 import React from "react";
 import "./tiertable.css";
-function TierTable() {
+function TierTable({show}) {
   return (
     <>
+    {(show) ? 
       <table>
         <tr>
           <th>Tier</th>
@@ -33,9 +34,9 @@ function TierTable() {
           <td>&ge;6 LPA</td>
         </tr>
       </table>
-      <br></br>
+      : <></>}
     </>
-  );
+    );
 }
 
 export default TierTable;
