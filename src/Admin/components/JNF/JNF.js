@@ -469,7 +469,7 @@ const JNF = ({ setShowLoader }) => {
                       {page === 1 ? (
                         <>
                           {" "}
-                          <Instructions year={year} />
+                          <Instructions year={year} /> <TierTable />
                         </>
                       ) : (
                         <></>
