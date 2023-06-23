@@ -320,21 +320,21 @@ const JNF = ({ setShowLoader }) => {
       },
     };
 
-    // setShowLoader(true);
+    setShowLoader(true);
 
-    // fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
-    //   .then((res) => {
-    //     if (!(res.status === 200 || res.status === 400)) {
-    //       setError(res);
-    //       setSubmitted(1);
-    //     }
-    setSubmitted(1);
-    removeData = 1;
-    setShowLoader(false);
-    // })
-    // .catch((error) => {
-    //   setError(error);
-    // });
+    fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
+      .then((res) => {
+        if (!(res.status === 200 || res.status === 400)) {
+          setError(res);
+          setSubmitted(1);
+        }
+        setSubmitted(1);
+        removeData = 1;
+        setShowLoader(false);
+      })
+      .catch((error) => {
+        setError(error);
+      });
 
     window.localStorage.removeItem(LOCAL_STORAGE_KEY);
     window.localStorage.setItem(
