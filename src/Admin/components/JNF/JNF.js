@@ -4,7 +4,6 @@ import CompOverview from "./CompOverview";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Instructions from "./Instructions";
-import TierTable from "./TierTable";
 import { useFormikContext } from "formik";
 import { useState, useEffect, useRef } from "react";
 import JobProfile from "./JobProfile";
