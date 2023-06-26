@@ -16,6 +16,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import JNF from "./Admin/components/JNF/JNF";
 import VerifyEmail from "./Admin/components/VerifyEmail/VerifyEmail";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -45,7 +46,7 @@ const App = () => {
   };
 
   return (
-    <>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
       <Router basename="portal">
         {showLoader ? <Loader /> : ""}
         <Snackbar
@@ -206,7 +207,7 @@ const App = () => {
                     </div>
                 )}
             </Router>
-        </>
+        </GoogleOAuthProvider>
     );
 };
 
