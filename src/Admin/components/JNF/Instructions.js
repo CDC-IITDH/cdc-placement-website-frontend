@@ -1,9 +1,18 @@
 import logo from "../../images/cdc_logo.png";
+import React, { useState } from "react";
 import { Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Autofill from "./Autofill";
+import TierTable from "./TierTable";
 
 const Instructions = ({ year, updateData }) => {
+
+  const [showTable, setShowTable] = useState(false);
+
+  const toggleTable = () => {
+    setShowTable(!showTable);
+  };
+
   const handleClick = (e) => {
     Autofill(e, updateData);
   };
@@ -45,6 +54,10 @@ const Instructions = ({ year, updateData }) => {
                 {" "}
                 click here
               </Link>
+            </li>
+            <li>
+              The placement system is teir based. Check the how we classify companies <a onClick={toggleTable} href="#tier-table">here</a>.
+              <TierTable show={showTable} />
             </li>
           </ul>
         </div>
