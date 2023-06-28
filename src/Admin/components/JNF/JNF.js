@@ -448,7 +448,7 @@ const JNF = ({ setShowLoader }) => {
                   validateOnMount={true}
                   validationSchema={schema}
                   onSubmit={submit}
-                  initialValues= {valsFromUseEffect}
+                  initialValues= {preFill? initialValues: valsFromUseEffect}
                 >
                   {({
                     handleSubmit,
