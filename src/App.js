@@ -160,7 +160,7 @@ const App = () => {
                   path="/inf"
                   render={() => {
                     return (
-                      // Return jnf component
+                      // Return inf component
                       <INF setShowLoader={setShowLoader} />
                     );
                   }}
