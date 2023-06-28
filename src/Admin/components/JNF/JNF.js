@@ -17,40 +17,42 @@ import swal from "sweetalert2";
 
 const JNF = ({ setShowLoader }) => {
   const year = "2022-2023";
+  const [preFill, setPreFill] = useState();
   var initialValues = {
-    name: "",
-    link: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    pincode: "",
-    type: "",
-    nature: "",
-    designation: "",
+    name: preFill?.placement_data.company_name || "",
+    link: preFill?.placement_data.website || "",
+    compdescription:
+      preFill?.placement_data.company_details || "",
+    address: preFill?.placement_data.address || "",
+    city: preFill?.placement_data.city || "",
+    state: preFill?.placement_data.state || "",
+    country: preFill?.placement_data.country || "",
+    pincode: preFill?.placement_data.pin_code || "",
+    type: preFill?.placement_data.company_type || "",
+    nature: preFill?.placement_data.nature_of_business || "",
+    designation:  "",
     locations: "",
-    details: "",
+    details:  "",
     date: "",
+    branch: "",
+    research: "",
     numoffers: "",
     ctc: "",
     gross: "",
     takehome: "",
     bonus: "",
-    selectionprocess: "",
-    contact: "",
-    email: "",
-    mobile: "",
-    telephone: "",
-    compdescription: "",
     bonddetails: "",
-    requirements: "",
+    selectionprocess: "",
     selection: "",
-    compdescription_file: "",
+    requirements: "",
+    contact: preFill?.placement_data.contact_person_name || "",
+    email: preFill?.placement_data.email || "",
+    mobile: preFill?.placement_data.phone_number || "",
+    telephone: preFill?.placement_data.telephone || "",           
+    compdescription_file: "" ,
     jobdescription_file: "",
     salary_file: "",
-    selection_file: "",
-    branch: "",
-    research: "",
+    selection_file:"",
     selectionprocess_other: "",
   };
   const LOCAL_STORAGE_KEY = "vals_jnf";
@@ -62,14 +64,14 @@ const JNF = ({ setShowLoader }) => {
   const [salary_file, setSalary_file] = useState([]);
   const [warning, setWarning] = useState();
   const [selection_file, setSelection_file] = useState([]);
-  var valsFromUseEffect =
-    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValues;
   const [showComponents, setShowComponents] = useState(false);
+  const [valsFromUseEffect, SetValsFromUseEffect] = useState(initialValues);
   var removeData = 0;
+
   const HandleBeforeLoad = () => {
     const handleAlert = () => {
       if (
-        window.localStorage.getItem(LOCAL_STORAGE_KEY) ==
+        preFill || window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
           JSON.stringify(initialValues) ||
         !window.localStorage.getItem(LOCAL_STORAGE_KEY)
       ) {
@@ -93,18 +95,14 @@ const JNF = ({ setShowLoader }) => {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            valsFromUseEffect =
-              JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) ||
-              initialValues;
+            SetValsFromUseEffect(JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)));
             swal.fire("You can continue filling the JNF");
             setShowComponents(true);
           } else if (result.isDenied) {
-            valsFromUseEffect = initialValues;
             window.localStorage.setItem(
               LOCAL_STORAGE_KEY,
               JSON.stringify(initialValues)
             );
-            console.log("selected denied");
             setShowComponents(true);
           }
         });
@@ -446,10 +444,11 @@ const JNF = ({ setShowLoader }) => {
             <Col className="l-pink p-5" lg={7} xs={11}>
               {!submitted ? (
                 <Formik
+                enableReinitialize={true}
                   validateOnMount={true}
                   validationSchema={schema}
                   onSubmit={submit}
-                  initialValues={valsFromUseEffect}
+                  initialValues= {preFill? initialValues: valsFromUseEffect}
                 >
                   {({
                     handleSubmit,
@@ -469,7 +468,7 @@ const JNF = ({ setShowLoader }) => {
                       {page === 1 ? (
                         <>
                           {" "}
-                          <Instructions year={year} />
+                          <Instructions year={year} updateData={setPreFill} />
                         </>
                       ) : (
                         <></>
