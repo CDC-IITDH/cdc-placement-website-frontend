@@ -119,6 +119,19 @@ const Dashboard = ({
 								) : (
 									<Fragment>
 										{dashboardInfo[0]?.placementApplication.map((elem) => {
+											const hasApplied = appliedIds.has(elem.id) ? true : false;
+											let selectionStatus = hasApplied
+												? applStatus.get(elem.id)
+												: null;
+											let offerstatus,haschoosen;
+											if(selectionStatus){
+												offerstatus=offerStatus.get(elem.id);
+												if(offerstatus===null){
+													haschoosen=false;
+												}else{
+													haschoosen=true;
+												}
+											}
 											return (
 												<ApplicationCard
 													key={elem.id}
@@ -132,6 +145,9 @@ const Dashboard = ({
 													type='placements'
 													additional_info={elem.additional_info}
 													selected={elem.selected}
+													selectionStatus={selectionStatus}
+													offerStatus={offerstatus}
+													hasChoosen={haschoosen}
 													setError={setError}
 													setShowError={setShowError}
 													setSuccess={setSuccess}

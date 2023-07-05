@@ -154,7 +154,7 @@ function ApplicationCard({
 					</div>
 				</Link>
 
-				{deadline_datetime > new Date() ? (
+				{/* {deadline_datetime > new Date() ? (
 					<div>
 						<Divider />
 						<Grid item style={{ textAlign: 'center' }}>
@@ -168,7 +168,7 @@ function ApplicationCard({
 							</Button>
 						</Grid>
 					</div>
-				) : null}
+				) : null} */}
 			</Card>
 		</Fragment>
 	);
