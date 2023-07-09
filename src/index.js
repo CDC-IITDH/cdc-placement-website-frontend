@@ -9,4 +9,4 @@ import App from "./App";
 //     worker.start();
 // }
 
-ReactDOM.render( < App / > , document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));

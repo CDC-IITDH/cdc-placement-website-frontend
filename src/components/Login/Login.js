@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Typography, Grid, Divider } from "@material-ui/core";
-import GoogleLogin from "react-google-login";
+import { useGoogleLogin } from '@react-oauth/google';
 import { SignIn } from "../../api/auth";
 import { Redirect } from "react-router-dom";
-import { RefreshTokenSetup } from "../../utils/refreshToken";
+import { RefreshTokenSetup, RefreshToken } from "../../utils/refreshToken";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "react-bootstrap/Button";
 import Hidden from "@material-ui/core/Hidden";
@@ -18,8 +18,34 @@ const Login = ({
   setError,
   setShowError,
 }) => {
-  const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
   var [authLoaded, setAuthLoaded] = useState(false);
+
+  useEffect(() => {
+    if (auth) {
+      setAuthLoaded(true);
+    }else{
+      if (localStorage.getItem("refresh_token")) {
+        RefreshToken().then(
+          (result) => {
+            if (result) {
+              setToken(result["id_token"]);
+              setUserTypes(result["user_type"]);
+              setAuthLoaded(true);
+              setAuth(true);
+            }}).catch(
+              (err) => {
+                localStorage.removeItem("refresh_token");
+                setError("Automatic login failed, Please Login again");
+                setShowError(true);
+                setAuth(false);
+              }
+            )
+      }else{
+        setAuthLoaded(true);
+        setShowLoader(false);
+      }
+    }
+  }, [auth, setAuth, setError, setShowError, setShowLoader, setToken, setUserTypes]);
 
   // useEffect(() => {
   //   var token_4 =
@@ -40,16 +66,23 @@ const Login = ({
   const classes = useStyles();
 
   const googleSuccess = async (res) => {
-    const token = res.tokenId;
-    SignIn(token)
+    setShowLoader(true);
+    const code = res.code;  // code is the authorization code that we need to send to the backend to get the id_token
+    SignIn(code)
       .then((result) => {
         return result;
       })
       .then((result) => {
-        setAuth(true);
-        setToken(token);
-        RefreshTokenSetup(res, setToken);
+        setToken(result["id_token"]); // With the id_token we can get the user details
         setUserTypes(result["user_type"]);
+        let store = {
+          'refresh_token': result["refresh_token"]
+        };
+        localStorage.setItem("refresh_token", JSON.stringify(store));
+        RefreshTokenSetup(res, setToken, setUserTypes);
+        setAuth(true);
+        setAuthLoaded(true);
+        setShowLoader(false);
       })
       .catch((err) => {
         setAuthLoaded(true);
@@ -61,10 +94,24 @@ const Login = ({
       });
   };
 
+  
   const googleFailure = (err) => {
     console.log(err);
-    return <Redirect to='/' />;
+    setAuthLoaded(true);
+    setShowLoader(false);
+    setAuth(false);
+    setToken(null);
+    setError("Google Login Failed");
+    setShowError(true);
   };
+
+  const googlelogin = useGoogleLogin({
+    onSuccess: googleSuccess,
+    onNonOAuthError: googleFailure,
+    flow: "auth-code"
+  });
+
+
   return auth ? (
     <Redirect to='/' />
   ) : (
@@ -99,28 +146,12 @@ const Login = ({
             </Grid>
           </Hidden>
           <Grid item xs={12} sm={5} className='login-btn-parent'>
-            <GoogleLogin
-              clientId={CLIENT_ID}
-              render={(renderProps) => (
-                <Button
+            <Button
                   className='Button-login'
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
+                  onClick={googlelogin}
                 >
                   <div className='login-btn'>SIGN IN</div>
                 </Button>
-              )}
-              onSuccess={googleSuccess}
-              onFailure={googleFailure}
-              cookiePolicy='single_host_origin'
-              isSignedIn={true}
-              onAutoLoadFinished={(loggedIn) => {
-                if (!loggedIn) {
-                  setAuthLoaded(true);
-                  setShowLoader(false);
-                }
-              }}
-            />
           </Grid>
         </Grid>
       </Container>
