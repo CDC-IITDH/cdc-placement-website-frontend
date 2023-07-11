@@ -8,21 +8,16 @@ import {
   Typography,
   Divider,
   TextField,
-  FormControl,
-  FormControlLabel,
   Checkbox,
-  FormGroup,
   InputAdornment,
   Menu,
   MenuItem,
-  Icon,
   IconButton,
   Box,
 } from "@material-ui/core";
 import useStyles from "./styles";
 import { ExportAsExcel } from "../../api/details_page";
 import AddStudent from "./AddStudent";
-import { set } from "date-fns";
 
 const Header = ({
   studentsApplied,
@@ -35,13 +30,20 @@ const Header = ({
   setSuccess,
   setShowSuccess,
   getApplicationsInfo,
+  searchText,
+  setSearchText,
+  filterOptionsBatch,
+  setFilterOptionsBatch,
+  filterOptionsBranch,
+  setFilterOptionsBranch,
+  filterOptionsStatus,
+  setFilterOptionsStatus,
 }) => {
   const classes = useStyles();
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
-  const [searchText, setSearchText] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownAnchorEl, setDropdownAnchorEl] = useState(null);
-  const [show, setShow] = useState(["filterOptionsBatch", "batch"]);
+  const [show, setShow] = useState([filterOptionsBatch, "batch"]);
 
   useEffect(() => {
     const closeDropdown = () => {
@@ -92,65 +94,55 @@ const Header = ({
 
   const openBatch = (event) => {
     event.stopPropagation();
-    setShow(["filterOptionsBatch", "batch"]);
+    setShow([filterOptionsBatch, "batch", setFilterOptionsBatch]);
   };
 
   const openBranch = (event) => {
     event.stopPropagation();
-    setShow(["filterOptionsBranch", "branch"]);
+    setShow([filterOptionsBranch, "branch", setFilterOptionsBranch]);
   };
 
   const openStatus = (event) => {
     event.stopPropagation();
-    setShow(["filterOptionsStatus", "status"]);
+    setShow([filterOptionsStatus, "status", setFilterOptionsStatus]);
   };
 
   const handleCheckboxChange = (id, optionType) => {
+    let updatedOptions;
+    let setUpdatedOptions;
+
     if (optionType === "batch") {
-      const updatedOptions = filterOptionsBatch.map((option) => {
-        if (option.id === id) {
-          return { ...option, selected: !option.selected };
-        }
-        return option;
-      });
-      setFilterOptionsBatch(updatedOptions);
+      updatedOptions = [...filterOptionsBatch];
+      setUpdatedOptions = setFilterOptionsBatch;
     } else if (optionType === "branch") {
-      const updatedOptions = filterOptionsBranch.map((option) => {
-        if (option.id === id) {
-          return { ...option, selected: !option.selected };
-        }
-        return option;
-      });
-      setFilterOptionsBranch(updatedOptions);
+      updatedOptions = [...filterOptionsBranch];
+      setUpdatedOptions = setFilterOptionsBranch;
     } else if (optionType === "status") {
-      const updatedOptions = filterOptionsStatus.map((option) => {
+      updatedOptions = [...filterOptionsStatus];
+      setUpdatedOptions = setFilterOptionsStatus;
+    }
+
+    if (updatedOptions) {
+      updatedOptions = updatedOptions.map((option) => {
         if (option.id === id) {
           return { ...option, selected: !option.selected };
         }
         return option;
       });
-      setFilterOptionsStatus(updatedOptions);
+      setUpdatedOptions(updatedOptions);
     }
+
+    const updatedShow = [
+      show[0].map((option) => {
+        if (option.id === id) {
+          return { ...option, selected: !option.selected };
+        }
+        return option;
+      }),
+      show[1],
+    ];
+    setShow(updatedShow);
   };
-
-  const [filterOptionsBatch, setFilterOptionsBatch] = useState([
-    { id: 1, name: "2020", selected: true },
-    { id: 2, name: "2021", selected: true },
-    { id: 3, name: "2022", selected: true },
-    { id: 4, name: "2023", selected: true },
-  ]);
-
-  const [filterOptionsBranch, setFilterOptionsBranch] = useState([
-    { id: 1, name: "CSE", selected: true },
-    { id: 2, name: "EE", selected: true },
-    { id: 3, name: "ME", selected: true },
-  ]);
-
-  const [filterOptionsStatus, setFilterOptionsStatus] = useState([
-    { id: 1, name: "Applied", selected: true },
-    { id: 2, name: "Selected", selected: true },
-    { id: 3, name: "Rejected", selected: true },
-  ]);
 
   return (
     <div className={classes.mainPageContainer}>
@@ -203,7 +195,11 @@ const Header = ({
                 onClose={handleDropdownClose}
                 PaperProps={{
                   style: {
-                    width: "20ch",
+                    width: "auto",
+                    height: "auto",
+                    marginTop: "8px",
+                    borderRadius: "4px",
+                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
                   },
                 }}
                 MenuListProps={{
@@ -219,21 +215,24 @@ const Header = ({
                   horizontal: "left",
                 }}
               >
-                <MenuItem onClick={openBatch} disableRipple>
-                  Batch
-                </MenuItem>
-                <MenuItem onClick={openBranch} disableRipple>
-                  Branch
-                </MenuItem>
-                <MenuItem onClick={openStatus} disableRipple>
-                  Status
-                </MenuItem>
-                <div className={classes.filterOptionsContainer}>
-                  {show[0] === "filterOptionsBatch" &&
-                    filterOptionsBatch.map((option) => (
+                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                  <Box>
+                    <MenuItem onClick={openBatch} disableRipple>
+                      Batch
+                    </MenuItem>
+                    <MenuItem onClick={openBranch} disableRipple>
+                      Branch
+                    </MenuItem>
+                    <MenuItem onClick={openStatus} disableRipple>
+                      Status
+                    </MenuItem>
+                  </Box>
+                  <Box className={classes.filterOptionsContainer}>
+                    {show[0].map((option) => (
                       <MenuItem
                         key={option.id}
                         disableRipple
+                        sx={{ py: 0, px: 2 }}
                         onClick={(event) => {
                           event.stopPropagation();
                           handleCheckboxChange(option.id, show[1]);
@@ -250,49 +249,8 @@ const Header = ({
                         <Typography>{option.name}</Typography>
                       </MenuItem>
                     ))}
-                  {show[0] === "filterOptionsBranch" &&
-                    filterOptionsBranch.map((option) => (
-                      <MenuItem
-                        key={option.id}
-                        disableRipple
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          handleCheckboxChange(option.id, show[1]);
-                        }}
-                      >
-                        <Checkbox
-                          checked={option.selected}
-                          color="primary"
-                          onChange={(event) => {
-                            event.stopPropagation();
-                            handleCheckboxChange(option.id, show[1]);
-                          }}
-                        />
-                        <Typography>{option.name}</Typography>
-                      </MenuItem>
-                    ))}
-                  {show[0] === "filterOptionsStatus" &&
-                    filterOptionsStatus.map((option) => (
-                      <MenuItem
-                        key={option.id}
-                        disableRipple
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          handleCheckboxChange(option.id, show[1]);
-                        }}
-                      >
-                        <Checkbox
-                          checked={option.selected}
-                          color="primary"
-                          onChange={(event) => {
-                            event.stopPropagation();
-                            handleCheckboxChange(option.id, show[1]);
-                          }}
-                        />
-                        <Typography>{option.name}</Typography>
-                      </MenuItem>
-                    ))}
-                </div>
+                  </Box>
+                </Box>
               </Menu>
             </>
           )}
