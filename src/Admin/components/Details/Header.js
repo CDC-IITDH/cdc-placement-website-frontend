@@ -61,7 +61,7 @@ const Header = ({
     if (token) {
       ExportAsExcel(token, openingId)
         .then((res) => {
-          const data = res;
+          const data = res.data;
           if (data.file) {
             window.open(data.file);
           }
@@ -229,66 +229,69 @@ const Header = ({
                   Status
                 </MenuItem>
                 <div className={classes.filterOptionsContainer}>
-                  {show[0].map((option) => (
-                    <MenuItem
-                      key={option.id}
-                      disableRipple
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleCheckboxChange(option.id, show[1]);
-                      }}
-                    >
-                      <Checkbox
-                        checked={option.selected}
-                        color="primary"
-                        onChange={(event) => {
+                  {show[0] === "filterOptionsBatch" &&
+                    filterOptionsBatch.map((option) => (
+                      <MenuItem
+                        key={option.id}
+                        disableRipple
+                        onClick={(event) => {
                           event.stopPropagation();
                           handleCheckboxChange(option.id, show[1]);
                         }}
-                      />
-                      <Typography>{option.name}</Typography>
-                    </MenuItem>
-                  ))}
-                  {/* {filterOptionsBranch.map((option) => (
-                    <MenuItem
-                      key={option.id}
-                      disableRipple
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleCheckboxChange(option.id, "branch");
-                      }}
-                    >
-                      <Checkbox
-                        checked={option.selected}
-                        color="primary"
-                        onChange={(event) => {
+                      >
+                        <Checkbox
+                          checked={option.selected}
+                          color="primary"
+                          onChange={(event) => {
+                            event.stopPropagation();
+                            handleCheckboxChange(option.id, show[1]);
+                          }}
+                        />
+                        <Typography>{option.name}</Typography>
+                      </MenuItem>
+                    ))}
+                  {show[0] === "filterOptionsBranch" &&
+                    filterOptionsBranch.map((option) => (
+                      <MenuItem
+                        key={option.id}
+                        disableRipple
+                        onClick={(event) => {
                           event.stopPropagation();
-                          handleCheckboxChange(option.id, "branch");
+                          handleCheckboxChange(option.id, show[1]);
                         }}
-                      />
-                      <Typography>{option.name}</Typography>
-                    </MenuItem>
-                  ))} */}
-                  {/* {filterOptionsStatus.map((option) => (
-                    <MenuItem
-                      key={option.id}
-                      disableRipple
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleCheckboxChange(option.id, "status");
-                      }}
-                    >
-                      <Checkbox
-                        checked={option.selected}
-                        color="primary"
-                        onChange={(event) => {
+                      >
+                        <Checkbox
+                          checked={option.selected}
+                          color="primary"
+                          onChange={(event) => {
+                            event.stopPropagation();
+                            handleCheckboxChange(option.id, show[1]);
+                          }}
+                        />
+                        <Typography>{option.name}</Typography>
+                      </MenuItem>
+                    ))}
+                  {show[0] === "filterOptionsStatus" &&
+                    filterOptionsStatus.map((option) => (
+                      <MenuItem
+                        key={option.id}
+                        disableRipple
+                        onClick={(event) => {
                           event.stopPropagation();
-                          handleCheckboxChange(option.id, "status");
+                          handleCheckboxChange(option.id, show[1]);
                         }}
-                      />
-                      <Typography>{option.name}</Typography>
-                    </MenuItem>
-                  ))} */}
+                      >
+                        <Checkbox
+                          checked={option.selected}
+                          color="primary"
+                          onChange={(event) => {
+                            event.stopPropagation();
+                            handleCheckboxChange(option.id, show[1]);
+                          }}
+                        />
+                        <Typography>{option.name}</Typography>
+                      </MenuItem>
+                    ))}
                 </div>
               </Menu>
             </>
