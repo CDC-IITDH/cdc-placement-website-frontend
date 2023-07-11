@@ -4,16 +4,16 @@ import API_ENDPOINT from "./api_endpoint";
 const SignIn = (code) => {
   return new Promise((myResolve, myReject) => {
     if (code) {
-      fetch(API_ENDPOINT+"api/login/", {
+      fetch(API_ENDPOINT + "api/login/", {
         method: "POST",
         headers: {
           Accept: "application/json",
-          'X-CSRFToken': getCookie('csrftoken'),
-          'Content-Type': 'application/json'
+          "X-CSRFToken": getCookie("csrftoken"),
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "code" : code
-        })
+          code: code,
+        }),
       })
         .then((result) => {
           if (result.status === 200) myResolve(result.json());
