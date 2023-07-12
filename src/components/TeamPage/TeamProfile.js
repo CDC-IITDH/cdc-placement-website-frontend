@@ -1,11 +1,30 @@
 import team from "./teamcopy.module.css";
 import jsn from "./resp.json";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import API_ENDPOINT from "../../api/api_endpoint";
+import { getCookie } from "../../utils/getCookie";
+
 
 export default function TeamProfile({setShowLoader}) {
+  const [resp, setResp] = useState()
+  
   useEffect(() => {
+    fetch(API_ENDPOINT+"api/student/getContributorStats/", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+    }).then(
+      (result) => {
+        if(result.status === 200){
+          setResp(result.body)
+        }
+      }
+    )
     setShowLoader(false);
-  }, [setShowLoader])
+  }, [setShowLoader,setResp])
   return (
     <section className={team.section_team}>
       <div className={team.container}>
@@ -20,7 +39,7 @@ export default function TeamProfile({setShowLoader}) {
         </div>
         {/*<!-- / End Header Section -->*/}
         <div className="row">
-          {jsn?.data
+          {resp?.data
             .sort((a, b) => b.commits - a.commits)
             .map((e, index) => {
               return (
