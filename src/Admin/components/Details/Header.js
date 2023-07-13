@@ -191,6 +191,7 @@ const Header = ({
                     <ClearIcon
                       className={classes.clearIcon}
                       onClick={() => setSearchText("")}
+                      style={{ cursor: "pointer" }}
                     />
                   )}
                 </InputAdornment>
