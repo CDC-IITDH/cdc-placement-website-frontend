@@ -28,24 +28,35 @@ const DetailsPage = ({
   const [countStudentsSelected, setCountStudentSelected] = useState(0);
 
   const [searchText, setSearchText] = useState("");
-  const [filterOptionsBatch, setFilterOptionsBatch] = useState([
+
+  const BATCH = [
     { id: 1, name: "2020", selected: true },
     { id: 2, name: "2021", selected: true },
     { id: 3, name: "2022", selected: true },
     { id: 4, name: "2023", selected: true },
-  ]);
+  ];
 
-  const [filterOptionsBranch, setFilterOptionsBranch] = useState([
+  const BRANCH = [
     { id: 1, name: "CSE", selected: true },
     { id: 2, name: "EE", selected: true },
     { id: 3, name: "ME", selected: true },
-  ]);
+  ];
 
-  const [filterOptionsStatus, setFilterOptionsStatus] = useState([
+  const STATUS = [
     { id: 1, name: "Applied", selected: true },
     { id: 2, name: "Selected", selected: true },
     { id: 3, name: "Rejected", selected: true },
-  ]);
+  ];
+
+  const [filterOptionsBatch, setFilterOptionsBatch] = useState(BATCH);
+  const [filterOptionsBranch, setFilterOptionsBranch] = useState(BRANCH);
+  const [filterOptionsStatus, setFilterOptionsStatus] = useState(STATUS);
+
+  const resetCheckboxes = () => {
+    setFilterOptionsBatch(BATCH);
+    setFilterOptionsBranch(BRANCH);
+    setFilterOptionsStatus(STATUS);
+  };
 
   const getApplicationsInfo = () => {
     if (token) {
@@ -64,7 +75,6 @@ const DetailsPage = ({
     setopeningId(match.params.id);
     setopeningType(match.params.type);
     getApplicationsInfo();
-
   }, [match, token, openingId]);
 
   useEffect(() => {
@@ -145,6 +155,7 @@ const DetailsPage = ({
           setFilterOptionsBranch={setFilterOptionsBranch}
           filterOptionsStatus={filterOptionsStatus}
           setFilterOptionsStatus={setFilterOptionsStatus}
+          resetCheckboxes={resetCheckboxes}
         />
         <StudentList
           applicationsInfo={applicationsInfo}

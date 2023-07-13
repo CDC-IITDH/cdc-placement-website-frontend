@@ -4,6 +4,7 @@ import AddIcon from "@material-ui/icons/Add";
 import LocalPrintshopIcon from "@material-ui/icons/LocalPrintshop";
 import SearchIcon from "@material-ui/icons/Search";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import ClearIcon from "@mui/icons-material/Clear";
 import {
   Typography,
   Divider,
@@ -38,6 +39,7 @@ const Header = ({
   setFilterOptionsBranch,
   filterOptionsStatus,
   setFilterOptionsStatus,
+  resetCheckboxes,
 }) => {
   const classes = useStyles();
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
@@ -144,6 +146,18 @@ const Header = ({
     setShow(updatedShow);
   };
 
+  const resetFilters = () => {
+    resetCheckboxes();
+
+    const updatedShow = [
+      show[0].map((option) => {
+        return { ...option, selected: true };
+      }),
+      show[1],
+    ];
+    setShow(updatedShow);
+  };
+
   return (
     <div className={classes.mainPageContainer}>
       <div className={classes.headerContainer}>
@@ -171,7 +185,14 @@ const Header = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <SearchIcon className={classes.searchIcon} />
+                  {!searchText ? (
+                    <SearchIcon className={classes.searchIcon} />
+                  ) : (
+                    <ClearIcon
+                      className={classes.clearIcon}
+                      onClick={() => setSearchText("")}
+                    />
+                  )}
                 </InputAdornment>
               ),
             }}
@@ -195,8 +216,6 @@ const Header = ({
                 onClose={handleDropdownClose}
                 PaperProps={{
                   style: {
-                    width: "auto",
-                    height: "auto",
                     marginTop: "8px",
                     borderRadius: "4px",
                     boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
@@ -221,7 +240,12 @@ const Header = ({
                     flexDirection: "row",
                   }}
                 >
-                  <Box sx={{ borderRight: "1px solid #e3dede", my: 1 }}>
+                  <Box
+                    sx={{
+                      borderRight: "1px solid #e3dede",
+                      my: 1,
+                    }}
+                  >
                     <MenuItem onClick={openBatch} disableRipple>
                       Batch
                     </MenuItem>
@@ -231,13 +255,25 @@ const Header = ({
                     <MenuItem onClick={openStatus} disableRipple>
                       Status
                     </MenuItem>
+                    <Box
+                      sx={{
+                        backgroundColor: "#e85143",
+                        my: 1.5,
+                        mx: 1,
+                        borderRadius: 3,
+                        color: "#fff",
+                      }}
+                    >
+                      <MenuItem onClick={resetFilters} disableRipple>
+                        Reset
+                      </MenuItem>
+                    </Box>
                   </Box>
                   <Box className={classes.filterOptionsContainer}>
                     {show[0].map((option) => (
                       <MenuItem
                         key={option.id}
                         disableRipple
-                        sx={{ height: "10px" }}
                         onClick={(event) => {
                           event.stopPropagation();
                           handleCheckboxChange(option.id, show[1]);
@@ -246,7 +282,6 @@ const Header = ({
                         <Checkbox
                           checked={option.selected}
                           color="primary"
-                          sx={{ height: "10px", m: 0, p: 0  }}
                           onChange={(event) => {
                             event.stopPropagation();
                             handleCheckboxChange(option.id, show[1]);
