@@ -27,6 +27,37 @@ const DetailsPage = ({
   const [reqJobPosting, setreqJobPosting] = useState(null);
   const [countStudentsSelected, setCountStudentSelected] = useState(0);
 
+  const [searchText, setSearchText] = useState("");
+
+  const BATCH = [
+    { id: 1, name: "2020", selected: true },
+    { id: 2, name: "2021", selected: true },
+    { id: 3, name: "2022", selected: true },
+    { id: 4, name: "2023", selected: true },
+  ];
+
+  const BRANCH = [
+    { id: 1, name: "CSE", selected: true },
+    { id: 2, name: "EE", selected: true },
+    { id: 3, name: "ME", selected: true },
+  ];
+
+  const STATUS = [
+    { id: 1, name: "Applied", selected: true },
+    { id: 2, name: "Selected", selected: true },
+    { id: 3, name: "Rejected", selected: true },
+  ];
+
+  const [filterOptionsBatch, setFilterOptionsBatch] = useState(BATCH);
+  const [filterOptionsBranch, setFilterOptionsBranch] = useState(BRANCH);
+  const [filterOptionsStatus, setFilterOptionsStatus] = useState(STATUS);
+
+  const resetCheckboxes = () => {
+    setFilterOptionsBatch(BATCH);
+    setFilterOptionsBranch(BRANCH);
+    setFilterOptionsStatus(STATUS);
+  };
+
   const getApplicationsInfo = () => {
     if (token) {
       GetApplications(token, openingId)
@@ -44,7 +75,6 @@ const DetailsPage = ({
     setopeningId(match.params.id);
     setopeningType(match.params.type);
     getApplicationsInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match, token, openingId]);
 
   useEffect(() => {
@@ -117,6 +147,15 @@ const DetailsPage = ({
           setSuccess={setSuccess}
           setShowSuccess={setShowSuccess}
           getApplicationsInfo={getApplicationsInfo}
+          searchText={searchText}
+          setSearchText={setSearchText}
+          filterOptionsBatch={filterOptionsBatch}
+          setFilterOptionsBatch={setFilterOptionsBatch}
+          filterOptionsBranch={filterOptionsBranch}
+          setFilterOptionsBranch={setFilterOptionsBranch}
+          filterOptionsStatus={filterOptionsStatus}
+          setFilterOptionsStatus={setFilterOptionsStatus}
+          resetCheckboxes={resetCheckboxes}
         />
         <StudentList
           applicationsInfo={applicationsInfo}
@@ -129,6 +168,11 @@ const DetailsPage = ({
           setShowSuccess={setShowSuccess}
           setShowLoader={setShowLoader}
           getApplicationsInfo={getApplicationsInfo}
+          searchText={searchText}
+          filterOptionsBatch={filterOptionsBatch}
+          filterOptionsBranch={filterOptionsBranch}
+          filterOptionsStatus={filterOptionsStatus}
+          setFilterOptionsStatus={setFilterOptionsStatus}
         />
       </div>
     </div>
