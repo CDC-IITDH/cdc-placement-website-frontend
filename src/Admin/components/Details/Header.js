@@ -19,7 +19,6 @@ import useStyles from "./styles";
 import { ExportAsExcel } from "../../api/details_page";
 import AddStudent from "./AddStudent";
 
-
 const Header = ({
   studentsApplied,
   countStudentsSelected,
@@ -161,7 +160,7 @@ const Header = ({
             </Typography>
           </div>
         </div>
-        <div>
+        <Box sx={{ margin: "auto" }}>
           <TextField
             className={classes.searchBar}
             id="outlined-basic"
@@ -200,7 +199,7 @@ const Header = ({
                     height: "auto",
                     marginTop: "8px",
                     borderRadius: "4px",
-                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                    boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
                   },
                 }}
                 MenuListProps={{
@@ -216,8 +215,13 @@ const Header = ({
                   horizontal: "left",
                 }}
               >
-                <Box sx={{ display: "flex", flexDirection: "row" }}>
-                  <Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Box sx={{ borderRight: "1px solid #e3dede", my: 1 }}>
                     <MenuItem onClick={openBatch} disableRipple>
                       Batch
                     </MenuItem>
@@ -233,7 +237,7 @@ const Header = ({
                       <MenuItem
                         key={option.id}
                         disableRipple
-                        sx={{ py: 0, px: 2 }}
+                        sx={{ height: "10px" }}
                         onClick={(event) => {
                           event.stopPropagation();
                           handleCheckboxChange(option.id, show[1]);
@@ -242,6 +246,7 @@ const Header = ({
                         <Checkbox
                           checked={option.selected}
                           color="primary"
+                          sx={{ height: "10px", m: 0, p: 0  }}
                           onChange={(event) => {
                             event.stopPropagation();
                             handleCheckboxChange(option.id, show[1]);
@@ -255,7 +260,7 @@ const Header = ({
               </Menu>
             </>
           )}
-        </div>
+        </Box>
         <div className={classes.otherFunctions}>
           <div
             onClick={handleAddStudentModal}

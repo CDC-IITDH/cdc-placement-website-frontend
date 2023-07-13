@@ -58,7 +58,14 @@ const StudentList = ({
                   return 1;
                 }
               })
-              .filter((elem) => elem.student_details.name.includes(searchText))
+              .filter((elem) => {
+                const rollNo = elem.student_details.roll_no;
+                return (
+                  elem.student_details.name.includes(searchText) ||
+                  (rollNo && rollNo.toString() === searchText)
+                );
+              })
+
               .filter((elem) => {
                 return (
                   (filterOptionsBatch.length === 0 ||
