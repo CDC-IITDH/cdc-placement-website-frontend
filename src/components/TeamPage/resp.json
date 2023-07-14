@@ -1,0 +1,105 @@
+{
+  "action": "Get Contributor Stats",
+  "message": "Contributor Stats Fetched",
+  "data": [
+    {
+      "id": 9,
+      "name": "Karthik MV",
+      "email": "200010030@iitdh.ac.in",
+      "github_id": "karthikmurakonda",
+      "linkedin": null,
+      "commits": 50,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 98,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 14,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 233,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 102,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 99,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 23,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 92,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 38,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 91,
+      "image": null
+    },
+    {
+      "id": 7,
+      "name": "Gowtham Sai",
+      "email": "190010036@iitdh.ac.in",
+      "github_id": "gowtham3105",
+      "linkedin": "gowtham",
+      "commits": 18,
+      "image": null
+    }
+  ]
+}

@@ -16,6 +16,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import JNF from "./Admin/components/JNF/JNF";
 import VerifyEmail from "./Admin/components/VerifyEmail/VerifyEmail";
+import TeamProfile from "./components/TeamPage/TeamProfile";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function Alert(props) {
@@ -71,6 +72,10 @@ const App = () => {
 
                 {auth && currentUserType ? (
                     <Switch>
+                        <Route
+                            path='/team/'
+                            render={() => {return(<TeamProfile/>)}}
+                        />
                         <Route
                             path='/student/'
                             render={() => {
@@ -158,6 +163,10 @@ const App = () => {
                                 </div>
                         ) : (
                             <Switch>
+                                <Route
+                            path='/team/'
+                            render={() => {return(<TeamProfile setShowLoader={setShowLoader}/>)}}
+                        />
                                 <Route
                                     path='/jnf'
                                     render={() => {
