@@ -16,7 +16,7 @@ import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
 
 const JNF = ({ setShowLoader }) => {
-  const year = "2022-2023";
+  const year = "2023-2024";
   const [preFill, setPreFill] = useState();
   var initialValues = {
     name: preFill?.placement_data.company_name || "",
