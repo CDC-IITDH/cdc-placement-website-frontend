@@ -42,7 +42,7 @@ const Instructions = ({ year, updateData }) => {
             </li>
             <li>
               Before filling the form kindly refer to the{" "}
-              <a href="https://drive.google.com/file/d/13_qduU5w51fdu7YfOtOjGNadX3qziDDV/view">
+              <a href="https://drive.google.com/file/d/1QpP0K4J6AXiFcezI-mBRzrpesci0gsAh/view">
                 placement brochure
               </a>{" "}
               and the <a href="https://cdc.iitdh.ac.in/">placement website</a>{" "}
