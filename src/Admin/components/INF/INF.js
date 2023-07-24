@@ -320,7 +320,7 @@ const INF = ({ setShowLoader }) => {
 
     setShowLoader(true);
 
-    fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
+    fetch(API_ENDPOINT + "api/company/addInternship/", requestOptions)
       .then((res) => {
         if (!(res.status === 200 || res.status === 400)) {
           setError(res);
