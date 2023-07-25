@@ -104,6 +104,7 @@ const SelectionProcess = ({
           maxLength={inf_textarea_max_character_count}
           className="text-area"
           name="selection"
+          value={values.selection}
           onChange={handleChange}
           onBlur={handleBlur}
         ></Form.Control>
@@ -115,6 +116,7 @@ const SelectionProcess = ({
           maxLength={inf_textarea_max_character_count}
           className="text-area"
           name="requirements"
+          value={values.requirements}
           onChange={handleChange}
           onBlur={handleBlur}
         ></Form.Control>

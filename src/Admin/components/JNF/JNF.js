@@ -171,7 +171,7 @@ const JNF = ({ setShowLoader }) => {
       .string()
       .url("Please enter a valid url (eg. https://example.com)")
       .required("Website Link is Required"),
-    // compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+    compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
     jobdescription_file: yup
       .mixed()
       .test("pdf-check", "Must be PDF", validatePDF)

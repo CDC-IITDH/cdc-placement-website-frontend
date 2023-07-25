@@ -4,7 +4,6 @@ import CompOverview from "./CompOverview";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Instructions from "./Instructions";
-import TierTable from "./TierTable";
 import { useFormikContext } from "formik";
 import { useState, useEffect, useRef } from "react";
 import InternProfile from "./InternProfile";
@@ -17,43 +16,47 @@ import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
 
 const INF = ({ setShowLoader }) => {
-  const year = "2022-2023";
+  const year = "2023-2024";
+
   var initialValues = {
-    name: "",
-    link: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    pincode: "",
-    type: "",
-    nature: "",
-    designation: "",
-    locations: "",
-    details: "",
-    date: "",
+    companyname: "", //
+    website: "", //
+    compdescription: "", //
+    address: "", // 
+    city: "", //
+    state: "", // 
+    country: "",// 
+    pincode: "",//
+    companytype: "", //
+    nature: "", // 
+    designation: "", //
+    locations: "", //
+    details: "",  //
+    season: "", 
+    start_date: "",
+    end_date: "",
+    worktype: "",
+    branch: "",
+    research: "",
+    sophomoresallowed: "",
     numoffers: "",
-    ctc: "",
-    gross: "",
-    takehome: "",
-    bonus: "",
+    stipend: "",
+    facilities: "",
+    other_facilities: "",
     selectionprocess: "",
+    selectionprocess_other: "",
+    selection: "",
+    requirements: "",
     contact: "",
     email: "",
     mobile: "",
     telephone: "",
-    compdescription: "",
-    bonddetails: "",
-    requirements: "",
-    selection: "",
     compdescription_file: "",
     internshipdescription_file: "",
-    salary_file: "",
+    stipend_benefits_file : "",
     selection_file: "",
-    branch: "",
-    research: "",
-    selectionprocess_other: "",
   };
+
   const LOCAL_STORAGE_KEY = "vals_inf";
   const [page, setPage] = useState(1);
   const [submitted, setSubmitted] = useState(0);
@@ -167,24 +170,12 @@ const INF = ({ setShowLoader }) => {
     };
   };
   let schema = yup.object().shape({
-    name: yup.string().required("Company Name is Required"),
-    link: yup
-      .string()
-      .url("Please enter a valid url (eg. https://example.com)")
-      .required("Website Link is Required"),
-    // compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
-    internshipdescription_file: yup
-      .mixed()
-      .test("pdf-check", "Must be PDF", validatePDF)
-      .test("size-check", "Must be smaller than 10MB", validateSize),
-    salary_file: yup
-      .mixed()
-      .test("pdf-check", "Must be PDF", validatePDF)
-      .test("size-check", "Must be smaller than 10MB", validateSize),
-    selection_file: yup
-      .mixed()
-      .test("pdf-check", "Must be PDF", validatePDF)
-      .test("size-check", "Must be smaller than 10MB", validateSize),
+    companyname: yup.string().required("Company Name is Required"), //
+    website: yup
+    .string()
+    .url("Please enter a valid url (eg. https://example.com)")
+    .required("Website Link is Required"), //
+    compdescription : yup.string().required("Company Description is Required"), //
     address: yup.string().required("Company Address is Required"),
     city: yup.string().required("City is Required"),
     state: yup.string().required("State is Required"),
@@ -194,40 +185,56 @@ const INF = ({ setShowLoader }) => {
       .required("Zip/Pin is Required")
       .min(100000, "Must be at least 6 digits")
       .max(999999, "Must be at most 6 digits"),
-    type: yup.string().required("Required"),
+    companytype: yup.string().required("Required"),
     nature: yup.string().required("Required"),
     designation: yup.string().required("Designation is Required"),
     locations: yup.string().required("Loaction is Required"),
     details: yup.string().required("Details are Required"),
-    date: yup.string().required("Date is Required"),
+    worktype: yup.string().required("Required"),
+    season: yup
+    .array()
+      .min(1, "Choose at least one")
+      .required("Required"),
+    startdate: yup.string().required("Date is Required"),
+    enddate: yup.string().required("Date is Required"),
+    sophomoresallowed: yup.string().required("Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     research: yup.string().required("Required"),
     numoffers: yup.number().min(0, "Must be positive"),
-    ctc: yup.number().required("CTC is Required").min(0, "Must be positive"),
-    gross: yup
-      .number()
-      .required("Gross is Required")
-      .min(0, "Must be positive"),
-    takehome: yup
-      .number()
-      .required("Take Home is Required")
-      .min(0, "Must be positive"),
-    bonus: yup.number().min(0, "Must be positive"),
+    stipend: yup.number().required("Stipend is Required").min(0, "Must be positive"),
+    facilities: yup
+    .array(),
+    other_facilities: yup.string(),
+    selection: yup.string(),
     selectionprocess: yup
-      .array()
+    .array()
       .min(1, "Choose at least one")
       .required("Required"),
+    requirements: yup.string(),
     contact: yup.string().required("Contact is Required"),
     email: yup
       .string()
       .email("Please enter a email address (eg. john@example.com)")
       .required("Required"),
-    mobile: yup
+      mobile: yup
       .number()
       .required("Mobile Number is Required")
       .min(1000000000, "Must be 10 digits")
       .max(9999999999, "Must be 10 digits"),
-    telephone: yup.string(),
+      telephone: yup.string(),
+      compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      internshipdescription_file: yup
+        .mixed()
+        .test("pdf-check", "Must be PDF", validatePDF)
+        .test("size-check", "Must be smaller than 10MB", validateSize),
+        stipend_benefits_file: yup
+        .mixed()
+        .test("pdf-check", "Must be PDF", validatePDF)
+        .test("size-check", "Must be smaller than 10MB", validateSize),
+      selection_file: yup
+        .mixed()
+        .test("pdf-check", "Must be PDF", validatePDF)
+        .test("size-check", "Must be smaller than 10MB", validateSize),
   });
 
   function submit(values) {
@@ -250,48 +257,37 @@ const INF = ({ setShowLoader }) => {
     }
 
     var formdata = new FormData();
-    formdata.append("company_name", values.name);
-    formdata.append("address", values.address);
-    formdata.append("company_type", values.type);
-    formdata.append("nature_of_business", values.nature);
-    formdata.append("type_of_organisation", values.type);
-    formdata.append("website", values.link);
-    formdata.append("company_details", values.compdescription);
+    formdata.append("company_name", values.companyname);
+    formdata.append("website", values.website);
     formdata.append("is_company_details_pdf", is_company_details_pdf);
-    formdata.append("contact_person_name", values.contact);
-    formdata.append("phone_number", values.mobile);
-    formdata.append("email", values.email);
+    formdata.append("company_details", values.compdescription);
+    formdata.append("address", values.address);
     formdata.append("city", values.city);
     formdata.append("state", values.state);
     formdata.append("country", values.country);
     formdata.append("pincode", values.pincode);
-    formdata.append("company_type", values.type);
-    formdata.append("designation", values.designation);
-    formdata.append("description", values.details);
+    formdata.append("company_type", values.companytype);
+    formdata.append("nature_of_business", values.nature);
     formdata.append("is_description_pdf", is_description_pdf);
+    formdata.append("designation", values.designation);
     formdata.append("internship_location", values.locations);
-    formdata.append("compensation_ctc", values.ctc);
-    formdata.append("compensation_gross", values.gross);
-    formdata.append("compensation_take_home", values.takehome);
-    formdata.append("compensation_bonus", values.bonus ? values.bonus : 0);
-    formdata.append("is_compensation_details_pdf", is_compensation_details_pdf);
-    formdata.append("bond_details", values.bonddetails);
-    formdata.append(
-      "selection_procedure_rounds",
-      JSON.stringify(selectionprocess)
-    );
-    formdata.append("selection_procedure_details", values.selection);
-    formdata.append(
-      "is_selection_procedure_details_pdf",
-      is_selection_procedure_details_pdf
-    );
-    formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
+    formdata.append("description", values.details);
+    formdata.append("season", JSON.stringify(values.season));
+    formdata.append("start_date", changeDateFormat(values.startdate));
+    formdata.append("end_date", changeDateFormat(values.enddate));
+    formdata.append("work_type", values.worktype);
     formdata.append("allowed_branch", JSON.stringify(values.branch));
+    formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("rs_eligible", values.research);
-    formdata.append(
-      "tentative_no_of_offers",
-      values.numoffers ? values.numoffers : 0
-    );
+    formdata.append("sophomores_allowed", values.sophomoresallowed);
+    formdata.append("num_offers", values.numoffers ? values.numoffers : 0);
+    formdata.append("is_stipend_details_pdf", is_compensation_details_pdf);
+    formdata.append("stipend", values.stipend);
+    formdata.append("facilities", JSON.stringify(values.facilities));
+    formdata.append("other_facilities", values.other_facilities);
+    formdata.append("selection_procedure_rounds",JSON.stringify(selectionprocess));
+    formdata.append("selection_procedure_details", values.selection);
+    formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
     formdata.append("other_requirements", values.requirements);
     compdescription_file.forEach((file) => {
       formdata.append("company_details_pdf", file, file.name);
@@ -299,16 +295,18 @@ const INF = ({ setShowLoader }) => {
     selection_file.forEach((file) => {
       formdata.append("selection_procedure_details_pdf", file, file.name);
     });
-    // formdata.append("description_pdf", [values.internshipdescription_file]);
-    // formdata.append("compensation_details_pdf", [values.salary_file]);
-    internshipdescription_file.forEach((file) => {
-      formdata.append("description_pdf", file, file.name);
-    });
-    salary_file.forEach((file) => {
-      formdata.append("compensation_details_pdf", file, file.name);
-    });
-    formdata.append("selection_procedure_details_pdf", [values.selection_file]);
-    formdata.append("recaptchakey", recaptchaRef.current.getValue());
+      // formdata.append("description_pdf", [values.internshipdescription_file]);
+      // formdata.append("compensation_details_pdf", [values.salary_file]);
+      internshipdescription_file.forEach((file) => {
+        formdata.append("description_pdf", file, file.name);
+      });
+      salary_file.forEach((file) => {
+        formdata.append("compensation_details_pdf", file, file.name);
+      });
+      formdata.append("contact_person_name", values.contact);
+      formdata.append("phone_number", values.mobile);
+      formdata.append("email", values.email);
+      formdata.append("recaptchakey", recaptchaRef.current.getValue());
     var requestOptions = {
       method: "POST",
       body: formdata,
@@ -359,7 +357,7 @@ const INF = ({ setShowLoader }) => {
         errors.state ||
         errors.country ||
         errors.pincode ||
-        errors.type ||
+        errors.companytype ||
         errors.nature
       ) {
         setFieldTouched("name", true);
@@ -369,7 +367,7 @@ const INF = ({ setShowLoader }) => {
         setFieldTouched("state", true);
         setFieldTouched("country", true);
         setFieldTouched("pincode", true);
-        setFieldTouched("type", true);
+        setFieldTouched("companytype", true);
         setFieldTouched("nature", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
@@ -381,24 +379,27 @@ const INF = ({ setShowLoader }) => {
         errors.designation ||
         errors.locations ||
         errors.details ||
-        errors.date ||
+        errors.worktype ||
+        errors.season ||
+        errors.startdate ||
+        errors.enddate ||
         errors.branch ||
+        errors.sophomoresallowed ||
         errors.research ||
         errors.numoffers ||
-        errors.ctc ||
-        errors.gross ||
-        errors.takehome
+        errors.stipend
       ) {
         setFieldTouched("designation", true);
         setFieldTouched("locations", true);
         setFieldTouched("details", true);
-        setFieldTouched("date", true);
+        setFieldTouched("startdate", true);
+        setFieldTouched("enddate", true);
+        setFieldTouched("worktype", true);
+        setFieldTouched("season", true);
         setFieldTouched("branch", true);
         setFieldTouched("research", true);
         setFieldTouched("numoffers", true);
-        setFieldTouched("ctc", true);
-        setFieldTouched("gross", true);
-        setFieldTouched("takehome", true);
+        setFieldTouched("stipend", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
       } else {
