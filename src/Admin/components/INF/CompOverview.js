@@ -36,15 +36,15 @@ const CompOverview = ({
         <Form.Control
           maxLength={inf_smalltext_max_character_count}
           type="text"
-          name="name"
-          value={values.name}
+          name="companyname"
+          value={values.companyname}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.name && errors.name}
+          isInvalid={touched.companyname && errors.companyname}
         />
         <Form.Control.Feedback type="invalid">
           {" "}
-          {errors.name}{" "}
+          {errors.companyname}{" "}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
@@ -54,15 +54,15 @@ const CompOverview = ({
         <Form.Control
           maxLength={inf_text_max_character_count}
           type="text"
-          name="link"
-          value={values.link}
+          name="website"
+          value={values.website}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.link && errors.link}
+          isInvalid={touched.website && errors.website}
         />
         <Form.Control.Feedback type="invalid">
           {" "}
-          {errors.link}{" "}
+          {errors.website}{" "}
         </Form.Control.Feedback>
       </Form.Group>
       <MultipleFileInput
@@ -199,25 +199,25 @@ const CompOverview = ({
               "Public Sector",
               "Start-Up",
               "Other",
-            ].map((type) => (
-              <Col sm={6} key={type}>
+            ].map((companytype) => (
+              <Col sm={6} key={companytype}>
                 <Form.Check.Input
                   type="radio"
-                  label={type}
-                  name="type"
-                  value={type}
+                  label={companytype}
+                  name="companytype"
+                  value={companytype}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   isInvalid={touched.type && errors.type}
-                  checked={values.type.includes(type)}
+                  checked={values.companytype.includes(companytype)}
                 ></Form.Check.Input>
-                <Form.Check.Label>{type}</Form.Check.Label>
+                <Form.Check.Label>{companytype}</Form.Check.Label>
               </Col>
             ))}
           </Row>
         </Form.Check>
         <span className="select-feedback">
-          {errors.type && touched.type ? errors.type : ""}
+          {errors.companytype && touched.companytype ? errors.companytype : ""}
         </span>
       </Form.Group>
       <Form.Group className="mb-5">

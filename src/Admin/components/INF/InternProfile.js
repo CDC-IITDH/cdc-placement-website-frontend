@@ -98,22 +98,109 @@ const InternProfile = ({
           {errors.details}{" "}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-5 w-50">
+
+      <Form.Group className="mb-5">
         <Form.Label>
-          Tentative Date of Joining <span className="text-danger">*</span>
+          Internship Type{" "}
+          <span className="text-danger">*</span>
         </Form.Label>
+        <Form.Check className="form-check" type="radio">
+          <Row>
+            {["Work from home", "Work from office"].map((type) => (
+              <Col sm={6} key={type}>
+                <Form.Check.Input
+                  type="radio"
+                  label={type}
+                  name="worktype"
+                  value={type}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.research && errors.research}
+                  checked={values.worktype.includes(type)}
+                ></Form.Check.Input>
+                <Form.Check.Label>{type}</Form.Check.Label>
+              </Col>
+            ))}
+          </Row>
+        </Form.Check>
+        <span className="select-feedback">
+          {errors.worktype && touched.worktype ? errors.worktype : ""}
+        </span>
+      </Form.Group>
+
+      <Form.Group className="mb-5">
+        <Form.Label>
+          Internship Season <span className="text-danger">*</span>
+        </Form.Label>
+        <Form.Check className="form-check" type="checkbox">
+          <Row>
+            {[
+              "Summer vacation Internship (May-July)",
+              "Autumn co-op Internship (Aug-Nov)",
+              "Winter vacation Internship (Dec)",
+              "Spring co-op Internship (Jan-April)",
+            ].map((x) => (
+              <Col sm={6} key={x.substring(0, 6)}>
+                <Form.Check.Input
+                  type="checkbox"
+                  label={x}
+                  name="season"
+                  value={x.substring(0, 6)}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={
+                    touched.season && errors.season
+                  }
+                  checked={values.season.includes(x.substring(0, 6))}
+                ></Form.Check.Input>
+                <Form.Check.Label>{x}</Form.Check.Label>
+              </Col>
+            ))}
+          </Row>
+        </Form.Check>
+        <span className="select-feedback">
+          {errors.season && touched.season ? errors.season : ""}
+        </span>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-5">
+        <Form.Label column>
+          Tentative Date of joining <span className="text-danger">*</span>
+        </Form.Label>
+        <Col>
         <Form.Control
           type="date"
-          name="date"
-          value={values.date}
+          name="startdate"
+          value={values.startdate}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.date && errors.date}
+          isInvalid={touched.startdate && errors.startdate}
         />
         <Form.Control.Feedback type="invalid">
           {" "}
-          {errors.date}{" "}
+          {errors.startdate}{" "}
         </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-5">
+        <Form.Label column>
+          Tentative Date of completion <span className="text-danger">*</span>
+        </Form.Label>
+        <Col>
+         <Form.Control
+          type="date"
+          name="enddate"
+          value={values.enddate}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          isInvalid={touched.enddate && errors.enddate}
+        />
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.enddate}{" "}
+        </Form.Control.Feedback>
+        </Col>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>
@@ -141,6 +228,36 @@ const InternProfile = ({
           {touched.branch ? errors.branch : ""}
         </span>
       </Form.Group>
+
+      <Form.Group className="mb-5">
+        <Form.Label>
+        Are sophomores (2nd Year) eligible as well?{" "}
+          <span className="text-danger">*</span>
+        </Form.Label>
+        <Form.Check className="form-check" type="radio">
+          <Row>
+            {["Yes", "No"].map((eligible) => (
+              <Col sm={6} key={eligible}>
+                <Form.Check.Input
+                  type="radio"
+                  label={eligible}
+                  name="sophomoresallowed"
+                  value={eligible}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.sophomoresallowed && errors.sophomoresallowed}
+                  checked={values.sophomoresallowed.includes(eligible)}
+                ></Form.Check.Input>
+                <Form.Check.Label>{eligible}</Form.Check.Label>
+              </Col>
+            ))}
+          </Row>
+        </Form.Check>
+        <span className="select-feedback">
+          {errors.sophomoresallowed && touched.sophomoresallowed ? errors.sophomoresallowed : ""}
+        </span>
+      </Form.Group>
+
       <Form.Group className="mb-5">
         <Form.Label>
           Are MS research scholars (postgraduates) eligible to apply?{" "}
@@ -189,97 +306,75 @@ const InternProfile = ({
           offered candidates is unable to take up the position.
         </Form.Text>
       </Form.Group>
-      <p className="mb-5 gray-blue">
-        <b>
-          <u>Note:</u> In case of different salary structures being offer to
-          BTech and MS students, the details regarding the same are to be
-          clearly mentioned in the fields below.
-        </b>
-      </p>
+      <hr className="pd" />
       <MultipleFileInput
         stateVar={salary_file}
         setStateVar={setSalary_file}
-        name="salary_file"
-        label="Salary Description"
+        name="stipend_benefits_file"
+        label="Stipend and Other Facilities description"
       />
       <Form.Group className="mb-5 w-50">
         <Form.Label>
-          Cost to Company (CTC) <span className="text-danger">*</span>
+          Stipend <span className="text-danger">*</span>
         </Form.Label>
         <Form.Control
           type="number"
-          name="ctc"
-          value={values.ctc}
+          name="stipend"
+          value={values.stipend}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.ctc && errors.ctc}
+          isInvalid={touched.stipend && errors.stipend}
         />
         <Form.Control.Feedback type="invalid">
           {" "}
-          {errors.ctc}{" "}
+          {errors.stipend}{" "}
         </Form.Control.Feedback>
-        <Form.Text className="text-muted">(in INR/year)</Form.Text>
+        <Form.Text className="text-muted">(in INR/Month)</Form.Text>
       </Form.Group>
-      <Form.Group className="mb-5 w-50">
-        <Form.Label>
-          Gross <span className="text-danger">*</span>
-        </Form.Label>
-        <Form.Control
-          type="number"
-          name="gross"
-          value={values.gross}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={touched.gross && errors.gross}
-        />
-        <Form.Control.Feedback type="invalid">
-          {" "}
-          {errors.gross}{" "}
-        </Form.Control.Feedback>
-        <Form.Text className="text-muted">(in INR/year)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-5 w-50">
-        <Form.Label>
-          Take Home <span className="text-danger">*</span>
-        </Form.Label>
-        <Form.Control
-          type="number"
-          name="takehome"
-          value={values.takehome}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={touched.takehome && errors.takehome}
-        />
-        <Form.Control.Feedback type="invalid">
-          {" "}
-          {errors.takehome}{" "}
-        </Form.Control.Feedback>
-        <Form.Text className="text-muted">(in INR/year)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-5 w-50">
-        <Form.Label>Bonus/Incentives (if any)</Form.Label>
-        <Form.Control
-          type="number"
-          name="bonus"
-          value={values.bonus}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={touched.bonus && errors.bonus}
-        />
-        <Form.Control.Feedback type="invalid">
-          {" "}
-          {errors.bonus}{" "}
-        </Form.Control.Feedback>
-        <Form.Text className="text-muted">(in INR/year)</Form.Text>
-      </Form.Group>
+
       <Form.Group className="mb-5">
-        <Form.Label>Details of Bond (if any)</Form.Label>
+        <Form.Label>
+          Facilities provided
+        </Form.Label>
+        <Form.Check className="form-check" type="checkbox">
+          <Row>
+            {[
+              "Accommodation",
+              "Transport",
+              "Food",
+              "Medical Facility",
+            ].map((x) => (
+              <Col sm={6} key={x}>
+                <Form.Check.Input
+                  type="checkbox"
+                  label={x}
+                  name="facilities"
+                  value={x.split(" ")[0]}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={
+                    touched.facilities && errors.facilities
+                  }
+                  checked={values.facilities.includes(x.split(" ")[0])}
+                ></Form.Check.Input>
+                <Form.Check.Label>{x.split(" ")[0]}</Form.Check.Label>
+              </Col>
+            ))}
+          </Row>
+        </Form.Check>
+        <span className="select-feedback">
+          {errors.facilities && touched.facilities ? errors.facilities : ""}
+        </span>
+      </Form.Group>
+
+      <Form.Group className="mb-5">
+        <Form.Label> Other available facilities  (if any)</Form.Label>
         <Form.Control
           as="textarea"
           maxLength={inf_textarea_max_character_count}
           className="text-area"
-          name="bonddetails"
-          value={values.bonddetails}
+          name="other_facilities"
+          value={values.other_facilities}
           onChange={handleChange}
           onBlur={handleBlur}
         ></Form.Control>
