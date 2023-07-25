@@ -76,7 +76,7 @@ const INF = ({ setShowLoader }) => {
   const HandleBeforeLoad = () => {
     const handleAlert = () => {
       if (
-        window.localStorage.getItem(LOCAL_STORAGE_KEY) ==
+        window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
           JSON.stringify(initialValues) ||
         !window.localStorage.getItem(LOCAL_STORAGE_KEY)
       ) {
@@ -86,8 +86,13 @@ const INF = ({ setShowLoader }) => {
       }
       swal
         .fire({
-          title: "Do you want to resume filling the inf?",
-          text: "Files will not be saved",
+          title: "Do you want to resume your prevous filling of the INF?",
+          text: "We have saved your previous progress. You can continue filling the INF from where you left off. Note that you can only resume your previous filling once.",
+          html: `
+          We have saved your previous progress. You can continue filling the INF from where you left off.
+          <p style="color:red">Note that you can only resume your previous filling once.
+          PDFs uploaded will not be saved.</p>
+          `,
           icon: "question",
           showDenyButton: true,
           confirmButtonText: "Yes",
@@ -334,6 +339,11 @@ const INF = ({ setShowLoader }) => {
         setError(error);
       });
 
+    window.localStorage.removeItem(LOCAL_STORAGE_KEY);
+    window.localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify(initialValues)
+    );
     window.localStorage.removeItem(LOCAL_STORAGE_KEY);
     window.localStorage.setItem(
       LOCAL_STORAGE_KEY,
