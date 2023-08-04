@@ -19,19 +19,19 @@ const INF = ({ setShowLoader }) => {
   const year = "2023-2024";
 
   var initialValues = {
-    companyname: "", //
-    website: "", //
-    compdescription: "", //
-    address: "", // 
-    city: "", //
-    state: "", // 
-    country: "",// 
-    pincode: "",//
-    companytype: "", //
-    nature: "", // 
-    designation: "", //
-    locations: "", //
-    details: "",  //
+    companyname: "",
+    website: "",
+    compdescription: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    pincode: "",
+    companytype: "",
+    nature: "",
+    designation: "",
+    locations: "",
+    details: "",
     season: "", 
     start_date: "",
     end_date: "",
@@ -76,7 +76,7 @@ const INF = ({ setShowLoader }) => {
   const HandleBeforeLoad = () => {
     const handleAlert = () => {
       if (
-        window.localStorage.getItem(LOCAL_STORAGE_KEY) ==
+        window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
           JSON.stringify(initialValues) ||
         !window.localStorage.getItem(LOCAL_STORAGE_KEY)
       ) {
@@ -86,8 +86,13 @@ const INF = ({ setShowLoader }) => {
       }
       swal
         .fire({
-          title: "Do you want to resume filling the inf?",
-          text: "Files will not be saved",
+          title: "Do you want to resume your prevous filling of the INF?",
+          text: "We have saved your previous progress. You can continue filling the INF from where you left off. Note that you can only resume your previous filling once.",
+          html: `
+          We have saved your previous progress. You can continue filling the INF from where you left off.
+          <p style="color:red">Note that you can only resume your previous filling once.
+          PDFs uploaded will not be saved.</p>
+          `,
           icon: "question",
           showDenyButton: true,
           confirmButtonText: "Yes",
@@ -170,12 +175,12 @@ const INF = ({ setShowLoader }) => {
     };
   };
   let schema = yup.object().shape({
-    companyname: yup.string().required("Company Name is Required"), //
+    companyname: yup.string().required("Company Name is Required"),
     website: yup
     .string()
     .url("Please enter a valid url (eg. https://example.com)")
-    .required("Website Link is Required"), //
-    compdescription : yup.string().required("Company Description is Required"), //
+    .required("Website Link is Required"), 
+    compdescription : yup.string(),
     address: yup.string().required("Company Address is Required"),
     city: yup.string().required("City is Required"),
     state: yup.string().required("State is Required"),
