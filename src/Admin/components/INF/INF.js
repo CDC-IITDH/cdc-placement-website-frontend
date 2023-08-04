@@ -19,19 +19,19 @@ const INF = ({ setShowLoader }) => {
   const year = "2023-2024";
 
   var initialValues = {
-    companyname: "", //
-    website: "", //
-    compdescription: "", //
-    address: "", // 
-    city: "", //
-    state: "", // 
-    country: "",// 
-    pincode: "",//
-    companytype: "", //
-    nature: "", // 
-    designation: "", //
-    locations: "", //
-    details: "",  //
+    companyname: "",
+    website: "",
+    compdescription: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    pincode: "",
+    companytype: "",
+    nature: "",
+    designation: "",
+    locations: "",
+    details: "",
     season: "", 
     start_date: "",
     end_date: "",
@@ -175,12 +175,12 @@ const INF = ({ setShowLoader }) => {
     };
   };
   let schema = yup.object().shape({
-    companyname: yup.string().required("Company Name is Required"), //
+    companyname: yup.string().required("Company Name is Required"),
     website: yup
     .string()
     .url("Please enter a valid url (eg. https://example.com)")
-    .required("Website Link is Required"), //
-    compdescription : yup.string().required("Company Description is Required"), //
+    .required("Website Link is Required"), 
+    compdescription : yup.string(),
     address: yup.string().required("Company Address is Required"),
     city: yup.string().required("City is Required"),
     state: yup.string().required("State is Required"),
@@ -339,11 +339,6 @@ const INF = ({ setShowLoader }) => {
         setError(error);
       });
 
-    window.localStorage.removeItem(LOCAL_STORAGE_KEY);
-    window.localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify(initialValues)
-    );
     window.localStorage.removeItem(LOCAL_STORAGE_KEY);
     window.localStorage.setItem(
       LOCAL_STORAGE_KEY,
