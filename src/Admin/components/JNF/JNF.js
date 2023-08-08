@@ -216,10 +216,10 @@ const JNF = ({ setShowLoader }) => {
       .array()
       .min(1, "Choose at least one")
       .required("Required"),
-    contact: yup.string().required("Contact is Required"),
+    contact: yup.string().required("Contact Name is Required"),
     email: yup
       .string()
-      .email("Please enter a email address (eg. john@example.com)")
+      .email("Please enter a email address (eg. sriram@example.com)")
       .required("Required"),
     mobile: yup
       .number()
