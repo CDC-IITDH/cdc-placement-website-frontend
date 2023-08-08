@@ -108,6 +108,10 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       <Form.Group className="mb-5">
         <Form.Label>Details of Bond (if any)</Form.Label>
         <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
+        {
+          touched.bonddetails && values.bonddetails.length > jnf_textarea_max_character_count-1 && 
+          (<Form.Text className="text-danger">Bond details should be less than {jnf_textarea_max_character_count} characters</Form.Text>)
+        }
       </Form.Group>
     </>
   )

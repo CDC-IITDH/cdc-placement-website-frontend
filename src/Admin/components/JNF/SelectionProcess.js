@@ -108,6 +108,10 @@ const SelectionProcess = ({
           onBlur={handleBlur}
           value={values.selection}
         ></Form.Control>
+        {
+          touched.selection && values.selection.length > jnf_textarea_max_character_count-1 && 
+          (<Form.Text className="text-danger">Description should be less than {jnf_textarea_max_character_count} characters</Form.Text>)
+        }
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Academic Requirements</Form.Label>
@@ -120,6 +124,10 @@ const SelectionProcess = ({
           onBlur={handleBlur}
           value={values.requirements}
         ></Form.Control>
+        {
+          touched.requirements && values.requirements.length > jnf_textarea_max_character_count-1 && 
+          (<Form.Text className="text-danger">Description should be less than {jnf_textarea_max_character_count} characters</Form.Text>)
+        }
         <Form.Text className="text-muted">
           Mention any academic requirements such as CPI cutoff, branch, etc.
         </Form.Text>

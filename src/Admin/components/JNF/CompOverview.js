@@ -68,6 +68,10 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
           onBlur={handleBlur}
           value={values.compdescription}
         ></Form.Control>
+        {
+          touched.compdescription && values.compdescription.length > jnf_textarea_max_character_count-1 && 
+          (<Form.Text className="text-danger">Company description should be within {jnf_textarea_max_character_count} characters</Form.Text>)
+        }
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>
