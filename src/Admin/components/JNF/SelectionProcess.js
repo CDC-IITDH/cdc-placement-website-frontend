@@ -107,11 +107,12 @@ const SelectionProcess = ({
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.selection}
+          isInvalid={touched.selection && errors.selection}
         ></Form.Control>
-        {
-          touched.selection && values.selection.length > jnf_textarea_max_character_count-1 && 
-          (<Form.Text className="text-danger">Description should be less than {jnf_textarea_max_character_count} characters</Form.Text>)
-        }
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.selection}{" "}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Academic Requirements</Form.Label>
@@ -123,11 +124,12 @@ const SelectionProcess = ({
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.requirements}
+          isInvalid={touched.requirements && errors.requirements}
         ></Form.Control>
-        {
-          touched.requirements && values.requirements.length > jnf_textarea_max_character_count-1 && 
-          (<Form.Text className="text-danger">Description should be less than {jnf_textarea_max_character_count} characters</Form.Text>)
-        }
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.requirements}{" "}
+        </Form.Control.Feedback>
         <Form.Text className="text-muted">
           Mention any academic requirements such as CPI cutoff, branch, etc.
         </Form.Text>

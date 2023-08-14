@@ -184,6 +184,7 @@ const JNF = ({ setShowLoader }) => {
       .mixed()
       .test("pdf-check", "Must be PDF", validatePDF)
       .test("size-check", "Must be smaller than 10MB", validateSize),
+    compdescription: yup.string().max(jnf_textarea_max_character_count-1, `Company details should be within ${jnf_textarea_max_character_count} characters.`),
     address: yup.string().required("Company Address is Required").max(jnf_textarea_max_character_count-1, `Company address should be within ${jnf_textarea_max_character_count} characters.`),
     city: yup.string().required("City is Required").max(jnf_smalltext_max_character_count-1, `City name should be within ${jnf_smalltext_max_character_count-1} characters.`),
     state: yup.string().required("State is Required").max(jnf_smalltext_max_character_count-1,`State name should be within ${jnf_smalltext_max_character_count-1} characters.`),
@@ -212,15 +213,19 @@ const JNF = ({ setShowLoader }) => {
       .required("Take Home is Required")
       .min(0, "Must be positive"),
     bonus: yup.number().min(0, "Must be positive"),
+    bonddetails: yup.string().max(jnf_textarea_max_character_count-1, `Bond details should be within ${jnf_textarea_max_character_count} character limit.`),
     selectionprocess: yup
       .array()
       .min(1, "Choose at least one")
       .required("Required"),
-    contact: yup.string().required("Contact Name is Required"),
+    selection: yup.string().max(jnf_textarea_max_character_count-1, `Selection details should be within ${jnf_textarea_max_character_count} character limit.`),
+    requirements: yup.string().max(jnf_textarea_max_character_count-1, `Requirements should be within ${jnf_textarea_max_character_count} character limit.`),
+    contact: yup.string().required("Contact Name is Required").max(jnf_text_max_character_count-1, `Contact name should be within ${jnf_text_max_character_count-1} characters.`),
     email: yup
       .string()
       .email("Please enter a email address (eg. sriram@example.com)")
-      .required("Required"),
+      .required("Required")
+      .max(jnf_smalltext_max_character_count-1, `Email should be within ${jnf_smalltext_max_character_count-1} characters.`),
     mobile: yup
       .number()
       .required("Mobile Number is Required")
