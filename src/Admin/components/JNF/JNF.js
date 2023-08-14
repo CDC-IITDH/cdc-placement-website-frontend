@@ -392,7 +392,7 @@ const JNF = ({ setShowLoader }) => {
         errors.ctc ||
         errors.gross ||
         errors.takehome ||
-        //errors.bonus ||
+        errors.bonus ||
         errors.bonddetails 
       ) {
         setFieldTouched("designation", true);
@@ -405,7 +405,7 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("ctc", true);
         setFieldTouched("gross", true);
         setFieldTouched("takehome", true);
-        //setFieldTouched("bonus", true);
+        setFieldTouched("bonus", true);
         setFieldTouched("bonddetails", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
