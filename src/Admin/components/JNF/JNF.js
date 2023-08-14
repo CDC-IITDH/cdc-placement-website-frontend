@@ -356,6 +356,7 @@ const JNF = ({ setShowLoader }) => {
       if (
         errors.name ||
         errors.link ||
+        errors.compdescription ||
         errors.address ||
         errors.city ||
         errors.state ||
@@ -366,6 +367,7 @@ const JNF = ({ setShowLoader }) => {
       ) {
         setFieldTouched("name", true);
         setFieldTouched("link", true);
+        setFieldTouched("compdescription", true);
         setFieldTouched("address", true);
         setFieldTouched("city", true);
         setFieldTouched("state", true);
@@ -389,7 +391,9 @@ const JNF = ({ setShowLoader }) => {
         errors.numoffers ||
         errors.ctc ||
         errors.gross ||
-        errors.takehome
+        errors.takehome ||
+        //errors.bonus ||
+        errors.bonddetails 
       ) {
         setFieldTouched("designation", true);
         setFieldTouched("locations", true);
@@ -401,13 +405,17 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("ctc", true);
         setFieldTouched("gross", true);
         setFieldTouched("takehome", true);
+        //setFieldTouched("bonus", true);
+        setFieldTouched("bonddetails", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
       } else {
         setPage(page + 1);
       }
     } else if (page === 3) {
-      if (errors.selectionprocess) {
+      if (errors.selectionprocess || errors.selection || errors.requirements) {
+        setFieldTouched("selection", true);
+        setFieldTouched("requirements", true);
         setFieldTouched("selectionprocess", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
