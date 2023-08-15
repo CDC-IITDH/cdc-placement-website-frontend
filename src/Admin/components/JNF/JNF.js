@@ -14,7 +14,7 @@ import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
-
+import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./limit_constants";
 const JNF = ({ setShowLoader }) => {
   const year = "2023-2024";
   const [preFill, setPreFill] = useState();
@@ -166,11 +166,11 @@ const JNF = ({ setShowLoader }) => {
     };
   };
   let schema = yup.object().shape({
-    name: yup.string().required("Company Name is Required"),
+    name: yup.string().required("Company Name is Required").max(jnf_smalltext_max_character_count-1, `Company name should be within ${jnf_smalltext_max_character_count-1} characters.`),
     link: yup
       .string()
       .url("Please enter a valid url (eg. https://example.com)")
-      .required("Website Link is Required"),
+      .required("Website Link is Required").max(jnf_text_max_character_count-1, `Website link should be within ${jnf_text_max_character_count-1} character limit.`),
     compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
     jobdescription_file: yup
       .mixed()
@@ -184,20 +184,21 @@ const JNF = ({ setShowLoader }) => {
       .mixed()
       .test("pdf-check", "Must be PDF", validatePDF)
       .test("size-check", "Must be smaller than 10MB", validateSize),
-    address: yup.string().required("Company Address is Required"),
-    city: yup.string().required("City is Required"),
-    state: yup.string().required("State is Required"),
-    country: yup.string().required("Country is Required"),
+    compdescription: yup.string().max(jnf_textarea_max_character_count-1, `Company details should be within ${jnf_textarea_max_character_count} characters.`),
+    address: yup.string().required("Company Address is Required").max(jnf_textarea_max_character_count-1, `Company address should be within ${jnf_textarea_max_character_count} characters.`),
+    city: yup.string().required("City is Required").max(jnf_smalltext_max_character_count-1, `City name should be within ${jnf_smalltext_max_character_count-1} characters.`),
+    state: yup.string().required("State is Required").max(jnf_smalltext_max_character_count-1,`State name should be within ${jnf_smalltext_max_character_count-1} characters.`),
+    country: yup.string().required("Country is Required").max(jnf_smalltext_max_character_count-1, `Country name should be within ${jnf_smalltext_max_character_count-1} characters.`),
     pincode: yup
       .number("Must be a Number")
-      .required("Zip/Pin is Required")
+      .required("Zip/Pin code is Required")
       .min(100000, "Must be at least 6 digits")
       .max(999999, "Must be at most 6 digits"),
     type: yup.string().required("Required"),
     nature: yup.string().required("Required"),
-    designation: yup.string().required("Designation is Required"),
-    locations: yup.string().required("Loaction is Required"),
-    details: yup.string().required("Details are Required"),
+    designation: yup.string().required("Designation is Required").max(jnf_text_max_character_count-1, `Designation should be within ${jnf_text_max_character_count-1} character limit.`),
+    locations: yup.string().required("Loaction is Required").max(jnf_smalltext_max_character_count-1, `Location should be within ${jnf_smalltext_max_character_count-1} character limit.`),
+    details: yup.string().required("Details are Required").max(jnf_textarea_max_character_count-1, `Details should be within ${jnf_textarea_max_character_count} character limit.`),
     date: yup.string().required("Date is Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     research: yup.string().required("Required"),
@@ -212,15 +213,19 @@ const JNF = ({ setShowLoader }) => {
       .required("Take Home is Required")
       .min(0, "Must be positive"),
     bonus: yup.number().min(0, "Must be positive"),
+    bonddetails: yup.string().max(jnf_textarea_max_character_count-1, `Bond details should be within ${jnf_textarea_max_character_count} character limit.`),
     selectionprocess: yup
       .array()
       .min(1, "Choose at least one")
       .required("Required"),
-    contact: yup.string().required("Contact is Required"),
+    selection: yup.string().max(jnf_textarea_max_character_count-1, `Selection details should be within ${jnf_textarea_max_character_count} character limit.`),
+    requirements: yup.string().max(jnf_textarea_max_character_count-1, `Requirements should be within ${jnf_textarea_max_character_count} character limit.`),
+    contact: yup.string().required("Contact Name is Required").max(jnf_text_max_character_count-1, `Contact name should be within ${jnf_text_max_character_count-1} characters.`),
     email: yup
       .string()
-      .email("Please enter a email address (eg. john@example.com)")
-      .required("Required"),
+      .email("Please enter a email address (eg. sriram@example.com)")
+      .required("Required")
+      .max(jnf_smalltext_max_character_count-1, `Email should be within ${jnf_smalltext_max_character_count-1} characters.`),
     mobile: yup
       .number()
       .required("Mobile Number is Required")
@@ -351,6 +356,7 @@ const JNF = ({ setShowLoader }) => {
       if (
         errors.name ||
         errors.link ||
+        errors.compdescription ||
         errors.address ||
         errors.city ||
         errors.state ||
@@ -361,6 +367,7 @@ const JNF = ({ setShowLoader }) => {
       ) {
         setFieldTouched("name", true);
         setFieldTouched("link", true);
+        setFieldTouched("compdescription", true);
         setFieldTouched("address", true);
         setFieldTouched("city", true);
         setFieldTouched("state", true);
@@ -384,7 +391,9 @@ const JNF = ({ setShowLoader }) => {
         errors.numoffers ||
         errors.ctc ||
         errors.gross ||
-        errors.takehome
+        errors.takehome ||
+        errors.bonus ||
+        errors.bonddetails 
       ) {
         setFieldTouched("designation", true);
         setFieldTouched("locations", true);
@@ -396,13 +405,17 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("ctc", true);
         setFieldTouched("gross", true);
         setFieldTouched("takehome", true);
+        setFieldTouched("bonus", true);
+        setFieldTouched("bonddetails", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
       } else {
         setPage(page + 1);
       }
     } else if (page === 3) {
-      if (errors.selectionprocess) {
+      if (errors.selectionprocess || errors.selection || errors.requirements) {
+        setFieldTouched("selection", true);
+        setFieldTouched("requirements", true);
         setFieldTouched("selectionprocess", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");

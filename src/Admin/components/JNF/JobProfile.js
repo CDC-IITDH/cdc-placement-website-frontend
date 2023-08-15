@@ -107,7 +107,11 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Details of Bond (if any)</Form.Label>
-        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur}></Form.Control>
+        <Form.Control as="textarea" maxLength={jnf_textarea_max_character_count} className="text-area" name='bonddetails' value={values.bonddetails} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.bonddetails && errors.bonddetails}></Form.Control>
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.bonddetails}{" "}
+        </Form.Control.Feedback>
       </Form.Group>
     </>
   )

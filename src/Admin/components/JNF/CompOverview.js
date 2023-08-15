@@ -64,10 +64,15 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
           maxLength={jnf_textarea_max_character_count}
           className="text-area"
           name="compdescription"
+          value={values.compdescription}
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.compdescription}
-        ></Form.Control>
+          isInvalid={touched.compdescription && errors.compdescription}
+        />
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.compdescription}{" "}
+        </Form.Control.Feedback>  
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>
