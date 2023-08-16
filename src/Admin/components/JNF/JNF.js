@@ -203,16 +203,18 @@ const JNF = ({ setShowLoader }) => {
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     research: yup.string().required("Required"),
     numoffers: yup.number().min(0, "Must be positive"),
-    ctc: yup.number().required("CTC is Required").min(0, "Must be positive"),
+    ctc: yup.number().required("CTC is Required").integer("Must be an integer").min(0, "Must be positive"),
     gross: yup
       .number()
       .required("Gross is Required")
+      .integer("Must be an integer")
       .min(0, "Must be positive"),
     takehome: yup
       .number()
       .required("Take Home is Required")
+      .integer("Must be an integer")
       .min(0, "Must be positive"),
-    bonus: yup.number().min(0, "Must be positive"),
+    bonus: yup.number().integer("Must be an integer").min(0, "Must be positive"),
     bonddetails: yup.string().max(jnf_textarea_max_character_count-1, `Bond details should be within ${jnf_textarea_max_character_count} character limit.`),
     selectionprocess: yup
       .array()
