@@ -107,7 +107,12 @@ const SelectionProcess = ({
           value={values.selection}
           onChange={handleChange}
           onBlur={handleBlur}
+          isInvalid={touched.selection && errors.selection}
         ></Form.Control>
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.selection}{" "}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Academic Requirements</Form.Label>
@@ -119,7 +124,12 @@ const SelectionProcess = ({
           value={values.requirements}
           onChange={handleChange}
           onBlur={handleBlur}
+          isInvalid={touched.requirements && errors.requirements}
         ></Form.Control>
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.requirements}{" "}
+        </Form.Control.Feedback>
         <Form.Text className="text-muted">
           Mention any academic requirements such as CPI cutoff, branch, etc.
         </Form.Text>

@@ -81,7 +81,12 @@ const CompOverview = ({
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.compdescription}
+          isInvalid={touched.compdescription && errors.compdescription}
         ></Form.Control>
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.compdescription}{" "}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>

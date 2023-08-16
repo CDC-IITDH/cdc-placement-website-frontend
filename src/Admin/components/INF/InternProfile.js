@@ -377,7 +377,12 @@ const InternProfile = ({
           value={values.other_facilities}
           onChange={handleChange}
           onBlur={handleBlur}
+          isInvalid={touched.other_facilities && errors.other_facilities}
         ></Form.Control>
+        <Form.Control.Feedback type="invalid">
+          {" "}
+          {errors.other_facilities}{" "}
+        </Form.Control.Feedback>
       </Form.Group>
     </>
   );

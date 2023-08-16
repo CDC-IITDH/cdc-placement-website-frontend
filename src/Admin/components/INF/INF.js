@@ -14,6 +14,7 @@ import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
+import { inf_smalltext_max_character_count, inf_textarea_max_character_count, inf_text_max_character_count } from "./limit_constants";
 
 const INF = ({ setShowLoader }) => {
   const year = "2023-2024";
@@ -175,16 +176,16 @@ const INF = ({ setShowLoader }) => {
     };
   };
   let schema = yup.object().shape({
-    companyname: yup.string().required("Company Name is Required"),
+    companyname: yup.string().required("Company Name is Required").max(inf_smalltext_max_character_count-1, `Company name should be within ${inf_smalltext_max_character_count-1} characters.`),
     website: yup
     .string()
     .url("Please enter a valid url (eg. https://example.com)")
-    .required("Website Link is Required"), 
-    compdescription : yup.string(),
-    address: yup.string().required("Company Address is Required"),
-    city: yup.string().required("City is Required"),
-    state: yup.string().required("State is Required"),
-    country: yup.string().required("Country is Required"),
+    .required("Website Link is Required").max(inf_text_max_character_count-1, `Website link should be within ${inf_text_max_character_count-1} characters.`),
+    compdescription : yup.string().max(inf_textarea_max_character_count-1, `Company description should be within ${inf_textarea_max_character_count} characters.`),
+    address: yup.string().required("Company Address is Required").max(inf_textarea_max_character_count-1, `Company address should be within ${inf_textarea_max_character_count} characters.`),
+    city: yup.string().required("City is Required").max(inf_smalltext_max_character_count-1, `City should be within ${inf_smalltext_max_character_count-1} characters.`),
+    state: yup.string().required("State is Required").max(inf_smalltext_max_character_count-1, `State should be within ${inf_smalltext_max_character_count-1} characters.`),
+    country: yup.string().required("Country is Required").max(inf_smalltext_max_character_count-1, `Country should be within ${inf_smalltext_max_character_count-1} characters.`),
     pincode: yup
       .number("Must be a Number")
       .required("Zip/Pin is Required")
@@ -192,9 +193,9 @@ const INF = ({ setShowLoader }) => {
       .max(999999, "Must be at most 6 digits"),
     companytype: yup.string().required("Required"),
     nature: yup.string().required("Required"),
-    designation: yup.string().required("Designation is Required"),
-    locations: yup.string().required("Loaction is Required"),
-    details: yup.string().required("Details are Required"),
+    designation: yup.string().required("Designation is Required").max(inf_text_max_character_count-1, `Designation should be within ${inf_text_max_character_count-1} characters.`),
+    locations: yup.string().required("Loaction is Required").max(inf_smalltext_max_character_count-1, `Location should be within ${inf_smalltext_max_character_count-1} characters.`),
+    details: yup.string().required("Details are Required").max(inf_textarea_max_character_count-1, `Details should be within ${inf_textarea_max_character_count} characters.`),
     worktype: yup.string().required("Required"),
     season: yup
     .array()
@@ -206,21 +207,22 @@ const INF = ({ setShowLoader }) => {
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     research: yup.string().required("Required"),
     numoffers: yup.number().min(0, "Must be positive"),
-    stipend: yup.number().required("Stipend is Required").min(0, "Must be positive"),
+    stipend: yup.number().required("Stipend is Required").integer("Must be an integer").min(0, "Must be positive"),
     facilities: yup
     .array(),
-    other_facilities: yup.string(),
-    selection: yup.string(),
+    other_facilities: yup.string().max(inf_textarea_max_character_count-1, `Other facilities should be within ${inf_textarea_max_character_count} characters.`),
+    selection: yup.string().max(inf_textarea_max_character_count-1, `Selection procedure should be within ${inf_textarea_max_character_count} characters.`),
     selectionprocess: yup
     .array()
       .min(1, "Choose at least one")
       .required("Required"),
-    requirements: yup.string(),
-    contact: yup.string().required("Contact is Required"),
+    requirements: yup.string().max(inf_textarea_max_character_count-1, `Requirements should be within ${inf_textarea_max_character_count} characters.`),
+    contact: yup.string().required("Contact Name is Required").max(inf_text_max_character_count-1, `Contact should be within ${inf_text_max_character_count-1} characters.`),
     email: yup
       .string()
-      .email("Please enter a email address (eg. john@example.com)")
-      .required("Required"),
+      .email("Please enter a email address (eg. sriram@example.com)")
+      .required("Required")
+      .max(inf_smalltext_max_character_count-1, `Email should be within ${inf_smalltext_max_character_count-1} characters.`),
       mobile: yup
       .number()
       .required("Mobile Number is Required")
@@ -357,6 +359,7 @@ const INF = ({ setShowLoader }) => {
       if (
         errors.name ||
         errors.link ||
+        errors.compdescription ||
         errors.address ||
         errors.city ||
         errors.state ||
@@ -367,6 +370,7 @@ const INF = ({ setShowLoader }) => {
       ) {
         setFieldTouched("name", true);
         setFieldTouched("link", true);
+        setFieldTouched("compdescription", true);
         setFieldTouched("address", true);
         setFieldTouched("city", true);
         setFieldTouched("state", true);
@@ -392,7 +396,9 @@ const INF = ({ setShowLoader }) => {
         errors.sophomoresallowed ||
         errors.research ||
         errors.numoffers ||
-        errors.stipend
+        errors.stipend ||
+        errors.facilities ||
+        errors.other_facilities
       ) {
         setFieldTouched("designation", true);
         setFieldTouched("locations", true);
@@ -405,14 +411,18 @@ const INF = ({ setShowLoader }) => {
         setFieldTouched("research", true);
         setFieldTouched("numoffers", true);
         setFieldTouched("stipend", true);
+        setFieldTouched("facilities", true);
+        setFieldTouched("other_facilities", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
       } else {
         setPage(page + 1);
       }
     } else if (page === 3) {
-      if (errors.selectionprocess) {
+      if (errors.selectionprocess || errors.requirements || errors.selection) {
         setFieldTouched("selectionprocess", true);
+        setFieldTouched("requirements", true);
+        setFieldTouched("selection", true);
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
       } else {
