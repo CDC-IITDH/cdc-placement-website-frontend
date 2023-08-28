@@ -85,7 +85,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <Form.Label>Cost to Company (CTC) <span className="text-danger">*</span></Form.Label>
         <Form.Control type="number" name='ctc' value={values.ctc} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.ctc && errors.ctc} />
         <Form.Control.Feedback type="invalid"> {errors.ctc} </Form.Control.Feedback>
-        <Form.Text className="text-muted">(in INR/year)<br />(Example: If CTC is 15LPA, Enter 1500000))</Form.Text>
+        <Form.Text className="text-muted">(in INR/year)<br />Example: If CTC is 15LPA, Enter 1500000</Form.Text>
       </Form.Group>
       <Form.Group className="mb-5 w-50">
         <Form.Label>Gross <span className="text-danger">*</span></Form.Label>
