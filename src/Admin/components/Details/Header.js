@@ -65,7 +65,6 @@ const Header = ({
     if (token) {
       ExportAsExcel(token, openingId)
         .then((res) => {
-          console.log(res);
           if (res.file) {
             window.open(res.file);
           }
