@@ -172,9 +172,6 @@ function Modale({
         </Modal.Header>
         <Modal.Body>
           <div className="card-div">
-            <h4 align="center" className="modale-info-name">
-              Hello {profileInfo.name}!
-            </h4>
 
             <div className="modal-field-parent">
               <Container>
