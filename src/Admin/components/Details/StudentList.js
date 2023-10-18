@@ -30,7 +30,53 @@ const StudentList = ({
     setPage(value);
   };
 
-  let length = applicationsInfo ? applicationsInfo.applications.length : 0;
+  let displayApplications = applicationsInfo ? applicationsInfo.applications
+      .sort((e) => {
+        if (e.selected) {
+          return -1;
+        } else {
+          return 1;
+        }
+      })
+      .filter((elem) => {
+        const rollNo = elem.student_details.roll_no;
+        return (
+          elem.student_details.name.includes(searchText) ||
+          (rollNo && rollNo.toString() === searchText)
+        );
+      })
+
+      .filter((elem) => {
+        return (
+          (filterOptionsBatch.length === 0 ||
+            filterOptionsBatch.some(
+              (option) =>
+                option.selected &&
+                elem.student_details.batch === option.name
+            )) &&
+          (filterOptionsBranch.length === 0 ||
+            filterOptionsBranch.some(
+              (option) =>
+                option.selected &&
+                elem.student_details.branch === option.name
+            )) &&
+          (filterOptionsStatus.length === 0 ||
+            filterOptionsStatus.some(
+              (option) =>
+                (option.selected && elem.selected === option.name) ||
+                (option.name === "Applied" &&
+                  option.selected &&
+                  elem.selected === null) ||
+                (option.name === "Selected" &&
+                  option.selected &&
+                  elem.selected === true) ||
+                (option.name === "Rejected" &&
+                  option.selected &&
+                  elem.selected === false)
+            ))
+        );
+      }) : [];
+  let length = displayApplications.length;
   const pageCount = Math.ceil(length / usersPerPage);
 
   return (
@@ -48,54 +94,7 @@ const StudentList = ({
               </Typography>
             </Grid>
           ) : (
-            applicationsInfo &&
-            applicationsInfo.applications
-              .slice(pagesVisited, pagesVisited + usersPerPage)
-              .sort((e) => {
-                if (e.selected) {
-                  return -1;
-                } else {
-                  return 1;
-                }
-              })
-              .filter((elem) => {
-                const rollNo = elem.student_details.roll_no;
-                return (
-                  elem.student_details.name.includes(searchText) ||
-                  (rollNo && rollNo.toString() === searchText)
-                );
-              })
-
-              .filter((elem) => {
-                return (
-                  (filterOptionsBatch.length === 0 ||
-                    filterOptionsBatch.some(
-                      (option) =>
-                        option.selected &&
-                        elem.student_details.batch === option.name
-                    )) &&
-                  (filterOptionsBranch.length === 0 ||
-                    filterOptionsBranch.some(
-                      (option) =>
-                        option.selected &&
-                        elem.student_details.branch === option.name
-                    )) &&
-                  (filterOptionsStatus.length === 0 ||
-                    filterOptionsStatus.some(
-                      (option) =>
-                        (option.selected && elem.selected === option.name) ||
-                        (option.name === "Applied" &&
-                          option.selected &&
-                          elem.selected === null) ||
-                        (option.name === "Selected" &&
-                          option.selected &&
-                          elem.selected === true) ||
-                        (option.name === "Rejected" &&
-                          option.selected &&
-                          elem.selected === false)
-                    ))
-                );
-              })
+            displayApplications.slice(pagesVisited, pagesVisited + usersPerPage)
               .map((elem) => {
                 return (
                   <Grid key={elem.id} item xs={6} s={6} md={6} lg={3}>
