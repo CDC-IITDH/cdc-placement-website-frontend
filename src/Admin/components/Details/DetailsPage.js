@@ -39,7 +39,7 @@ const DetailsPage = ({
   const BRANCH = [
     { id: 1, name: "CSE", selected: true },
     { id: 2, name: "EE", selected: true },
-    { id: 3, name: "ME", selected: true },
+    { id: 3, name: "MMAE", selected: true },
   ];
 
   const STATUS = [
