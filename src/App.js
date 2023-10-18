@@ -17,6 +17,7 @@ import JNF from "./Admin/components/JNF/JNF";
 import INF from "./Admin/components/INF/INF";
 import VerifyEmail from "./Admin/components/VerifyEmail/VerifyEmail";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Notification from "./firebaseNotifications/Notification";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -80,18 +81,21 @@ const App = () => {
                   userTypes.includes(currentUserType)
                 )
                   return (
-                    <Student
-                      auth={auth}
-                      token={token}
-                      setAuth={setAuth}
-                      setToken={setToken}
-                      setCurrentUserType={setCurrentUserType}
-                      setShowLoader={setShowLoader}
-                      setError={setError}
-                      setShowError={setShowError}
-                      setSuccess={setSuccess}
-                      setShowSuccess={setShowSuccess}
-                    />
+                    <div>
+                      <Notification token={token} />
+                      <Student
+                        auth={auth}
+                        token={token}
+                        setAuth={setAuth}
+                        setToken={setToken}
+                        setCurrentUserType={setCurrentUserType}
+                        setShowLoader={setShowLoader}
+                        setError={setError}
+                        setShowError={setShowError}
+                        setSuccess={setSuccess}
+                        setShowSuccess={setShowSuccess}
+                      />
+                    </div>
                   );
                 else return <Redirect to="/" />;
               }}
@@ -107,6 +111,7 @@ const App = () => {
                 )
                   return (
                     <userTypesContext.Provider value={userTypes}>
+                      <Notification token={token} />
                       <Admin
                         auth={auth}
                         token={token}
