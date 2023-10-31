@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 let messaging;
 
-if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator && isSupported()) {
   initializeApp(firebaseConfig);
   messaging = getMessaging();
 } else {
@@ -24,7 +24,7 @@ if ("serviceWorker" in navigator) {
 
 
 export const requestForToken = (token) => {
-  if (isSupported()) {
+  if ("serviceWorker" in navigator && isSupported()) {
     return getToken(messaging, {
       vapidKey:
         "BJfvjeL3lvzQi9Tk6Mra9i6gHDaa6bCYmEF8sB9Dsn1ERtXq5XeWvgJI-Dze5MlnEFds-X3djtBlk4oogbcMuXs",
@@ -62,7 +62,7 @@ export const requestForToken = (token) => {
 // - the user clicks on an app notification created by a service worker `messaging.onBackgroundMessage` handler.
 export const onMessageListener = () =>
   new Promise((resolve) => {
-    if (isSupported()) {
+    if ("serviceWorker" in navigator && isSupported()) {
       onMessage(messaging, (payload) => {
         resolve(payload);
       });
