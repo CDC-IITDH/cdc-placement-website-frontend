@@ -2,7 +2,7 @@
 // Read more at https://firebase.google.com/docs/cloud-messaging/js/client && https://firebase.google.com/docs/cloud-messaging/js/receive
 
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDNozpg23CATUK2dtH9YvgRCn41w0qFqEU",
@@ -13,40 +13,48 @@ const firebaseConfig = {
   appId: "1:206036807588:web:6a03828c7f9ed17a6c5b31",
 };
 
-initializeApp(firebaseConfig);
+let messaging;
 
-const messaging = getMessaging();
+if ("serviceWorker" in navigator) {
+  initializeApp(firebaseConfig);
+  messaging = getMessaging();
+} else {
+  console.log("Service worker is not supported in this browser.");
+}
+
 
 export const requestForToken = (token) => {
-  return getToken(messaging, {
-    vapidKey:
-      "BJfvjeL3lvzQi9Tk6Mra9i6gHDaa6bCYmEF8sB9Dsn1ERtXq5XeWvgJI-Dze5MlnEFds-X3djtBlk4oogbcMuXs",
-    // serviceWorkerRegistration,
-  })
-    .then((currentToken) => {
-      if (currentToken) {
-        //console.log("current token for client: ", currentToken);
-
-        if (currentToken) {
-          sendTokenToServer(currentToken, token);
-        } else {
-          console.log(
-            "No Instance ID token available. Give permission to generate one."
-          );
-
-          setTokenSentToServer(false);
-        }
-      } else {
-        setTokenSentToServer(false);
-        requestPermission();
-        console.log(
-          "No registration token available. Give permission to generate one."
-        );
-      }
+  if (isSupported()) {
+    return getToken(messaging, {
+      vapidKey:
+        "BJfvjeL3lvzQi9Tk6Mra9i6gHDaa6bCYmEF8sB9Dsn1ERtXq5XeWvgJI-Dze5MlnEFds-X3djtBlk4oogbcMuXs",
+      // serviceWorkerRegistration,
     })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
-    });
+      .then((currentToken) => {
+        if (currentToken) {
+          //console.log("current token for client: ", currentToken);
+
+          if (currentToken) {
+            sendTokenToServer(currentToken, token);
+          } else {
+            console.log(
+              "No Instance ID token available. Give permission to generate one."
+            );
+
+            setTokenSentToServer(false);
+          }
+        } else {
+          setTokenSentToServer(false);
+          requestPermission();
+          console.log(
+            "No registration token available. Give permission to generate one."
+          );
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred while retrieving token. ", err);
+      });
+  }
 };
 
 // Handle incoming messages. Called when:
@@ -54,9 +62,11 @@ export const requestForToken = (token) => {
 // - the user clicks on an app notification created by a service worker `messaging.onBackgroundMessage` handler.
 export const onMessageListener = () =>
   new Promise((resolve) => {
-    onMessage(messaging, (payload) => {
-      resolve(payload);
-    });
+    if (isSupported()) {
+      onMessage(messaging, (payload) => {
+        resolve(payload);
+      });
+    }
   });
 
 function sendTokenToServer(currentToken, token) {
@@ -85,12 +95,7 @@ function sendTokenToServer(currentToken, token) {
     } catch (err) {
       console.log(err);
     }
-  } else {
-    // console.log(
-    //   "Token already sent to server so won't send it again " +
-    //     "unless it changes"
-    // );
-  }
+  } 
 }
 
 function isTokenSentToServer() {
@@ -109,15 +114,14 @@ function setTokenSentToServer(sent) {
 }
 function requestPermission() {
   //console.log("Requesting permission...");
-  // [START request_permission]
+
   messaging
     .requestPermission()
     .then(function () {
       requestForToken();
-     // console.log("Notification permission granted.");
+      // console.log("Notification permission granted.");
     })
     .catch(function (err) {
       console.log("Unable to get permission to notify.", err);
     });
-  // [END request_permission]
 }
