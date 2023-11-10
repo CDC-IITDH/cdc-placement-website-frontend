@@ -287,13 +287,7 @@ function Modale({
                   })
                   .then((submit) => {
                     if (submit.isConfirmed) {
-                      SendData().then(() => {
-                        setSuccess("Application Submited Successfully");
-                        setShowSuccess(true);
-                      }).catch((err) => {
-                        setError("Unable to Submit Application. Please Try Again");
-                        setShowError(true);
-                      });
+                      SendData()
                     }
                   });
               }}
