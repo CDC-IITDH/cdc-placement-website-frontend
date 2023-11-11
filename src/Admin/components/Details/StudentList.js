@@ -31,13 +31,6 @@ const StudentList = ({
   };
 
   let displayApplications = applicationsInfo ? applicationsInfo.applications
-      .sort((e) => {
-        if (e.selected) {
-          return -1;
-        } else {
-          return 1;
-        }
-      })
       .filter((elem) => {
         const rollNo = elem.student_details.roll_no;
         return (
@@ -75,7 +68,15 @@ const StudentList = ({
                   elem.selected === false)
             ))
         );
-      }) : [];
+      })
+      .sort((e) => {
+        if (e.selected) {
+          return -1;
+        } else {
+          return 1;
+        }
+      })
+       : [];
   let length = displayApplications.length;
   const pageCount = Math.ceil(length / usersPerPage);
 

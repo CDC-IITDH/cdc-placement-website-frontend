@@ -3,6 +3,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import Swal from "sweetalert2";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDNozpg23CATUK2dtH9YvgRCn41w0qFqEU",
@@ -39,12 +40,24 @@ export const requestForToken = (token) => {
       } else {
         setTokenSentToServer(false);
         requestPermission();
+          
         console.log(
           "No registration token available. Give permission to generate one."
         );
       }
     })
+      
     .catch((err) => {
+        Swal.fire({
+          title: "Notifications are disabled",
+          text: "Please enable browser notifications to receive updates deadlines and other important information",
+          icon: "info",
+          confirmButtonText: "OK"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            requestPermission();
+          }
+        });
       console.log("An error occurred while retrieving token. ", err);
     });
 };
@@ -62,7 +75,7 @@ export const onMessageListener = () =>
 function sendTokenToServer(currentToken, token) {
   if (
     !isTokenSentToServer() ||
-    sessionStorage.getItem("FCM_token") != currentToken
+    sessionStorage.getItem("FCM_token") !== currentToken
   ) {
     //console.log("Sending token to server...");
     try {
@@ -77,7 +90,7 @@ function sendTokenToServer(currentToken, token) {
         }),
       }).then(function (response) {
         //console.log(response);
-        if (response.status == 200) {
+        if (response.status === 200) {
           setTokenSentToServer(true);
           sessionStorage.setItem("FCM_token", currentToken);
         }
@@ -94,7 +107,7 @@ function sendTokenToServer(currentToken, token) {
 }
 
 function isTokenSentToServer() {
-  if (sessionStorage.getItem("sentToServer") == 1) {
+  if (sessionStorage.getItem("sentToServer") === 1) {
     return true;
   }
   return false;
