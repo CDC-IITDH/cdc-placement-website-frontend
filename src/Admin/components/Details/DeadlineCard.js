@@ -54,7 +54,7 @@ const DeadlineCard = (
     };
 
 
-    if (opening_offer_accepted === true) {
+    if (true) {
         return (
             <Box
                 sx={{
