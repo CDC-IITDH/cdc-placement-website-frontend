@@ -55,10 +55,7 @@ const ExportAsExcel = (token, opening_id) => {
 };
 
 
-const ChangeOffer = (token, opening_id, offer_accepted,deadline) => {
-  deadline = deadline.replace('T', ' ');
-  deadline = deadline.replace('+', ' +');
-  console.log(deadline);
+const ChangeOffer = (token, opening_id, offer_accepted) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
       fetch(API_ENDPOINT + "api/admin/updateOfferAccepted/", {
@@ -72,7 +69,6 @@ const ChangeOffer = (token, opening_id, offer_accepted,deadline) => {
         body: JSON.stringify({
           opening_id: opening_id,
           offer_accepted: offer_accepted,
-          deadline_datetime: deadline
         }),
       })
         .then((result) => {
@@ -89,8 +85,6 @@ const ChangeOffer = (token, opening_id, offer_accepted,deadline) => {
 };
 
 const UpdateDeadline = (token, deadline,opening_id) => {
-  console.log(deadline)
-  console.log(opening_id)
   return new Promise((myResolve, myReject) => {
     if (token) {
       fetch(API_ENDPOINT + "api/admin/updateDeadline/", {

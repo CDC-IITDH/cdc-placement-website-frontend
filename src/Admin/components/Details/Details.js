@@ -22,7 +22,6 @@ const Details = ({
       return (
         <OfferAccept
           buttonContent={"Offer Accepted"}
-          deadline={opening.deadline_datetime}
           opening={opening.id}
           setShowLoader={setShowLoader}
           token={token}
@@ -33,7 +32,6 @@ const Details = ({
       return (
         <OfferAccept
           buttonContent="Offer Declined"
-          deadline={opening.deadline_datetime}
           opening={opening.id}
           setShowLoader={setShowLoader}
           token={token}
@@ -44,7 +42,6 @@ const Details = ({
       return (
         <OfferAccept
           buttonContent={"Offer Approval Pending"}
-          deadline={opening.deadline_datetime}
           opening={opening.id}
           setShowLoader={setShowLoader}
           token={token}
