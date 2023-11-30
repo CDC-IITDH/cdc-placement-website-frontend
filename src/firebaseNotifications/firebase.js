@@ -58,19 +58,31 @@ export const requestForToken = (token) => {
       })
       .catch((err) => {
         var notified = sessionStorage.getItem("notified");
-        if (!notified) {
+        var denied = localStorage.getItem("denied");
+        if (!denied && !notified) {
           Swal.fire({
             title: "Notifications are disabled",
             text: "Please enable browser notifications to receive updates deadlines and other important information",
             icon: "info",
             confirmButtonText: "OK",
+            showDenyButton: true,
+            denyButtonText: "Don't show \n again",
           }).then((result) => {
             if (result.isConfirmed) {
+              Swal.fire(
+                "Do it manually!!",
+                "As you have blocked it, Please give permission manually",
+                "info"
+              );
               sessionStorage.setItem("notified", 1);
+            } else if (result.isDenied) {
+              localStorage.setItem("denied", 1);
             }
           });
         }
-         console.log("An error occurred while retrieving token. permission not granted");
+        console.log(
+          "An error occurred while retrieving token. permission not granted"
+        );
       });
   }
 };
