@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { useState, Fragment } from "react";
 import logo from "../../images/cdc_logo.png";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -87,7 +87,14 @@ const Navbar = ({
                   </div>
                 </MenuItem>
                 <MenuItem>
-                  <a style={{color: 'black', textDecoration:'none'}} target="_blank" href="https://drive.google.com/file/d/1-v1KiMw0-hlvEnmUEQJc2rAQJTgH3xPg/view?usp=drivesdk" rel="noreferrer noopener" >Placement Rules</a>
+                  <a
+                    style={{ color: "black", textDecoration: "none" }}
+                    target="_blank"
+                    href="https://drive.google.com/file/d/1-v1KiMw0-hlvEnmUEQJc2rAQJTgH3xPg/view?usp=drivesdk"
+                    rel="noreferrer noopener"
+                  >
+                    Placement Rules
+                  </a>
                 </MenuItem>
                 <MenuItem>
                   <LogOut
@@ -117,7 +124,15 @@ const Navbar = ({
                 </div>
               </Button>
               <Button>
-                <a style={{color: 'white', textDecoration:'none'}} target="_blank" href="https://drive.google.com/file/d/1-v1KiMw0-hlvEnmUEQJc2rAQJTgH3xPg/view?usp=drivesdk" className={classes.navbarLinks} rel="noreferrer noopener">Placement Rules</a>
+                <a
+                  style={{ color: "white", textDecoration: "none" }}
+                  target="_blank"
+                  href="https://drive.google.com/file/d/1P8z5w-PVAl3w6p2Z8kWgSDOUPukuMx--/view?usp=drivesdk"
+                  className={classes.navbarLinks}
+                  rel="noreferrer noopener"
+                >
+                  Placement Rules
+                </a>
               </Button>
               <LogOut
                 auth={auth}

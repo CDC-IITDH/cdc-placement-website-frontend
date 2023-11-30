@@ -172,9 +172,6 @@ function Modale({
         </Modal.Header>
         <Modal.Body>
           <div className="card-div">
-            <h4 align="center" className="modale-info-name">
-              Hello {profileInfo.name}!
-            </h4>
 
             <div className="modal-field-parent">
               <Container>
@@ -290,13 +287,7 @@ function Modale({
                   })
                   .then((submit) => {
                     if (submit.isConfirmed) {
-                      SendData().then(() => {
-                        setSuccess("Application Submited Successfully");
-                        setShowSuccess(true);
-                      }).catch((err) => {
-                        setError("Unable to Submit Application. Please Try Again");
-                        setShowError(true);
-                      });
+                      SendData()
                     }
                   });
               }}

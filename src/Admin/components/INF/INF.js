@@ -357,8 +357,8 @@ const INF = ({ setShowLoader }) => {
   ) => {
     if (page === 1) {
       if (
-        errors.name ||
-        errors.link ||
+        errors.companyname ||
+        errors.website ||
         errors.compdescription ||
         errors.address ||
         errors.city ||
