@@ -2,7 +2,12 @@
 // Read more at https://firebase.google.com/docs/cloud-messaging/js/client && https://firebase.google.com/docs/cloud-messaging/js/receive
 
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
+import {
+  getMessaging,
+  getToken,
+  onMessage,
+  isSupported,
+} from "firebase/messaging";
 import Swal from "sweetalert2";
 
 const firebaseConfig = {
@@ -22,7 +27,6 @@ if ("serviceWorker" in navigator && isSupported()) {
 } else {
   console.log("Service worker is not supported in this browser.");
 }
-
 
 export const requestForToken = (token) => {
   if ("serviceWorker" in navigator && isSupported()) {
@@ -53,17 +57,20 @@ export const requestForToken = (token) => {
         }
       })
       .catch((err) => {
+        var notified = sessionStorage.getItem("notified");
+        if (!notified) {
           Swal.fire({
             title: "Notifications are disabled",
             text: "Please enable browser notifications to receive updates deadlines and other important information",
             icon: "info",
-            confirmButtonText: "OK"
+            confirmButtonText: "OK",
           }).then((result) => {
             if (result.isConfirmed) {
-              requestPermission();
+              sessionStorage.setItem("notified", 1);
             }
           });
-        console.log("An error occurred while retrieving token. ", err);
+        }
+         console.log("An error occurred while retrieving token. permission not granted");
       });
   }
 };
@@ -106,7 +113,7 @@ function sendTokenToServer(currentToken, token) {
     } catch (err) {
       console.log(err);
     }
-  } 
+  }
 }
 
 function isTokenSentToServer() {
