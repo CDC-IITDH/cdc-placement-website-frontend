@@ -122,7 +122,7 @@ function ApplicationCard({
 											className={css.selectionStatusSubtitle}
 											variant='body1'
 										>
-											{selected === true ? 'ACCEPTED' : 'REJECTED'}
+											{selected === true ? 'SELECTED' : 'REJECTED'}
 										</Typography>
 									</Card>
 								)}
@@ -154,7 +154,7 @@ function ApplicationCard({
 					</div>
 				</Link>
 
-				{deadline_datetime > new Date() ? (
+				{/* {deadline_datetime > new Date() ? (
 					<div>
 						<Divider />
 						<Grid item style={{ textAlign: 'center' }}>
@@ -168,7 +168,7 @@ function ApplicationCard({
 							</Button>
 						</Grid>
 					</div>
-				) : null}
+				) : null} */}
 			</Card>
 		</Fragment>
 	);

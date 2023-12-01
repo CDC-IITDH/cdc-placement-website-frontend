@@ -137,7 +137,7 @@ const JobCard = ({
                                             className={classes.buttonTestBody1}
                                         >
                                             {selectionStatus.selection_status
-                                                ? "ACCEPTED"
+                                                ? "SELECTED"
                                                 : "REJECTED"}
                                         </Typography>
                                     </Box>

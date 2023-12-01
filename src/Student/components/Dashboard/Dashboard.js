@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import './Dashboard.css';
-import Cards from './Cards';
 import { Container } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { Fragment } from 'react';
 import ApplicationCard from './ApplicationCard';
+import Cards from './Cards';
 
 const Dashboard = ({
 	dashboardInfo,
@@ -23,18 +23,23 @@ const Dashboard = ({
 	const [isloading, setIsloading] = useState(true);
 	const [appliedIds, setAppliedIds] = useState(new Set());
 	const [applStatus, setApplStatus] = useState(new Map());
+	const [offerStatus, setOfferStatus] = useState(new Map());
+
 
 	useEffect(() => {
 		if (dashboardInfo[0]) {
 			const ids = new Set();
 			const status = new Map();
+			const offer_Status = new Map();
 
 			dashboardInfo[0]?.placementApplication.forEach((elem) => {
 				ids.add(elem.placement.id);
 				status.set(elem.placement.id, elem.selected);
+				offer_Status.set(elem.placement.id, elem.offer_accepted);
 			});
 			setAppliedIds(ids);
 			setApplStatus(status);
+			setOfferStatus(offer_Status);
 
 			setIsloading(false);
 			setShowLoader(false);
@@ -66,6 +71,15 @@ const Dashboard = ({
 											let selectionStatus = hasApplied
 												? applStatus.get(elem.id)
 												: null;
+												let offerstatus,haschoosen;
+											if(selectionStatus){
+												offerstatus=offerStatus.get(elem.id);
+												if(offerstatus===null){
+													haschoosen=false;
+												}else{
+													haschoosen=true;
+												}
+											}
 											return (
 												<Cards
 													key={elem.id}
@@ -81,6 +95,8 @@ const Dashboard = ({
 													profileInfo={profileInfo}
 													hasApplied={hasApplied}
 													selectionStatus={selectionStatus}
+													hasChoosen={haschoosen}
+													offerStatus={offerstatus}
 													setError={setError}
 													setShowError={setShowError}
 													setSuccess={setSuccess}
@@ -103,6 +119,19 @@ const Dashboard = ({
 								) : (
 									<Fragment>
 										{dashboardInfo[0]?.placementApplication.map((elem) => {
+											const hasApplied = appliedIds.has(elem.id) ? true : false;
+											let selectionStatus = hasApplied
+												? applStatus.get(elem.id)
+												: null;
+											let offerstatus,haschoosen;
+											if(selectionStatus){
+												offerstatus=offerStatus.get(elem.id);
+												if(offerstatus===null){
+													haschoosen=false;
+												}else{
+													haschoosen=true;
+												}
+											}
 											return (
 												<ApplicationCard
 													key={elem.id}
@@ -116,6 +145,9 @@ const Dashboard = ({
 													type='placements'
 													additional_info={elem.additional_info}
 													selected={elem.selected}
+													selectionStatus={selectionStatus}
+													offerStatus={offerstatus}
+													hasChoosen={haschoosen}
 													setError={setError}
 													setShowError={setShowError}
 													setSuccess={setSuccess}
