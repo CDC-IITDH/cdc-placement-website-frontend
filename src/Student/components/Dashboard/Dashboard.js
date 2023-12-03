@@ -25,7 +25,11 @@ const Dashboard = ({
   const [applStatus, setApplStatus] = useState(new Map());
   const [internship_appliedIds, setInternship_appliedIds] = useState(new Set());
   const [internship_applStatus, setInternship_applStatus] = useState(new Map());
-
+  var Applications=[];
+  Applications=[...dashboardInfo[0]?.placementApplication,...dashboardInfo[0]?.internshipApplication];
+  Applications.sort((a,b)=>{
+    return new Date(b.applied_at)-new Date(a.applied_at);
+  })
   useEffect(() => {
     if (dashboardInfo[0]) {
       const ids = new Set();
@@ -41,6 +45,7 @@ const Dashboard = ({
         internship_ids.add(elem.internship.id);
         internship_status.set(elem.internship.id, elem.selected);
       });
+
       setAppliedIds(ids);
       setApplStatus(status);
       setInternship_appliedIds(internship_ids);
@@ -176,52 +181,52 @@ const Dashboard = ({
                     </Container>
                   ) : (
                     <Fragment>
-                      {dashboardInfo[0]?.placementApplication.map((elem) => {
-                        return (
+                      {Applications.map((elem) => {
+                       return(
+                        elem.placement?(
                           <ApplicationCard
-                            key={elem.id}
-                            id={elem.id}
-                            company={elem.placement.company_name}
-                            deadline_datetime={
-                              new Date(elem.placement.deadline_datetime)
-                            }
-                            token={token}
-                            resume={elem.resume_link}
-                            type="placements"
-                            additional_info={elem.additional_info}
-                            selected={elem.selected}
-                            setError={setError}
-                            setShowError={setShowError}
-                            setSuccess={setSuccess}
-                            setShowSuccess={setShowSuccess}
-                            setShowLoader={setShowLoader}
-                            getDashboardInfo={getDashboardInfo}
-                          />
-                        );
+                         key={elem.id}
+                         id={elem.id}
+                         company={elem.placement.company_name}
+                         deadline_datetime={
+                           new Date(elem.placement.deadline_datetime)
+                         }
+                         token={token}
+                         resume={elem.resume_link}
+                         type="placements"
+                         additional_info={elem.additional_info}
+                         selected={elem.selected}
+                         setError={setError}
+                         setShowError={setShowError}
+                         setSuccess={setSuccess}
+                         setShowSuccess={setShowSuccess}
+                         setShowLoader={setShowLoader}
+                         getDashboardInfo={getDashboardInfo}
+                        />
+                     ):(
+                       <ApplicationCard
+                         key={elem.id}
+                         id={elem.id}
+                         company={elem.internship.company_name}
+                         deadline_datetime={
+                           new Date(elem.internship.deadline_datetime)
+                         }
+                         token={token}
+                         resume={elem.resume_link}
+                         type="internships"
+                         additional_info={elem.additional_info}
+                         selected={elem.selected}
+                         setError={setError}
+                         setShowError={setShowError}
+                         setSuccess={setSuccess}
+                         setShowSuccess={setShowSuccess}
+                         setShowLoader={setShowLoader}
+                         getDashboardInfo={getDashboardInfo}
+                       />
+                     )
+                       );
                       })}
-                      {dashboardInfo[0]?.internshipApplication.map((elem) => {
-                        return (
-                          <ApplicationCard
-                            key={elem.id}
-                            id={elem.id}
-                            company={elem.internship.company_name}
-                            deadline_datetime={
-                              new Date(elem.internship.deadline_datetime)
-                            }
-                            token={token}
-                            resume={elem.resume_link}
-                            type="internships"
-                            additional_info={elem.additional_info}
-                            selected={elem.selected}
-                            setError={setError}
-                            setShowError={setShowError}
-                            setSuccess={setSuccess}
-                            setShowSuccess={setShowSuccess}
-                            setShowLoader={setShowLoader}
-                            getDashboardInfo={getDashboardInfo}
-                          />
-                        );
-                      })}
+                    
                     </Fragment>
                   )}
                 </Tab>
