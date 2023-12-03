@@ -72,7 +72,15 @@ function ApplicationCard({
 
 		e.stopPropagation();
 	};
-
+	const label_style={
+		padding: "5px 10px",
+		borderRadius: "20px",
+		fontSize: "15px",
+		fontWeight: "bold",
+		backgroundColor: "#FF3FA4",
+		marginLeft: "10px",
+		color: "#ffffff",
+		}
 	return (
 		<Fragment>
 			<Card className={css.applicationCard}>
@@ -93,8 +101,14 @@ function ApplicationCard({
 									component='h6'
 									style={{ marginLeft: '20px' }}
 								>
-									<SvgIcon component={Work} /> {company}
+									<SvgIcon component={Work} /> {company }
+									{type==='internships'?(
+										<span style={label_style}>Internship</span>
+									):(
+										<span style={{...label_style,backgroundColor:"#7057ff"}}>Placement</span>
+									)}
 								</Typography>
+								
 							</Grid>
 							<Grid item xs={12} sm={3} className={css.applicationTitleStatus}>
 								{selected === null ? (
