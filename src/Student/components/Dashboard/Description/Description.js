@@ -25,7 +25,6 @@ const Description = ({
     resume_selected: null,
     additional_details: null,
   });
-
   useEffect(() => {
     if (
       dashboardInfo[0] !== null &&
@@ -38,15 +37,26 @@ const Description = ({
         }
       );
       if (desc.length === 0) {
-
+        if(infoType==='placements'){
+          
         desc = dashboardInfo[0]['placementApplication'].filter(
+          (elem) => {
+            return (elem.id.toString() === match.params.id.toString())
+          }
+      );
+      for (let i = 0; i < desc.length; i++) {
+        desc[i] = desc[i]['placement'];
+      }
+        }else{
+          desc = dashboardInfo[0]['internshipApplication'].filter(
             (elem) => {
               return (elem.id.toString() === match.params.id.toString())
             }
         );
         for (let i = 0; i < desc.length; i++) {
-          desc[i] = desc[i]['placement'];
+          desc[i] = desc[i]['internship'];
         }
+      }
       }
       if (desc.length !== 0) {
         setDesc(desc);
@@ -57,9 +67,11 @@ const Description = ({
             i++
           ) {
             if (
-              dashboardInfo[0].internshipApplication[i].internship.toString() ===
-              match.params.id.toString() && selectionStatus.resume_selected === null
+              (dashboardInfo[0].internshipApplication[i].id.toString() ===
+              match.params.id.toString() ||  dashboardInfo[0].internshipApplication[i]['internship'].id.toString() ===
+              match.params.id.toString()) && selectionStatus.resume_selected === null
             ) {
+              
               setHasApplied(true);
               setSelectionStatus({
                 ...selectionStatus,
@@ -114,6 +126,8 @@ const Description = ({
         </div>
       ) : (
         desc.map((elem) => {
+          
+          
           return (
             <JobCard
               key={elem.id}
@@ -128,18 +142,22 @@ const Description = ({
               company_details = {elem.company_details}
               company_details_pdf_links = {elem.company_details_pdf_links}
               is_company_details_pdf={elem.is_company_details_pdf}
+              stipend={elem.stipend}
               compensation_CTC={elem.compensation_CTC}
               compensation_bonus={elem.compensation_bonus}
               compensation_gross={elem.compensation_gross}
               compensation_take_home={elem.compensation_take_home}
               compensation_pdf_links={elem.compensation_pdf_links}
-              is_compensation_details_pdf={elem.is_compensation_details_pdf}
+              is_compensation_details_pdf={elem.is_compensation_details_pdf || elem.is_stipend_description_pdf}
               compensation_details={elem.compensation_details}
               description={elem.description}
               description_pdf_links = {elem.description_pdf_links}
               is_description_pdf={elem.is_description_pdf}
               tier={elem.tier}
-              start_date={elem.tentative_date_of_joining}
+              start_date={match.params.type === "placements" ? elem.tentative_date_of_joining : elem.interning_period_from}
+              end_date={elem.interning_period_to}
+              wfh={elem.is_work_from_home}
+              facilities_provided={elem.facilities_provided}
               allowed_branch={elem.allowed_branch}
               allowed_batch={elem.allowed_batch}
               website={elem.website}
@@ -158,9 +176,6 @@ const Description = ({
               country={elem.country}
               created_at={elem.created_at}
               co_op={match.params.type === "internships" ? elem.co_op : ""}
-              duration={
-                match.params.type === "internships" ? elem.duration : ""
-              }
               profileInfo={profileInfo}
               hasApplied={hasApplied}
               selectionStatus={selectionStatus}

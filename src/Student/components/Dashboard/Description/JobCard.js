@@ -25,6 +25,7 @@ const JobCard = ({
                      company_details,
                      company_details_pdf_links,
                      is_company_details_pdf,
+                        stipend,
                      compensation_CTC,
                      compensation_bonus,
                      compensation_gross,
@@ -37,6 +38,9 @@ const JobCard = ({
                      is_description_pdf,
                      tier,
                      start_date,
+                     end_date,
+                     wfh,
+                     facilities_provided,
                      allowed_branch,
                      allowed_batch,
                      website,
@@ -70,7 +74,7 @@ const JobCard = ({
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    
 
     return (
         <Box className={classes.container}>
@@ -161,7 +165,8 @@ const JobCard = ({
                 </Grid>
 
                 <Grid item xs={12} md={4} lg={4}>
-                    <Grid item lg={12} md={12} sm={12} xs={12}>
+                    {type === "placements" ? (
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
                         <Card variant="outlined">
                             <CardContent style={{padding:"10px 16px"}}>
                                 <Typography color="textSecondary" gutterBottom>
@@ -172,16 +177,43 @@ const JobCard = ({
                                 </Typography>
                             </CardContent>
                         </Card>
-                    </Grid>
+                        </Grid>
+                    ):
+                    (
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
+                        <Card variant="outlined">
+                            <CardContent style={{padding:"10px 16px"}}>
+                                <Typography color="textSecondary" gutterBottom>
+                                    Co-Op  Offered
+                                </Typography>
+                                <Typography variant="h5" component="h5">
+                                    {co_op?"Yes":"No"}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                        </Grid>
+                    )
+                    
+                    
+                    
+                    }
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <Card variant="outlined" >
                             <CardContent style={{padding:"10px 16px"}}>
                                 <Typography color="textSecondary" gutterBottom>
-                                    Start Date
+                                   {type==="internships"?"Duration":"Tentative Date of Joining"}
                                 </Typography>
-                                {type === "internships" && duration ? (
+                                {type === "internships"  ? (
                                     <Typography variant="h5" component="h5">
-                                        {`${start_date} | ${duration} months`}
+                                        {`${new Date(start_date).toLocaleDateString('en-US', {
+                                            month: 'short',
+                                            day: 'numeric',
+                                            year: 'numeric'
+                                        })} - ${new Date(end_date).toLocaleDateString('en-US', {
+                                            month: 'short',
+                                            day: 'numeric',
+                                            year: 'numeric'
+                                        })} `}
                                     </Typography>
                                 ) : (
                                     <Typography variant="h5" component="h5">
@@ -210,7 +242,7 @@ const JobCard = ({
 
                                 <Typography variant="h5" component="h5">
                                     <span>&#8377;</span>
-                                    {compensation_CTC ? ` ${compensation_CTC.toLocaleString()}` : ""}
+                                    {compensation_CTC ?  `${compensation_CTC.toLocaleString()}`:` ${stipend.toLocaleString()}` }
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -219,10 +251,11 @@ const JobCard = ({
                         <Card variant="outlined" >
                             <CardContent style={{padding:"10px 16px"}}>
                                 <Typography color="textSecondary" gutterBottom>
-                                    Location | Location Type
+                                    Location | Location Type {type === "internships" ? "| Oppurtunity Type" : ""}
                                 </Typography>
                                 <Typography variant="h5" component="h5">
-                                    {`${city} | ${city_type}`}
+                                    {`${city} | ${city_type}` + (type === "internships" ? " | "+(wfh ? "Remote" : "In Office") : "")}
+                                       
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -338,7 +371,7 @@ const JobCard = ({
 
                         }
                         {
-                            compensation_CTC || compensation_gross || compensation_details || is_compensation_details_pdf ?
+                            compensation_CTC || compensation_gross || compensation_details || is_compensation_details_pdf ||stipend?
                                 <div>
                                     <Typography variant="h5" component="h5" style={{margin: "10px 0 5px"}}>
                                         Compensation Details
@@ -365,6 +398,12 @@ const JobCard = ({
                                             {compensation_details}
                                                 </Typography>:""
                                     }
+                                    {
+                                        stipend? <Typography variant="body1" component="p">
+                                            <b>Stipend: </b> Rs. {stipend}
+                                                </Typography>:""
+
+                                    }
                                     {is_compensation_details_pdf && compensation_pdf_links.length ?
                                         <Typography variant="body1" component="body1">
                                             <b>Attachments:</b>
@@ -385,6 +424,32 @@ const JobCard = ({
                                     <hr/>
                                 </div> : ""
 
+                        }
+                        {
+                            facilities_provided?.length ? (
+                                <div>
+                                    <Typography variant="h5" component="h5" style={{margin: "10px 0 5px"}}>
+                                        Facilities Provided
+                                    </Typography>
+                                    {facilities_provided ? (
+                                        <Typography variant="body1" component="p">
+                                            <ol>
+                                                {facilities_provided?.map((elem, index) => {
+                                                    return (
+                                                        <li key={index}>
+                                                            <Typography variant="body1" component="p">
+                                                                {elem}
+                                                            </Typography>
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ol>
+                                        </Typography>
+                                    ) : ""}
+                                     <hr/>
+                                </div>
+                               
+                            ) : ("")
                         }
                         {
                             selection_procedure || selection_procedure_details || is_selection_procedure_details_pdf ?
@@ -427,6 +492,7 @@ const JobCard = ({
                                 </div> : ""
 
                         }
+                        
                         {
                             other_requirements ? <div><Typography variant="h5" component="h5" style={{margin: "10px 0 5px"}}>
                                         Other Requirements
@@ -461,7 +527,7 @@ const JobCard = ({
                             </div>:""
                         }
                         {other_requirements || other_requirements || tentative_no_of_offers ?<hr/>:"" }
-
+                        
                     </Box>
                 </Grid>
 
@@ -476,7 +542,7 @@ const JobCard = ({
                     handleClose={handleClose}
                     company={company_name}
                     designation={designation}
-                    compensation={compensation_CTC}
+                    compensation={type==="internships"?stipend:compensation_gross}
                     additionalInfo={additional_info}
                     profileInfo={profileInfo}
                     setError={setError}

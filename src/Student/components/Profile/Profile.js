@@ -136,6 +136,14 @@ const Profile = ({
                                             <div className="modal-field-key">CPI:</div>
                                             <div className="modal-field-value">{profileInfo.cpi}</div>
                                         </div>
+                                        <div className="modal-field-parent">
+                                            <div className="modal-field-key">Registered for Placements:</div>
+                                            <div className="modal-field-value">{profileInfo.can_apply?"True":"False"}</div>
+                                        </div>
+                                        <div className="modal-field-parent">
+                                            <div className="modal-field-key">Registered for Internships:</div>
+                                            <div className="modal-field-value">{profileInfo.can_apply_internship?"True":"False"}</div>
+                                        </div>
 
                                         {
                                             profileInfo.offers && profileInfo.offers.length ?

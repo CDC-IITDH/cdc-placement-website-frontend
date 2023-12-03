@@ -33,7 +33,8 @@ function ApplicationCard({
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
-	const withDraw = (e) => {
+	const withDraw = (e,type) => {
+		
 		Swal.fire({
 			title: 'WithDraw Application?',
 			text: 'Once WithDrawn, you can apply again before the deadline',
@@ -45,6 +46,7 @@ function ApplicationCard({
 			if (res.isConfirmed) {
 				const data = {
 					application_id: id,
+					opening_type: type==='placements'?'Placement':'Internship',
 				};
 
 				WithDrawApplication(token, data)
@@ -160,7 +162,9 @@ function ApplicationCard({
 						<Grid item style={{ textAlign: 'center' }}>
 							<Button
 								className={css.withDrewButton}
-								onClick={withDraw}
+								onClick={(e)=>{
+									withDraw(e,type);
+								}}
 							>
 								<Typography variant='subtitle2'>
 									Withdraw Application
