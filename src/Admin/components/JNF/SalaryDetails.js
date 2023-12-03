@@ -1,6 +1,6 @@
 import { Form, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
-import { jnf_textarea_max_character_count } from "./limit_constants"
+import { jnf_textarea_max_character_count } from "./constants"
 import MultipleFileInput from "./MultipleFileInput"
 
 const SalaryDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, handleFieldChange, setFieldValue, salary_file, setSalary_file}) => {

@@ -14,7 +14,7 @@ import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
-import { inf_smalltext_max_character_count, inf_textarea_max_character_count, inf_text_max_character_count } from "./limit_constants";
+import { inf_smalltext_max_character_count, inf_textarea_max_character_count, inf_text_max_character_count } from "./constants";
 
 const INF = ({ setShowLoader }) => {
   const year = "2023-2024";
@@ -38,8 +38,8 @@ const INF = ({ setShowLoader }) => {
     end_date: "",
     worktype: "",
     branch: "",
-    research: "",
-    sophomoresallowed: "",
+    allowedstreams: "",
+    allowedbatches: "",
     numoffers: "",
     stipend: "",
     facilities: "",
@@ -134,7 +134,6 @@ const INF = ({ setShowLoader }) => {
     setWarning();
   }, [page]);
 
-  const recaptchaRef = useRef(null);
   const termsRef = useRef(null);
 
   const validatePDF = (value, context) => {
@@ -203,9 +202,9 @@ const INF = ({ setShowLoader }) => {
       .required("Required"),
     startdate: yup.string().required("Date is Required"),
     enddate: yup.string().required("Date is Required"),
-    sophomoresallowed: yup.string().required("Required"),
+    allowedbatches: yup.array(),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    research: yup.string().required("Required"),
+    allowedstreams: yup.array().min(1, "Choose at least one").required("Required"),
     numoffers: yup.number().min(0, "Must be positive"),
     stipend: yup.number().required("Stipend is Required").integer("Must be an integer").min(0, "Must be positive"),
     facilities: yup
@@ -284,9 +283,8 @@ const INF = ({ setShowLoader }) => {
     formdata.append("end_date", changeDateFormat(values.enddate));
     formdata.append("work_type", values.worktype);
     formdata.append("allowed_branch", JSON.stringify(values.branch));
-    formdata.append("sophomores_allowed", values.sophomoresallowed);
-    formdata.append("rs_eligible", values.research);
-    formdata.append("sophomores_allowed", values.sophomoresallowed);
+    formdata.append("allowed_batches", values.allowedbatches);
+    formdata.append("allowed_streams", values.allowedstreams);
     formdata.append("num_offers", values.numoffers ? values.numoffers : 0);
     formdata.append("is_stipend_details_pdf", is_compensation_details_pdf);
     formdata.append("stipend", values.stipend);
@@ -313,7 +311,6 @@ const INF = ({ setShowLoader }) => {
       formdata.append("contact_person_name", values.contact);
       formdata.append("phone_number", values.mobile);
       formdata.append("email", values.email);
-      formdata.append("recaptchakey", recaptchaRef.current.getValue());
     var requestOptions = {
       method: "POST",
       body: formdata,
@@ -393,8 +390,8 @@ const INF = ({ setShowLoader }) => {
         errors.startdate ||
         errors.enddate ||
         errors.branch ||
-        errors.sophomoresallowed ||
-        errors.research ||
+        errors.allowedbatches ||
+        errors.allowedstreams ||
         errors.numoffers ||
         errors.stipend ||
         errors.facilities ||
@@ -408,7 +405,7 @@ const INF = ({ setShowLoader }) => {
         setFieldTouched("worktype", true);
         setFieldTouched("season", true);
         setFieldTouched("branch", true);
-        setFieldTouched("research", true);
+        setFieldTouched("allowedstreams", true);
         setFieldTouched("numoffers", true);
         setFieldTouched("stipend", true);
         setFieldTouched("facilities", true);
@@ -437,9 +434,6 @@ const INF = ({ setShowLoader }) => {
         setWarning("Please fill all the required fields");
       } else if (termsRef.current.checked === false) {
         setWarning("Please accept the terms and conditions");
-        window.scrollTo(0, 0);
-      } else if (recaptchaRef.current.getValue() === "") {
-        setWarning("Please verify that you are not a robot");
         window.scrollTo(0, 0);
       } else {
         handleSubmit();
@@ -582,12 +576,6 @@ const INF = ({ setShowLoader }) => {
                               Cell
                             </span>
                           </Col>
-                          <ReCAPTCHA
-                            sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
-                            size="normal"
-                            ref={recaptchaRef}
-                            style={{ marginTop: "20px", height: "50px" }}
-                          />
                         </>
                       ) : (
                         <></>

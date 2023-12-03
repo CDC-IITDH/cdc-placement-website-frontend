@@ -1,7 +1,8 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
-import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./limit_constants";
+import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count, all_btech_branches, all_mtech_branches, all_ms_branches, all_phd_branches } from "./constants";
 import MultipleFileInput from "./MultipleFileInput";
+import EligibleGroup from "./EligibleStudentsComponent";
 
 const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty, setFieldValue, submitCount, jobdescription_file, setJobdescription_file,  salary_file, setSalary_file}) => {
   return (
@@ -41,34 +42,11 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <Form.Control type="date" name='date' value={values.date} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.date && errors.date} />
         <Form.Control.Feedback type="invalid"> {errors.date} </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-5">
-        <Form.Label>Eligible Branches <span className="text-danger">*</span></Form.Label>
-        <Form.Check className="form-check" type="checkbox">
-          <Row>
-            {['CSE','EE','MMAE'].map((x) => (
-              <Col key={x} sm={6}>
-                <Form.Check.Input type="checkbox" name="branch" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.branch && errors.branch} checked={values.branch.includes(x)}></Form.Check.Input>
-                <Form.Check.Label>{x}</Form.Check.Label>
-              </Col>
-            ))}
-          </Row>
-        </Form.Check>
-        <span className="select-feedback">{touched.branch? errors.branch:''}</span>
-      </Form.Group>
-      <Form.Group className="mb-5">
-        <Form.Label>Are MS research scholars (postgraduates) eligible to apply? <span className="text-danger">*</span></Form.Label>
-        <Form.Check className="form-check" type="radio">
-          <Row>
-            {['Yes','No'].map((eligible) => (
-              <Col sm={6} key={eligible}>
-                <Form.Check.Input type="radio" label={eligible} name="research" value={eligible} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.research && errors.research} checked={values.research.includes(eligible)}></Form.Check.Input>
-                <Form.Check.Label>{eligible}</Form.Check.Label>
-              </Col>
-            ))}
-          </Row>
-        </Form.Check>
-        <span className="select-feedback">{errors.research && touched.research? errors.research:''}</span>
-      </Form.Group>
+      <EligibleGroup values={values} errors={errors} touched={touched} handleBlur={handleBlur} handleChange={handleChange} name="btech" branches={all_btech_branches} />
+      <EligibleGroup values={values} errors={errors} touched={touched} handleBlur={handleBlur} handleChange={handleChange} name="mtech" branches={all_mtech_branches} />
+      <EligibleGroup values={values} errors={errors} touched={touched} handleBlur={handleBlur} handleChange={handleChange} name="ms" branches={all_ms_branches} />
+      <EligibleGroup values={values} errors={errors} touched={touched} handleBlur={handleBlur} handleChange={handleChange} name="phd" branches={all_phd_branches} />
+
       <Form.Group className="mb-5">
         <Form.Label>Tentative No. of Offers</Form.Label>
         <Form.Control type="number" name='numoffers' value={values.numoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.numoffers && errors.numoffers} />
@@ -78,7 +56,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         </Form.Text>
       </Form.Group>
       <p className="mb-5 gray-blue"><b>
-        <u>Note:</u> In case of different salary structures being offer to BTech and MS students, the details regarding the same are to be clearly mentioned in the fields below.
+        <u>Note:</u> In case of different salary structures being offer to BTech and MS students, the details regarding the same are to be clearly mentioned below as a PDF.
       </b></p>
       <MultipleFileInput stateVar={salary_file} setStateVar={setSalary_file} name="salary_file" label ="Salary Description" />
       <Form.Group className="mb-5 w-50">

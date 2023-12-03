@@ -1,6 +1,6 @@
 import { Form, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
-import { jnf_smalltext_max_character_count, jnf_text_max_character_count } from "./limit_constants"
+import { jnf_smalltext_max_character_count, jnf_text_max_character_count } from "./constants"
 
 const ContactDetails = ({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, dirty}) => {
   return (

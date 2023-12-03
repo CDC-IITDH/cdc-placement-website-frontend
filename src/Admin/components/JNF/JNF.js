@@ -11,10 +11,10 @@ import SelectionProcess from "./SelectionProcess";
 import ContactDetails from "./ContactDetails";
 import API_ENDPOINT from "../../../api/api_endpoint";
 import { Alert } from "react-bootstrap";
-import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
-import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./limit_constants";
+import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./constants";
+
 const JNF = ({ setShowLoader }) => {
   const year = "2023-2024";
   const [preFill, setPreFill] = useState();
@@ -34,8 +34,14 @@ const JNF = ({ setShowLoader }) => {
     locations: "",
     details:  "",
     date: "",
-    branch: "",
-    research: "",
+    btechallowed: "",
+    mtechallowed: "",
+    phdallowed: "",
+    msallowed: "",
+    btechbranches: "",
+    mtechbranches: "",
+    phdbranches: "",
+    msbranches: "",
     numoffers: "",
     ctc: "",
     gross: "",
@@ -45,10 +51,10 @@ const JNF = ({ setShowLoader }) => {
     selectionprocess: "",
     selection: "",
     requirements: "",
-    contact: preFill?.placement_data.contact_person_name || "",
-    email: preFill?.placement_data.email || "",
-    mobile: preFill?.placement_data.phone_number || "",
-    telephone: preFill?.placement_data.telephone || "",           
+    contact: "",
+    email: "",
+    mobile: "",
+    telephone: "",
     compdescription_file: "" ,
     jobdescription_file: "",
     salary_file: "",
@@ -124,7 +130,6 @@ const JNF = ({ setShowLoader }) => {
     setWarning();
   }, [page]);
 
-  const recaptchaRef = useRef(null);
   const termsRef = useRef(null);
 
   const validatePDF = (value, context) => {
@@ -200,8 +205,26 @@ const JNF = ({ setShowLoader }) => {
     locations: yup.string().required("Loaction is Required").max(jnf_smalltext_max_character_count-1, `Location should be within ${jnf_smalltext_max_character_count-1} character limit.`),
     details: yup.string().required("Details are Required").max(jnf_textarea_max_character_count-1, `Details should be within ${jnf_textarea_max_character_count} character limit.`),
     date: yup.string().required("Date is Required"),
-    branch: yup.array().min(1, "Choose at least one").required("Required"),
-    research: yup.string().required("Required"),
+    btechallowed: yup.boolean(),
+    mtechallowed: yup.boolean(),
+    phdallowed: yup.boolean(),
+    msallowed: yup.boolean(),
+    btechbranches: yup.array().when("btechallowed", {
+      is: true,
+      then: yup.array().min(1, "Choose at least one").required("Required"),
+    }),
+    mtechbranches: yup.array().when("mtechallowed", {
+      is: true,
+      then: yup.array().min(1, "Choose at least one").required("Required"),
+    }),
+    phdbranches: yup.array().when("phdallowed", {
+      is: true,
+      then: yup.array().min(1, "Choose at least one").required("Required"),
+    }),
+    msbranches: yup.array().when("msallowed", {
+      is: true,
+      then: yup.array().min(1, "Choose at least one").required("Required"),
+    }),
     numoffers: yup.number().min(0, "Must be positive"),
     ctc: yup.number().required("CTC is Required").integer("Must be an integer").min(0, "Must be positive"),
     gross: yup
@@ -292,8 +315,14 @@ const JNF = ({ setShowLoader }) => {
       is_selection_procedure_details_pdf
     );
     formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
-    formdata.append("allowed_branch", JSON.stringify(values.branch));
-    formdata.append("rs_eligible", values.research);
+    formdata.append("btech_allowed", values.btechallowed);
+    formdata.append("mtech_allowed", values.mtechallowed);
+    formdata.append("phd_allowed", values.phdallowed);
+    formdata.append("ms_allowed", values.msallowed);
+    formdata.append("btech_branches", JSON.stringify(values.btechbranches));
+    formdata.append("mtech_branches", JSON.stringify(values.mtechbranches));
+    formdata.append("phd_branches", JSON.stringify(values.phdbranches));
+    formdata.append("ms_branches", JSON.stringify(values.msbranches));
     formdata.append(
       "tentative_no_of_offers",
       values.numoffers ? values.numoffers : 0
@@ -305,8 +334,6 @@ const JNF = ({ setShowLoader }) => {
     selection_file.forEach((file) => {
       formdata.append("selection_procedure_details_pdf", file, file.name);
     });
-    // formdata.append("description_pdf", [values.jobdescription_file]);
-    // formdata.append("compensation_details_pdf", [values.salary_file]);
     jobdescription_file.forEach((file) => {
       formdata.append("description_pdf", file, file.name);
     });
@@ -314,7 +341,6 @@ const JNF = ({ setShowLoader }) => {
       formdata.append("compensation_details_pdf", file, file.name);
     });
     formdata.append("selection_procedure_details_pdf", [values.selection_file]);
-    formdata.append("recaptchakey", recaptchaRef.current.getValue());
     var requestOptions = {
       method: "POST",
       body: formdata,
@@ -389,7 +415,7 @@ const JNF = ({ setShowLoader }) => {
         errors.details ||
         errors.date ||
         errors.branch ||
-        errors.research ||
+        errors.allowedstreams ||
         errors.numoffers ||
         errors.ctc ||
         errors.gross ||
@@ -402,7 +428,7 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("details", true);
         setFieldTouched("date", true);
         setFieldTouched("branch", true);
-        setFieldTouched("research", true);
+        setFieldTouched("allowedstreams", true);
         setFieldTouched("numoffers", true);
         setFieldTouched("ctc", true);
         setFieldTouched("gross", true);
@@ -433,9 +459,6 @@ const JNF = ({ setShowLoader }) => {
         setWarning("Please fill all the required fields");
       } else if (termsRef.current.checked === false) {
         setWarning("Please accept the terms and conditions");
-        window.scrollTo(0, 0);
-      } else if (recaptchaRef.current.getValue() === "") {
-        setWarning("Please verify that you are not a robot");
         window.scrollTo(0, 0);
       } else {
         handleSubmit();
@@ -575,12 +598,6 @@ const JNF = ({ setShowLoader }) => {
                               Cell
                             </span>
                           </Col>
-                          <ReCAPTCHA
-                            sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
-                            size="normal"
-                            ref={recaptchaRef}
-                            style={{ marginTop: "20px", height: "50px" }}
-                          />
                         </>
                       ) : (
                         <></>
