@@ -71,9 +71,11 @@ const Dashboard = ({
                   {dashboardInfo[0] &&
                   dashboardInfo[0]?.placements.length === 0 ? (
                     <Container>
+                      <center>
                       <h4 style={{ color: "#787878" }}>
                         No Listings Available
                       </h4>
+                      </center>
                     </Container>
                   ) : (
                     <Fragment>
@@ -117,9 +119,11 @@ const Dashboard = ({
                   {dashboardInfo[0] &&
                   dashboardInfo[0]?.internships.length === 0 ? (
                     <Container>
+                       <center>
                       <h4 style={{ color: "#787878" }}>
                         No Listings Available
                       </h4>
+                      </center>
                     </Container>
                   ) : (
                     <Fragment>
@@ -164,9 +168,11 @@ const Dashboard = ({
                   {dashboardInfo[0] &&
                   dashboardInfo[0].placementApplication.length === 0 && dashboardInfo[0].internshipApplication.length===0 ? (
                     <Container>
+                       <center>
                       <h4 style={{ color: "#787878" }}>
-                        No Listings Available
+                        No Applications Available
                       </h4>
+                      </center>
                     </Container>
                   ) : (
                     <Fragment>
