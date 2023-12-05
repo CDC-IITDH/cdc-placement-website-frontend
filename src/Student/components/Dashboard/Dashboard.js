@@ -26,7 +26,10 @@ const Dashboard = ({
   const [internship_appliedIds, setInternship_appliedIds] = useState(new Set());
   const [internship_applStatus, setInternship_applStatus] = useState(new Map());
   var Applications=[];
-  Applications=[...dashboardInfo[0]?.placementApplication,...dashboardInfo[0]?.internshipApplication];
+  console.log(dashboardInfo);
+  if(dashboardInfo){
+    Applications=[...dashboardInfo[0]?.placementApplication,...dashboardInfo[0]?.internshipApplication];
+  }
   Applications.sort((a,b)=>{
     return new Date(b.applied_at)-new Date(a.applied_at);
   })
