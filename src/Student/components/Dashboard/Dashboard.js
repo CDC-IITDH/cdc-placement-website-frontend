@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {  useEffect,useReducer } from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import "./Dashboard.css";
@@ -8,6 +8,21 @@ import { Redirect } from "react-router-dom";
 import { Fragment } from "react";
 import ApplicationCard from "./ApplicationCard";
 
+const reducer=(state,action)=>{
+  switch(action.type){
+    case "SET_DASHBOARD_INFO":
+      return action.payload;
+    default:
+      return state;
+  }
+}
+const initialState={
+  isloading:true,
+  appliedIds:new Set(),
+  applStatus:new Map(),
+  internship_appliedIds:new Set(),
+  internship_applStatus:new Map(),
+}
 const Dashboard = ({
   dashboardInfo,
   auth,
@@ -20,16 +35,11 @@ const Dashboard = ({
   setShowSuccess,
   getDashboardInfo,
 }) => {
-  const [isloading, setIsloading] = useState(true);
-  const [appliedIds, setAppliedIds] = useState(new Set());
-  const [applStatus, setApplStatus] = useState(new Map());
-  const [internship_appliedIds, setInternship_appliedIds] = useState(new Set());
-  const [internship_applStatus, setInternship_applStatus] = useState(new Map());
+  const [state, dispatch] = useReducer(reducer,initialState);
+  const {isloading,appliedIds,applStatus,internship_appliedIds,internship_applStatus}=state;
   var Applications=[];
-  console.log(dashboardInfo);
-  if(dashboardInfo){
-    Applications=[...dashboardInfo[0]?.placementApplication,...dashboardInfo[0]?.internshipApplication];
-  }
+  if(!isloading){
+    Applications=[...dashboardInfo[0].placementApplication,...dashboardInfo[0].internshipApplication];  }
   Applications.sort((a,b)=>{
     return new Date(b.applied_at)-new Date(a.applied_at);
   })
@@ -49,11 +59,18 @@ const Dashboard = ({
         internship_status.set(elem.internship.id, elem.selected);
       });
 
-      setAppliedIds(ids);
-      setApplStatus(status);
-      setInternship_appliedIds(internship_ids);
-      setInternship_applStatus(internship_status);
-      setIsloading(false);
+      dispatch(
+        {
+          type:"SET_DASHBOARD_INFO",
+          payload:{
+            isloading:false,
+            appliedIds:ids,
+            applStatus:status,
+            internship_appliedIds:internship_ids,
+            internship_applStatus:internship_status,
+          }
+        }
+      )
       setShowLoader(false);
     }
   }, [dashboardInfo, setShowLoader]);
