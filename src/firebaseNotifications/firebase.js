@@ -70,8 +70,8 @@ export const requestForToken = (token) => {
           }).then((result) => {
             if (result.isConfirmed) {
               Swal.fire(
-                "Do it manually!!",
-                "As you have blocked it, Please give permission manually",
+                "Turn On Notification Settings Manually",
+                "As you have blocked it earlier,please give permission manually",
                 "info"
               );
               sessionStorage.setItem("notified", 1);
