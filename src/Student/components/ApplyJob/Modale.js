@@ -201,7 +201,9 @@ function Modale({
               <Container>
                 <Row>
                   <Col xs={12} sm={6}>
-                    <div className="modale-field-key">Compensation - CTC:</div>
+                    <div className="modale-field-key">{
+                      
+                    type==='internships'?"Stipend":"Compensation -CTC"}:</div>
                   </Col>
                   <Col xs={12} sm={6}>
                     <div className="modale-field-value"> {compensation.toLocaleString('en-IN', {

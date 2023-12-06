@@ -33,7 +33,8 @@ function ApplicationCard({
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
-	const withDraw = (e) => {
+	const withDraw = (e,type) => {
+		
 		Swal.fire({
 			title: 'WithDraw Application?',
 			text: 'Once WithDrawn, you can apply again before the deadline',
@@ -45,6 +46,7 @@ function ApplicationCard({
 			if (res.isConfirmed) {
 				const data = {
 					application_id: id,
+					opening_type: type==='placements'?'Placement':'Internship',
 				};
 
 				WithDrawApplication(token, data)
@@ -91,8 +93,14 @@ function ApplicationCard({
 									component='h6'
 									style={{ marginLeft: '20px' }}
 								>
-									<SvgIcon component={Work} /> {company}
+									<SvgIcon component={Work} /> {company }
+									{type==='internships'?(
+										<span className={css.label_style}>Internship</span>
+									):(
+										<span  className={css.label_style} style={{backgroundColor:"#7057ff"}}>Placement</span>
+									)}
 								</Typography>
+								
 							</Grid>
 							<Grid item xs={12} sm={3} className={css.applicationTitleStatus}>
 								{selected === null ? (
@@ -160,7 +168,9 @@ function ApplicationCard({
 						<Grid item style={{ textAlign: 'center' }}>
 							<Button
 								className={css.withDrewButton}
-								onClick={withDraw}
+								onClick={(e)=>{
+									withDraw(e,type);
+								}}
 							>
 								<Typography variant='subtitle2'>
 									Withdraw Application

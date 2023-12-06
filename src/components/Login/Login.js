@@ -37,6 +37,7 @@ const Login = ({
                 localStorage.removeItem("refresh_token");
                 setError("Automatic login failed, Please Login again");
                 setShowError(true);
+                setShowLoader(false);
                 setAuth(false);
               }
             )

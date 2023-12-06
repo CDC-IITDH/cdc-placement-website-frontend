@@ -5,6 +5,8 @@ import {
   Button,
   MenuItem,
   IconButton,
+  Popper,
+  Paper,
   Menu,
 } from "@material-ui/core";
 import { useState, Fragment } from "react";
@@ -12,6 +14,7 @@ import logo from "../../images/cdc_logo.png";
 import { Link } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuIcon from "@material-ui/icons/Menu";
+
 
 import useStyles from "./styles";
 import LogOut from "../Logout/Logout";
@@ -27,9 +30,10 @@ const Navbar = ({
   const smallScreens = useMediaQuery("(max-width:600px)");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
 
   const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
   const handleClose = () => {
@@ -97,6 +101,16 @@ const Navbar = ({
                   </a>
                 </MenuItem>
                 <MenuItem>
+                  <a
+                    style={{ color: "black", textDecoration: "none" }}
+                    target="_blank"
+                    href="https://drive.google.com/file/d/1PLHd6BiXP7fAbQaob8o0juXZzRSu8vWa/view"
+                    rel="noreferrer noopener"
+                  >
+                    Internship Rules
+                  </a>
+                </MenuItem>
+                <MenuItem>
                   <LogOut
                     auth={auth}
                     setAuth={setAuth}
@@ -123,17 +137,39 @@ const Navbar = ({
                   Profile
                 </div>
               </Button>
-              <Button>
-                <a
-                  style={{ color: "white", textDecoration: "none" }}
-                  target="_blank"
-                  href="https://drive.google.com/file/d/1P8z5w-PVAl3w6p2Z8kWgSDOUPukuMx--/view?usp=drivesdk"
-                  className={classes.navbarLinks}
-                  rel="noreferrer noopener"
-                >
-                  Placement Rules
-                </a>
-              </Button>
+              <Button
+              aria-describedby={id}
+              style={{ color: "white", fontWeight: "bold" }}
+              onClick={handleMenu}
+            >
+              Rules
+            </Button>
+            <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start">
+              <Paper>
+                <MenuItem onClick={handleClose}>
+                  <a
+                    style={{ color: "black", textDecoration: "none" }}
+                    target="_blank"
+                    href="https://drive.google.com/file/d/1P8z5w-PVAl3w6p2Z8kWgSDOUPukuMx--/view?usp=drivesdk"
+                    className={classes.navbarLinks}
+                    rel="noreferrer noopener"
+                  >
+                    Placement Rules
+                  </a>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <a
+                    style={{ color: "black", textDecoration: "none" }}
+                    target="_blank"
+                    href="https://drive.google.com/file/d/1PLHd6BiXP7fAbQaob8o0juXZzRSu8vWa/view"
+                    className={classes.navbarLinks}
+                    rel="noreferrer noopener"
+                  >
+                    Internship Rules
+                  </a>
+                </MenuItem>
+              </Paper>
+            </Popper>
               <LogOut
                 auth={auth}
                 setAuth={setAuth}

@@ -66,7 +66,7 @@ export default makeStyles((theme) => ({
 				fontSize: '100%',
 			},
 			[theme.breakpoints.down(400)]: {
-				fontSize: '100%',
+				fontSize: '70%',
 			},
 		},
 	},
@@ -423,4 +423,19 @@ export default makeStyles((theme) => ({
 			padding: '0.5rem 0.5rem',
 		},
 	},
+	label_style: {
+		padding: "5px 10px",
+		borderRadius: "20px",
+		fontSize: "15px",
+		fontWeight: "bold",
+		backgroundColor: "#FF3FA4",
+		marginLeft: "10px",
+		color: "#ffffff",
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '10px',
+			marginLeft: '5px',
+		  },
+		},
+
+  
 }));
