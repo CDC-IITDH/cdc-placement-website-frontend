@@ -189,7 +189,7 @@ const Dashboard = ({
               )}
 
               {profileInfo?.can_apply || profileInfo?.can_apply_internship ? (
-                <Tab eventKey="applied" title="Your Applications">
+                <Tab eventKey="applied" title="Applied">
                   {dashboardInfo[0] &&
                   dashboardInfo[0].placementApplication.length === 0 && dashboardInfo[0].internshipApplication.length===0 ? (
                     <Container>
