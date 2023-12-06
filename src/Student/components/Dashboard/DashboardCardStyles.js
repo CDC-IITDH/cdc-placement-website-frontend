@@ -66,7 +66,7 @@ export default makeStyles((theme) => ({
 				fontSize: '100%',
 			},
 			[theme.breakpoints.down(400)]: {
-				fontSize: '100%',
+				fontSize: '70%',
 			},
 		},
 	},
@@ -431,5 +431,11 @@ export default makeStyles((theme) => ({
 		backgroundColor: "#FF3FA4",
 		marginLeft: "10px",
 		color: "#ffffff",
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '10px',
+			marginLeft: '5px',
+		  },
 		},
+
+  
 }));
