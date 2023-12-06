@@ -18,7 +18,6 @@ const Details = ({
   const classes = useStyles();
 
   const offerBtn = () => {
-
     if (opening && opening.offer_accepted === true) {
       return (
         <OfferAccept

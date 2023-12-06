@@ -24,10 +24,11 @@ const Notification = ({ token }) => {
       notify();
     }
   }, [notification]);
-
-  if (token) {
-    requestForToken(token);
-  }
+  useEffect(() => {
+    if (token) {
+      requestForToken(token);
+    }
+  }, [token]);
 
   onMessageListener()
     .then((payload) => {
