@@ -35,7 +35,14 @@ const JobCard = ({
                      is_description_pdf,
                      tier,
                      start_date,
-                     allowed_branch,
+                     btech_allowed,
+                     mtech_allowed,
+                     ms_allowed,
+                     phd_allowed,
+                     btech_allowed_branch,
+                     mtech_allowed_branch,
+                     ms_allowed_branch,
+                     phd_allowed_branch,
                      allowed_batch,
                      website,
                      selection_procedure,
@@ -177,34 +184,49 @@ const JobCard = ({
                         <Card variant="outlined" >
                             <CardContent style={{padding:"10px 16px"}}>
                                 <Typography color="textSecondary" gutterBottom>
-                                    Allowed Branch
+                                    Eligible Batches
                                 </Typography>
                                 <Box className={classes.cardContainer}>
-                                    {allowed_branch.map((elem, index) => {
-                                        return (
-                                            <Card key={index} className={classes.branchCard}>
-                                                <Typography>{elem}</Typography>
-                                            </Card>
-                                        );
-                                    })}
-                                </Box>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid item lg={12} md={12} sm={12} xs={12}>
-                        <Card variant="outlined" >
-                            <CardContent style={{padding:"10px 16px"}}>
-                                <Typography color="textSecondary" gutterBottom>
-                                    Allowed Batch
-                                </Typography>
-                                <Box className={classes.cardContainer}>
-                                    {allowed_batch.map((elem, index) => {
-                                        return (
-                                            <Card key={index} className={classes.batchCard} >
-                                                <Typography>{elem}</Typography>
-                                            </Card>
-                                        );
-                                    })}
+                                    {
+                                        btech_allowed ? btech_allowed_branch.map((elem, index) => {
+                                            return (
+                                                <Card key={index} className={classes.batchCard} >
+                                                    <Typography>B.Tech-{elem}</Typography>
+                                                </Card>
+                                            );
+                                        }
+                                    ):""
+                                    }
+                                    {
+                                        mtech_allowed ? mtech_allowed_branch.map((elem, index) => {
+                                            return (
+                                                <Card key={index} className={classes.batchCard} >
+                                                    <Typography>M.Tech-{elem}</Typography>
+                                                </Card>
+                                            );
+                                        }
+                                    ):""
+                                    }
+                                    {
+                                        ms_allowed ? ms_allowed_branch.map((elem, index) => {
+                                            return (
+                                                <Card key={index} className={classes.batchCard} >
+                                                    <Typography>MS-{elem}</Typography>
+                                                </Card>
+                                            );
+                                        }
+                                    ):""
+                                    }
+                                    {
+                                        phd_allowed ? phd_allowed_branch.map((elem, index) => {
+                                            return (
+                                                <Card key={index} className={classes.batchCard} >
+                                                    <Typography>PhD-{elem}</Typography>
+                                                </Card>
+                                            );
+                                        }
+                                    ):""
+                                    }
                                 </Box>
                             </CardContent>
                         </Card>

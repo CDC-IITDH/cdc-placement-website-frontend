@@ -4,7 +4,7 @@ import {
   inf_smalltext_max_character_count,
   inf_textarea_max_character_count,
   inf_text_max_character_count,
-} from "./limit_constants";
+} from "./constants";
 import MultipleFileInput from "./MultipleFileInput";
 
 const CompOverview = ({

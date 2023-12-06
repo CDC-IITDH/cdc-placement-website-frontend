@@ -86,7 +86,7 @@ export default makeStyles((theme) => ({
   },
   batchCard: {
     display: "flex",
-    width: "6rem",
+    padding: "0.5rem",
     height: "48px",
     alignItems: "center",
     justifyContent: "center",

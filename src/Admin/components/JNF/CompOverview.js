@@ -1,6 +1,6 @@
 import { Form, Row, Col, Container } from "react-bootstrap"
 import banner from '../../../images/banner.jpg'
-import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./limit_constants";
+import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./constants";
 import MultipleFileInput from "./MultipleFileInput";
 
 const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFieldValue, submitCount, compdescription_file, setCompdescription_file}) => {

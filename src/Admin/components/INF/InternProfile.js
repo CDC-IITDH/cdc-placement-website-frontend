@@ -4,7 +4,7 @@ import {
   inf_smalltext_max_character_count,
   inf_textarea_max_character_count,
   inf_text_max_character_count,
-} from "./limit_constants";
+} from "./constants";
 import MultipleFileInput from "./MultipleFileInput";
 
 const InternProfile = ({
@@ -115,7 +115,7 @@ const InternProfile = ({
                   value={type}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={touched.research && errors.research}
+                  isInvalid={touched.worktype && errors.worktype}
                   checked={values.worktype.includes(type)}
                 ></Form.Check.Input>
                 <Form.Check.Label>{type}</Form.Check.Label>
@@ -208,18 +208,18 @@ const InternProfile = ({
         </Form.Label>
         <Form.Check className="form-check" type="checkbox">
           <Row>
-            {["CSE", "EE", "MMAE"].map((x) => (
-              <Col key={x} sm={6}>
+          {[['CSE','Computer Science Engineering'],['EE', 'Electrical Engineering'],['MMAE', 'Mechanical Engineering'], ['EP', 'Engineering Physics']].map((x) => (
+              <Col key={x[0]} sm={6}>
                 <Form.Check.Input
                   type="checkbox"
                   name="branch"
-                  value={x}
+                  value={x[0]}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   isInvalid={touched.branch && errors.branch}
-                  checked={values.branch.includes(x)}
+                  checked={values.branch.includes(x[0])}
                 ></Form.Check.Input>
-                <Form.Check.Label>{x}</Form.Check.Label>
+                <Form.Check.Label>{x[1]}</Form.Check.Label>
               </Col>
             ))}
           </Row>
@@ -231,61 +231,63 @@ const InternProfile = ({
 
       <Form.Group className="mb-5">
         <Form.Label>
-        Are sophomores (2nd Year) eligible as well?{" "}
+          Allowed Streams{" "}
           <span className="text-danger">*</span>
         </Form.Label>
         <Form.Check className="form-check" type="radio">
           <Row>
-            {["Yes", "No"].map((eligible) => (
-              <Col sm={6} key={eligible}>
+            {["B.Tech.", "M.Tech.", "MS" , "PhD" ].map((batch) => (
+              <Col sm={6} key={batch}>
                 <Form.Check.Input
-                  type="radio"
-                  label={eligible}
-                  name="sophomoresallowed"
-                  value={eligible}
+                  type="checkbox"
+                  label={batch}
+                  name="allowedstreams"
+                  value={batch}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={touched.sophomoresallowed && errors.sophomoresallowed}
-                  checked={values.sophomoresallowed.includes(eligible)}
+                  isInvalid={touched.allowedstreams && errors.allowedstreams}
+                  checked={values.allowedstreams.includes(batch)}
                 ></Form.Check.Input>
-                <Form.Check.Label>{eligible}</Form.Check.Label>
+                <Form.Check.Label>{batch}</Form.Check.Label>
               </Col>
             ))}
           </Row>
         </Form.Check>
         <span className="select-feedback">
-          {errors.sophomoresallowed && touched.sophomoresallowed ? errors.sophomoresallowed : ""}
+          {errors.allowedstreams && touched.allowedstreams ? errors.allowedstreams : ""}
         </span>
       </Form.Group>
 
       <Form.Group className="mb-5">
         <Form.Label>
-          Are MS research scholars (postgraduates) eligible to apply?{" "}
-          <span className="text-danger">*</span>
+        Allowed Batches (for B.Tech./MS/M.Tech. streams)
         </Form.Label>
         <Form.Check className="form-check" type="radio">
           <Row>
-            {["Yes", "No"].map((eligible) => (
-              <Col sm={6} key={eligible}>
+            {[["2020", "UG final year (2020 Batch)"], ["2021", "UG pre-final year (2021 Batch)"],
+                ["2022", "UG Second year/(MS/M.tech) final year (2022 Batch)"], ["2023", "MS/M.Tech. first year (2023 Batch)"]].map((batch) => (
+              <Col sm={6} key={batch[0]}>
                 <Form.Check.Input
-                  type="radio"
-                  label={eligible}
-                  name="research"
-                  value={eligible}
+                  type="checkbox"
+                  label={batch[1]}
+                  name="allowedbatches"
+                  value={batch[0]}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={touched.research && errors.research}
-                  checked={values.research.includes(eligible)}
+                  isInvalid={touched.allowedbatches && errors.allowedbatches}
+                  checked={values.allowedbatches.includes(batch[0])}
                 ></Form.Check.Input>
-                <Form.Check.Label>{eligible}</Form.Check.Label>
+                <Form.Check.Label>{batch[1]}</Form.Check.Label>
               </Col>
             ))}
           </Row>
         </Form.Check>
         <span className="select-feedback">
-          {errors.research && touched.research ? errors.research : ""}
+          {errors.allowedbatches && touched.allowedbatches ? errors.allowedbatches : ""}
         </span>
       </Form.Group>
+
+
       <Form.Group className="mb-5">
         <Form.Label>Tentative No. of Offers</Form.Label>
         <Form.Control

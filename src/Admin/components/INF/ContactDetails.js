@@ -3,7 +3,7 @@ import banner from "../../../images/banner.jpg";
 import {
   inf_smalltext_max_character_count,
   inf_text_max_character_count,
-} from "./limit_constants";
+} from "./constants";
 
 const ContactDetails = ({
   handleSubmit,
