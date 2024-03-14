@@ -596,7 +596,6 @@ const JNF = ({ setShowLoader }) => {
                     setFieldTouched,
                     submitCount,
                   }) => (
-                    //check
                     <Form noValidate onSubmit={handleSubmit}>
                       <AutoSave />
                       {page === 1 ? (

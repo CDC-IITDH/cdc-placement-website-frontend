@@ -92,7 +92,6 @@ const MultipleFileInput = ({ stateVar, setStateVar, name, label }) => {
             multiple={true}
             accept="application/pdf"
             onChange={(event) => {
-              console.log(event.currentTarget.files);
               addFile(event.currentTarget.files, stateVar, setStateVar);
               event.target.value = null;
             }}
