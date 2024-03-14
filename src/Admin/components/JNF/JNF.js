@@ -14,15 +14,18 @@ import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
-import { jnf_smalltext_max_character_count, jnf_textarea_max_character_count, jnf_text_max_character_count } from "./limit_constants";
+import {
+  jnf_smalltext_max_character_count,
+  jnf_textarea_max_character_count,
+  jnf_text_max_character_count,
+} from "./limit_constants";
 const JNF = ({ setShowLoader }) => {
   const year = "2023-2024";
   const [preFill, setPreFill] = useState();
   var initialValues = {
     name: preFill?.placement_data.company_name || "",
     link: preFill?.placement_data.website || "",
-    compdescription:
-      preFill?.placement_data.company_details || "",
+    compdescription: preFill?.placement_data.company_details || "",
     address: preFill?.placement_data.address || "",
     city: preFill?.placement_data.city || "",
     state: preFill?.placement_data.state || "",
@@ -30,9 +33,9 @@ const JNF = ({ setShowLoader }) => {
     pincode: preFill?.placement_data.pin_code || "",
     type: preFill?.placement_data.company_type || "",
     nature: preFill?.placement_data.nature_of_business || "",
-    designation:  "",
+    designation: "",
     locations: "",
-    details:  "",
+    details: "",
     date: "",
     branch: "",
     research: "",
@@ -48,11 +51,11 @@ const JNF = ({ setShowLoader }) => {
     contact: preFill?.placement_data.contact_person_name || "",
     email: preFill?.placement_data.email || "",
     mobile: preFill?.placement_data.phone_number || "",
-    telephone: preFill?.placement_data.telephone || "",           
-    compdescription_file: "" ,
+    telephone: preFill?.placement_data.telephone || "",
+    compdescription_file: "",
     jobdescription_file: "",
     salary_file: "",
-    selection_file:"",
+    selection_file: "",
     selectionprocess_other: "",
   };
   const LOCAL_STORAGE_KEY = "vals_jnf";
@@ -71,7 +74,8 @@ const JNF = ({ setShowLoader }) => {
   const HandleBeforeLoad = () => {
     const handleAlert = () => {
       if (
-        preFill || window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
+        preFill ||
+        window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
           JSON.stringify(initialValues) ||
         !window.localStorage.getItem(LOCAL_STORAGE_KEY)
       ) {
@@ -95,7 +99,9 @@ const JNF = ({ setShowLoader }) => {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            SetValsFromUseEffect(JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)));
+            SetValsFromUseEffect(
+              JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY))
+            );
             swal.fire("You can continue filling the JNF");
             setShowComponents(true);
           } else if (result.isDenied) {
@@ -129,6 +135,7 @@ const JNF = ({ setShowLoader }) => {
 
   const validatePDF = (value, context) => {
     if (value) {
+      console.log(value);
       return value.type === "application/pdf";
     } else {
       return true;
@@ -137,6 +144,7 @@ const JNF = ({ setShowLoader }) => {
 
   const validateSize = (value, context) => {
     if (value) {
+      console.log(value.size);
       return value.size <= 10000000;
     } else {
       return true;
@@ -166,12 +174,29 @@ const JNF = ({ setShowLoader }) => {
     };
   };
   let schema = yup.object().shape({
-    name: yup.string().required("Company Name is Required").max(jnf_smalltext_max_character_count-1, `Company name should be within ${jnf_smalltext_max_character_count-1} characters.`),
+    name: yup
+      .string()
+      .required("Company Name is Required")
+      .max(
+        jnf_smalltext_max_character_count - 1,
+        `Company name should be within ${
+          jnf_smalltext_max_character_count - 1
+        } characters.`
+      ),
     link: yup
       .string()
       .url("Please enter a valid url (eg. https://example.com)")
-      .required("Website Link is Required").max(jnf_text_max_character_count-1, `Website link should be within ${jnf_text_max_character_count-1} character limit.`),
-    compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
+      .required("Website Link is Required")
+      .max(
+        jnf_text_max_character_count - 1,
+        `Website link should be within ${
+          jnf_text_max_character_count - 1
+        } character limit.`
+      ),
+    compdescription_file: yup
+      .mixed()
+      .test("pdf-check", "Must be PDF", validatePDF)
+      .test("size-check", "Must be smaller than 10MB", validateSize),
     jobdescription_file: yup
       .mixed()
       .test("pdf-check", "Must be PDF", validatePDF)
@@ -184,11 +209,46 @@ const JNF = ({ setShowLoader }) => {
       .mixed()
       .test("pdf-check", "Must be PDF", validatePDF)
       .test("size-check", "Must be smaller than 10MB", validateSize),
-    compdescription: yup.string().max(jnf_textarea_max_character_count-1, `Company details should be within ${jnf_textarea_max_character_count} characters.`),
-    address: yup.string().required("Company Address is Required").max(jnf_textarea_max_character_count-1, `Company address should be within ${jnf_textarea_max_character_count} characters.`),
-    city: yup.string().required("City is Required").max(jnf_smalltext_max_character_count-1, `City name should be within ${jnf_smalltext_max_character_count-1} characters.`),
-    state: yup.string().required("State is Required").max(jnf_smalltext_max_character_count-1,`State name should be within ${jnf_smalltext_max_character_count-1} characters.`),
-    country: yup.string().required("Country is Required").max(jnf_smalltext_max_character_count-1, `Country name should be within ${jnf_smalltext_max_character_count-1} characters.`),
+    compdescription: yup
+      .string()
+      .max(
+        jnf_textarea_max_character_count - 1,
+        `Company details should be within ${jnf_textarea_max_character_count} characters.`
+      ),
+    address: yup
+      .string()
+      .required("Company Address is Required")
+      .max(
+        jnf_textarea_max_character_count - 1,
+        `Company address should be within ${jnf_textarea_max_character_count} characters.`
+      ),
+    city: yup
+      .string()
+      .required("City is Required")
+      .max(
+        jnf_smalltext_max_character_count - 1,
+        `City name should be within ${
+          jnf_smalltext_max_character_count - 1
+        } characters.`
+      ),
+    state: yup
+      .string()
+      .required("State is Required")
+      .max(
+        jnf_smalltext_max_character_count - 1,
+        `State name should be within ${
+          jnf_smalltext_max_character_count - 1
+        } characters.`
+      ),
+    country: yup
+      .string()
+      .required("Country is Required")
+      .max(
+        jnf_smalltext_max_character_count - 1,
+        `Country name should be within ${
+          jnf_smalltext_max_character_count - 1
+        } characters.`
+      ),
     pincode: yup
       .number("Must be a Number")
       .required("Zip/Pin code is Required")
@@ -196,14 +256,40 @@ const JNF = ({ setShowLoader }) => {
       .max(999999, "Must be at most 6 digits"),
     type: yup.string().required("Required"),
     nature: yup.string().required("Required"),
-    designation: yup.string().required("Designation is Required").max(jnf_text_max_character_count-1, `Designation should be within ${jnf_text_max_character_count-1} character limit.`),
-    locations: yup.string().required("Loaction is Required").max(jnf_smalltext_max_character_count-1, `Location should be within ${jnf_smalltext_max_character_count-1} character limit.`),
-    details: yup.string().required("Details are Required").max(jnf_textarea_max_character_count-1, `Details should be within ${jnf_textarea_max_character_count} character limit.`),
+    designation: yup
+      .string()
+      .required("Designation is Required")
+      .max(
+        jnf_text_max_character_count - 1,
+        `Designation should be within ${
+          jnf_text_max_character_count - 1
+        } character limit.`
+      ),
+    locations: yup
+      .string()
+      .required("Loaction is Required")
+      .max(
+        jnf_smalltext_max_character_count - 1,
+        `Location should be within ${
+          jnf_smalltext_max_character_count - 1
+        } character limit.`
+      ),
+    details: yup
+      .string()
+      .required("Details are Required")
+      .max(
+        jnf_textarea_max_character_count - 1,
+        `Details should be within ${jnf_textarea_max_character_count} character limit.`
+      ),
     date: yup.string().required("Date is Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     research: yup.string().required("Required"),
     numoffers: yup.number().min(0, "Must be positive"),
-    ctc: yup.number().required("CTC is Required").integer("Must be an integer").min(0, "Must be positive"),
+    ctc: yup
+      .number()
+      .required("CTC is Required")
+      .integer("Must be an integer")
+      .min(0, "Must be positive"),
     gross: yup
       .number()
       .required("Gross is Required")
@@ -214,20 +300,51 @@ const JNF = ({ setShowLoader }) => {
       .required("Take Home is Required")
       .integer("Must be an integer")
       .min(0, "Must be positive"),
-    bonus: yup.number().integer("Must be an integer").min(0, "Must be positive"),
-    bonddetails: yup.string().max(jnf_textarea_max_character_count-1, `Bond details should be within ${jnf_textarea_max_character_count} character limit.`),
+    bonus: yup
+      .number()
+      .integer("Must be an integer")
+      .min(0, "Must be positive"),
+    bonddetails: yup
+      .string()
+      .max(
+        jnf_textarea_max_character_count - 1,
+        `Bond details should be within ${jnf_textarea_max_character_count} character limit.`
+      ),
     selectionprocess: yup
       .array()
       .min(1, "Choose at least one")
       .required("Required"),
-    selection: yup.string().max(jnf_textarea_max_character_count-1, `Selection details should be within ${jnf_textarea_max_character_count} character limit.`),
-    requirements: yup.string().max(jnf_textarea_max_character_count-1, `Requirements should be within ${jnf_textarea_max_character_count} character limit.`),
-    contact: yup.string().required("Contact Name is Required").max(jnf_text_max_character_count-1, `Contact name should be within ${jnf_text_max_character_count-1} characters.`),
+    selection: yup
+      .string()
+      .max(
+        jnf_textarea_max_character_count - 1,
+        `Selection details should be within ${jnf_textarea_max_character_count} character limit.`
+      ),
+    requirements: yup
+      .string()
+      .max(
+        jnf_textarea_max_character_count - 1,
+        `Requirements should be within ${jnf_textarea_max_character_count} character limit.`
+      ),
+    contact: yup
+      .string()
+      .required("Contact Name is Required")
+      .max(
+        jnf_text_max_character_count - 1,
+        `Contact name should be within ${
+          jnf_text_max_character_count - 1
+        } characters.`
+      ),
     email: yup
       .string()
       .email("Please enter a email address (eg. sriram@example.com)")
       .required("Required")
-      .max(jnf_smalltext_max_character_count-1, `Email should be within ${jnf_smalltext_max_character_count-1} characters.`),
+      .max(
+        jnf_smalltext_max_character_count - 1,
+        `Email should be within ${
+          jnf_smalltext_max_character_count - 1
+        } characters.`
+      ),
     mobile: yup
       .number()
       .required("Mobile Number is Required")
@@ -395,7 +512,7 @@ const JNF = ({ setShowLoader }) => {
         errors.gross ||
         errors.takehome ||
         errors.bonus ||
-        errors.bonddetails 
+        errors.bonddetails
       ) {
         setFieldTouched("designation", true);
         setFieldTouched("locations", true);
@@ -459,11 +576,12 @@ const JNF = ({ setShowLoader }) => {
             <Col className="l-pink p-5" lg={7} xs={11}>
               {!submitted ? (
                 <Formik
-                enableReinitialize={true}
+                  enableReinitialize={true}
                   validateOnMount={true}
                   validationSchema={schema}
+                  isValidating={true}
                   onSubmit={submit}
-                  initialValues= {preFill? initialValues: valsFromUseEffect}
+                  initialValues={preFill ? initialValues : valsFromUseEffect}
                 >
                   {({
                     handleSubmit,
@@ -478,6 +596,7 @@ const JNF = ({ setShowLoader }) => {
                     setFieldTouched,
                     submitCount,
                   }) => (
+                    //check
                     <Form noValidate onSubmit={handleSubmit}>
                       <AutoSave />
                       {page === 1 ? (
