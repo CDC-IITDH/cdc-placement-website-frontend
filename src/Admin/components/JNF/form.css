@@ -1,20 +1,21 @@
 .l-pink {
-  background-color: #FFF5F4;
+  background-color: #eff7ff;
+  border-radius: 6px;
 }
 
 .d-pink {
-  background-color: #E6BDBB;
+  background-color: #125875;
 }
 
-.logo {
+/* .logo {
   filter: brightness(0.5) contrast(200%);
-}
+} */
 
 .bk-container {
   background-repeat: repeat;
   background-attachment: scroll;
   background-position: center top;
-  color:#52201f;
+  color:#125875;
   min-height: calc( 100vh );
 }
 
@@ -47,10 +48,11 @@
   position: absolute;
   top: 0px;
   left: 0px;
+  border-radius: 6px;
 }
 
 .haze {
-  background-color: #2c3db37a;
+  background-color:rgba(0, 0, 0, 0.5);
   color: white;
   font-size: 4em;
   font-weight: bold;

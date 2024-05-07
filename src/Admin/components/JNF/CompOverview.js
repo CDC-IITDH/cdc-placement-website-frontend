@@ -8,7 +8,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
     <>
       <Container className="p-0 mb-5" fluid>
         <div className="w-100 position-relative banner-container">
-          <img className="fix banner p-0" alt="banner" src={banner}></img>
+          <img className="fix banner p-0" alt="banner" src="https://www.iitdh.ac.in/sites/default/files/2023-10/slide-02-new_3.jpg"></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">COMPANY OVERVIEW</div>
           </div>

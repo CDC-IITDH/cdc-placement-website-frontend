@@ -17,7 +17,7 @@ import swal from "sweetalert2";
 import { inf_smalltext_max_character_count, inf_textarea_max_character_count, inf_text_max_character_count } from "./limit_constants";
 
 const INF = ({ setShowLoader }) => {
-  const year = "2023-2024";
+  const year = "2024-2025";
 
   var initialValues = {
     companyname: "",
