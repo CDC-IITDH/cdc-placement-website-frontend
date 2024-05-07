@@ -1,4 +1,4 @@
-import logo from "../../images/cdc_logo.png";
+import logo from "../../images/CDC-Logo.png";
 import { Row } from "react-bootstrap";
 
 const Instructions = ({ year }) => {

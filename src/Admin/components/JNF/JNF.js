@@ -20,7 +20,7 @@ import {
   jnf_text_max_character_count,
 } from "./limit_constants";
 const JNF = ({ setShowLoader }) => {
-  const year = "2023-2024";
+  const year = "2024-2025";
   const [preFill, setPreFill] = useState();
   var initialValues = {
     name: preFill?.placement_data.company_name || "",
