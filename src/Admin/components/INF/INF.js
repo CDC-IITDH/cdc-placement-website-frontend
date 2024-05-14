@@ -205,7 +205,7 @@ const INF = ({ setShowLoader }) => {
     enddate: yup.string().required("Date is Required"),
     sophomoresallowed: yup.string().required("Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    research: yup.string().required("Required"),
+    research: yup.array(),
     numoffers: yup.number().min(0, "Must be positive"),
     stipend: yup.number().required("Stipend is Required").integer("Must be an integer").min(0, "Must be positive"),
     facilities: yup
@@ -285,7 +285,7 @@ const INF = ({ setShowLoader }) => {
     formdata.append("work_type", values.worktype);
     formdata.append("allowed_branch", JSON.stringify(values.branch));
     formdata.append("sophomores_allowed", values.sophomoresallowed);
-    formdata.append("rs_eligible", values.research);
+    formdata.append("rs_eligible", JSON.stringify(values.research));
     formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("num_offers", values.numoffers ? values.numoffers : 0);
     formdata.append("is_stipend_details_pdf", is_compensation_details_pdf);

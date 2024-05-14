@@ -283,7 +283,7 @@ const JNF = ({ setShowLoader }) => {
       ),
     date: yup.string().required("Date is Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    research: yup.string().required("Required"),
+    research:  yup.array(),
     numoffers: yup.number().min(0, "Must be positive"),
     ctc: yup
       .number()
@@ -410,7 +410,7 @@ const JNF = ({ setShowLoader }) => {
     );
     formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
     formdata.append("allowed_branch", JSON.stringify(values.branch));
-    formdata.append("rs_eligible", values.research);
+    formdata.append("rs_eligible", JSON.stringify(values.research));
     formdata.append(
       "tentative_no_of_offers",
       values.numoffers ? values.numoffers : 0

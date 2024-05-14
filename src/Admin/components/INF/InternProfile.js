@@ -260,10 +260,10 @@ const InternProfile = ({
 
       <Form.Group className="mb-5">
         <Form.Label>
-          Are MS research scholars (postgraduates) eligible to apply?{" "}
-          <span className="text-danger">*</span>
+          Are the following students are eligible to apply?{" "}
+          {/* <span className="text-danger">*</span> */}
         </Form.Label>
-        <Form.Check className="form-check" type="radio">
+        {/* <Form.Check className="form-check" type="radio">
           <Row>
             {["Yes", "No"].map((eligible) => (
               <Col sm={6} key={eligible}>
@@ -281,7 +281,27 @@ const InternProfile = ({
               </Col>
             ))}
           </Row>
-        </Form.Check>
+        </Form.Check> */}
+        <Form.Check className="form-check" type="checkbox">
+          <Row>
+        {['MS', 'MTech', 'PHD'].map((degree) => (
+            <Col sm={4} key={degree}>
+                <Form.Check type="checkbox">
+                    <Form.Check.Input 
+                        type="checkbox" 
+                        name="research"
+                        value={degree}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isInvalid={touched.research && errors.research}
+                        checked={values.research.includes(degree)}
+                    />
+                    <Form.Check.Label>{degree}</Form.Check.Label>
+                </Form.Check>
+            </Col>
+        ))}
+    </Row>
+</Form.Check>
         <span className="select-feedback">
           {errors.research && touched.research ? errors.research : ""}
         </span>
