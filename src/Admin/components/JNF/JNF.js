@@ -14,11 +14,14 @@ import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
+import MultiStepProgressBar from "./MultiStepProgressBar";
+
 import {
   jnf_smalltext_max_character_count,
   jnf_textarea_max_character_count,
   jnf_text_max_character_count,
 } from "./limit_constants";
+
 const JNF = ({ setShowLoader }) => {
   const year = "2024-2025";
   const [preFill, setPreFill] = useState();
@@ -471,6 +474,7 @@ const JNF = ({ setShowLoader }) => {
     setFieldTouched,
     handleSubmit
   ) => {
+    console.log("First time page is changed");
     if (page === 1) {
       if (
         errors.name ||
@@ -601,7 +605,11 @@ const JNF = ({ setShowLoader }) => {
                       {page === 1 ? (
                         <>
                           {" "}
-                          <Instructions year={year} updateData={setPreFill} />
+                          <Instructions
+                            year={year}
+                            updateData={setPreFill}
+                            handlePageChange={handlePageChange} // remove this line later
+                          />
                         </>
                       ) : (
                         <></>
@@ -609,6 +617,19 @@ const JNF = ({ setShowLoader }) => {
                       {warning ? (
                         <Alert variant="danger">{warning}</Alert>
                       ) : null}
+                      <div
+                        style={{
+                          position: "sticky",
+                          top: "0",
+                          zIndex: "1000",
+                          backgroundColor: "#eff7ff",
+                        }}
+                      >
+                        <MultiStepProgressBar
+                          page={page}
+                          handlePageChange={handlePageChange}
+                        />
+                      </div>
                       {page === 1 ? (
                         <CompOverview
                           handleSubmit={handleSubmit}
