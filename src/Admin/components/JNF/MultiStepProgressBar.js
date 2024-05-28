@@ -1,60 +1,41 @@
-import React from "react";
-import { Row } from "react-bootstrap";
-import StepProgressBar from "react-step-progress";
-import "react-step-progress/dist/index.css";
+import React from 'react';
+import './multistep.css'; // Import the CSS styles
 
-const MultiStepProgressBar = ({ page, handlePageChange }) => {
-  // setup step validators, will be called before proceeding to the next step
-  function step2Validator() {
-    // return a boolean
-    return true;
-  }
+const MultiStepProgressBar = ({ page }) => {
+  const steps = [
+    { label: "Company Overview", name: "step 1" },
+    { label: "Job Profile", name: "step 2" },
+    { label: "Selection Process", name: "step 3" },
+    { label: "Contact Details", name: "step 4" },
+  ];
 
-  function step3Validator() {
-    // return a boolean
-  }
-
-  function step4Validator() {
-    // return a boolean
-  }
-
-  function onFormSubmit() {
-    alert("Page is Changed");
-  }
   return (
-    <>
-      <div className="p-3">
-        <StepProgressBar
-          startingStep={0}
-          onSubmit={handlePageChange}
-          // created separate css file, StepProgressBar.module.css
-          // wrapperClass="wrapper"
-          // progressClass="progress"
-          // stepClass="step"
-          steps={[
-            {
-              label: "Company Overview",
-              name: "step 1",
-            },
-            {
-              label: "Job Profile",
-              name: "step 2",
-              validator: step2Validator,
-            },
-            {
-              label: "Selection Process",
-              name: "step 3",
-              validator: step3Validator,
-            },
-            {
-              label: "Contact Details",
-              name: "step 4",
-              validator: step4Validator,
-            },
-          ]}
-        />
+    <div className="container">
+      <div className="steps-container">
+        {steps.map((step, index) => {
+          const isCompleted = page - 1 > index;
+          const isActive = page - 1 === index;
+
+          return (
+            <div key={index} className="step-item">
+              {index > 0 && (
+                <div className="line-container">
+                  <div
+                    className={`line ${isCompleted ? 'completed-line' : ''} ${isActive ? 'active-line' : ''}`}
+                  ></div>
+                </div>
+              )}
+              <div
+                className={`step-circle ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
+              >
+                {isCompleted ? '✔' : isActive ? <span className="active-dot"></span> : ''}
+              </div>
+              <div className="step-label">{step.label}</div>
+            </div>
+          );
+        })}
       </div>
-    </>
+    </div>
   );
 };
 

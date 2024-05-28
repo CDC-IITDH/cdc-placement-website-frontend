@@ -1,4 +1,5 @@
 import { Form, Row, Col, Container } from "react-bootstrap";
+import React, { useState } from "react";
 import banner from "../../../images/banner.jpg";
 import { jnf_textarea_max_character_count } from "./limit_constants";
 import MultipleFileInput from "./MultipleFileInput";
@@ -16,15 +17,27 @@ const SelectionProcess = ({
   selection_file,
   setSelection_file,
 }) => {
+  const [isCpiRequired, setIsCpiRequired] = useState(true);
+
+  const handleCpiChange = (event) => {
+    const value = event.target.value === "yes";
+    setIsCpiRequired(value);
+    if (!value) {
+      setFieldValue("cpi", "");
+    } else {
+      setFieldValue("cpi", "6");
+    }
+  };
+
   return (
     <>
       <Container className="p-0 mb-5" fluid>
-        <div className="w-100 position-relative banner-container">
+        {/* <div className="w-100 position-relative banner-container">
           <img className="fix banner p-0" alt="banner" src="https://www.iitdh.ac.in/sites/default/files/2023-10/slide-02-new_3.jpg"></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">SELECTION PROCESS</div>
           </div>
-        </div>
+        </div> */}
       </Container>
       <p className="mb-3 text-center">
         Describe the tentative selection process for the students.
@@ -114,6 +127,58 @@ const SelectionProcess = ({
           {errors.selection}{" "}
         </Form.Control.Feedback>
       </Form.Group>
+      <Form.Group className="mb-5">
+            <Form.Label>Is there any minimum CPI requirement?</Form.Label>
+            <div>
+              <Form.Check
+                type="radio"
+                id="cpiYes"
+                name="isCpiRequired"
+                value="yes"
+                label="Yes"
+                checked={isCpiRequired}
+                onChange={(e) => {
+                  handleCpiChange(e);
+                  handleChange(e);
+                }}
+                onBlur={handleBlur}
+                isInvalid={touched.isCpiRequired && errors.isCpiRequired}
+              />
+              <Form.Check
+                type="radio"
+                id="cpiNo"
+                name="isCpiRequired"
+                value="no"
+                label="No"
+                checked={!isCpiRequired}
+                onChange={(e) => {
+                  handleCpiChange(e);
+                  handleChange(e);
+                }}
+                onBlur={handleBlur}
+                isInvalid={touched.isCpiRequired && errors.isCpiRequired}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.isCpiRequired}
+              </Form.Control.Feedback>
+            </div>
+            {isCpiRequired && (
+              <Form.Group className="mt-3">
+                <Form.Label>Enter Minimum CPI</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="cpi"
+                  value={values.cpi}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.cpi && errors.cpi}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.cpi}
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
+          </Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Academic Requirements</Form.Label>
         <Form.Control

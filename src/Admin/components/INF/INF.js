@@ -39,7 +39,7 @@ const INF = ({ setShowLoader }) => {
     worktype: "",
     branch: "",
     research: "",
-    sophomoresallowed: "",
+    // sophomoresallowed: "",
     numoffers: "",
     stipend: "",
     facilities: "",
@@ -56,6 +56,8 @@ const INF = ({ setShowLoader }) => {
     internshipdescription_file: "",
     stipend_benefits_file : "",
     selection_file: "",
+    cpi:"" ,//new field is added needs to be checked
+    years:"" //new field is added needs to be checked 
   };
 
   const LOCAL_STORAGE_KEY = "vals_inf";
@@ -203,7 +205,7 @@ const INF = ({ setShowLoader }) => {
       .required("Required"),
     startdate: yup.string().required("Date is Required"),
     enddate: yup.string().required("Date is Required"),
-    sophomoresallowed: yup.string().required("Required"),
+    // sophomoresallowed: yup.string().required("Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     research: yup.array(),
     numoffers: yup.number().min(0, "Must be positive"),
@@ -242,6 +244,15 @@ const INF = ({ setShowLoader }) => {
         .mixed()
         .test("pdf-check", "Must be PDF", validatePDF)
         .test("size-check", "Must be smaller than 10MB", validateSize),
+      cpi: yup
+        .mixed()
+        .when('isCpiRequired', {
+          is: true,
+          then: yup.number().required('CPI is required').min(0, 'CPI cannot be negative').max(10, 'CPI cannot be more than 10'),
+          otherwise: yup.mixed()
+        }),//needs to be checked
+     years:yup.array().required("Required") //needs to be checked
+
   });
 
   function submit(values) {
@@ -284,9 +295,10 @@ const INF = ({ setShowLoader }) => {
     formdata.append("end_date", changeDateFormat(values.enddate));
     formdata.append("work_type", values.worktype);
     formdata.append("allowed_branch", JSON.stringify(values.branch));
-    formdata.append("sophomores_allowed", values.sophomoresallowed);
+    // formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("rs_eligible", JSON.stringify(values.research));
-    formdata.append("sophomores_allowed", values.sophomoresallowed);
+    formdata.append("years",JSON.stringify(values.years));
+    // formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("num_offers", values.numoffers ? values.numoffers : 0);
     formdata.append("is_stipend_details_pdf", is_compensation_details_pdf);
     formdata.append("stipend", values.stipend);
@@ -294,6 +306,7 @@ const INF = ({ setShowLoader }) => {
     formdata.append("other_facilities", values.other_facilities);
     formdata.append("selection_procedure_rounds",JSON.stringify(selectionprocess));
     formdata.append("selection_procedure_details", values.selection);
+    formdata.append("cpi", values.cpi);
     formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
     formdata.append("other_requirements", values.requirements);
     compdescription_file.forEach((file) => {
@@ -393,7 +406,7 @@ const INF = ({ setShowLoader }) => {
         errors.startdate ||
         errors.enddate ||
         errors.branch ||
-        errors.sophomoresallowed ||
+        // errors.sophomoresallowed ||
         errors.research ||
         errors.numoffers ||
         errors.stipend ||

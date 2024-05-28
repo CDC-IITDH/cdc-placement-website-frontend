@@ -23,6 +23,12 @@ const InternProfile = ({
   salary_file,
   setSalary_file,
 }) => {
+  const allBranches = ["CSE", "EE", "MMAE", "EP", "MNC", "Civil", "Chemical"];
+  const defaultBranches = ["CSE", "EE", "MMAE", "EP"];
+  const selectedBranches =
+    values.years?.includes("Second Year") || values.years?.includes("Third Year")
+      ? allBranches
+      : defaultBranches;
   return (
     <>
       <Container className="p-0 mb-5" fluid>
@@ -203,12 +209,37 @@ const InternProfile = ({
         </Col>
       </Form.Group>
       <Form.Group className="mb-5">
+        <Form.Label>Eligible Students to apply</Form.Label>
+        <Form.Check className="form-check" type="checkbox">
+          <Row>
+            {["Second Year", "Third Year", "Fourth Year"].map((year) => (
+              <Col sm={4} key={year}>
+          <Form.Check.Input
+            type="checkbox"
+            name="years"
+            value={year}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            isInvalid={touched.years && errors.years}
+            checked={values.years?.includes(year) || year === "Fourth Year"}
+          ></Form.Check.Input>
+          <Form.Check.Label>{year}</Form.Check.Label>
+        </Col>
+            ))}
+          </Row>
+        </Form.Check>
+        <span className="select-feedback">
+          {errors.years && touched.years ? errors.years : ""}
+        </span>
+      </Form.Group>
+
+      <Form.Group className="mb-5">
         <Form.Label>
           Eligible Branches <span className="text-danger">*</span>
         </Form.Label>
         <Form.Check className="form-check" type="checkbox">
           <Row>
-            {["CSE", "EE", "MMAE","EP"].map((x) => (
+            {selectedBranches.map((x) => (
               <Col key={x} sm={6}>
                 <Form.Check.Input
                   type="checkbox"
@@ -217,7 +248,7 @@ const InternProfile = ({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   isInvalid={touched.branch && errors.branch}
-                  checked={values.branch.includes(x)}
+                  checked={values.branch?.includes(x)}
                 ></Form.Check.Input>
                 <Form.Check.Label>{x}</Form.Check.Label>
               </Col>
@@ -229,7 +260,8 @@ const InternProfile = ({
         </span>
       </Form.Group>
 
-      <Form.Group className="mb-5">
+    
+      {/* <Form.Group className="mb-5">
         <Form.Label>
         Are sophomores (2nd Year) eligible as well?{" "}
           <span className="text-danger">*</span>
@@ -256,7 +288,7 @@ const InternProfile = ({
         <span className="select-feedback">
           {errors.sophomoresallowed && touched.sophomoresallowed ? errors.sophomoresallowed : ""}
         </span>
-      </Form.Group>
+      </Form.Group> */}
 
       <Form.Group className="mb-5">
         <Form.Label>

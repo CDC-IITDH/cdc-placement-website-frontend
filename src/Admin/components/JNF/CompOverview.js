@@ -6,7 +6,7 @@ import MultipleFileInput from "./MultipleFileInput";
 const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFieldValue, submitCount, compdescription_file, setCompdescription_file}) => {
   return (
     <>
-      <Container className="p-0 mb-5" fluid>
+      {/* <Container className="p-0 mb-5" fluid>
         <div className="w-100 position-relative banner-container">
           <img className="fix banner p-0" alt="banner" src="https://www.iitdh.ac.in/sites/default/files/2023-10/slide-02-new_3.jpg"></img>
           <div className="fix w-100 h-100 haze">
@@ -14,7 +14,7 @@ const CompOverview = ({handleChange, handleBlur, values, touched, errors, setFie
           </div>
         </div>
       </Container>
-      <hr className="pd" />
+      <hr className="pd" /> */}
       <Form.Group className="mb-5">
         <Form.Label>
           Company Name <span className="text-danger">*</span>

@@ -18,16 +18,16 @@ const Instructions = ({ year, updateData }) => {
 
   return (
     <>
-      <Row className="m-5 text-center justify-content-center">
+      {/* <Row className="m-5 text-center justify-content-center">
         <img src={logo} className="w-75 logo" alt="logo" />
-      </Row>
-      <Row className="p-3 text-center justify-content-center">
+      </Row> */}
+      {/* <Row className="p-3 text-center justify-content-center">
         <h3>
           <b>Job Notification Form</b>
         </h3>
         <h6>{year}</h6>
-      </Row>
-      <hr className="pd" />
+      </Row> */}
+      {/* <hr className="pd" /> */}
       <Row className="p-3 gray-blue">
         <h4>
           <b>Instructions:</b>
