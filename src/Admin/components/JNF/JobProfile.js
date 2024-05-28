@@ -7,14 +7,14 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
   return (
     <>
       <Container className="p-0 mb-5" fluid>
-        <div className="w-100 position-relative banner-container">
+        {/* <div className="w-100 position-relative banner-container">
           <img className="fix banner p-0" alt="banner" src="https://www.iitdh.ac.in/sites/default/files/2023-10/slide-02-new_3.jpg"></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">
               JOB PROFILE
             </div>
           </div>
-        </div>
+        </div> */}
       </Container>
       <hr className="pd" />
       <MultipleFileInput stateVar={jobdescription_file} setStateVar={setJobdescription_file} name="jobdescription_file" label ="Job Description" />
@@ -56,8 +56,10 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <span className="select-feedback">{touched.branch? errors.branch:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">
-        <Form.Label>Are MS research scholars (postgraduates) eligible to apply? <span className="text-danger">*</span></Form.Label>
-        <Form.Check className="form-check" type="radio">
+        <Form.Label>Are the following students eligible to apply? 
+        {/* <span className="text-danger">*</span> */}
+        </Form.Label>
+        {/* <Form.Check className="form-check" type="radio">
           <Row>
             {['Yes','No'].map((eligible) => (
               <Col sm={6} key={eligible}>
@@ -66,7 +68,30 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
               </Col>
             ))}
           </Row>
-        </Form.Check>
+        </Form.Check> */}
+  
+        <Form.Check className="form-check" type="checkbox">
+          <Row>
+        {['MS', 'MTech', 'PHD'].map((degree) => (
+            <Col sm={4} key={degree}>
+                <Form.Check type="checkbox">
+                    <Form.Check.Input 
+                        type="checkbox" 
+                        name="research"
+                        value={degree}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isInvalid={touched.research && errors.research}
+                        checked={values.research.includes(degree)}
+                    />
+                    <Form.Check.Label>{degree}</Form.Check.Label>
+                </Form.Check>
+            </Col>
+        ))}
+    </Row>
+</Form.Check>
+
+
         <span className="select-feedback">{errors.research && touched.research? errors.research:''}</span>
       </Form.Group>
       <Form.Group className="mb-5">

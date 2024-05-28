@@ -6,7 +6,6 @@ import Autofill from "./Autofill";
 import TierTable from "./TierTable";
 
 const Instructions = ({ year, updateData }) => {
-
   const [showTable, setShowTable] = useState(false);
 
   const toggleTable = () => {
@@ -19,16 +18,16 @@ const Instructions = ({ year, updateData }) => {
 
   return (
     <>
-      <Row className="m-5 text-center justify-content-center">
+      {/* <Row className="m-5 text-center justify-content-center">
         <img src={logo} className="w-75 logo" alt="logo" />
-      </Row>
-      <Row className="p-3 text-center justify-content-center">
+      </Row> */}
+      {/* <Row className="p-3 text-center justify-content-center">
         <h3>
           <b>Job Notification Form</b>
         </h3>
         <h6>{year}</h6>
-      </Row>
-      <hr className="pd" />
+      </Row> */}
+      {/* <hr className="pd" /> */}
       <Row className="p-3 gray-blue">
         <h4>
           <b>Instructions:</b>
@@ -49,14 +48,20 @@ const Instructions = ({ year, updateData }) => {
               for the selection process and rules & regulations.
             </li>
             <li>
-              If you have filled jnf already for some other roles, you can save time by prefilling the JNF form by company ID{" "}
+              If you have filled jnf already for some other roles, you can save
+              time by prefilling the JNF form by company ID{" "}
               <Link to="" onClick={handleClick}>
                 {" "}
                 click here
               </Link>
             </li>
             <li>
-              The placement system is teir based. Check the how we classify companies <a onClick={toggleTable} href="#tier-table">here</a>.
+              The placement system is teir based. Check the how we classify
+              companies{" "}
+              <a onClick={toggleTable} href="#tier-table">
+                here
+              </a>
+              .
               <TierTable show={showTable} />
             </li>
           </ul>

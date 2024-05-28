@@ -1,10 +1,10 @@
-.l-pink {
+/* .l-pink {
   background-color: #eff7ff;
   border-radius: 6px;
-}
+} */
 
 .d-pink {
-  background-color: #125875;
+  background-color: #eff7ff;
 }
 
 /* .logo {
@@ -15,7 +15,7 @@
   background-repeat: repeat;
   background-attachment: scroll;
   background-position: center top;
-  color:#125875;
+  color:black;
   min-height: calc( 100vh );
 }
 
@@ -25,7 +25,7 @@
 }
 
 .gray-blue {
-  color:#33425f;
+  color:black;
 }
 
 /* input[type=file]::file-selector-button {

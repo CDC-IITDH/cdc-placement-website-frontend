@@ -1,11 +1,11 @@
-.l-pink {
+/* .l-pink {
   background-color: #eff7ff;
   border-radius: 6px;
 }
 
 .d-pink {
   background-color: #125875;
-}
+} */
 
 /* .logo {
   filter: brightness(0.5) contrast(200%);
@@ -15,7 +15,7 @@
   background-repeat: repeat;
   background-attachment: scroll;
   background-position: center top;
-  color:#125875;
+  /* color:#125875; */
   min-height: calc( 100vh );
 }
 
