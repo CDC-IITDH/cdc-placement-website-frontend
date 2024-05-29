@@ -14,7 +14,13 @@ import { Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getCookie } from "../../../utils/getCookie";
 import swal from "sweetalert2";
-import { inf_smalltext_max_character_count, inf_textarea_max_character_count, inf_text_max_character_count } from "./limit_constants";
+import {
+  inf_smalltext_max_character_count,
+  inf_textarea_max_character_count,
+  inf_text_max_character_count,
+} from "./limit_constants";
+import Header from "../JNF/Header";
+import MultiStepProgressBar from "./MultiStepProgressBar";
 
 const INF = ({ setShowLoader }) => {
   const year = "2024-2025";
@@ -33,7 +39,7 @@ const INF = ({ setShowLoader }) => {
     designation: "",
     locations: "",
     details: "",
-    season: "", 
+    season: "",
     start_date: "",
     end_date: "",
     worktype: "",
@@ -54,10 +60,10 @@ const INF = ({ setShowLoader }) => {
     telephone: "",
     compdescription_file: "",
     internshipdescription_file: "",
-    stipend_benefits_file : "",
+    stipend_benefits_file: "",
     selection_file: "",
-    cpi:"" ,//new field is added needs to be checked
-    years:"" //new field is added needs to be checked 
+    cpi: "", //new field is added needs to be checked
+    years: "", //new field is added needs to be checked
   };
 
   const LOCAL_STORAGE_KEY = "vals_inf";
@@ -178,16 +184,65 @@ const INF = ({ setShowLoader }) => {
     };
   };
   let schema = yup.object().shape({
-    companyname: yup.string().required("Company Name is Required").max(inf_smalltext_max_character_count-1, `Company name should be within ${inf_smalltext_max_character_count-1} characters.`),
+    companyname: yup
+      .string()
+      .required("Company Name is Required")
+      .max(
+        inf_smalltext_max_character_count - 1,
+        `Company name should be within ${
+          inf_smalltext_max_character_count - 1
+        } characters.`
+      ),
     website: yup
-    .string()
-    .url("Please enter a valid url (eg. https://example.com)")
-    .required("Website Link is Required").max(inf_text_max_character_count-1, `Website link should be within ${inf_text_max_character_count-1} characters.`),
-    compdescription : yup.string().max(inf_textarea_max_character_count-1, `Company description should be within ${inf_textarea_max_character_count} characters.`),
-    address: yup.string().required("Company Address is Required").max(inf_textarea_max_character_count-1, `Company address should be within ${inf_textarea_max_character_count} characters.`),
-    city: yup.string().required("City is Required").max(inf_smalltext_max_character_count-1, `City should be within ${inf_smalltext_max_character_count-1} characters.`),
-    state: yup.string().required("State is Required").max(inf_smalltext_max_character_count-1, `State should be within ${inf_smalltext_max_character_count-1} characters.`),
-    country: yup.string().required("Country is Required").max(inf_smalltext_max_character_count-1, `Country should be within ${inf_smalltext_max_character_count-1} characters.`),
+      .string()
+      .url("Please enter a valid url (eg. https://example.com)")
+      .required("Website Link is Required")
+      .max(
+        inf_text_max_character_count - 1,
+        `Website link should be within ${
+          inf_text_max_character_count - 1
+        } characters.`
+      ),
+    compdescription: yup
+      .string()
+      .max(
+        inf_textarea_max_character_count - 1,
+        `Company description should be within ${inf_textarea_max_character_count} characters.`
+      ),
+    address: yup
+      .string()
+      .required("Company Address is Required")
+      .max(
+        inf_textarea_max_character_count - 1,
+        `Company address should be within ${inf_textarea_max_character_count} characters.`
+      ),
+    city: yup
+      .string()
+      .required("City is Required")
+      .max(
+        inf_smalltext_max_character_count - 1,
+        `City should be within ${
+          inf_smalltext_max_character_count - 1
+        } characters.`
+      ),
+    state: yup
+      .string()
+      .required("State is Required")
+      .max(
+        inf_smalltext_max_character_count - 1,
+        `State should be within ${
+          inf_smalltext_max_character_count - 1
+        } characters.`
+      ),
+    country: yup
+      .string()
+      .required("Country is Required")
+      .max(
+        inf_smalltext_max_character_count - 1,
+        `Country should be within ${
+          inf_smalltext_max_character_count - 1
+        } characters.`
+      ),
     pincode: yup
       .number("Must be a Number")
       .required("Zip/Pin is Required")
@@ -195,64 +250,118 @@ const INF = ({ setShowLoader }) => {
       .max(999999, "Must be at most 6 digits"),
     companytype: yup.string().required("Required"),
     nature: yup.string().required("Required"),
-    designation: yup.string().required("Designation is Required").max(inf_text_max_character_count-1, `Designation should be within ${inf_text_max_character_count-1} characters.`),
-    locations: yup.string().required("Loaction is Required").max(inf_smalltext_max_character_count-1, `Location should be within ${inf_smalltext_max_character_count-1} characters.`),
-    details: yup.string().required("Details are Required").max(inf_textarea_max_character_count-1, `Details should be within ${inf_textarea_max_character_count} characters.`),
+    designation: yup
+      .string()
+      .required("Designation is Required")
+      .max(
+        inf_text_max_character_count - 1,
+        `Designation should be within ${
+          inf_text_max_character_count - 1
+        } characters.`
+      ),
+    locations: yup
+      .string()
+      .required("Loaction is Required")
+      .max(
+        inf_smalltext_max_character_count - 1,
+        `Location should be within ${
+          inf_smalltext_max_character_count - 1
+        } characters.`
+      ),
+    details: yup
+      .string()
+      .required("Details are Required")
+      .max(
+        inf_textarea_max_character_count - 1,
+        `Details should be within ${inf_textarea_max_character_count} characters.`
+      ),
     worktype: yup.string().required("Required"),
-    season: yup
-    .array()
-      .min(1, "Choose at least one")
-      .required("Required"),
+    season: yup.array().min(1, "Choose at least one").required("Required"),
     startdate: yup.string().required("Date is Required"),
     enddate: yup.string().required("Date is Required"),
     // sophomoresallowed: yup.string().required("Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     research: yup.array(),
     numoffers: yup.number().min(0, "Must be positive"),
-    stipend: yup.number().required("Stipend is Required").integer("Must be an integer").min(0, "Must be positive"),
-    facilities: yup
-    .array(),
-    other_facilities: yup.string().max(inf_textarea_max_character_count-1, `Other facilities should be within ${inf_textarea_max_character_count} characters.`),
-    selection: yup.string().max(inf_textarea_max_character_count-1, `Selection procedure should be within ${inf_textarea_max_character_count} characters.`),
+    stipend: yup
+      .number()
+      .required("Stipend is Required")
+      .integer("Must be an integer")
+      .min(0, "Must be positive"),
+    facilities: yup.array(),
+    other_facilities: yup
+      .string()
+      .max(
+        inf_textarea_max_character_count - 1,
+        `Other facilities should be within ${inf_textarea_max_character_count} characters.`
+      ),
+    selection: yup
+      .string()
+      .max(
+        inf_textarea_max_character_count - 1,
+        `Selection procedure should be within ${inf_textarea_max_character_count} characters.`
+      ),
     selectionprocess: yup
-    .array()
+      .array()
       .min(1, "Choose at least one")
       .required("Required"),
-    requirements: yup.string().max(inf_textarea_max_character_count-1, `Requirements should be within ${inf_textarea_max_character_count} characters.`),
-    contact: yup.string().required("Contact Name is Required").max(inf_text_max_character_count-1, `Contact should be within ${inf_text_max_character_count-1} characters.`),
+    requirements: yup
+      .string()
+      .max(
+        inf_textarea_max_character_count - 1,
+        `Requirements should be within ${inf_textarea_max_character_count} characters.`
+      ),
+    contact: yup
+      .string()
+      .required("Contact Name is Required")
+      .max(
+        inf_text_max_character_count - 1,
+        `Contact should be within ${
+          inf_text_max_character_count - 1
+        } characters.`
+      ),
     email: yup
       .string()
       .email("Please enter a email address (eg. sriram@example.com)")
       .required("Required")
-      .max(inf_smalltext_max_character_count-1, `Email should be within ${inf_smalltext_max_character_count-1} characters.`),
-      mobile: yup
+      .max(
+        inf_smalltext_max_character_count - 1,
+        `Email should be within ${
+          inf_smalltext_max_character_count - 1
+        } characters.`
+      ),
+    mobile: yup
       .number()
       .required("Mobile Number is Required")
       .min(1000000000, "Must be 10 digits")
       .max(9999999999, "Must be 10 digits"),
-      telephone: yup.string(),
-      compdescription_file: yup.mixed().test('pdf-check','Must be PDF',validatePDF).test('size-check','Must be smaller than 10MB',validateSize),
-      internshipdescription_file: yup
-        .mixed()
-        .test("pdf-check", "Must be PDF", validatePDF)
-        .test("size-check", "Must be smaller than 10MB", validateSize),
-        stipend_benefits_file: yup
-        .mixed()
-        .test("pdf-check", "Must be PDF", validatePDF)
-        .test("size-check", "Must be smaller than 10MB", validateSize),
-      selection_file: yup
-        .mixed()
-        .test("pdf-check", "Must be PDF", validatePDF)
-        .test("size-check", "Must be smaller than 10MB", validateSize),
-      cpi: yup
-        .mixed()
-        .when('isCpiRequired', {
-          is: true,
-          then: yup.number().required('CPI is required').min(0, 'CPI cannot be negative').max(10, 'CPI cannot be more than 10'),
-          otherwise: yup.mixed()
-        }),//needs to be checked
-     years:yup.array().required("Required") //needs to be checked
-
+    telephone: yup.string(),
+    compdescription_file: yup
+      .mixed()
+      .test("pdf-check", "Must be PDF", validatePDF)
+      .test("size-check", "Must be smaller than 10MB", validateSize),
+    internshipdescription_file: yup
+      .mixed()
+      .test("pdf-check", "Must be PDF", validatePDF)
+      .test("size-check", "Must be smaller than 10MB", validateSize),
+    stipend_benefits_file: yup
+      .mixed()
+      .test("pdf-check", "Must be PDF", validatePDF)
+      .test("size-check", "Must be smaller than 10MB", validateSize),
+    selection_file: yup
+      .mixed()
+      .test("pdf-check", "Must be PDF", validatePDF)
+      .test("size-check", "Must be smaller than 10MB", validateSize),
+    cpi: yup.mixed().when("isCpiRequired", {
+      is: true,
+      then: yup
+        .number()
+        .required("CPI is required")
+        .min(0, "CPI cannot be negative")
+        .max(10, "CPI cannot be more than 10"),
+      otherwise: yup.mixed(),
+    }), //needs to be checked
+    years: yup.array().required("Required"), //needs to be checked
   });
 
   function submit(values) {
@@ -297,17 +406,23 @@ const INF = ({ setShowLoader }) => {
     formdata.append("allowed_branch", JSON.stringify(values.branch));
     // formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("rs_eligible", JSON.stringify(values.research));
-    formdata.append("years",JSON.stringify(values.years));
+    formdata.append("years", JSON.stringify(values.years));
     // formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("num_offers", values.numoffers ? values.numoffers : 0);
     formdata.append("is_stipend_details_pdf", is_compensation_details_pdf);
     formdata.append("stipend", values.stipend);
     formdata.append("facilities", JSON.stringify(values.facilities));
     formdata.append("other_facilities", values.other_facilities);
-    formdata.append("selection_procedure_rounds",JSON.stringify(selectionprocess));
+    formdata.append(
+      "selection_procedure_rounds",
+      JSON.stringify(selectionprocess)
+    );
     formdata.append("selection_procedure_details", values.selection);
     formdata.append("cpi", values.cpi);
-    formdata.append("is_selection_procedure_details_pdf", is_selection_procedure_details_pdf);
+    formdata.append(
+      "is_selection_procedure_details_pdf",
+      is_selection_procedure_details_pdf
+    );
     formdata.append("other_requirements", values.requirements);
     compdescription_file.forEach((file) => {
       formdata.append("company_details_pdf", file, file.name);
@@ -315,18 +430,18 @@ const INF = ({ setShowLoader }) => {
     selection_file.forEach((file) => {
       formdata.append("selection_procedure_details_pdf", file, file.name);
     });
-      // formdata.append("description_pdf", [values.internshipdescription_file]);
-      // formdata.append("compensation_details_pdf", [values.salary_file]);
-      internshipdescription_file.forEach((file) => {
-        formdata.append("description_pdf", file, file.name);
-      });
-      salary_file.forEach((file) => {
-        formdata.append("compensation_details_pdf", file, file.name);
-      });
-      formdata.append("contact_person_name", values.contact);
-      formdata.append("phone_number", values.mobile);
-      formdata.append("email", values.email);
-      formdata.append("recaptchakey", recaptchaRef.current.getValue());
+    // formdata.append("description_pdf", [values.internshipdescription_file]);
+    // formdata.append("compensation_details_pdf", [values.salary_file]);
+    internshipdescription_file.forEach((file) => {
+      formdata.append("description_pdf", file, file.name);
+    });
+    salary_file.forEach((file) => {
+      formdata.append("compensation_details_pdf", file, file.name);
+    });
+    formdata.append("contact_person_name", values.contact);
+    formdata.append("phone_number", values.mobile);
+    formdata.append("email", values.email);
+    formdata.append("recaptchakey", recaptchaRef.current.getValue());
     var requestOptions = {
       method: "POST",
       body: formdata,
@@ -473,7 +588,7 @@ const INF = ({ setShowLoader }) => {
           }}
         >
           <Row className="justify-content-center">
-            <Col className="l-pink p-5" lg={7} xs={11}>
+            <Col className="l-pink" lg={10} xs={10}>
               {!submitted ? (
                 <Formik
                   validateOnMount={true}
@@ -496,6 +611,20 @@ const INF = ({ setShowLoader }) => {
                   }) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       <AutoSave />
+                      <Header />
+                      <div
+                        style={{
+                          marginTop: "60px", // Adjust this value based on the height of your header
+                          top: "50px", // This value seems to be intended for positioning, adjust as needed
+                          backgroundColor: "#eff7ff",
+                        }}
+                      >
+                        <Row className=" text-center justify-content-center">
+                          <h3>Internship Notification Form</h3>
+                          <h6 style={{ color: "black" }}>{year}</h6>
+                        </Row>
+                        <MultiStepProgressBar page={page} />
+                      </div>
                       {page === 1 ? (
                         <>
                           {" "}
@@ -612,6 +741,10 @@ const INF = ({ setShowLoader }) => {
                           <Col className="text-start">
                             <Button
                               variant="primary"
+                              style={{
+                                backgroundColor: "#ff7350",
+                                borderColor: "#ff7350",
+                              }}
                               onClick={() => {
                                 setPage(page - 1);
                               }}
@@ -626,6 +759,10 @@ const INF = ({ setShowLoader }) => {
                           <Col className="text-end">
                             <Button
                               variant="primary"
+                              style={{
+                                backgroundColor: "#ff7350",
+                                borderColor: "#ff7350",
+                              }}
                               onClick={() =>
                                 handlePageChange(
                                   setPage,

@@ -32,12 +32,12 @@ const SelectionProcess = ({
   return (
     <>
       <Container className="p-0 mb-5" fluid>
-        <div className="w-100 position-relative banner-container">
+        {/* <div className="w-100 position-relative banner-container">
           <img className="fix banner p-0" alt="banner" src="https://www.iitdh.ac.in/sites/default/files/2023-10/slide-02-new_3.jpg"></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">SELECTION PROCESS</div>
           </div>
-        </div>
+        </div> */}
       </Container>
       <p className="mb-3 text-center">
         Describe the tentative selection process for the students.

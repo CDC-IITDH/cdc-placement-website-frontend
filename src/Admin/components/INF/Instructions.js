@@ -1,10 +1,10 @@
 import logo from "../../images/CDC-Logo.png";
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 const Instructions = ({ year }) => {
   return (
     <>
-      <Row className="m-5 text-center justify-content-center">
+      {/* <Row className="m-5 text-center justify-content-center">
         <img src={logo} className="w-75 logo" alt="logo" />
       </Row>
       <Row className="p-3 text-center justify-content-center">
@@ -13,12 +13,14 @@ const Instructions = ({ year }) => {
         </h3>
         <h6>{year}</h6>
       </Row>
-      <hr className="pd" />
+      <hr className="pd" /> */}
       <Row className="p-3 gray-blue">
-        <h4>
-          <b>Instructions:</b>
-        </h4>
-        <div className="p-3">
+        <Col xs={12}>
+          <h4>
+            <b>Instructions:</b>
+          </h4>
+        </Col>
+        <Col xs={12} className="p-3 ">
           <ul>
             <li>
               Student's choices will be governed by the information you provide
@@ -34,7 +36,7 @@ const Instructions = ({ year }) => {
               for the selection process and rules & regulations.
             </li>
           </ul>
-        </div>
+        </Col>
       </Row>
     </>
   );

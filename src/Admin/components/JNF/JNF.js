@@ -61,7 +61,7 @@ const JNF = ({ setShowLoader }) => {
     salary_file: "",
     selection_file: "",
     selectionprocess_other: "",
-    cpi:""//new field is added needs to be checked 
+    cpi: "", //new field is added needs to be checked
   };
   const LOCAL_STORAGE_KEY = "vals_jnf";
   const [page, setPage] = useState(1);
@@ -288,7 +288,7 @@ const JNF = ({ setShowLoader }) => {
       ),
     date: yup.string().required("Date is Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    research:  yup.array(),
+    research: yup.array(),
     numoffers: yup.number().min(0, "Must be positive"),
     ctc: yup
       .number()
@@ -356,15 +356,16 @@ const JNF = ({ setShowLoader }) => {
       .min(1000000000, "Must be 10 digits")
       .max(9999999999, "Must be 10 digits"),
     telephone: yup.string(),
-    cpi: yup.string().when('isCpiRequired', {
+    cpi: yup.string().when("isCpiRequired", {
       is: true,
-      then: yup.number()
-        .typeError('CPI must be a number.')
-        .min(0, 'CPI must be at least 0.')
-        .max(10, 'CPI must be at most 10.')
-        .required('CPI is required when minimum CPI is specified.'),
+      then: yup
+        .number()
+        .typeError("CPI must be a number.")
+        .min(0, "CPI must be at least 0.")
+        .max(10, "CPI must be at most 10.")
+        .required("CPI is required when minimum CPI is specified."),
       otherwise: yup.string(),
-    }),//needs to be checked
+    }), //needs to be checked
   });
 
   function submit(values) {
@@ -429,7 +430,7 @@ const JNF = ({ setShowLoader }) => {
       "tentative_no_of_offers",
       values.numoffers ? values.numoffers : 0
     );
-    formdata.append("cpi", values.cpi);//needs to be checked
+    formdata.append("cpi", values.cpi); //needs to be checked
     formdata.append("other_requirements", values.requirements);
     compdescription_file.forEach((file) => {
       formdata.append("company_details_pdf", file, file.name);
@@ -548,11 +549,16 @@ const JNF = ({ setShowLoader }) => {
         setPage(page + 1);
       }
     } else if (page === 3) {
-      if (errors.selectionprocess || errors.selection || errors.requirements || errors.cpi) {
+      if (
+        errors.selectionprocess ||
+        errors.selection ||
+        errors.requirements ||
+        errors.cpi
+      ) {
         setFieldTouched("selection", true);
         setFieldTouched("requirements", true);
         setFieldTouched("selectionprocess", true);
-        setFieldTouched("cpi",true);//needs to be checked
+        setFieldTouched("cpi", true); //needs to be checked
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
       } else {
@@ -615,35 +621,25 @@ const JNF = ({ setShowLoader }) => {
                   }) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       <AutoSave />
-                    
-                   
-                      <Header  />
+
+                      <Header />
                       <div
-              style={{   
-                marginTop: '60px', // Adjust this value based on the height of your header
-          top: '50px', // This value seems to be intended for positioning, adjust as needed
-                          backgroundColor: "#eff7ff",}}
+                        style={{
+                          marginTop: "60px", // Adjust this value based on the height of your header
+                          top: "50px", // This value seems to be intended for positioning, adjust as needed
+                          backgroundColor: "#eff7ff",
+                        }}
                       >
-                       <Row className=" text-center justify-content-center">
-        <h3>
-         Job Notification Form
-        </h3>
-        <h6 style={{color:"black"}}>{year}</h6>
-      </Row>
-                        <MultiStepProgressBar
-                          page={page}
-                         
-                        />
-                 
+                        <Row className=" text-center justify-content-center">
+                          <h3>Job Notification Form</h3>
+                          <h6 style={{ color: "black" }}>{year}</h6>
+                        </Row>
+                        <MultiStepProgressBar page={page} />
                       </div>
                       {page === 1 ? (
                         <>
                           {" "}
-                          <Instructions
-                            year={year}
-                            updateData={setPreFill}
-                            handlePageChange={handlePageChange} // remove this line later
-                          />
+                          <Instructions year={year} updateData={setPreFill} />
                         </>
                       ) : (
                         <></>
@@ -752,7 +748,10 @@ const JNF = ({ setShowLoader }) => {
                           <Col className="text-start">
                             <Button
                               variant="primary"
-                              style={{backgroundColor:"#ff7350",borderColor:"#ff7350"}}
+                              style={{
+                                backgroundColor: "#ff7350",
+                                borderColor: "#ff7350",
+                              }}
                               onClick={() => {
                                 setPage(page - 1);
                               }}
@@ -767,7 +766,10 @@ const JNF = ({ setShowLoader }) => {
                           <Col className="text-end">
                             <Button
                               variant="primary"
-                              style={{backgroundColor:"#ff7350",borderColor:"#ff7350"}}
+                              style={{
+                                backgroundColor: "#ff7350",
+                                borderColor: "#ff7350",
+                              }}
                               onClick={() =>
                                 handlePageChange(
                                   setPage,
