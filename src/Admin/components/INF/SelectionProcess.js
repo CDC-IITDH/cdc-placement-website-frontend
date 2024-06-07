@@ -32,12 +32,12 @@ const SelectionProcess = ({
   return (
     <>
       <Container className="p-0 mb-5" fluid>
-        <div className="w-100 position-relative banner-container">
+        {/* <div className="w-100 position-relative banner-container">
           <img className="fix banner p-0" alt="banner" src="https://www.iitdh.ac.in/sites/default/files/2023-10/slide-02-new_3.jpg"></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">SELECTION PROCESS</div>
           </div>
-        </div>
+        </div> */}
       </Container>
       <p className="mb-3 text-center">
         Describe the tentative selection process for the students.
@@ -127,6 +127,46 @@ const SelectionProcess = ({
           {errors.selection}{" "}
         </Form.Control.Feedback>
       </Form.Group>
+      <Form.Group className="mb-5">
+  <Form.Label>Psychometric Test (if any, to be completed before issuing the offer letter) <span className="text-danger">*</span></Form.Label>
+  <Row>
+    {['Yes', 'No'].map((test) => (
+      <Col sm={6} key={test}>
+        <Form.Check
+          type="radio"
+          label={test}
+          name="psychometricTest"
+          value={test}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          isInvalid={touched.psychometricTest && errors.psychometricTest}
+          checked={values.psychometricTest === test}
+        />
+      </Col>
+    ))}
+  </Row>
+  <span className="select-feedback">{errors.psychometricTest && touched.psychometricTest ? errors.psychometricTest : ''}</span>
+</Form.Group>
+<Form.Group className="mb-5">
+  <Form.Label>Medical Test (if any, to be completed before issuing the offer letter) <span className="text-danger">*</span></Form.Label>
+  <Row>
+    {['Yes', 'No'].map((test) => (
+      <Col sm={6} key={test}>
+        <Form.Check
+          type="radio"
+          label={test}
+          name="medicalTest"
+          value={test}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          isInvalid={touched.medicalTest && errors.medicalTest}
+          checked={values.medicalTest === test}
+        />
+      </Col>
+    ))}
+  </Row>
+  <span className="select-feedback">{errors.medicalTest && touched.medicalTest ? errors.medicalTest : ''}</span>
+</Form.Group>
       <Form.Group className="mb-5">
         <Form.Label>Is there any minimum CPI requirement?</Form.Label>
         <div>

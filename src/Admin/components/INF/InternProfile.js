@@ -26,18 +26,19 @@ const InternProfile = ({
   const allBranches = ["CSE", "EE", "MMAE", "EP", "MNC", "Civil", "Chemical"];
   const defaultBranches = ["CSE", "EE", "MMAE", "EP"];
   const selectedBranches =
-    values.years?.includes("Second Year") || values.years?.includes("Third Year")
+    values.years?.includes("Second Year") ||
+    values.years?.includes("Third Year")
       ? allBranches
       : defaultBranches;
   return (
     <>
       <Container className="p-0 mb-5" fluid>
-        <div className="w-100 position-relative banner-container">
+        {/* <div className="w-100 position-relative banner-container">
           <img className="fix banner p-0" alt="banner" src="https://www.iitdh.ac.in/sites/default/files/2023-10/slide-02-new_3.jpg"></img>
           <div className="fix w-100 h-100 haze">
             <div className="center text-center w-100">INTERNSHIP PROFILE</div>
           </div>
-        </div>
+        </div> */}
       </Container>
       <hr className="pd" />
       <MultipleFileInput
@@ -107,8 +108,7 @@ const InternProfile = ({
 
       <Form.Group className="mb-5">
         <Form.Label>
-          Internship Type{" "}
-          <span className="text-danger">*</span>
+          Internship Type <span className="text-danger">*</span>
         </Form.Label>
         <Form.Check className="form-check" type="radio">
           <Row>
@@ -154,9 +154,7 @@ const InternProfile = ({
                   value={x.substring(0, 6)}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={
-                    touched.season && errors.season
-                  }
+                  isInvalid={touched.season && errors.season}
                   checked={values.season.includes(x.substring(0, 6))}
                 ></Form.Check.Input>
                 <Form.Check.Label>{x}</Form.Check.Label>
@@ -174,18 +172,18 @@ const InternProfile = ({
           Tentative Date of joining <span className="text-danger">*</span>
         </Form.Label>
         <Col>
-        <Form.Control
-          type="date"
-          name="startdate"
-          value={values.startdate}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={touched.startdate && errors.startdate}
-        />
-        <Form.Control.Feedback type="invalid">
-          {" "}
-          {errors.startdate}{" "}
-        </Form.Control.Feedback>
+          <Form.Control
+            type="date"
+            name="startdate"
+            value={values.startdate}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            isInvalid={touched.startdate && errors.startdate}
+          />
+          <Form.Control.Feedback type="invalid">
+            {" "}
+            {errors.startdate}{" "}
+          </Form.Control.Feedback>
         </Col>
       </Form.Group>
 
@@ -194,18 +192,18 @@ const InternProfile = ({
           Tentative Date of completion <span className="text-danger">*</span>
         </Form.Label>
         <Col>
-         <Form.Control
-          type="date"
-          name="enddate"
-          value={values.enddate}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          isInvalid={touched.enddate && errors.enddate}
-        />
-        <Form.Control.Feedback type="invalid">
-          {" "}
-          {errors.enddate}{" "}
-        </Form.Control.Feedback>
+          <Form.Control
+            type="date"
+            name="enddate"
+            value={values.enddate}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            isInvalid={touched.enddate && errors.enddate}
+          />
+          <Form.Control.Feedback type="invalid">
+            {" "}
+            {errors.enddate}{" "}
+          </Form.Control.Feedback>
         </Col>
       </Form.Group>
       <Form.Group className="mb-5">
@@ -214,17 +212,19 @@ const InternProfile = ({
           <Row>
             {["Second Year", "Third Year", "Fourth Year"].map((year) => (
               <Col sm={4} key={year}>
-          <Form.Check.Input
-            type="checkbox"
-            name="years"
-            value={year}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            isInvalid={touched.years && errors.years}
-            checked={values.years?.includes(year) || year === "Fourth Year"}
-          ></Form.Check.Input>
-          <Form.Check.Label>{year}</Form.Check.Label>
-        </Col>
+                <Form.Check.Input
+                  type="checkbox"
+                  name="years"
+                  value={year}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.years && errors.years}
+                  checked={
+                    values.years?.includes(year) || year === "Fourth Year"
+                  }
+                ></Form.Check.Input>
+                <Form.Check.Label>{year}</Form.Check.Label>
+              </Col>
             ))}
           </Row>
         </Form.Check>
@@ -260,7 +260,6 @@ const InternProfile = ({
         </span>
       </Form.Group>
 
-    
       {/* <Form.Group className="mb-5">
         <Form.Label>
         Are sophomores (2nd Year) eligible as well?{" "}
@@ -316,48 +315,89 @@ const InternProfile = ({
         </Form.Check> */}
         <Form.Check className="form-check" type="checkbox">
           <Row>
-        {['MS', 'MTech', 'PHD'].map((degree) => (
-            <Col sm={4} key={degree}>
+            {["MS", "MTech", "PHD"].map((degree) => (
+              <Col sm={4} key={degree}>
                 <Form.Check type="checkbox">
-                    <Form.Check.Input 
-                        type="checkbox" 
-                        name="research"
-                        value={degree}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        isInvalid={touched.research && errors.research}
-                        checked={values.research.includes(degree)}
-                    />
-                    <Form.Check.Label>{degree}</Form.Check.Label>
+                  <Form.Check.Input
+                    type="checkbox"
+                    name="research"
+                    value={degree}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isInvalid={touched.research && errors.research}
+                    checked={values.research.includes(degree)}
+                  />
+                  <Form.Check.Label>{degree}</Form.Check.Label>
                 </Form.Check>
-            </Col>
-        ))}
-    </Row>
-</Form.Check>
+              </Col>
+            ))}
+          </Row>
+        </Form.Check>
         <span className="select-feedback">
           {errors.research && touched.research ? errors.research : ""}
         </span>
       </Form.Group>
+      <Row>
+        <Col sm={6}>
+      <Form.Group className="mb-3">
+        <Form.Label>Minimum No. of Hires</Form.Label>
+        <Form.Control type="number" name='numoffers' value={values.numoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.numoffers && errors.numoffers} />
+        <Form.Control.Feedback type="invalid"> {errors.numoffers} </Form.Control.Feedback>
+        </Form.Group>
+        </Col>
+        <Col sm={6}>
+        <Form.Group className="mb-3">
+        <Form.Label>Expected  No. of Offers</Form.Label>
+        <Form.Control type="number" name='expoffers' value={values.expoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.expoffers && errors.expoffers} />
+        <Form.Control.Feedback type="invalid"> {errors.expoffers} </Form.Control.Feedback>
+        
+        </Form.Group>
+        </Col>
+        <Form.Text className="text-muted mb-3">
+          The company when at the end of the selection procedure, is encouraged to maintain a list of waiting candidates, in the event that one of the offered candidates is unable to take up the position.
+        </Form.Text>
+      </Row>
       <Form.Group className="mb-5">
-        <Form.Label>Tentative No. of Offers</Form.Label>
-        <Form.Control
-          type="number"
-          name="numoffers"
-          value={values.numoffers}
+  <Form.Label>Is backlog students eligible to apply? <span className="text-danger">*</span></Form.Label>
+  <Row>
+    {['Yes', 'No'].map((eligible) => (
+      <Col sm={6} key={eligible}>
+        <Form.Check
+          type="radio"
+          label={eligible}
+          name="backlogEligibility"
+          value={eligible}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.numoffers && errors.numoffers}
+          isInvalid={touched.backlogEligibility && errors.backlogEligibility}
+          checked={values.backlogEligibility === eligible}
         />
-        <Form.Control.Feedback type="invalid">
-          {" "}
-          {errors.numoffers}{" "}
-        </Form.Control.Feedback>
-        <Form.Text className="text-muted">
-          The company when at the end of the selection procedure, is encouraged
-          to maintain a list of waiting candidates, in the event that one of the
-          offered candidates is unable to take up the position.
-        </Form.Text>
-      </Form.Group>
+      </Col>
+    ))}
+  </Row>
+  <span className="select-feedback">{errors.backlogEligibility && touched.backlogEligibility ? errors.backlogEligibility : ''}</span>
+</Form.Group>
+
+<Form.Group className="mb-5">
+  <Form.Label>Is the position also open to PwD/ DAP? <span className="text-danger">*</span></Form.Label>
+  <Row>
+    {['Yes', 'No'].map((eligible) => (
+      <Col sm={6} key={eligible}>
+        <Form.Check
+          type="radio"
+          label={eligible}
+          name="pwdEligibility"
+          value={eligible}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          isInvalid={touched.pwdEligibility && errors.pwdEligibility}
+          checked={values.pwdEligibility === eligible}
+        />
+      </Col>
+    ))}
+  </Row>
+  <span className="select-feedback">{errors.pwdEligibility && touched.pwdEligibility ? errors.pwdEligibility : ''}</span>
+</Form.Group>
       <hr className="pd" />
       <MultipleFileInput
         stateVar={salary_file}
@@ -385,33 +425,26 @@ const InternProfile = ({
       </Form.Group>
 
       <Form.Group className="mb-5">
-        <Form.Label>
-          Facilities provided
-        </Form.Label>
+        <Form.Label>Facilities provided</Form.Label>
         <Form.Check className="form-check" type="checkbox">
           <Row>
-            {[
-              "Accommodation",
-              "Transport",
-              "Food",
-              "Medical Facility",
-            ].map((x) => (
-              <Col sm={6} key={x}>
-                <Form.Check.Input
-                  type="checkbox"
-                  label={x}
-                  name="facilities"
-                  value={x.split(" ")[0]}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isInvalid={
-                    touched.facilities && errors.facilities
-                  }
-                  checked={values.facilities.includes(x.split(" ")[0])}
-                ></Form.Check.Input>
-                <Form.Check.Label>{x.split(" ")[0]}</Form.Check.Label>
-              </Col>
-            ))}
+            {["Accommodation", "Transport", "Food", "Medical Facility"].map(
+              (x) => (
+                <Col sm={6} key={x}>
+                  <Form.Check.Input
+                    type="checkbox"
+                    label={x}
+                    name="facilities"
+                    value={x.split(" ")[0]}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isInvalid={touched.facilities && errors.facilities}
+                    checked={values.facilities.includes(x.split(" ")[0])}
+                  ></Form.Check.Input>
+                  <Form.Check.Label>{x.split(" ")[0]}</Form.Check.Label>
+                </Col>
+              )
+            )}
           </Row>
         </Form.Check>
         <span className="select-feedback">
@@ -420,7 +453,7 @@ const InternProfile = ({
       </Form.Group>
 
       <Form.Group className="mb-5">
-        <Form.Label> Other available facilities  (if any)</Form.Label>
+        <Form.Label> Other available facilities (if any)</Form.Label>
         <Form.Control
           as="textarea"
           maxLength={inf_textarea_max_character_count}
