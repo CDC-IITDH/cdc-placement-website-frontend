@@ -128,6 +128,46 @@ const SelectionProcess = ({
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
+  <Form.Label>Psychometric Test (if any, to be completed before issuing the offer letter) <span className="text-danger">*</span></Form.Label>
+  <Row>
+    {['Yes', 'No'].map((test) => (
+      <Col sm={6} key={test}>
+        <Form.Check
+          type="radio"
+          label={test}
+          name="psychometricTest"
+          value={test}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          isInvalid={touched.psychometricTest && errors.psychometricTest}
+          checked={values.psychometricTest === test}
+        />
+      </Col>
+    ))}
+  </Row>
+  <span className="select-feedback">{errors.psychometricTest && touched.psychometricTest ? errors.psychometricTest : ''}</span>
+</Form.Group>
+<Form.Group className="mb-5">
+  <Form.Label>Medical Test (if any, to be completed before issuing the offer letter) <span className="text-danger">*</span></Form.Label>
+  <Row>
+    {['Yes', 'No'].map((test) => (
+      <Col sm={6} key={test}>
+        <Form.Check
+          type="radio"
+          label={test}
+          name="medicalTest"
+          value={test}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          isInvalid={touched.medicalTest && errors.medicalTest}
+          checked={values.medicalTest === test}
+        />
+      </Col>
+    ))}
+  </Row>
+  <span className="select-feedback">{errors.medicalTest && touched.medicalTest ? errors.medicalTest : ''}</span>
+</Form.Group>
+      <Form.Group className="mb-5">
         <Form.Label>Is there any minimum CPI requirement?</Form.Label>
         <div>
           <Form.Check

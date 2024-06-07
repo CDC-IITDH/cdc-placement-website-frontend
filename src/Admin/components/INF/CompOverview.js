@@ -107,6 +107,35 @@ const CompOverview = ({
           {errors.address}{" "}
         </Form.Control.Feedback>
       </Form.Group>
+      <Form.Group className="mb-5 ">
+        <Form.Label>Company Turnover (For NIRF Purpose) <span className="text-danger">*</span></Form.Label>
+        <Form.Control type="number" name='companyTurnover' value={values.companyTurnover} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.companyTurnover && errors.companyTurnover} />
+        <Form.Control.Feedback type="invalid"> {errors.companyTurnover} </Form.Control.Feedback>
+        <Form.Text className="text-muted">(in INR/year)<br /></Form.Text>
+      </Form.Group>
+      <Row>
+        <Col sm={6}>
+      <Form.Group className="mb-5">
+        <Form.Label>Date of establishment <span className="text-danger">*</span></Form.Label>
+        <Form.Control type="date" name='establishdate' value={values.establishdate} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.establishdate && errors.establishdate} />
+        <Form.Control.Feedback type="invalid"> {errors.establishdate} </Form.Control.Feedback>
+      </Form.Group>
+      </Col>
+      <Col sm={6}>
+      <Form.Group className="mb-5">
+    <Form.Label>Number of Employees <span className="text-danger">*</span></Form.Label>
+    <Form.Control 
+        type="number" 
+        name='numberOfEmployees' 
+        value={values.numberOfEmployees} 
+        onChange={handleChange} 
+        onBlur={handleBlur} 
+        isInvalid={touched.numberOfEmployees && errors.numberOfEmployees} 
+    />
+    <Form.Control.Feedback type="invalid"> {errors.numberOfEmployees} </Form.Control.Feedback>
+</Form.Group>
+ </Col>
+      </Row>
       <Row>
         <Col sm={6}>
           <Form.Group className="mb-5">

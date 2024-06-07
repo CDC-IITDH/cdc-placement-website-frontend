@@ -337,26 +337,67 @@ const InternProfile = ({
           {errors.research && touched.research ? errors.research : ""}
         </span>
       </Form.Group>
+      <Row>
+        <Col sm={6}>
+      <Form.Group className="mb-3">
+        <Form.Label>Minimum No. of Hires</Form.Label>
+        <Form.Control type="number" name='numoffers' value={values.numoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.numoffers && errors.numoffers} />
+        <Form.Control.Feedback type="invalid"> {errors.numoffers} </Form.Control.Feedback>
+        </Form.Group>
+        </Col>
+        <Col sm={6}>
+        <Form.Group className="mb-3">
+        <Form.Label>Expected  No. of Offers</Form.Label>
+        <Form.Control type="number" name='expoffers' value={values.expoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.expoffers && errors.expoffers} />
+        <Form.Control.Feedback type="invalid"> {errors.expoffers} </Form.Control.Feedback>
+        
+        </Form.Group>
+        </Col>
+        <Form.Text className="text-muted mb-3">
+          The company when at the end of the selection procedure, is encouraged to maintain a list of waiting candidates, in the event that one of the offered candidates is unable to take up the position.
+        </Form.Text>
+      </Row>
       <Form.Group className="mb-5">
-        <Form.Label>Tentative No. of Offers</Form.Label>
-        <Form.Control
-          type="number"
-          name="numoffers"
-          value={values.numoffers}
+  <Form.Label>Is backlog students eligible to apply? <span className="text-danger">*</span></Form.Label>
+  <Row>
+    {['Yes', 'No'].map((eligible) => (
+      <Col sm={6} key={eligible}>
+        <Form.Check
+          type="radio"
+          label={eligible}
+          name="backlogEligibility"
+          value={eligible}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.numoffers && errors.numoffers}
+          isInvalid={touched.backlogEligibility && errors.backlogEligibility}
+          checked={values.backlogEligibility === eligible}
         />
-        <Form.Control.Feedback type="invalid">
-          {" "}
-          {errors.numoffers}{" "}
-        </Form.Control.Feedback>
-        <Form.Text className="text-muted">
-          The company when at the end of the selection procedure, is encouraged
-          to maintain a list of waiting candidates, in the event that one of the
-          offered candidates is unable to take up the position.
-        </Form.Text>
-      </Form.Group>
+      </Col>
+    ))}
+  </Row>
+  <span className="select-feedback">{errors.backlogEligibility && touched.backlogEligibility ? errors.backlogEligibility : ''}</span>
+</Form.Group>
+
+<Form.Group className="mb-5">
+  <Form.Label>Is the position also open to PwD/ DAP? <span className="text-danger">*</span></Form.Label>
+  <Row>
+    {['Yes', 'No'].map((eligible) => (
+      <Col sm={6} key={eligible}>
+        <Form.Check
+          type="radio"
+          label={eligible}
+          name="pwdEligibility"
+          value={eligible}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          isInvalid={touched.pwdEligibility && errors.pwdEligibility}
+          checked={values.pwdEligibility === eligible}
+        />
+      </Col>
+    ))}
+  </Row>
+  <span className="select-feedback">{errors.pwdEligibility && touched.pwdEligibility ? errors.pwdEligibility : ''}</span>
+</Form.Group>
       <hr className="pd" />
       <MultipleFileInput
         stateVar={salary_file}

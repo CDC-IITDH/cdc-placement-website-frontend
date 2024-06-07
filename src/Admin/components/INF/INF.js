@@ -40,6 +40,12 @@ const INF = ({ setShowLoader }) => {
     locations: "",
     details: "",
     season: "",
+    establishdate:"",//newly added needs to be checked
+    expoffers: "",//newly added needs to checked
+    pwdEligibility:"",//newly added needs to checked
+    backlogEligibility:"",//newly added needs to checked
+    medicalTest:"",//newly added needs to checked
+    psychometricTest:"",//newly added needs to checked
     start_date: "",
     end_date: "",
     worktype: "",
@@ -47,6 +53,8 @@ const INF = ({ setShowLoader }) => {
     research: "",
     // sophomoresallowed: "",
     numoffers: "",
+    companyTurnover:"",//newly added needs to checked
+    numberOfEmployees:"",//newly added needs to checked
     stipend: "",
     facilities: "",
     other_facilities: "",
@@ -277,6 +285,13 @@ const INF = ({ setShowLoader }) => {
       ),
     worktype: yup.string().required("Required"),
     season: yup.array().min(1, "Choose at least one").required("Required"),
+    establishdate:yup.string().required("Date is Required"),
+    numberOfEmployees:yup.number().min(0, "Must be positive"),//needs to be checked
+    companyTurnover:yup
+    .number()
+    .required("Company Turnover is Required")
+    .integer("Must be an integer")
+    .min(0, "Must be positive"),//needs to be checked
     startdate: yup.string().required("Date is Required"),
     enddate: yup.string().required("Date is Required"),
     // sophomoresallowed: yup.string().required("Required"),
@@ -311,6 +326,11 @@ const INF = ({ setShowLoader }) => {
         inf_textarea_max_character_count - 1,
         `Requirements should be within ${inf_textarea_max_character_count} characters.`
       ),
+      expoffers: yup.number().min(0, "Must be positive"),//needs to be checked
+      pwdEligibility: yup.string().required("Required"),//needs to be checked
+      backlogEligibility: yup.string().required("Required"),//needs to be checked
+      medicalTest: yup.string().required("Required"),//needs to be checked
+      psychometricTest: yup.string().required("Required"),//needs to be checked
     contact: yup
       .string()
       .required("Contact Name is Required")
@@ -396,7 +416,12 @@ const INF = ({ setShowLoader }) => {
     formdata.append("company_type", values.companytype);
     formdata.append("nature_of_business", values.nature);
     formdata.append("is_description_pdf", is_description_pdf);
+    formdata.append("expected_no_of_offers", values.expoffers ? values.expoffers : 0);//needs to be checked
+    formdata.append("pwd_eligible", values.pwdEligibility);//needs to be checked
+    formdata.append("backlog_eligible", values.backlogEligibility);//needs to be checked
     formdata.append("designation", values.designation);
+    formdata.append("number_of_employees",values.numberOfEmployees ? values.numberOfEmployees : 0);//needs to be checked
+    formdata.append("company_turnover", values.companyTurnover);//needs to be checked
     formdata.append("internship_location", values.locations);
     formdata.append("description", values.details);
     formdata.append("season", JSON.stringify(values.season));
@@ -410,6 +435,8 @@ const INF = ({ setShowLoader }) => {
     // formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("num_offers", values.numoffers ? values.numoffers : 0);
     formdata.append("is_stipend_details_pdf", is_compensation_details_pdf);
+    formdata.append("pyschometric_test" , values. psychometricTest);//needs to be checked
+    formdata.append("medical_test",values.medicalTest);//needs to be checked
     formdata.append("stipend", values.stipend);
     formdata.append("facilities", JSON.stringify(values.facilities));
     formdata.append("other_facilities", values.other_facilities);
@@ -418,6 +445,7 @@ const INF = ({ setShowLoader }) => {
       JSON.stringify(selectionprocess)
     );
     formdata.append("selection_procedure_details", values.selection);
+    formdata.append("establishment_date" , changeDateFormat(values.establishdate));//needs to be checked
     formdata.append("cpi", values.cpi);
     formdata.append(
       "is_selection_procedure_details_pdf",
@@ -490,6 +518,9 @@ const INF = ({ setShowLoader }) => {
         errors.compdescription ||
         errors.address ||
         errors.city ||
+        errors.establishdate ||
+        errors.numberOfEmployees ||
+        errors.companyTurnover ||
         errors.state ||
         errors.country ||
         errors.pincode ||
@@ -499,6 +530,9 @@ const INF = ({ setShowLoader }) => {
         setFieldTouched("name", true);
         setFieldTouched("link", true);
         setFieldTouched("compdescription", true);
+        setFieldTouched("establishdate",true);//needs to be checked
+        setFieldTouched("numberOfEmployees",true);//needs to be checked
+        setFieldTouched("companyTurnover",true);//needs to be checked
         setFieldTouched("address", true);
         setFieldTouched("city", true);
         setFieldTouched("state", true);
@@ -519,6 +553,9 @@ const INF = ({ setShowLoader }) => {
         errors.worktype ||
         errors.season ||
         errors.startdate ||
+        errors.pwdEligibility ||
+        errors.backlogEligibility ||
+        errors.expoffers ||
         errors.enddate ||
         errors.branch ||
         // errors.sophomoresallowed ||
@@ -535,6 +572,9 @@ const INF = ({ setShowLoader }) => {
         setFieldTouched("enddate", true);
         setFieldTouched("worktype", true);
         setFieldTouched("season", true);
+        setFieldTouched("pwdEligibility", true);//needs to be checked
+        setFieldTouched("backlogEligibility", true);//needs to be checked
+        setFieldTouched("expoffers", true);//needs to be checked
         setFieldTouched("branch", true);
         setFieldTouched("research", true);
         setFieldTouched("numoffers", true);
@@ -547,8 +587,11 @@ const INF = ({ setShowLoader }) => {
         setPage(page + 1);
       }
     } else if (page === 3) {
-      if (errors.selectionprocess || errors.requirements || errors.selection) {
+      if (errors.selectionprocess || errors.requirements || errors.selection ||  errors. psychometricTest ||
+        errors.medicalTest ) {
         setFieldTouched("selectionprocess", true);
+        setFieldTouched("psychometricTest",true);//needs to be checked
+        setFieldTouched("medicalTest",true);//needs to be checked
         setFieldTouched("requirements", true);
         setFieldTouched("selection", true);
         window.scrollTo(0, 0);

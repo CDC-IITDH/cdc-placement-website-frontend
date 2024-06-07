@@ -22,6 +22,7 @@ import {
   jnf_text_max_character_count,
 } from "./limit_constants";
 import Header from "./Header";
+import { set } from "date-fns";
 
 const JNF = ({ setShowLoader }) => {
   const year = "2024-2025";
@@ -41,10 +42,18 @@ const JNF = ({ setShowLoader }) => {
     locations: "",
     details: "",
     date: "",
+    establishdate:"",//newly added needs to be checked
     branch: "",
     research: "",
+    pwdEligibility:"",//newly added needs to checked
+    backlogEligibility:"",//newly added needs to checked
+    medicalTest:"",//newly added needs to checked
+    psychometricTest:"",//newly added needs to checked
     numoffers: "",
+    expoffers: "",//newly added needs to checked
+    numberOfEmployees:"",//newly added needs to checked
     ctc: "",
+    companyTurnover:"",//newly added needs to checked
     gross: "",
     takehome: "",
     bonus: "",
@@ -287,9 +296,21 @@ const JNF = ({ setShowLoader }) => {
         `Details should be within ${jnf_textarea_max_character_count} character limit.`
       ),
     date: yup.string().required("Date is Required"),
+    establishdate:yup.string().required("Date is Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     research: yup.array(),
+    pwdEligibility: yup.string().required("Required"),//needs to be checked
+    backlogEligibility: yup.string().required("Required"),//needs to be checked
+    medicalTest: yup.string().required("Required"),//needs to be checked
+    psychometricTest: yup.string().required("Required"),//needs to be checked
     numoffers: yup.number().min(0, "Must be positive"),
+    expoffers: yup.number().min(0, "Must be positive"),//needs to be checked
+    numberOfEmployees:yup.number().min(0, "Must be positive"),//needs to be checked
+    companyTurnover:yup
+    .number()
+    .required("Company Turnover is Required")
+    .integer("Must be an integer")
+    .min(0, "Must be positive"),//needs to be checked
     ctc: yup
       .number()
       .required("CTC is Required")
@@ -409,6 +430,7 @@ const JNF = ({ setShowLoader }) => {
     formdata.append("is_description_pdf", is_description_pdf);
     formdata.append("job_location", values.locations);
     formdata.append("compensation_ctc", values.ctc);
+    formdata.append("company_turnover", values.companyTurnover);//needs to be checked
     formdata.append("compensation_gross", values.gross);
     formdata.append("compensation_take_home", values.takehome);
     formdata.append("compensation_bonus", values.bonus ? values.bonus : 0);
@@ -424,12 +446,19 @@ const JNF = ({ setShowLoader }) => {
       is_selection_procedure_details_pdf
     );
     formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
+    formdata.append("establishment_date" , changeDateFormat(values.establishdate));//needs to be checked
     formdata.append("allowed_branch", JSON.stringify(values.branch));
     formdata.append("rs_eligible", JSON.stringify(values.research));
+    formdata.append("pwd_eligible", values.pwdEligibility);//needs to be checked
+    formdata.append("backlog_eligible", values.backlogEligibility);//needs to be checked
+    formdata.append("pyschometric_test" , values. psychometricTest);//needs to be checked
+    formdata.append("medical_test",values.medicalTest);//needs to be checked
     formdata.append(
       "tentative_no_of_offers",
       values.numoffers ? values.numoffers : 0
     );
+    formdata.append("expected_no_of_offers", values.expoffers ? values.expoffers : 0);//needs to be checked
+    formdata.append("number_of_employees",values.numberOfEmployees ? values.numberOfEmployees : 0);//needs to be checked
     formdata.append("cpi", values.cpi); //needs to be checked
     formdata.append("other_requirements", values.requirements);
     compdescription_file.forEach((file) => {
@@ -495,6 +524,9 @@ const JNF = ({ setShowLoader }) => {
         errors.compdescription ||
         errors.address ||
         errors.city ||
+        errors.establishdate ||
+        errors.numberOfEmployees ||
+        errors.companyTurnover ||
         errors.state ||
         errors.country ||
         errors.pincode ||
@@ -505,6 +537,9 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("link", true);
         setFieldTouched("compdescription", true);
         setFieldTouched("address", true);
+        setFieldTouched("establishdate",true);//needs to be checked
+        setFieldTouched("numberOfEmployees",true);//needs to be checked
+        setFieldTouched("companyTurnover",true);//needs to be checked
         setFieldTouched("city", true);
         setFieldTouched("state", true);
         setFieldTouched("country", true);
@@ -524,7 +559,10 @@ const JNF = ({ setShowLoader }) => {
         errors.date ||
         errors.branch ||
         errors.research ||
+        errors.pwdEligibility ||
+        errors.backlogEligibility ||
         errors.numoffers ||
+        errors.expoffers ||
         errors.ctc ||
         errors.gross ||
         errors.takehome ||
@@ -537,7 +575,10 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("date", true);
         setFieldTouched("branch", true);
         setFieldTouched("research", true);
+        setFieldTouched("pwdEligibility", true);//needs to be checked
+        setFieldTouched("backlogEligibility", true);//needs to be checked
         setFieldTouched("numoffers", true);
+        setFieldTouched("expoffers", true);//needs to be checked
         setFieldTouched("ctc", true);
         setFieldTouched("gross", true);
         setFieldTouched("takehome", true);
@@ -551,11 +592,15 @@ const JNF = ({ setShowLoader }) => {
     } else if (page === 3) {
       if (
         errors.selectionprocess ||
+        errors. psychometricTest ||
+        errors.medicalTest ||
         errors.selection ||
         errors.requirements ||
         errors.cpi
       ) {
         setFieldTouched("selection", true);
+        setFieldTouched("psychometricTest",true);//needs to be checked
+        setFieldTouched("medicalTest",true);//needs to be checked
         setFieldTouched("requirements", true);
         setFieldTouched("selectionprocess", true);
         setFieldTouched("cpi", true); //needs to be checked
