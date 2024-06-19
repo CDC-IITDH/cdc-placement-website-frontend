@@ -54,6 +54,32 @@ const ExportAsExcel = (token, opening_id) => {
   });
 };
 
+const DownloadResume = (token, opening_id) => {
+  return new Promise((myResolve, myReject) => {
+    if (token) {
+      fetch(API_ENDPOINT + "api/admin/downloadResume/", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ opening_id: opening_id }),
+      })
+        .then((result) => {
+          if (result.status === 200) myResolve(result.json());
+          else throw new Error("Error " + result.status);
+        })
+        .catch((err) => {
+          myReject(false);
+        });
+    } else {
+      return myReject(false);
+    }
+  });
+};
+
 
 const ChangeOffer = (token, opening_id, offer_accepted) => {
   return new Promise((myResolve, myReject) => {
@@ -206,4 +232,4 @@ const AddAdditionalInfo = (token, opening_id, field) => {
   });
 };
 
-export { GetApplications, ExportAsExcel, ChangeOffer, UpdateDeadline, MarkStatus, DeleteAdditionalInfo, AddAdditionalInfo };
+export { GetApplications, ExportAsExcel, DownloadResume, ChangeOffer, UpdateDeadline, MarkStatus, DeleteAdditionalInfo, AddAdditionalInfo };

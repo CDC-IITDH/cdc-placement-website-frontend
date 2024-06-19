@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import AddIcon from "@material-ui/icons/Add";
 import LocalPrintshopIcon from "@material-ui/icons/LocalPrintshop";
+import GetAppIcon from '@material-ui/icons/GetApp';
 import SearchIcon from "@material-ui/icons/Search";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -18,6 +19,7 @@ import {
 } from "@material-ui/core";
 import useStyles from "./styles";
 import { ExportAsExcel } from "../../api/details_page";
+import { DownloadResume } from "../../api/details_page";
 import AddStudent from "./AddStudent";
 
 const Header = ({
@@ -64,6 +66,20 @@ const Header = ({
   const exportAsExcel = () => {
     if (token) {
       ExportAsExcel(token, openingId)
+        .then((res) => {
+          if (res.file) {
+            window.open(res.file);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const downloadResume = () => {
+    if (token) {
+      DownloadResume(token, openingId)
         .then((res) => {
           if (res.file) {
             window.open(res.file);
@@ -311,6 +327,12 @@ const Header = ({
             <LocalPrintshopIcon className={classes.printIcon} />
             <Typography className={classes.buttonText}>
               Export as Excel
+            </Typography>
+          </div>
+          <div onClick={downloadResume} className={classes.otherFunctionButtons}>
+            <GetAppIcon className={classes.printIcon} />
+            <Typography className={classes.buttonText}>
+              Download <br />Resumes
             </Typography>
           </div>
         </div>
