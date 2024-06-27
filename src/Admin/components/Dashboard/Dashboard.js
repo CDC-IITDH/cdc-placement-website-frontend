@@ -185,6 +185,119 @@ const Dashboard = ({
                   </Fragment>
                 )}
               </Tab>
+              <Tab eventKey="ongoing_internships" title="Current Internsips">
+                {dashboardview && dashboardview?.ongoing_internships.length === 0 ? (
+                  <Container>
+                    <h4 style={{ color: "#787878" }}>No Listings Available</h4>
+                  </Container>
+                ) : (
+                  <Fragment>
+                    {dashboardview?.ongoing_internships.map((elem) => {
+                      // convert elem.deadline_timestamp to date dd/mm/yyyy
+                      return (
+                        <Cards
+                          key={elem.id}
+                          id={elem.id}
+                          token={token}
+                          company_name={elem.company_name}
+                          compensation_CTC={elem.stipend}
+                          description={elem.description}
+                          designation={elem.designation}
+                          deadline_datetime={elem.deadline_datetime}
+                          tier={elem.tier}
+                          contact_person_name={elem.contact_person_name}
+                          phone_number={elem.phone_number}
+                          email={elem.email}
+                          additional_info={elem.additional_info}
+                          type="Internship"
+                          profileInfo={profileInfo}
+                          setError={setError}
+                          setShowError={setShowError}
+                          setSuccess={setSuccess}
+                          setShowSuccess={setShowSuccess}
+                          setShowLoader={setShowLoader}
+                          getDashboardInfo={getDashboardInfo}
+                        />
+                      );
+                    })}
+                  </Fragment>
+                )}
+              </Tab>
+              <Tab eventKey="previous_internships" title="Previous Internships">
+                {dashboardview && dashboardview?.previous_internships.length === 0 ? (
+                  <Container>
+                    <h4 style={{ color: "#787878" }}>No Listings Available</h4>
+                  </Container>
+                ) : (
+                  <Fragment>
+                    {dashboardview?.previous_internships.map((elem) => {
+                      return (
+                        <Cards
+                          key={elem.id}
+                          id={elem.id}
+                          token={token}
+                          company_name={elem.company_name}
+                          compensation_CTC={elem.compensation_CTC}
+                          description={elem.description}
+                          designation={elem.designation}
+                          deadline_datetime={elem.deadline_datetime}
+                          tier={elem.tier}
+                          contact_person_name={elem.contact_person_name}
+                          phone_number={elem.phone_number}
+                          email={elem.email}
+                          additional_info={elem.additional_info}
+                          type="Internship"
+                          profileInfo={profileInfo}
+                          setError={setError}
+                          setShowError={setShowError}
+                          setSuccess={setSuccess}
+                          setShowSuccess={setShowSuccess}
+                          setShowLoader={setShowLoader}
+                          getDashboardInfo={getDashboardInfo}
+                        />
+                      );
+                    })}
+                  </Fragment>
+                )}
+              </Tab>
+              <Tab eventKey="new_internships" title="New Internship Notifications">
+                {dashboardview && dashboardview?.new_internships.length === 0 ? (
+                  <Container>
+                    <h4 style={{ color: "#787878" }}>No Listings Available</h4>
+                  </Container>
+                ) : (
+                  <Fragment>
+                    {dashboardview?.new_internships.map((elem) => {
+                      // convert elem.deadline_timestamp to date dd/mm/yyyy
+                      return (
+                        <Cards
+                          key={elem.id}
+                          id={elem.id}
+                          token={token}
+                          company_name={elem.company_name}
+                          compensation_CTC={elem.stipend}
+                          description={elem.description}
+                          designation={elem.designation}
+                          deadline_datetime={elem.deadline_datetime}
+                          tier={elem.tier}
+                          contact_person_name={elem.contact_person_name}
+                          phone_number={elem.phone_number}
+                          email={elem.email}
+                          additional_info={elem.additional_info}
+                          type="Internship"
+                          profileInfo={profileInfo}
+                          setError={setError}
+                          setShowError={setShowError}
+                          setSuccess={setSuccess}
+                          setShowSuccess={setShowSuccess}
+                          setShowLoader={setShowLoader}
+                          getDashboardInfo={getDashboardInfo}
+                        />
+                      );
+                    })}
+                  </Fragment>
+                )}
+              </Tab>
             </Tabs>
           </div>
         </div>

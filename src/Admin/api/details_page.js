@@ -1,11 +1,11 @@
 import API_ENDPOINT from "../../api/api_endpoint";
 import { getCookie } from "../../utils/getCookie";
 
-const GetApplications = (token, opening_id) => {
+const GetApplications = (token, opening_id, opening_type) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
       fetch(
-        API_ENDPOINT + "api/admin/getApplications/?opening_id=" + opening_id,
+        API_ENDPOINT + "api/admin/getApplications/?opening_id=" + opening_id + "&opening_type=" + opening_type,
         {
           method: "GET",
           headers: {
@@ -81,7 +81,7 @@ const DownloadResume = (token, opening_id) => {
 };
 
 
-const ChangeOffer = (token, opening_id, offer_accepted) => {
+const ChangeOffer = (token, opening_id, opening_type, offer_accepted) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
       fetch(API_ENDPOINT + "api/admin/updateOfferAccepted/", {
@@ -95,6 +95,7 @@ const ChangeOffer = (token, opening_id, offer_accepted) => {
         body: JSON.stringify({
           opening_id: opening_id,
           offer_accepted: offer_accepted,
+          opening_type: opening_type,
         }),
       })
         .then((result) => {
