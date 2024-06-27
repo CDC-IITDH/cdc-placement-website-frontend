@@ -23,6 +23,7 @@ const Details = ({
         <OfferAccept
           buttonContent={"Offer Accepted"}
           opening={opening.id}
+          type={type}
           setShowLoader={setShowLoader}
           token={token}
           getDashboardInfo={getDashboardInfo}
@@ -33,6 +34,7 @@ const Details = ({
         <OfferAccept
           buttonContent="Offer Declined"
           opening={opening.id}
+          type={type}
           setShowLoader={setShowLoader}
           token={token}
           getDashboardInfo={getDashboardInfo}
@@ -43,6 +45,7 @@ const Details = ({
         <OfferAccept
           buttonContent={"Offer Approval Pending"}
           opening={opening.id}
+          type={type}
           setShowLoader={setShowLoader}
           token={token}
           getDashboardInfo={getDashboardInfo}

@@ -1,11 +1,11 @@
 import API_ENDPOINT from "../../api/api_endpoint";
 import { getCookie } from "../../utils/getCookie";
 
-const GetApplications = (token, opening_id) => {
+const GetApplications = (token, opening_id, opening_type) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
       fetch(
-        API_ENDPOINT + "api/admin/getApplications/?opening_id=" + opening_id,
+        API_ENDPOINT + "api/admin/getApplications/?opening_id=" + opening_id + "&opening_type=" + opening_type,
         {
           method: "GET",
           headers: {
@@ -54,8 +54,34 @@ const ExportAsExcel = (token, opening_id) => {
   });
 };
 
+const DownloadResume = (token, opening_id) => {
+  return new Promise((myResolve, myReject) => {
+    if (token) {
+      fetch(API_ENDPOINT + "api/admin/downloadResume/", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ opening_id: opening_id }),
+      })
+        .then((result) => {
+          if (result.status === 200) myResolve(result.json());
+          else throw new Error("Error " + result.status);
+        })
+        .catch((err) => {
+          myReject(false);
+        });
+    } else {
+      return myReject(false);
+    }
+  });
+};
 
-const ChangeOffer = (token, opening_id, offer_accepted) => {
+
+const ChangeOffer = (token, opening_id, opening_type, offer_accepted) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
       fetch(API_ENDPOINT + "api/admin/updateOfferAccepted/", {
@@ -69,6 +95,7 @@ const ChangeOffer = (token, opening_id, offer_accepted) => {
         body: JSON.stringify({
           opening_id: opening_id,
           offer_accepted: offer_accepted,
+          opening_type: opening_type,
         }),
       })
         .then((result) => {
@@ -206,4 +233,4 @@ const AddAdditionalInfo = (token, opening_id, field) => {
   });
 };
 
-export { GetApplications, ExportAsExcel, ChangeOffer, UpdateDeadline, MarkStatus, DeleteAdditionalInfo, AddAdditionalInfo };
+export { GetApplications, ExportAsExcel, DownloadResume, ChangeOffer, UpdateDeadline, MarkStatus, DeleteAdditionalInfo, AddAdditionalInfo };

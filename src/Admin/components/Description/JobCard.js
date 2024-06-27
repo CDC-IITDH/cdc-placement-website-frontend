@@ -107,6 +107,7 @@ const JobCard = ({
                 </Grid>
 
                 <Grid item xs={12} md={4} lg={4}>
+                    { tier && 
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <Card variant="outlined">
                             <CardContent style={{padding:"10px 16px"}}>
@@ -119,13 +120,14 @@ const JobCard = ({
                             </CardContent>
                         </Card>
                     </Grid>
+                    }
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <Card variant="outlined" >
                             <CardContent style={{padding:"10px 16px"}}>
                                 <Typography color="textSecondary" gutterBottom>
                                     Start Date
                                 </Typography>
-                                {type === "internships" && duration ? (
+                                {type === "Internship" && duration ? (
                                     <Typography variant="h5" component="h5">
                                         {`${start_date} | ${duration} months`}
                                     </Typography>
@@ -144,7 +146,7 @@ const JobCard = ({
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <Card variant="outlined" >
                             <CardContent style={{padding:"10px 16px"}}>
-                                {type === "internships" ? (
+                                {type === "Internship" ? (
                                     <Typography color="textSecondary" gutterBottom>
                                         Compensation (per month)
                                     </Typography>

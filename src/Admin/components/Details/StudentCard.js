@@ -14,6 +14,7 @@ const StudentCard = ({
   branch,
   batch,
   roll_no,
+  phone_no,
   student_id,
   opening_id,
   resume_list,
@@ -149,6 +150,9 @@ const StudentCard = ({
         </Typography>
         <Typography className={classes.studentCardText}>
           Branch : {branch}
+        </Typography>
+        <Typography className={classes.studentCardText}>
+          Phone Number : {phone_no}
         </Typography>
       </Box>
       <Box
