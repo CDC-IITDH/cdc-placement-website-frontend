@@ -104,6 +104,7 @@ const StudentList = ({
                       batch={elem.student_details.batch}
                       branch={elem.student_details.branch}
                       roll_no={elem.student_details.roll_no}
+                      phone_no={elem.student_details.phone_number}
                       student_id={elem.student}
                       selected={elem.selected}
                       opening_id={openingId}

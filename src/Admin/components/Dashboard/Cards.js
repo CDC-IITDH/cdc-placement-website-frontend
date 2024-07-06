@@ -67,16 +67,17 @@ function Cards({
                                     </Row>
                                 </h6>
                             </Col>
-                            <Col sm={12} md={6} lg={4} className={css.contact}>
-                                <h6>
-                                    <Row>
-                                        <Col xs={12} style={{fontSize: "18px"}}>
-                                            <div style={{fontWeight: "600"}}> Tier: {tier}</div>
-
-                                        </Col>
-                                    </Row>
-                                </h6>
-                            </Col>
+                            {type === "placements" && (
+                                <Col sm={12} md={6} lg={4} className={css.contact}>
+                                    <h6>
+                                        <Row>
+                                            <Col xs={12} style={{ fontSize: "18px" }}>
+                                                <div style={{ fontWeight: "600" }}> Tier: {tier}</div>
+                                            </Col>
+                                        </Row>
+                                    </h6>
+                                </Col>
+                            )}
 
                             <Col sm={12} md={6} lg={4} className={css.contact}>
                                 <h6>
@@ -110,24 +111,44 @@ function Cards({
                                     </Row>
                                 </h6>
                             </Col>
-
-                            <Col sm={12} md={6} lg={3} className={css.compensation}>
-                                <h6>
-                                    <Row>
-                                        <Col xs={1}>
-                                            <SvgIcon component={AccountBalanceWalletRounded}/>
-                                        </Col>
-                                        <Col xs={11} style={{fontSize: "14px"}}>
-                                            <div style={{fontWeight: "600"}}> Compensation - CTC:</div>
-                                            {compensation_CTC.toLocaleString('en-IN', {
-                                                style: 'currency',
-                                                currency: 'INR',
-                                                maximumFractionDigits: "0"
-                                            })}
-                                        </Col>
-                                    </Row>
-                                </h6>
-                            </Col>
+                            
+                            {type === "Internship" ? (
+                                <Col sm={12} md={6} lg={3} className={css.compensation}>
+                                    <h6>
+                                        <Row>
+                                            <Col xs={1}>
+                                                <SvgIcon component={AccountBalanceWalletRounded}/>
+                                            </Col>
+                                            <Col xs={11} style={{fontSize: "14px"}}>
+                                                <div style={{fontWeight: "600"}}> Stipend:</div>
+                                                {compensation_CTC.toLocaleString('en-IN', {
+                                                    style: 'currency',
+                                                    currency: 'INR',
+                                                    maximumFractionDigits: "0"
+                                                })}
+                                            </Col>
+                                        </Row>
+                                    </h6>
+                                </Col>
+                            ) : (
+                                <Col sm={12} md={6} lg={3} className={css.compensation}>
+                                    <h6>
+                                        <Row>
+                                            <Col xs={1}>
+                                                <SvgIcon component={AccountBalanceWalletRounded}/>
+                                            </Col>
+                                            <Col xs={11} style={{fontSize: "14px"}}>
+                                                <div style={{fontWeight: "600"}}> Compensation - CTC:</div>
+                                                {compensation_CTC.toLocaleString('en-IN', {
+                                                    style: 'currency',
+                                                    currency: 'INR',
+                                                    maximumFractionDigits: "0"
+                                                })}
+                                            </Col>
+                                        </Row>
+                                    </h6>
+                                </Col>
+                            )}
 
                             <Col sm={12} md={6} lg={3} className={css.dead_line}>
                                 <h6>

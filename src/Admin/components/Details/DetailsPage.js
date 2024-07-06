@@ -60,7 +60,7 @@ const DetailsPage = ({
 
   const getApplicationsInfo = () => {
     if (token) {
-      GetApplications(token, openingId)
+      GetApplications(token, openingId, openingType)
         .then((res) => {
           const data = res;
           setapplicationsInfo(data);
@@ -114,6 +114,33 @@ const DetailsPage = ({
       dashboardInfo[0]?.new.length !== 0
     ) {
       reqJob = dashboardInfo[0]?.new.filter((elem) => {
+        return elem.id === openingId;
+      });
+    }
+    if (
+      reqJob.length === 0 &&
+      dashboardInfo && 
+      dashboardInfo[0]?.ongoing_internships.length !== 0
+    ) {
+      reqJob = dashboardInfo[0]?.ongoing_internships.filter((elem) => {
+        return elem.id === openingId;
+      });
+    }
+    if (
+      reqJob.length === 0 &&
+      dashboardInfo[0] &&
+      dashboardInfo[0]?.previous_internships.length !== 0
+    ) {
+      reqJob = dashboardInfo[0]?.previous_internships.filter((elem) => {
+        return elem.id === openingId;
+      });
+    }
+    if (
+      reqJob.length === 0 &&
+      dashboardInfo &&
+      dashboardInfo[0]?.new_internships.length !== 0
+    ) {
+      reqJob = dashboardInfo[0]?.new_internships.filter((elem) => {
         return elem.id === openingId;
       });
     }

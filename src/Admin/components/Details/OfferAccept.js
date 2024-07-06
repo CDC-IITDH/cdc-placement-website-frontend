@@ -13,7 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import swal from "sweetalert";
 import { userTypesContext } from "../../../App.js";
 
-const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboardInfo}) => {
+const OfferAccept = ({buttonContent, opening, type, setShowLoader, token, getDashboardInfo}) => {
 
     const [open, setOpen] = useState(false);
     const [dialog_loading, setDialogLoading] = useState(false);
@@ -115,7 +115,7 @@ const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboard
                         .then((willDelete) => {
                                 if (willDelete) {
                                 let offer_accepted = "false";
-                                ChangeOffer(token, opening, offer_accepted).then(res => {
+                                ChangeOffer(token, opening, type ,offer_accepted).then(res => {
                                     swal("Offer Declined!", {
                                         icon: "success",
                                     });
@@ -149,7 +149,7 @@ const OfferAccept = ({buttonContent, opening, setShowLoader, token, getDashboard
                         .then((willDelete) => {
                                 if (willDelete) {
                                 let offer_accepted = "true";
-                                ChangeOffer(token, opening, offer_accepted).then(res => {
+                                ChangeOffer(token, opening, type, offer_accepted).then(res => {
                                     getDashboardInfo();
                                     swal("Offer Accepted!", {
                                         icon: "success",

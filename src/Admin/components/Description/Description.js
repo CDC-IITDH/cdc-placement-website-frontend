@@ -39,14 +39,38 @@ const Description = ({
         );
 
       }
-       if (desc.length === 0) {
+      if (desc.length === 0) {
 
         desc = dashboardInfo[0]['previous'].filter(
             (elem) => {
               return (elem.id.toString() === match.params.id.toString())
             }
         );
+      }
+      if (desc.length === 0) {
 
+        desc = dashboardInfo[0]['ongoing_internships'].filter(
+            (elem) => {
+              return (elem.id.toString() === match.params.id.toString())
+            }
+        );
+        console.log(desc)
+      }
+      if (desc.length === 0) {
+
+        desc = dashboardInfo[0]['previous_internships'].filter(
+            (elem) => {
+              return (elem.id.toString() === match.params.id.toString())
+            }
+        );
+      }
+      if (desc.length === 0) {
+
+        desc = dashboardInfo[0]['new_internships'].filter(
+            (elem) => {
+              return (elem.id.toString() === match.params.id.toString())
+            }
+        );
       }
       if (desc.length !== 0) {
         setDesc(desc);
@@ -84,18 +108,20 @@ const Description = ({
               company_details = {elem.company_details}
               company_details_pdf_links = {elem.company_details_pdf_links}
               is_company_details_pdf={elem.is_company_details_pdf}
-              compensation_CTC={elem.compensation_CTC}
-              compensation_bonus={elem.compensation_bonus}
-              compensation_gross={elem.compensation_gross}
-              compensation_take_home={elem.compensation_take_home}
+              compensation_CTC={
+                match.params.type === "Internship" ? elem.stipend : elem.compensation_CTC
+              }
+              compensation_bonus={match.params.type === "placements" ? elem.compensation_bonus : ""}
+              compensation_gross={match.params.type === "placements" ? elem.compensation_gross : ""}
+              compensation_take_home={match.params.type === "placements" ? elem.compensation_take_home : ""}
               compensation_pdf_links={elem.compensation_pdf_links}
               is_compensation_details_pdf={elem.is_compensation_details_pdf}
-              compensation_details={elem.compensation_details}
+              compensation_details={match.params.type === "placements" ? elem.compensation_details : ""}
               description={elem.description}
               description_pdf_links = {elem.description_pdf_links}
               is_description_pdf={elem.is_description_pdf}
-              tier={elem.tier}
-              start_date={elem.tentative_date_of_joining}
+              tier={match.params.type === "placements" ? elem.tier : ""}
+              start_date={match.params.type === "placements" ? elem.tentative_date_of_joining : elem.interning_period_from}
               allowed_branch={elem.allowed_branch}
               allowed_batch={elem.allowed_batch}
               website={elem.website}
@@ -113,9 +139,9 @@ const Description = ({
               city_type={elem.city_type}
               country={elem.country}
               created_at={elem.created_at}
-              co_op={match.params.type === "internships" ? elem.co_op : ""}
+              co_op={match.params.type === "Internship" ? elem.co_op : ""}
               duration={
-                match.params.type === "internships" ? elem.duration : ""
+                match.params.type === "Internship" ? elem.duration : ""
               }
               contact_person_name={elem.contact_person_name}
               contact_person_email={elem.email}
