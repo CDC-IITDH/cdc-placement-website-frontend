@@ -22,6 +22,7 @@ import {
   jnf_text_max_character_count,
 } from "./limit_constants";
 import Header from "./Header";
+import { set } from "date-fns";
 
 const JNF = ({ setShowLoader }) => {
   const year = "2024-2025";
@@ -41,10 +42,18 @@ const JNF = ({ setShowLoader }) => {
     locations: "",
     details: "",
     date: "",
+    establishdate:"",//newly added needs to be checked
     branch: "",
     research: "",
+    pwdEligibility:"",//newly added needs to checked
+    backlogEligibility:"",//newly added needs to checked
+    medicalTest:"",//newly added needs to checked
+    psychometricTest:"",//newly added needs to checked
     numoffers: "",
+    expoffers: "",//newly added needs to checked
+    numberOfEmployees:"",//newly added needs to checked
     ctc: "",
+    companyTurnover:"",//newly added needs to checked
     gross: "",
     takehome: "",
     bonus: "",
@@ -61,7 +70,7 @@ const JNF = ({ setShowLoader }) => {
     salary_file: "",
     selection_file: "",
     selectionprocess_other: "",
-    cpi:""//new field is added needs to be checked 
+    cpi: "", //new field is added needs to be checked
   };
   const LOCAL_STORAGE_KEY = "vals_jnf";
   const [page, setPage] = useState(1);
@@ -287,9 +296,21 @@ const JNF = ({ setShowLoader }) => {
         `Details should be within ${jnf_textarea_max_character_count} character limit.`
       ),
     date: yup.string().required("Date is Required"),
+    establishdate:yup.string().required("Date is Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    research:  yup.array(),
+    research: yup.array(),
+    pwdEligibility: yup.string().required("Required"),//needs to be checked
+    backlogEligibility: yup.string().required("Required"),//needs to be checked
+    medicalTest: yup.string().required("Required"),//needs to be checked
+    psychometricTest: yup.string().required("Required"),//needs to be checked
     numoffers: yup.number().min(0, "Must be positive"),
+    expoffers: yup.number().min(0, "Must be positive"),//needs to be checked
+    numberOfEmployees:yup.number().min(0, "Must be positive"),//needs to be checked
+    companyTurnover:yup
+    .number()
+    .required("Company Turnover is Required")
+    .integer("Must be an integer")
+    .min(0, "Must be positive"),//needs to be checked
     ctc: yup
       .number()
       .required("CTC is Required")
@@ -356,15 +377,16 @@ const JNF = ({ setShowLoader }) => {
       .min(1000000000, "Must be 10 digits")
       .max(9999999999, "Must be 10 digits"),
     telephone: yup.string(),
-    cpi: yup.string().when('isCpiRequired', {
+    cpi: yup.string().when("isCpiRequired", {
       is: true,
-      then: yup.number()
-        .typeError('CPI must be a number.')
-        .min(0, 'CPI must be at least 0.')
-        .max(10, 'CPI must be at most 10.')
-        .required('CPI is required when minimum CPI is specified.'),
+      then: yup
+        .number()
+        .typeError("CPI must be a number.")
+        .min(0, "CPI must be at least 0.")
+        .max(10, "CPI must be at most 10.")
+        .required("CPI is required when minimum CPI is specified."),
       otherwise: yup.string(),
-    }),//needs to be checked
+    }), //needs to be checked
   });
 
   function submit(values) {
@@ -408,6 +430,7 @@ const JNF = ({ setShowLoader }) => {
     formdata.append("is_description_pdf", is_description_pdf);
     formdata.append("job_location", values.locations);
     formdata.append("compensation_ctc", values.ctc);
+    formdata.append("company_turnover", values.companyTurnover);//needs to be checked
     formdata.append("compensation_gross", values.gross);
     formdata.append("compensation_take_home", values.takehome);
     formdata.append("compensation_bonus", values.bonus ? values.bonus : 0);
@@ -423,13 +446,20 @@ const JNF = ({ setShowLoader }) => {
       is_selection_procedure_details_pdf
     );
     formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
+    formdata.append("establishment_date" , changeDateFormat(values.establishdate));//needs to be checked
     formdata.append("allowed_branch", JSON.stringify(values.branch));
     formdata.append("rs_eligible", JSON.stringify(values.research));
+    formdata.append("pwd_eligible", values.pwdEligibility);//needs to be checked
+    formdata.append("backlog_eligible", values.backlogEligibility);//needs to be checked
+    formdata.append("pyschometric_test" , values. psychometricTest);//needs to be checked
+    formdata.append("medical_test",values.medicalTest);//needs to be checked
     formdata.append(
       "tentative_no_of_offers",
       values.numoffers ? values.numoffers : 0
     );
-    formdata.append("cpi", values.cpi);//needs to be checked
+    formdata.append("expected_no_of_offers", values.expoffers ? values.expoffers : 0);//needs to be checked
+    formdata.append("number_of_employees",values.numberOfEmployees ? values.numberOfEmployees : 0);//needs to be checked
+    formdata.append("cpi", values.cpi); //needs to be checked
     formdata.append("other_requirements", values.requirements);
     compdescription_file.forEach((file) => {
       formdata.append("company_details_pdf", file, file.name);
@@ -494,6 +524,9 @@ const JNF = ({ setShowLoader }) => {
         errors.compdescription ||
         errors.address ||
         errors.city ||
+        errors.establishdate ||
+        errors.numberOfEmployees ||
+        errors.companyTurnover ||
         errors.state ||
         errors.country ||
         errors.pincode ||
@@ -504,6 +537,9 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("link", true);
         setFieldTouched("compdescription", true);
         setFieldTouched("address", true);
+        setFieldTouched("establishdate",true);//needs to be checked
+        setFieldTouched("numberOfEmployees",true);//needs to be checked
+        setFieldTouched("companyTurnover",true);//needs to be checked
         setFieldTouched("city", true);
         setFieldTouched("state", true);
         setFieldTouched("country", true);
@@ -523,7 +559,10 @@ const JNF = ({ setShowLoader }) => {
         errors.date ||
         errors.branch ||
         errors.research ||
+        errors.pwdEligibility ||
+        errors.backlogEligibility ||
         errors.numoffers ||
+        errors.expoffers ||
         errors.ctc ||
         errors.gross ||
         errors.takehome ||
@@ -536,7 +575,10 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("date", true);
         setFieldTouched("branch", true);
         setFieldTouched("research", true);
+        setFieldTouched("pwdEligibility", true);//needs to be checked
+        setFieldTouched("backlogEligibility", true);//needs to be checked
         setFieldTouched("numoffers", true);
+        setFieldTouched("expoffers", true);//needs to be checked
         setFieldTouched("ctc", true);
         setFieldTouched("gross", true);
         setFieldTouched("takehome", true);
@@ -548,11 +590,20 @@ const JNF = ({ setShowLoader }) => {
         setPage(page + 1);
       }
     } else if (page === 3) {
-      if (errors.selectionprocess || errors.selection || errors.requirements || errors.cpi) {
+      if (
+        errors.selectionprocess ||
+        errors. psychometricTest ||
+        errors.medicalTest ||
+        errors.selection ||
+        errors.requirements ||
+        errors.cpi
+      ) {
         setFieldTouched("selection", true);
+        setFieldTouched("psychometricTest",true);//needs to be checked
+        setFieldTouched("medicalTest",true);//needs to be checked
         setFieldTouched("requirements", true);
         setFieldTouched("selectionprocess", true);
-        setFieldTouched("cpi",true);//needs to be checked
+        setFieldTouched("cpi", true); //needs to be checked
         window.scrollTo(0, 0);
         setWarning("Please fill all the required fields");
       } else {
@@ -615,35 +666,25 @@ const JNF = ({ setShowLoader }) => {
                   }) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       <AutoSave />
-                    
-                   
-                      <Header  />
+
+                      <Header />
                       <div
-              style={{   
-                marginTop: '60px', // Adjust this value based on the height of your header
-          top: '50px', // This value seems to be intended for positioning, adjust as needed
-                          backgroundColor: "#eff7ff",}}
+                        style={{
+                          marginTop: "60px", // Adjust this value based on the height of your header
+                          top: "50px", // This value seems to be intended for positioning, adjust as needed
+                          backgroundColor: "#eff7ff",
+                        }}
                       >
-                       <Row className=" text-center justify-content-center">
-        <h3>
-         Job Notification Form
-        </h3>
-        <h6 style={{color:"black"}}>{year}</h6>
-      </Row>
-                        <MultiStepProgressBar
-                          page={page}
-                         
-                        />
-                 
+                        <Row className=" text-center justify-content-center">
+                          <h3>Job Notification Form</h3>
+                          <h6 style={{ color: "black" }}>{year}</h6>
+                        </Row>
+                        <MultiStepProgressBar page={page} />
                       </div>
                       {page === 1 ? (
                         <>
                           {" "}
-                          <Instructions
-                            year={year}
-                            updateData={setPreFill}
-                            handlePageChange={handlePageChange} // remove this line later
-                          />
+                          <Instructions year={year} updateData={setPreFill} />
                         </>
                       ) : (
                         <></>
@@ -752,7 +793,10 @@ const JNF = ({ setShowLoader }) => {
                           <Col className="text-start">
                             <Button
                               variant="primary"
-                              style={{backgroundColor:"#ff7350",borderColor:"#ff7350"}}
+                              style={{
+                                backgroundColor: "#ff7350",
+                                borderColor: "#ff7350",
+                              }}
                               onClick={() => {
                                 setPage(page - 1);
                               }}
@@ -767,7 +811,10 @@ const JNF = ({ setShowLoader }) => {
                           <Col className="text-end">
                             <Button
                               variant="primary"
-                              style={{backgroundColor:"#ff7350",borderColor:"#ff7350"}}
+                              style={{
+                                backgroundColor: "#ff7350",
+                                borderColor: "#ff7350",
+                              }}
                               onClick={() =>
                                 handlePageChange(
                                   setPage,

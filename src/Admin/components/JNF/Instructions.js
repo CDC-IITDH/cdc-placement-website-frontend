@@ -1,6 +1,6 @@
 import logo from "../../images/CDC-Logo.png";
 import React, { useState } from "react";
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Autofill from "./Autofill";
 import TierTable from "./TierTable";
@@ -29,10 +29,12 @@ const Instructions = ({ year, updateData }) => {
       </Row> */}
       {/* <hr className="pd" /> */}
       <Row className="p-3 gray-blue">
-        <h4>
-          <b>Instructions:</b>
-        </h4>
-        <div className="p-3">
+        <Col xs={12}>
+          <h4>
+            <b>Instructions:</b>
+          </h4>
+        </Col>
+        <Col xs={12} className="p-3">
           <ul>
             <li>
               Student's choices will be governed by the information you provide
@@ -65,7 +67,7 @@ const Instructions = ({ year, updateData }) => {
               <TierTable show={showTable} />
             </li>
           </ul>
-        </div>
+        </Col>
       </Row>
     </>
   );
