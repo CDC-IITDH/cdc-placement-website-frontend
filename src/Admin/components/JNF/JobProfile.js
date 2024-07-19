@@ -71,28 +71,32 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         </Form.Check> */}
   
         <Form.Check className="form-check" type="checkbox">
-          <Row>
-        {['MS', 'MTech', 'PHD'].map((degree) => (
-            <Col sm={4} key={degree}>
-                <Form.Check type="checkbox">
-                    <Form.Check.Input 
-                        type="checkbox" 
-                        name="research"
-                        value={degree}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        isInvalid={touched.research && errors.research}
-                        checked={values.research.includes(degree)}
-                    />
-                    <Form.Check.Label>{degree}</Form.Check.Label>
-                </Form.Check>
-            </Col>
-        ))}
-    </Row>
+        <Row>
+        {['Btech', 'MS', 'MTech', 'PHD'].map((degree) => (
+  <Col sm={4} key={degree}>
+    <Form.Check type="checkbox">
+      <Form.Check.Input 
+        type="checkbox" 
+        name="eligiblestudents"
+        value={degree}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        isInvalid={touched.eligiblestudents && errors.eligiblestudents}
+        checked={degree === 'Btech' || values.eligiblestudents?.includes(degree)}
+
+      />
+      <Form.Check.Label>{degree}</Form.Check.Label>
+      {console.log(values.eligiblestudents)}
+    </Form.Check>
+  </Col>
+))}
+
+
+      </Row>
 </Form.Check>
 
 
-        <span className="select-feedback">{errors.research && touched.research? errors.research:''}</span>
+        <span className="select-feedback">{errors.eligiblestudents && touched.eligiblestudents? errors.eligiblestudents:''}</span>
       </Form.Group>
       <Row>
         <Col sm={6}>
