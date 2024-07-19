@@ -121,7 +121,7 @@ const InternProfile = ({
                   value={type}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={touched.research && errors.research}
+                  isInvalid={touched.worktype && errors.worktype}
                   checked={values.worktype.includes(type)}
                 ></Form.Check.Input>
                 <Form.Check.Label>{type}</Form.Check.Label>
@@ -220,10 +220,11 @@ const InternProfile = ({
                   onBlur={handleBlur}
                   isInvalid={touched.years && errors.years}
                   checked={
-                    values.years?.includes(year) || year === "Fourth Year"
+                    values.years?.includes(year)
                   }
                 ></Form.Check.Input>
                 <Form.Check.Label>{year}</Form.Check.Label>
+                {console.log(values.years)}
               </Col>
             ))}
           </Row>
@@ -292,49 +293,34 @@ const InternProfile = ({
       <Form.Group className="mb-5">
         <Form.Label>
           Are the following students are eligible to apply?{" "}
-          {/* <span className="text-danger">*</span> */}
+          <span className="text-danger">*</span>
         </Form.Label>
-        {/* <Form.Check className="form-check" type="radio">
-          <Row>
-            {["Yes", "No"].map((eligible) => (
-              <Col sm={6} key={eligible}>
-                <Form.Check.Input
-                  type="radio"
-                  label={eligible}
-                  name="research"
-                  value={eligible}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isInvalid={touched.research && errors.research}
-                  checked={values.research.includes(eligible)}
-                ></Form.Check.Input>
-                <Form.Check.Label>{eligible}</Form.Check.Label>
-              </Col>
-            ))}
-          </Row>
-        </Form.Check> */}
         <Form.Check className="form-check" type="checkbox">
-          <Row>
-            {["MS", "MTech", "PHD"].map((degree) => (
-              <Col sm={4} key={degree}>
-                <Form.Check type="checkbox">
-                  <Form.Check.Input
-                    type="checkbox"
-                    name="research"
-                    value={degree}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.research && errors.research}
-                    checked={values.research.includes(degree)}
-                  />
-                  <Form.Check.Label>{degree}</Form.Check.Label>
-                </Form.Check>
-              </Col>
-            ))}
-          </Row>
+        <Row>
+        {['Btech', 'MS', 'MTech', 'PHD'].map((degree) => (
+  <Col sm={4} key={degree}>
+ 
+      <Form.Check.Input 
+        type="checkbox" 
+        name="eligibledegree"
+        value={degree}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        isInvalid={touched.eligibledegree && errors.eligibledegree}
+        checked={values.eligibledegree?.includes(degree)}
+
+      ></Form.Check.Input>
+      <Form.Check.Label>{degree}</Form.Check.Label>
+     
+   
+  </Col>
+))}
+
+
+      </Row>
         </Form.Check>
         <span className="select-feedback">
-          {errors.research && touched.research ? errors.research : ""}
+          {errors.eligiblestudents && touched.eligiblestudents ? errors.eligiblestudents : ""}
         </span>
       </Form.Group>
       <Row>

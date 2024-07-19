@@ -50,7 +50,7 @@ const INF = ({ setShowLoader }) => {
     end_date: "",
     worktype: "",
     branch: "",
-    research: "",
+    eligibledegree: "",
     // sophomoresallowed: "",
     numoffers: "",
     companyTurnover:"",//newly added needs to checked
@@ -296,7 +296,7 @@ const INF = ({ setShowLoader }) => {
     enddate: yup.string().required("Date is Required"),
     // sophomoresallowed: yup.string().required("Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    research: yup.array(),
+    eligibledegree: yup.array().required("Required"),
     numoffers: yup.number().min(0, "Must be positive"),
     stipend: yup
       .number()
@@ -372,14 +372,18 @@ const INF = ({ setShowLoader }) => {
       .mixed()
       .test("pdf-check", "Must be PDF", validatePDF)
       .test("size-check", "Must be smaller than 10MB", validateSize),
-    cpi: yup.mixed().when("isCpiRequired", {
-      is: true,
-      then: yup
-        .number()
-        .required("CPI is required")
-        .min(0, "CPI cannot be negative")
-        .max(10, "CPI cannot be more than 10"),
-      otherwise: yup.mixed(),
+    isCpiRequired: yup.string().required("Selection is required."),
+    cpi: yup
+      .number()
+      .when("isCpiRequired", {
+        is: (value) => value === "yes",
+        then: yup
+          .number()
+          .typeError("CPI must be a number.")
+          .min(0, "CPI must be at least 0.")
+          .max(10, "CPI must be at most 10.")
+          .required("CPI is required when minimum CPI is specified."),
+        otherwise: yup.number().notRequired(),
     }), //needs to be checked
     years: yup.array().required("Required"), //needs to be checked
   });
@@ -430,7 +434,7 @@ const INF = ({ setShowLoader }) => {
     formdata.append("work_type", values.worktype);
     formdata.append("allowed_branch", JSON.stringify(values.branch));
     // formdata.append("sophomores_allowed", values.sophomoresallowed);
-    formdata.append("rs_eligible", JSON.stringify(values.research));
+    formdata.append("eligiblestudents", JSON.stringify(values.eligibledegree));
     formdata.append("years", JSON.stringify(values.years));
     // formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("num_offers", values.numoffers ? values.numoffers : 0);
@@ -480,22 +484,35 @@ const INF = ({ setShowLoader }) => {
     };
 
     setShowLoader(true);
-
+    for (var pair of formdata.entries()) {
+      console.log(pair[0]+ ': ' + pair[1]); 
+    }
     fetch(API_ENDPOINT + "api/company/addInternship/", requestOptions)
-      .then((res) => {
-        if (!(res.status === 200 || res.status === 400)) {
-          setError(res);
-          setSubmitted(1);
-          removeData = 1;
-        }
-        setSubmitted(1);
-
-        removeData = 1;
-        setShowLoader(false);
-      })
-      .catch((error) => {
-        setError(error);
+  .then((res) => {
+    if (res.status === 200) {
+      return res.json();
+    } else if (res.status === 400) {
+      return res.json().then((data) => {
+        setError(data.message);
+        throw new Error(data.message || "Bad Request");
       });
+    } else {
+      throw new Error("Unexpected response status: " + res.status);
+    }
+  })
+  .then((data) => {
+    setSubmitted(1);
+    removeData = 1;
+    setShowLoader(false);
+    // handle success
+  })
+  .catch((error) => {
+    setError(error.message);
+    setSubmitted(1);
+    setShowLoader(false);
+  });
+
+
 
     window.localStorage.removeItem(LOCAL_STORAGE_KEY);
     window.localStorage.setItem(
@@ -559,7 +576,7 @@ const INF = ({ setShowLoader }) => {
         errors.enddate ||
         errors.branch ||
         // errors.sophomoresallowed ||
-        errors.research ||
+        errors.eligibledegree ||
         errors.numoffers ||
         errors.stipend ||
         errors.facilities ||
@@ -576,7 +593,7 @@ const INF = ({ setShowLoader }) => {
         setFieldTouched("backlogEligibility", true);//needs to be checked
         setFieldTouched("expoffers", true);//needs to be checked
         setFieldTouched("branch", true);
-        setFieldTouched("research", true);
+        setFieldTouched("eligibledegree", true);
         setFieldTouched("numoffers", true);
         setFieldTouched("stipend", true);
         setFieldTouched("facilities", true);
@@ -843,27 +860,27 @@ const INF = ({ setShowLoader }) => {
                 </Formik>
               ) : (
                 <>
-                  {error ? (
-                    <>
-                      <h3 className="text-center">
-                        Your Response has been recorded
-                      </h3>
-                      <p className="text-center">
-                        We will reach out to you soon with more information.
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <h3 className="text-center">Submitted Successfully!</h3>
-                      <p className="text-center">
-                        <b>
-                          To Finish up this process, please check your inbox for
-                          our verification email. Verify your email within 24
-                          hours of the submission to complete this process.{" "}
-                        </b>
-                      </p>
-                    </>
-                  )}
+                 {error ? (
+  <>
+    <h3 className="text-center">Submission Failed</h3>
+    <p className="text-center"  style={{ color: 'red' }}>
+      <b>Error: {error}</b>
+    </p>
+    <p className="text-center">
+      Please check the provided information and try again. If the issue persists, contact support.
+    </p>
+  </>
+) : (
+  <>
+    <h3 className="text-center">Submitted Successfully!</h3>
+    <p className="text-center">
+      <b>
+        To finish this process, please check your inbox for our verification email. 
+        Verify your email within 24 hours of the submission to complete this process.
+      </b>
+    </p>
+  </>
+)}
                 </>
               )}
             </Col>

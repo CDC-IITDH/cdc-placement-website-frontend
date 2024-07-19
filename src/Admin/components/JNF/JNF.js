@@ -44,7 +44,7 @@ const JNF = ({ setShowLoader }) => {
     date: "",
     establishdate:"",//newly added needs to be checked
     branch: "",
-    research: "",
+    eligiblestudents:"",
     pwdEligibility:"",//newly added needs to checked
     backlogEligibility:"",//newly added needs to checked
     medicalTest:"",//newly added needs to checked
@@ -298,7 +298,7 @@ const JNF = ({ setShowLoader }) => {
     date: yup.string().required("Date is Required"),
     establishdate:yup.string().required("Date is Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    research: yup.array(),
+    eligiblestudents: yup.array(),
     pwdEligibility: yup.string().required("Required"),//needs to be checked
     backlogEligibility: yup.string().required("Required"),//needs to be checked
     medicalTest: yup.string().required("Required"),//needs to be checked
@@ -377,15 +377,18 @@ const JNF = ({ setShowLoader }) => {
       .min(1000000000, "Must be 10 digits")
       .max(9999999999, "Must be 10 digits"),
     telephone: yup.string(),
-    cpi: yup.string().when("isCpiRequired", {
-      is: true,
-      then: yup
-        .number()
-        .typeError("CPI must be a number.")
-        .min(0, "CPI must be at least 0.")
-        .max(10, "CPI must be at most 10.")
-        .required("CPI is required when minimum CPI is specified."),
-      otherwise: yup.string(),
+    isCpiRequired: yup.string().required("Selection is required."),
+    cpi: yup
+      .number()
+      .when("isCpiRequired", {
+        is: (value) => value === "yes",
+        then: yup
+          .number()
+          .typeError("CPI must be a number.")
+          .min(0, "CPI must be at least 0.")
+          .max(10, "CPI must be at most 10.")
+          .required("CPI is required when minimum CPI is specified."),
+        otherwise: yup.number().notRequired(),
     }), //needs to be checked
   });
 
@@ -448,7 +451,7 @@ const JNF = ({ setShowLoader }) => {
     formdata.append("tentative_date_of_joining", changeDateFormat(values.date));
     formdata.append("establishment_date" , changeDateFormat(values.establishdate));//needs to be checked
     formdata.append("allowed_branch", JSON.stringify(values.branch));
-    formdata.append("rs_eligible", JSON.stringify(values.research));
+    formdata.append("eligiblestudents", JSON.stringify(values.eligiblestudents));
     formdata.append("pwd_eligible", values.pwdEligibility);//needs to be checked
     formdata.append("backlog_eligible", values.backlogEligibility);//needs to be checked
     formdata.append("pyschometric_test" , values. psychometricTest);//needs to be checked
@@ -489,18 +492,31 @@ const JNF = ({ setShowLoader }) => {
     setShowLoader(true);
 
     fetch(API_ENDPOINT + "api/company/addPlacement/", requestOptions)
-      .then((res) => {
-        if (!(res.status === 200 || res.status === 400)) {
-          setError(res);
-          setSubmitted(1);
-        }
-        setSubmitted(1);
-        removeData = 1;
-        setShowLoader(false);
-      })
-      .catch((error) => {
-        setError(error);
+  .then((res) => {
+    if (res.status === 200) {
+      return res.json();
+    } else if (res.status === 400) {
+      return res.json().then((data) => {
+        setError(data.message);
+        throw new Error(data.message || "Bad Request");
       });
+    } else {
+      throw new Error("Unexpected response status: " + res.status);
+    }
+  })
+  .then((data) => {
+    setSubmitted(1);
+    removeData = 1;
+    setShowLoader(false);
+    // handle success
+  })
+  .catch((error) => {
+    setError(error.message);
+    setSubmitted(1);
+    setShowLoader(false);
+  });
+
+
 
     window.localStorage.removeItem(LOCAL_STORAGE_KEY);
     window.localStorage.setItem(
@@ -558,7 +574,7 @@ const JNF = ({ setShowLoader }) => {
         errors.details ||
         errors.date ||
         errors.branch ||
-        errors.research ||
+        errors.eligiblestudents ||
         errors.pwdEligibility ||
         errors.backlogEligibility ||
         errors.numoffers ||
@@ -574,7 +590,7 @@ const JNF = ({ setShowLoader }) => {
         setFieldTouched("details", true);
         setFieldTouched("date", true);
         setFieldTouched("branch", true);
-        setFieldTouched("research", true);
+        setFieldTouched("eligiblestudents", true);
         setFieldTouched("pwdEligibility", true);//needs to be checked
         setFieldTouched("backlogEligibility", true);//needs to be checked
         setFieldTouched("numoffers", true);
@@ -592,7 +608,7 @@ const JNF = ({ setShowLoader }) => {
     } else if (page === 3) {
       if (
         errors.selectionprocess ||
-        errors. psychometricTest ||
+        errors.psychometricTest ||
         errors.medicalTest ||
         errors.selection ||
         errors.requirements ||
@@ -852,27 +868,29 @@ const JNF = ({ setShowLoader }) => {
                 </Formik>
               ) : (
                 <>
-                  {error ? (
-                    <>
-                      <h3 className="text-center">
-                        Your Response has been recorded
-                      </h3>
-                      <p className="text-center">
-                        We will reach out to you soon with more information.
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <h3 className="text-center">Submitted Successfully!</h3>
-                      <p className="text-center">
-                        <b>
-                          To Finish up this process, please check your inbox for
-                          our verification email. Verify your email within 24
-                          hours of the submission to complete this process.{" "}
-                        </b>
-                      </p>
-                    </>
-                  )}
+             
+                {error ? (
+  <>
+    <h3 className="text-center">Submission Failed</h3>
+    <p className="text-center"  style={{ color: 'red' }}>
+      <b>Error: {error}</b>
+    </p>
+    <p className="text-center">
+      Please check the provided information and try again. If the issue persists, contact support.
+    </p>
+  </>
+) : (
+  <>
+    <h3 className="text-center">Submitted Successfully!</h3>
+    <p className="text-center">
+      <b>
+        To finish this process, please check your inbox for our verification email. 
+        Verify your email within 24 hours of the submission to complete this process.
+      </b>
+    </p>
+  </>
+)}
+
                 </>
               )}
             </Col>
