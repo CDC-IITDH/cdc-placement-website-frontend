@@ -23,7 +23,7 @@ const SelectionProcess = ({
     const value = event.target.value === "yes";
     setIsCpiRequired(value);
     if (!value) {
-      setFieldValue("cpi", "");
+      setFieldValue("cpi", "0");
     } else {
       setFieldValue("cpi", "6");
     }
@@ -168,57 +168,57 @@ const SelectionProcess = ({
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5">
-  <Form.Label>Is there any minimum CPI requirement?</Form.Label>
-  <div>
-    <Form.Check
-      type="radio"
-      id="cpiYes"
-      name="isCpiRequired"
-      value="yes"
-      label="Yes"
-      checked={values.isCpiRequired === "yes"}
-      onChange={(e) => {
-        handleChange(e);
-        handleCpiChange(e);  // Assuming handleCpiChange is a custom function you use
-      }}
-      onBlur={handleBlur}
-      isInvalid={touched.isCpiRequired && !!errors.isCpiRequired}
-    />
-    <Form.Check
-      type="radio"
-      id="cpiNo"
-      name="isCpiRequired"
-      value="no"
-      label="No"
-      checked={values.isCpiRequired === "no"}
-      onChange={(e) => {
-        handleChange(e);
-        handleCpiChange(e);  // Assuming handleCpiChange is a custom function you use
-      }}
-      onBlur={handleBlur}
-      isInvalid={touched.isCpiRequired && !!errors.isCpiRequired}
-    />
-    <Form.Control.Feedback type="invalid">
-      {errors.isCpiRequired}
-    </Form.Control.Feedback>
-  </div>
-  {values.isCpiRequired === "yes" && (
-    <Form.Group className="mt-3">
-      <Form.Label>Enter Minimum CPI</Form.Label>
-      <Form.Control
-        type="text"
-        name="cpi"
-        value={values.cpi}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        isInvalid={touched.cpi && !!errors.cpi}
-      />
-      <Form.Control.Feedback type="invalid">
-        {errors.cpi}
-      </Form.Control.Feedback>
-    </Form.Group>
-  )}
-</Form.Group>
+        <Form.Label>Is there any minimum CPI requirement?</Form.Label>
+        <div>
+          <Form.Check
+            type="radio"
+            id="cpiYes"
+            name="isCpiRequired"
+            value="yes"
+            label="Yes"
+            checked={values.isCpiRequired === "yes"}
+            onChange={(e) => {
+              handleChange(e);
+              handleCpiChange(e); // Update CPI based on selection
+            }}
+            onBlur={handleBlur}
+            isInvalid={touched.isCpiRequired && !!errors.isCpiRequired}
+          />
+          <Form.Check
+            type="radio"
+            id="cpiNo"
+            name="isCpiRequired"
+            value="no"
+            label="No"
+            checked={values.isCpiRequired === "no"}
+            onChange={(e) => {
+              handleChange(e);
+              handleCpiChange(e); // Update CPI based on selection
+            }}
+            onBlur={handleBlur}
+            isInvalid={touched.isCpiRequired && !!errors.isCpiRequired}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.isCpiRequired}
+          </Form.Control.Feedback>
+        </div>
+        {values.isCpiRequired === "yes" && (
+          <Form.Group className="mt-3">
+            <Form.Label>Enter Minimum CPI</Form.Label>
+            <Form.Control
+              type="text"
+              name="cpi"
+              value={values.cpi}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isInvalid={touched.cpi && !!errors.cpi}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.cpi}
+            </Form.Control.Feedback>
+          </Form.Group>
+        )}
+      </Form.Group>
 
       <Form.Group className="mb-5">
         <Form.Label>Academic Requirements</Form.Label>

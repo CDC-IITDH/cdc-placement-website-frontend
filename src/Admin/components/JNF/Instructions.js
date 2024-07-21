@@ -57,7 +57,7 @@ const Instructions = ({ year, updateData }) => {
                 click here
               </Link>
             </li>
-            <li>
+            {/* <li>
               The placement system is teir based. Check the how we classify
               companies{" "}
               <a onClick={toggleTable} href="#tier-table">
@@ -65,7 +65,7 @@ const Instructions = ({ year, updateData }) => {
               </a>
               .
               <TierTable show={showTable} />
-            </li>
+            </li> */}
           </ul>
         </Col>
       </Row>

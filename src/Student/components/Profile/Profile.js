@@ -144,6 +144,14 @@ const Profile = ({
                                             <div className="modal-field-key">Registered for Internships:</div>
                                             <div className="modal-field-value">{profileInfo.can_apply_internship?"True":"False"}</div>
                                         </div>
+                                        <div className="modal-field-parent">
+                                            <div className="modal-field-key">Person with Disability:</div>
+                                            <div className="modal-field-value">{profileInfo.isPwd?"True":"False"}</div>
+                                        </div>
+                                        <div className="modal-field-parent">
+                                            <div className="modal-field-key">Has Backlog:</div>
+                                            <div className="modal-field-value">{profileInfo.isisBacklog?"True":"False"}</div>
+                                        </div>
 
                                         {
                                             profileInfo.offers && profileInfo.offers.length ?
