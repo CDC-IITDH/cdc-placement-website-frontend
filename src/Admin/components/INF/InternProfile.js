@@ -23,7 +23,7 @@ const InternProfile = ({
   salary_file,
   setSalary_file,
 }) => {
-  const allBranches = ["CSE", "EE", "MMAE", "EP", "MNC", "Civil", "Chemical"];
+  const allBranches = ["CSE", "EE", "MMAE", "EP", "MNC", "CIVIL", "CHEMICAL"];
   const defaultBranches = ["CSE", "EE", "MMAE", "EP"];
   const selectedBranches =
     values.years?.includes("Second Year") ||
