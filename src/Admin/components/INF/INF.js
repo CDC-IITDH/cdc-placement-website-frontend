@@ -42,15 +42,15 @@ const INF = ({ setShowLoader }) => {
     season: "",
     establishdate:"",//newly added needs to be checked
     expoffers: "",//newly added needs to checked
-    pwdEligibility:"",//newly added needs to checked
-    backlogEligibility:"",//newly added needs to checked
-    medicalTest:"",//newly added needs to checked
-    psychometricTest:"",//newly added needs to checked
+    pwdEligibility: 'No',//newly added needs to checked
+    backlogEligibility: 'No',//newly added needs to checked
+    medicalTest: 'No',//newly added needs to checked
+    psychometricTest: 'No',//newly added needs to checked
     start_date: "",
     end_date: "",
     worktype: "",
-    branch: "",
-    eligibledegree: "",
+    branch: ["CSE", "EE"],
+    eligibledegree: ['Btech'],
     // sophomoresallowed: "",
     numoffers: "",
     companyTurnover:"",//newly added needs to checked
@@ -70,8 +70,9 @@ const INF = ({ setShowLoader }) => {
     internshipdescription_file: "",
     stipend_benefits_file: "",
     selection_file: "",
-    cpi: "", //new field is added needs to be checked
-    years: "", //new field is added needs to be checked
+    cpi: "6", //new field is added needs to be checked
+    isCpiRequired: 'yes',
+    years: ["Fourth Year"], //new field is added needs to be checked
   };
 
   const LOCAL_STORAGE_KEY = "vals_inf";
@@ -253,9 +254,7 @@ const INF = ({ setShowLoader }) => {
       ),
     pincode: yup
       .number("Must be a Number")
-      .required("Zip/Pin is Required")
-      .min(100000, "Must be at least 6 digits")
-      .max(999999, "Must be at most 6 digits"),
+      .required("Zip/Pin is Required"),
     companytype: yup.string().required("Required"),
     nature: yup.string().required("Required"),
     designation: yup
@@ -285,11 +284,10 @@ const INF = ({ setShowLoader }) => {
       ),
     worktype: yup.string().required("Required"),
     season: yup.array().min(1, "Choose at least one").required("Required"),
-    establishdate:yup.string().required("Date is Required"),
+    establishdate:yup.string(),
     numberOfEmployees:yup.number().min(0, "Must be positive"),//needs to be checked
     companyTurnover:yup
     .number()
-    .required("Company Turnover is Required")
     .integer("Must be an integer")
     .min(0, "Must be positive"),//needs to be checked
     startdate: yup.string().required("Date is Required"),

@@ -41,20 +41,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <Form.Control type="date" name='date' value={values.date} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.date && errors.date} />
         <Form.Control.Feedback type="invalid"> {errors.date} </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-5">
-        <Form.Label>Eligible Branches <span className="text-danger">*</span></Form.Label>
-        <Form.Check className="form-check" type="checkbox">
-          <Row>
-            {['CSE','EE','MMAE','EP'].map((x) => (
-              <Col key={x} sm={6}>
-                <Form.Check.Input type="checkbox" name="branch" value={x} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.branch && errors.branch} checked={values.branch.includes(x)}></Form.Check.Input>
-                <Form.Check.Label>{x}</Form.Check.Label>
-              </Col>
-            ))}
-          </Row>
-        </Form.Check>
-        <span className="select-feedback">{touched.branch? errors.branch:''}</span>
-      </Form.Group>
+      
       <Form.Group className="mb-5">
         <Form.Label>Are the following students eligible to apply? 
         {/* <span className="text-danger">*</span> */}
@@ -72,7 +59,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
   
         <Form.Check className="form-check" type="checkbox">
         <Row>
-        {['Btech', 'MS', 'MTech', 'PHD'].map((degree) => (
+        {['Btech', 'MS', 'MTech', 'PHD' ,'BSMS'].map((degree) => (
   <Col sm={4} key={degree}>
     <Form.Check type="checkbox">
       <Form.Check.Input 
@@ -82,8 +69,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         onChange={handleChange}
         onBlur={handleBlur}
         isInvalid={touched.eligiblestudents && errors.eligiblestudents}
-        checked={degree === 'Btech' || values.eligiblestudents?.includes(degree)}
-
+        checked={values.eligiblestudents?.includes(degree)} // Check if the degree is included in the selected values
       />
       <Form.Check.Label>{degree}</Form.Check.Label>
       {console.log(values.eligiblestudents)}
@@ -97,6 +83,31 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
 
 
         <span className="select-feedback">{errors.eligiblestudents && touched.eligiblestudents? errors.eligiblestudents:''}</span>
+      </Form.Group>
+      <Form.Group className="mb-5">
+        <Form.Label>Eligible Branches <span className="text-danger">*</span></Form.Label>
+        <Form.Check className="form-check" type="checkbox">
+          <Row>
+          {['CSE', 'EE', 'MMAE', 'EP'].map((x) => (
+  <Col key={x} sm={6}>
+    <Form.Check type="checkbox">
+      <Form.Check.Input 
+        type="checkbox" 
+        name="branch" 
+        value={x} 
+        onChange={handleChange} 
+        onBlur={handleBlur} 
+        isInvalid={touched.branch && errors.branch} 
+        checked={values.branch.includes(x)} // Check if the branch is included in the selected values
+      />
+      <Form.Check.Label>{x}</Form.Check.Label>
+      {console.log(values.branch)}
+    </Form.Check>
+  </Col>
+))}
+          </Row>
+        </Form.Check>
+        <span className="select-feedback">{touched.branch? errors.branch:''}</span>
       </Form.Group>
       <Row>
         <Col sm={6}>

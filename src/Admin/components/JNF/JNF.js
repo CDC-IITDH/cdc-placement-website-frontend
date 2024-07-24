@@ -43,12 +43,12 @@ const JNF = ({ setShowLoader }) => {
     details: "",
     date: "",
     establishdate:"",//newly added needs to be checked
-    branch: "",
-    eligiblestudents:"",
-    pwdEligibility:"",//newly added needs to checked
-    backlogEligibility:"",//newly added needs to checked
-    medicalTest:"",//newly added needs to checked
-    psychometricTest:"",//newly added needs to checked
+    branch: ['CSE', 'EE'],
+    eligiblestudents: ['Btech'],
+    pwdEligibility: 'No',//newly added needs to checked
+    backlogEligibility: 'No',//newly added needs to checked
+    medicalTest: 'No',//newly added needs to checked
+    psychometricTest: 'No',//newly added needs to checked
     numoffers: "",
     expoffers: "",//newly added needs to checked
     numberOfEmployees:"",//newly added needs to checked
@@ -70,7 +70,8 @@ const JNF = ({ setShowLoader }) => {
     salary_file: "",
     selection_file: "",
     selectionprocess_other: "",
-    cpi: "", //new field is added needs to be checked
+    cpi: "6", //new field is added needs to be checked
+    isCpiRequired: 'yes'
   };
   const LOCAL_STORAGE_KEY = "vals_jnf";
   const [page, setPage] = useState(1);
@@ -265,9 +266,7 @@ const JNF = ({ setShowLoader }) => {
       ),
     pincode: yup
       .number("Must be a Number")
-      .required("Zip/Pin code is Required")
-      .min(100000, "Must be at least 6 digits")
-      .max(999999, "Must be at most 6 digits"),
+      .required("Zip/Pin code is Required"),
     type: yup.string().required("Required"),
     nature: yup.string().required("Required"),
     designation: yup
@@ -296,7 +295,7 @@ const JNF = ({ setShowLoader }) => {
         `Details should be within ${jnf_textarea_max_character_count} character limit.`
       ),
     date: yup.string().required("Date is Required"),
-    establishdate:yup.string().required("Date is Required"),
+    establishdate:yup.string(),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
     eligiblestudents: yup.array(),
     pwdEligibility: yup.string().required("Required"),//needs to be checked
@@ -308,7 +307,6 @@ const JNF = ({ setShowLoader }) => {
     numberOfEmployees:yup.number().min(0, "Must be positive"),//needs to be checked
     companyTurnover:yup
     .number()
-    .required("Company Turnover is Required")
     .integer("Must be an integer")
     .min(0, "Must be positive"),//needs to be checked
     ctc: yup
