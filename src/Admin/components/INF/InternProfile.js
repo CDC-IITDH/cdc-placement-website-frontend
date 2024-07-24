@@ -207,60 +207,83 @@ const InternProfile = ({
         </Col>
       </Form.Group>
       <Form.Group className="mb-5">
-        <Form.Label>Eligible Students to apply</Form.Label>
-        <Form.Check className="form-check" type="checkbox">
-          <Row>
-            {["Second Year", "Third Year", "Fourth Year"].map((year) => (
-              <Col sm={4} key={year}>
-                <Form.Check.Input
-                  type="checkbox"
-                  name="years"
-                  value={year}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isInvalid={touched.years && errors.years}
-                  checked={
-                    values.years?.includes(year)
-                  }
-                ></Form.Check.Input>
-                <Form.Check.Label>{year}</Form.Check.Label>
-                {console.log(values.years)}
-              </Col>
-            ))}
-          </Row>
-        </Form.Check>
-        <span className="select-feedback">
-          {errors.years && touched.years ? errors.years : ""}
-        </span>
-      </Form.Group>
-
+  <Form.Label>
+    Are the following students eligible to apply?{" "}
+    <span className="text-danger">*</span>
+  </Form.Label>
+  <Form.Check className="form-check" type="checkbox">
+    <Row>
+      {['Btech', 'MS', 'MTech', 'PHD' ,'BSMS'].map((degree) => (
+        <Col sm={4} key={degree}>
+          <Form.Check.Input 
+            type="checkbox" 
+            name="eligibledegree"
+            value={degree}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            isInvalid={touched.eligibledegree && errors.eligibledegree}
+            checked={values.eligibledegree?.includes(degree)}
+          />
+          <Form.Check.Label>{degree}</Form.Check.Label>
+        </Col>
+      ))}
+    </Row>
+  </Form.Check>
+  <span className="select-feedback">
+    {errors.eligibledegree && touched.eligibledegree ? errors.eligibledegree : ""}
+  </span>
+</Form.Group>
       <Form.Group className="mb-5">
-        <Form.Label>
-          Eligible Branches <span className="text-danger">*</span>
-        </Form.Label>
-        <Form.Check className="form-check" type="checkbox">
-          <Row>
-            {selectedBranches.map((x) => (
-              <Col key={x} sm={6}>
-                <Form.Check.Input
-                  type="checkbox"
-                  name="branch"
-                  value={x}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isInvalid={touched.branch && errors.branch}
-                  checked={values.branch?.includes(x)}
-                ></Form.Check.Input>
-                <Form.Check.Label>{x}</Form.Check.Label>
-              </Col>
-            ))}
-          </Row>
-        </Form.Check>
-        <span className="select-feedback">
-          {touched.branch ? errors.branch : ""}
-        </span>
-      </Form.Group>
+  <Form.Label>Eligible Students to apply</Form.Label>
+  <Form.Check className="form-check" type="checkbox">
+    <Row>
+      {["Fourth Year" , "Third Year","Second Year" ].map((year) => (
+        <Col sm={4} key={year}>
+          <Form.Check.Input
+            type="checkbox"
+            name="years"
+            value={year}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            isInvalid={touched.years && errors.years}
+            checked={values.years?.includes(year)}
+          />
+          <Form.Check.Label>{year}</Form.Check.Label>
+        </Col>
+      ))}
+    </Row>
+  </Form.Check>
+  <span className="select-feedback">
+    {errors.years && touched.years ? errors.years : ""}
+  </span>
+</Form.Group>
 
+<Form.Group className="mb-5">
+  <Form.Label>
+    Eligible Branches <span className="text-danger">*</span>
+  </Form.Label>
+  <Form.Check className="form-check" type="checkbox">
+    <Row>
+      {selectedBranches.map((x) => (
+        <Col key={x} sm={6}>
+          <Form.Check.Input
+            type="checkbox"
+            name="branch"
+            value={x}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            isInvalid={touched.branch && errors.branch}
+            checked={values.branch?.includes(x)}
+          />
+          <Form.Check.Label>{x}</Form.Check.Label>
+        </Col>
+      ))}
+    </Row>
+  </Form.Check>
+  <span className="select-feedback">
+    {touched.branch ? errors.branch : ""}
+  </span>
+</Form.Group>
       {/* <Form.Group className="mb-5">
         <Form.Label>
         Are sophomores (2nd Year) eligible as well?{" "}
@@ -290,39 +313,7 @@ const InternProfile = ({
         </span>
       </Form.Group> */}
 
-      <Form.Group className="mb-5">
-        <Form.Label>
-          Are the following students are eligible to apply?{" "}
-          <span className="text-danger">*</span>
-        </Form.Label>
-        <Form.Check className="form-check" type="checkbox">
-        <Row>
-        {['Btech', 'MS', 'MTech', 'PHD'].map((degree) => (
-  <Col sm={4} key={degree}>
- 
-      <Form.Check.Input 
-        type="checkbox" 
-        name="eligibledegree"
-        value={degree}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        isInvalid={touched.eligibledegree && errors.eligibledegree}
-        checked={values.eligibledegree?.includes(degree)}
-
-      ></Form.Check.Input>
-      <Form.Check.Label>{degree}</Form.Check.Label>
      
-   
-  </Col>
-))}
-
-
-      </Row>
-        </Form.Check>
-        <span className="select-feedback">
-          {errors.eligiblestudents && touched.eligiblestudents ? errors.eligiblestudents : ""}
-        </span>
-      </Form.Group>
       <Row>
         <Col sm={6}>
       <Form.Group className="mb-3">
