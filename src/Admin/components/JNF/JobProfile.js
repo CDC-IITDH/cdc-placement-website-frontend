@@ -59,7 +59,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
   
         <Form.Check className="form-check" type="checkbox">
         <Row>
-        {['Btech', 'MS', 'MTech', 'PHD' ,'BSMS'].map((degree) => (
+        {['Btech', 'MS', 'MTech', 'PHD'].map((degree) => (
   <Col sm={4} key={degree}>
     <Form.Check type="checkbox">
       <Form.Check.Input 
