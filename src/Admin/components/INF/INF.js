@@ -433,7 +433,22 @@ const INF = ({ setShowLoader }) => {
     formdata.append("allowed_branch", JSON.stringify(values.branch));
     // formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("eligiblestudents", JSON.stringify(values.eligibledegree));
-    formdata.append("years", JSON.stringify(values.years));
+    let allowedBatch = [];
+
+    // Determine the batch year based on values.years
+    const years = values.years;
+    
+    years.forEach(year => {
+      if (year === "Fourth Year") {
+        allowedBatch.push("2021");
+      } else if (year === "Third Year") {
+        allowedBatch.push("2022");
+      } else if (year === "Second Year") {
+        allowedBatch.push("2023");
+      }
+    });
+    // formdata.append("years", JSON.stringify(values.years));
+    formdata.append("allowed_batch", JSON.stringify(allowedBatch));
     // formdata.append("sophomores_allowed", values.sophomoresallowed);
     formdata.append("num_offers", values.numoffers ? values.numoffers : 0);
     formdata.append("is_stipend_details_pdf", is_compensation_details_pdf);
