@@ -318,14 +318,14 @@ const InternProfile = ({
         <Col sm={6}>
       <Form.Group className="mb-3">
         <Form.Label>Minimum No. of Hires</Form.Label>
-        <Form.Control type="number" name='numoffers' value={values.numoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.numoffers && errors.numoffers} />
+        <Form.Control  name='numoffers' value={values.numoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.numoffers && errors.numoffers} />
         <Form.Control.Feedback type="invalid"> {errors.numoffers} </Form.Control.Feedback>
         </Form.Group>
         </Col>
         <Col sm={6}>
         <Form.Group className="mb-3">
         <Form.Label>Expected  No. of Offers</Form.Label>
-        <Form.Control type="number" name='expoffers' value={values.expoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.expoffers && errors.expoffers} />
+        <Form.Control  name='expoffers' value={values.expoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.expoffers && errors.expoffers} />
         <Form.Control.Feedback type="invalid"> {errors.expoffers} </Form.Control.Feedback>
         
         </Form.Group>
@@ -387,7 +387,7 @@ const InternProfile = ({
           Stipend <span className="text-danger">*</span>
         </Form.Label>
         <Form.Control
-          type="number"
+         
           name="stipend"
           value={values.stipend}
           onChange={handleChange}

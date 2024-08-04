@@ -82,59 +82,59 @@ const JNF = ({ setShowLoader }) => {
   const [salary_file, setSalary_file] = useState([]);
   const [warning, setWarning] = useState();
   const [selection_file, setSelection_file] = useState([]);
-  const [showComponents, setShowComponents] = useState(false);
+  // const [showComponents, setShowComponents] = useState(false);
   const [valsFromUseEffect, SetValsFromUseEffect] = useState(initialValues);
   var removeData = 0;
 
-  const HandleBeforeLoad = () => {
-    const handleAlert = () => {
-      if (
-        preFill ||
-        window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
-          JSON.stringify(initialValues) ||
-        !window.localStorage.getItem(LOCAL_STORAGE_KEY)
-      ) {
-        setShowComponents(true);
+  // const HandleBeforeLoad = () => {
+  //   const handleAlert = () => {
+  //     if (
+  //       preFill ||
+  //       window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
+  //         JSON.stringify(initialValues) ||
+  //       !window.localStorage.getItem(LOCAL_STORAGE_KEY)
+  //     ) {
+  //       setShowComponents(true);
 
-        return;
-      }
-      swal
-        .fire({
-          title: "Do you want to resume your prevous filling of the JNF?",
-          text: "We have saved your previous progress. You can continue filling the JNF from where you left off. Note that you can only resume your previous filling once.",
-          html: `
-          We have saved your previous progress. You can continue filling the JNF from where you left off.
-          <p style="color:red">Note that you can only resume your previous filling once.
-          PDFs uploaded will not be saved.</p>
-          `,
-          icon: "question",
-          showDenyButton: true,
-          confirmButtonText: "Yes",
-          denyButtonText: `No`,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            SetValsFromUseEffect(
-              JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY))
-            );
-            swal.fire("You can continue filling the JNF");
-            setShowComponents(true);
-          } else if (result.isDenied) {
-            window.localStorage.setItem(
-              LOCAL_STORAGE_KEY,
-              JSON.stringify(initialValues)
-            );
-            setShowComponents(true);
-          }
-        });
-    };
+  //       return;
+  //     }
+  //     swal
+  //       .fire({
+  //         title: "Do you want to resume your prevous filling of the JNF?",
+  //         text: "We have saved your previous progress. You can continue filling the JNF from where you left off. Note that you can only resume your previous filling once.",
+  //         html: `
+  //         We have saved your previous progress. You can continue filling the JNF from where you left off.
+  //         <p style="color:red">Note that you can only resume your previous filling once.
+  //         PDFs uploaded will not be saved.</p>
+  //         `,
+  //         icon: "question",
+  //         showDenyButton: true,
+  //         confirmButtonText: "Yes",
+  //         denyButtonText: `No`,
+  //       })
+  //       .then((result) => {
+  //         if (result.isConfirmed) {
+  //           SetValsFromUseEffect(
+  //             JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY))
+  //           );
+  //           swal.fire("You can continue filling the JNF");
+  //           setShowComponents(true);
+  //         } else if (result.isDenied) {
+  //           window.localStorage.setItem(
+  //             LOCAL_STORAGE_KEY,
+  //             JSON.stringify(initialValues)
+  //           );
+  //           setShowComponents(true);
+  //         }
+  //       });
+  //   };
 
-    window.addEventListener("load", handleAlert);
+  //   window.addEventListener("load", handleAlert);
 
-    return () => {
-      window.removeEventListener("load", handleAlert);
-    };
-  };
+  //   return () => {
+  //     window.removeEventListener("load", handleAlert);
+  //   };
+  // };
 
   useEffect(() => {
     setShowLoader(false);
@@ -166,28 +166,28 @@ const JNF = ({ setShowLoader }) => {
     }
   };
 
-  const AutoSave = () => {
-    const { values, submitForm } = useFormikContext();
+  // const AutoSave = () => {
+  //   const { values, submitForm } = useFormikContext();
 
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
+  //   const handleBeforeUnload = (event) => {
+  //     event.preventDefault();
 
-      if (!removeData && !submitted) {
-        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
-      } else {
-        window.localStorage.setItem(
-          LOCAL_STORAGE_KEY,
-          JSON.stringify(initialValues)
-        );
-      }
-    };
+  //     if (!removeData && !submitted) {
+  //       window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
+  //     } else {
+  //       window.localStorage.setItem(
+  //         LOCAL_STORAGE_KEY,
+  //         JSON.stringify(initialValues)
+  //       );
+  //     }
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  };
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // };
   let schema = yup.object().shape({
     name: yup
       .string()
@@ -199,15 +199,18 @@ const JNF = ({ setShowLoader }) => {
         } characters.`
       ),
     link: yup
-      .string()
-      .url("Please enter a valid url (eg. https://example.com)")
-      .required("Website Link is Required")
-      .max(
-        jnf_text_max_character_count - 1,
-        `Website link should be within ${
-          jnf_text_max_character_count - 1
-        } character limit.`
-      ),
+    .string()
+    .matches(
+      /^(https?:\/\/|www\.)[^\s/$.?#].[^\s]*$/,
+      "Please enter a valid url (e.g., https://example.com or www.example.com)"
+    )
+    .required("Website Link is Required")
+    .max(
+      jnf_text_max_character_count - 1,
+      `Website link should be within ${
+        jnf_text_max_character_count - 1
+      } character limit.`
+    ),
     compdescription_file: yup
       .mixed()
       .test("pdf-check", "Must be PDF", validatePDF)
@@ -297,7 +300,7 @@ const JNF = ({ setShowLoader }) => {
     date: yup.string().required("Date is Required"),
     establishdate:yup.string(),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    eligiblestudents: yup.array(),
+    eligiblestudents: yup.array().min(1, "Choose at least one").required("Required"),
     pwdEligibility: yup.string().required("Required"),//needs to be checked
     backlogEligibility: yup.string().required("Required"),//needs to be checked
     medicalTest: yup.string().required("Required"),//needs to be checked
@@ -369,11 +372,10 @@ const JNF = ({ setShowLoader }) => {
           jnf_smalltext_max_character_count - 1
         } characters.`
       ),
-    mobile: yup
-      .number()
-      .required("Mobile Number is Required")
-      .min(1000000000, "Must be 10 digits")
-      .max(9999999999, "Must be 10 digits"),
+    mobile: yup.string()
+      .required("Mobile Number is Required"),
+       
+      
     telephone: yup.string(),
     isCpiRequired: yup.string().required("Selection is required."),
     cpi: yup
@@ -644,8 +646,8 @@ const JNF = ({ setShowLoader }) => {
 
   return (
     <>
-      <HandleBeforeLoad />
-      {showComponents && (
+      {/* <HandleBeforeLoad /> */}
+      { (
         <Container
           className="py-5 d-pink bk-container"
           fluid
@@ -679,7 +681,7 @@ const JNF = ({ setShowLoader }) => {
                     submitCount,
                   }) => (
                     <Form noValidate onSubmit={handleSubmit}>
-                      <AutoSave />
+                      {/* <AutoSave /> */}
 
                       <Header />
                       <div

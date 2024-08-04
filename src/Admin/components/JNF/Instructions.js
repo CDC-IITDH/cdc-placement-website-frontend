@@ -49,14 +49,14 @@ const Instructions = ({ year, updateData }) => {
               and the <a href="https://cdc.iitdh.ac.in/">placement website</a>{" "}
               for the selection process and rules & regulations.
             </li>
-            <li>
+            {/* <li>
               If you have filled jnf already for some other roles, you can save
               time by prefilling the JNF form by company ID{" "}
               <Link to="" onClick={handleClick}>
                 {" "}
                 click here
               </Link>
-            </li>
+            </li> */}
             {/* <li>
               The placement system is teir based. Check the how we classify
               companies{" "}

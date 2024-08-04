@@ -44,7 +44,7 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       
       <Form.Group className="mb-5">
         <Form.Label>Are the following students eligible to apply? 
-        {/* <span className="text-danger">*</span> */}
+        <span className="text-danger">*</span>
         </Form.Label>
         {/* <Form.Check className="form-check" type="radio">
           <Row>
@@ -113,14 +113,14 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
         <Col sm={6}>
       <Form.Group className="mb-3">
         <Form.Label>Minimum No. of Hires</Form.Label>
-        <Form.Control type="number" name='numoffers' value={values.numoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.numoffers && errors.numoffers} />
+        <Form.Control  name='numoffers' value={values.numoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.numoffers && errors.numoffers} />
         <Form.Control.Feedback type="invalid"> {errors.numoffers} </Form.Control.Feedback>
         </Form.Group>
         </Col>
         <Col sm={6}>
         <Form.Group className="mb-3">
         <Form.Label>Expected  No. of Offers</Form.Label>
-        <Form.Control type="number" name='expoffers' value={values.expoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.expoffers && errors.expoffers} />
+        <Form.Control  name='expoffers' value={values.expoffers} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.expoffers && errors.expoffers} />
         <Form.Control.Feedback type="invalid"> {errors.expoffers} </Form.Control.Feedback>
         
         </Form.Group>
@@ -177,25 +177,25 @@ const JobProfile = ({handleSubmit, handleChange, handleBlur, values, touched, is
       <MultipleFileInput stateVar={salary_file} setStateVar={setSalary_file} name="salary_file" label ="Salary Description" />
       <Form.Group className="mb-5 w-50">
         <Form.Label>Cost to Company (CTC) <span className="text-danger">*</span></Form.Label>
-        <Form.Control type="number" name='ctc' value={values.ctc} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.ctc && errors.ctc} />
+        <Form.Control  name='ctc' value={values.ctc} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.ctc && errors.ctc} />
         <Form.Control.Feedback type="invalid"> {errors.ctc} </Form.Control.Feedback>
         <Form.Text className="text-muted">(in INR/year)<br />Example: If CTC is 15LPA, Enter 1500000</Form.Text>
       </Form.Group>
       <Form.Group className="mb-5 w-50">
         <Form.Label>Gross <span className="text-danger">*</span></Form.Label>
-        <Form.Control type="number" name='gross' value={values.gross} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.gross && errors.gross} />
+        <Form.Control  name='gross' value={values.gross} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.gross && errors.gross} />
         <Form.Control.Feedback type="invalid"> {errors.gross} </Form.Control.Feedback>
         <Form.Text className="text-muted">(in INR/year)</Form.Text>
       </Form.Group>
       <Form.Group className="mb-5 w-50">
         <Form.Label>Take Home <span className="text-danger">*</span></Form.Label>
-        <Form.Control type="number" name='takehome' value={values.takehome} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.takehome && errors.takehome} />
+        <Form.Control  name='takehome' value={values.takehome} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.takehome && errors.takehome} />
         <Form.Control.Feedback type="invalid"> {errors.takehome} </Form.Control.Feedback>
         <Form.Text className="text-muted">(in INR/year)</Form.Text>
       </Form.Group>
       <Form.Group className="mb-5 w-50">
         <Form.Label>Bonus/Incentives (if any)</Form.Label>
-        <Form.Control type="number" name='bonus' value={values.bonus} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.bonus && errors.bonus} />
+        <Form.Control  name='bonus' value={values.bonus} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.bonus && errors.bonus} />
         <Form.Control.Feedback type="invalid"> {errors.bonus} </Form.Control.Feedback>
         <Form.Text className="text-muted">(in INR/year)</Form.Text>
       </Form.Group>

@@ -111,7 +111,7 @@ const CompOverview = ({
         <Form.Label>Company Turnover (For NIRF Purpose) 
         {/* <span className="text-danger">*</span> */}
         </Form.Label>
-        <Form.Control type="number" name='companyTurnover' value={values.companyTurnover} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.companyTurnover && errors.companyTurnover} />
+        <Form.Control  name='companyTurnover' value={values.companyTurnover} onChange={handleChange} onBlur={handleBlur} isInvalid={touched.companyTurnover && errors.companyTurnover} />
         <Form.Control.Feedback type="invalid"> {errors.companyTurnover} </Form.Control.Feedback>
         <Form.Text className="text-muted">(in INR/year)<br /></Form.Text>
       </Form.Group>
@@ -131,7 +131,7 @@ const CompOverview = ({
     {/* <span className="text-danger">*</span> */}
     </Form.Label>
     <Form.Control 
-        type="number" 
+        
         name='numberOfEmployees' 
         value={values.numberOfEmployees} 
         onChange={handleChange} 
@@ -211,7 +211,7 @@ const CompOverview = ({
               Zip/Pin <span className="text-danger">*</span>
             </Form.Label>
             <Form.Control
-              type="number"
+              
               name="pincode"
               value={values.pincode}
               onChange={handleChange}

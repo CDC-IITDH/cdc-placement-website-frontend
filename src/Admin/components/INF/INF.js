@@ -86,61 +86,61 @@ const INF = ({ setShowLoader }) => {
   const [salary_file, setSalary_file] = useState([]);
   const [warning, setWarning] = useState();
   const [selection_file, setSelection_file] = useState([]);
-
+// commented auto save feature
   const [showComponents, setShowComponents] = useState(false);
-  var valsFromUseEffect =
-    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValues;
+  // var valsFromUseEffect =
+  //   JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValues;
   var removeData = 0;
-  const HandleBeforeLoad = () => {
-    const handleAlert = () => {
-      if (
-        window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
-          JSON.stringify(initialValues) ||
-        !window.localStorage.getItem(LOCAL_STORAGE_KEY)
-      ) {
-        setShowComponents(true);
+  // const HandleBeforeLoad = () => {
+  //   const handleAlert = () => {
+  //     if (
+  //       window.localStorage.getItem(LOCAL_STORAGE_KEY) ===
+  //         JSON.stringify(initialValues) ||
+  //       !window.localStorage.getItem(LOCAL_STORAGE_KEY)
+  //     ) {
+  //       setShowComponents(true);
 
-        return;
-      }
-      swal
-        .fire({
-          title: "Do you want to resume your prevous filling of the INF?",
-          text: "We have saved your previous progress. You can continue filling the INF from where you left off. Note that you can only resume your previous filling once.",
-          html: `
-          We have saved your previous progress. You can continue filling the INF from where you left off.
-          <p style="color:red">Note that you can only resume your previous filling once.
-          PDFs uploaded will not be saved.</p>
-          `,
-          icon: "question",
-          showDenyButton: true,
-          confirmButtonText: "Yes",
-          denyButtonText: `No`,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            valsFromUseEffect =
-              JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) ||
-              initialValues;
-            swal.fire("You can continue filling the inf");
-            setShowComponents(true);
-          } else if (result.isDenied) {
-            valsFromUseEffect = initialValues;
-            window.localStorage.setItem(
-              LOCAL_STORAGE_KEY,
-              JSON.stringify(initialValues)
-            );
+  //       return;
+  //     }
+  //     swal
+  //       .fire({
+  //         title: "Do you want to resume your prevous filling of the INF?",
+  //         text: "We have saved your previous progress. You can continue filling the INF from where you left off. Note that you can only resume your previous filling once.",
+  //         html: `
+  //         We have saved your previous progress. You can continue filling the INF from where you left off.
+  //         <p style="color:red">Note that you can only resume your previous filling once.
+  //         PDFs uploaded will not be saved.</p>
+  //         `,
+  //         icon: "question",
+  //         showDenyButton: true,
+  //         confirmButtonText: "Yes",
+  //         denyButtonText: `No`,
+  //       })
+  //       .then((result) => {
+  //         if (result.isConfirmed) {
+  //           valsFromUseEffect =
+  //             JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) ||
+  //             initialValues;
+  //           swal.fire("You can continue filling the inf");
+  //           setShowComponents(true);
+  //         } else if (result.isDenied) {
+  //           valsFromUseEffect = initialValues;
+  //           window.localStorage.setItem(
+  //             LOCAL_STORAGE_KEY,
+  //             JSON.stringify(initialValues)
+  //           );
 
-            setShowComponents(true);
-          }
-        });
-    };
+  //           setShowComponents(true);
+  //         }
+  //       });
+  //   };
 
-    window.addEventListener("load", handleAlert);
+  //   window.addEventListener("load", handleAlert);
 
-    return () => {
-      window.removeEventListener("load", handleAlert);
-    };
-  };
+  //   return () => {
+  //     window.removeEventListener("load", handleAlert);
+  //   };
+  // };
 
   useEffect(() => {
     setShowLoader(false);
@@ -170,28 +170,28 @@ const INF = ({ setShowLoader }) => {
     }
   };
 
-  const AutoSave = () => {
-    const { values, submitForm } = useFormikContext();
+  // const AutoSave = () => {
+  //   const { values, submitForm } = useFormikContext();
 
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
+  //   const handleBeforeUnload = (event) => {
+  //     event.preventDefault();
 
-      if (!removeData && !submitted) {
-        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
-      } else {
-        window.localStorage.setItem(
-          LOCAL_STORAGE_KEY,
-          JSON.stringify(initialValues)
-        );
-      }
-    };
+  //     if (!removeData && !submitted) {
+  //       window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
+  //     } else {
+  //       window.localStorage.setItem(
+  //         LOCAL_STORAGE_KEY,
+  //         JSON.stringify(initialValues)
+  //       );
+  //     }
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  };
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // };
   let schema = yup.object().shape({
     companyname: yup
       .string()
@@ -203,15 +203,18 @@ const INF = ({ setShowLoader }) => {
         } characters.`
       ),
     website: yup
-      .string()
-      .url("Please enter a valid url (eg. https://example.com)")
-      .required("Website Link is Required")
-      .max(
-        inf_text_max_character_count - 1,
-        `Website link should be within ${
-          inf_text_max_character_count - 1
-        } characters.`
-      ),
+    .string()
+    .matches(
+      /^(https?:\/\/|www\.)[^\s/$.?#].[^\s]*$/,
+      "Please enter a valid url (e.g., https://example.com or www.example.com)"
+    )
+    .required("Website Link is Required")
+    .max(
+      inf_text_max_character_count - 1,
+      `Website link should be within ${
+        inf_text_max_character_count - 1
+      } character limit.`
+    ),
     compdescription: yup
       .string()
       .max(
@@ -294,7 +297,7 @@ const INF = ({ setShowLoader }) => {
     enddate: yup.string().required("Date is Required"),
     // sophomoresallowed: yup.string().required("Required"),
     branch: yup.array().min(1, "Choose at least one").required("Required"),
-    eligibledegree: yup.array().required("Required"),
+    eligibledegree: yup.array().min(1, "Choose at least one").required("Required"),
     numoffers: yup.number().min(0, "Must be positive"),
     stipend: yup
       .number()
@@ -348,11 +351,8 @@ const INF = ({ setShowLoader }) => {
           inf_smalltext_max_character_count - 1
         } characters.`
       ),
-    mobile: yup
-      .number()
-      .required("Mobile Number is Required")
-      .min(1000000000, "Must be 10 digits")
-      .max(9999999999, "Must be 10 digits"),
+    mobile: yup.string()
+      .required("Mobile Number is Required"),
     telephone: yup.string(),
     compdescription_file: yup
       .mixed()
@@ -650,8 +650,8 @@ const INF = ({ setShowLoader }) => {
 
   return (
     <>
-      <HandleBeforeLoad />
-      {showComponents && (
+      {/* <HandleBeforeLoad /> */} 
+      { (//removed showComponents
         <Container
           className="py-5 d-pink bk-container"
           fluid
@@ -667,7 +667,7 @@ const INF = ({ setShowLoader }) => {
                   validateOnMount={true}
                   validationSchema={schema}
                   onSubmit={submit}
-                  initialValues={valsFromUseEffect}
+                  initialValues={initialValues} //removed localsotrage values
                 >
                   {({
                     handleSubmit,
@@ -683,7 +683,7 @@ const INF = ({ setShowLoader }) => {
                     submitCount,
                   }) => (
                     <Form noValidate onSubmit={handleSubmit}>
-                      <AutoSave />
+                      {/* <AutoSave /> */}
                       <Header />
                       <div
                         style={{
