@@ -19,6 +19,7 @@ const StudentList = ({
   filterOptionsBatch,
   filterOptionsBranch,
   filterOptionsStatus,
+  filterOptionsDegree
 }) => {
   const classes = useStyles();
 
@@ -38,7 +39,7 @@ const StudentList = ({
           (rollNo && rollNo.toString() === searchText)
         );
       })
-
+      
       .filter((elem) => {
         return (
           (filterOptionsBatch.length === 0 ||
@@ -66,7 +67,13 @@ const StudentList = ({
                 (option.name === "Rejected" &&
                   option.selected &&
                   elem.selected === false)
-            ))
+            )) && 
+                      (filterOptionsDegree.length === 0 ||
+            filterOptionsDegree.some(
+              (option) =>
+                option.selected &&
+                elem.student_details.degree === option.name
+            )) 
         );
       })
       .sort((e) => {

@@ -40,6 +40,8 @@ const Header = ({
   filterOptionsBranch,
   setFilterOptionsBranch,
   filterOptionsStatus,
+  filterOptionsDegree,
+  setFilterOptionsDegree,
   setFilterOptionsStatus,
   resetCheckboxes,
 }) => {
@@ -123,7 +125,10 @@ const Header = ({
     event.stopPropagation();
     setShow([filterOptionsStatus, "status", setFilterOptionsStatus]);
   };
-
+   const openDegree = (event) => {
+    event.stopPropagation();
+    setShow([filterOptionsDegree, "degree", setFilterOptionsDegree]);
+  };
   const handleCheckboxChange = (id, optionType) => {
     let updatedOptions;
     let setUpdatedOptions;
@@ -138,7 +143,10 @@ const Header = ({
       updatedOptions = [...filterOptionsStatus];
       setUpdatedOptions = setFilterOptionsStatus;
     }
-
+    else if(optionType=="degree"){
+      updatedOptions=[...filterOptionsDegree];
+      setUpdatedOptions=setFilterOptionsDegree;
+    }
     if (updatedOptions) {
       updatedOptions = updatedOptions.map((option) => {
         if (option.id === id) {
@@ -270,6 +278,9 @@ const Header = ({
                     </MenuItem>
                     <MenuItem onClick={openStatus} disableRipple>
                       Status
+                    </MenuItem>
+                    <MenuItem onClick={openDegree} disableRipple>
+                      Degree
                     </MenuItem>
                     <Box
                       sx={{

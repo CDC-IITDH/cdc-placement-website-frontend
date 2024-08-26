@@ -30,16 +30,28 @@ const DetailsPage = ({
   const [searchText, setSearchText] = useState("");
 
   const BATCH = [
-    { id: 1, name: "2020", selected: true },
-    { id: 2, name: "2021", selected: true },
-    { id: 3, name: "2022", selected: true },
-    { id: 4, name: "2023", selected: true },
+    { id: 1, name: "2017", selected: true },
+    { id: 2, name: "2020", selected: true },
+    { id: 3, name: "2021", selected: true },
+    { id: 4, name: "2022", selected: true },
+    { id: 5, name: "2023", selected: true },
   ];
 
   const BRANCH = [
     { id: 1, name: "CSE", selected: true },
     { id: 2, name: "EE", selected: true },
     { id: 3, name: "MMAE", selected: true },
+    { id: 4, name: "EP", selected: true },
+    { id: 5, name: "CIVIL", selected: true },
+    { id: 6, name: "CHEMICAL", selected: true },
+    { id: 7, name: "MNC", selected: true },
+  ];
+  const DEGREE = [
+    { id: 1, name: "Btech", selected: true },
+    { id: 2, name: "MS", selected: true },
+    { id: 3, name: "Mtech", selected: true },
+    { id: 4, name: "PHD", selected: true },
+    { id: 5, name: "BSMS", selected: true },
   ];
 
   const STATUS = [
@@ -51,11 +63,13 @@ const DetailsPage = ({
   const [filterOptionsBatch, setFilterOptionsBatch] = useState(BATCH);
   const [filterOptionsBranch, setFilterOptionsBranch] = useState(BRANCH);
   const [filterOptionsStatus, setFilterOptionsStatus] = useState(STATUS);
+  const [filterOptionsDegree, setFilterOptionsDegree] = useState(DEGREE);
 
   const resetCheckboxes = () => {
     setFilterOptionsBatch(BATCH);
     setFilterOptionsBranch(BRANCH);
     setFilterOptionsStatus(STATUS);
+    setFilterOptionsDegree(DEGREE);
   };
 
   const getApplicationsInfo = () => {
@@ -180,6 +194,8 @@ const DetailsPage = ({
           setFilterOptionsBatch={setFilterOptionsBatch}
           filterOptionsBranch={filterOptionsBranch}
           setFilterOptionsBranch={setFilterOptionsBranch}
+          filterOptionsDegree={filterOptionsDegree} 
+          setFilterOptionsDegree={setFilterOptionsDegree} 
           filterOptionsStatus={filterOptionsStatus}
           setFilterOptionsStatus={setFilterOptionsStatus}
           resetCheckboxes={resetCheckboxes}
@@ -198,6 +214,7 @@ const DetailsPage = ({
           searchText={searchText}
           filterOptionsBatch={filterOptionsBatch}
           filterOptionsBranch={filterOptionsBranch}
+          filterOptionsDegree={filterOptionsDegree}
           filterOptionsStatus={filterOptionsStatus}
           setFilterOptionsStatus={setFilterOptionsStatus}
         />
