@@ -93,9 +93,7 @@ const Navbar = ({
                 <MenuItem>
                   <a
                     style={{ color: "black", textDecoration: "none" }}
-                    target="_blank"
-                    href="https://drive.google.com/file/d/1-v1KiMw0-hlvEnmUEQJc2rAQJTgH3xPg/view?usp=drivesdk"
-                    rel="noreferrer noopener"
+                    
                   >
                     Placement Rules
                   </a>
@@ -103,9 +101,7 @@ const Navbar = ({
                 <MenuItem>
                   <a
                     style={{ color: "black", textDecoration: "none" }}
-                    target="_blank"
-                    href="https://drive.google.com/file/d/1PLHd6BiXP7fAbQaob8o0juXZzRSu8vWa/view"
-                    rel="noreferrer noopener"
+                 
                   >
                     Internship Rules
                   </a>
@@ -149,10 +145,7 @@ const Navbar = ({
                 <MenuItem onClick={handleClose}>
                   <a
                     style={{ color: "black", textDecoration: "none" }}
-                    target="_blank"
-                    href="https://drive.google.com/file/d/1P8z5w-PVAl3w6p2Z8kWgSDOUPukuMx--/view?usp=drivesdk"
-                    className={classes.navbarLinks}
-                    rel="noreferrer noopener"
+                    
                   >
                     Placement Rules
                   </a>
@@ -160,10 +153,7 @@ const Navbar = ({
                 <MenuItem onClick={handleClose}>
                   <a
                     style={{ color: "black", textDecoration: "none" }}
-                    target="_blank"
-                    href="https://drive.google.com/file/d/1PLHd6BiXP7fAbQaob8o0juXZzRSu8vWa/view"
-                    className={classes.navbarLinks}
-                    rel="noreferrer noopener"
+                  
                   >
                     Internship Rules
                   </a>
