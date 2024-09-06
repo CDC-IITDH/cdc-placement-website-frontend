@@ -182,6 +182,7 @@ const DetailsPage = ({
           countStudentsSelected={countStudentsSelected}
           token={token}
           openingId={openingId}
+          openingType={openingType}
           reqJobPosting={reqJobPosting}
           setError={setError}
           setShowError={setShowError}
