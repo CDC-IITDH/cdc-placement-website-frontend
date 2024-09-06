@@ -49,7 +49,7 @@ const DetailsPage = ({
   const DEGREE = [
     { id: 1, name: "Btech", selected: true },
     { id: 2, name: "MS", selected: true },
-    { id: 3, name: "Mtech", selected: true },
+    { id: 3, name: "MTech", selected: true },
     { id: 4, name: "PHD", selected: true },
     { id: 5, name: "BSMS", selected: true },
   ];
