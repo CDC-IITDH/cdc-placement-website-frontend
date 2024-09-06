@@ -28,7 +28,7 @@ const GetApplications = (token, opening_id, opening_type) => {
   });
 };
 
-const ExportAsExcel = (token, opening_id) => {
+const ExportAsExcel = (token, opening_id,opening_type) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
       fetch(API_ENDPOINT + "api/admin/generateCSV/", {
@@ -39,7 +39,7 @@ const ExportAsExcel = (token, opening_id) => {
           "Content-Type": "application/json",
           'X-CSRFToken': getCookie('csrftoken')
         },
-        body: JSON.stringify({ opening_id: opening_id }),
+        body: JSON.stringify({ opening_id: opening_id,opening_type: opening_type}),
       })
         .then((result) => {
           if (result.status === 200) myResolve(result.json());
