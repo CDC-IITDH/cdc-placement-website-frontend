@@ -26,6 +26,7 @@ const Header = ({
   studentsApplied,
   countStudentsSelected,
   openingId,
+  openingType,
   token,
   reqJobPosting,
   setError,
@@ -81,7 +82,7 @@ const Header = ({
 
   const downloadResume = () => {
     if (token) {
-      DownloadResume(token, openingId)
+      DownloadResume(token, openingId,openingType)
         .then((res) => {
           if (res.file) {
             window.open(res.file);
