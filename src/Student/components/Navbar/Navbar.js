@@ -93,7 +93,8 @@ const Navbar = ({
                 <MenuItem>
                   <a
                     style={{ color: "black", textDecoration: "none" }}
-                    
+                    href="https://drive.google.com/file/d/1TMw1GLrgmZ2Ay9GUJFRHEtTOA4L3Znb_/view?usp=sharing"
+                    rel="noreferrer noopener"
                   >
                     Placement Rules
                   </a>
@@ -145,7 +146,8 @@ const Navbar = ({
                 <MenuItem onClick={handleClose}>
                   <a
                     style={{ color: "black", textDecoration: "none" }}
-                    
+                    href="https://drive.google.com/file/d/1TMw1GLrgmZ2Ay9GUJFRHEtTOA4L3Znb_/view?usp=sharing"
+                    rel="noreferrer noopener"
                   >
                     Placement Rules
                   </a>
