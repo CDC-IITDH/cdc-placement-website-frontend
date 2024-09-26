@@ -34,11 +34,11 @@ const ShowTables = ({
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
 	const [stats, setStats] = useState({
-		average_CTC: { CSE: 0, EE: 0, MMAE: 0 },
-		max_CTC: { CSE: 0, EE: 0, MMAE: 0 },
-		number_of_students_placed: { CSE: 0, EE: 0, MMAE: 0, Total: 0 },
+		average_CTC: { CSE: 0, EE: 0, MMAE: 0 ,EP:0},
+		max_CTC: { CSE: 0, EE: 0, MMAE: 0 ,EP:0},
+		number_of_students_placed: { CSE: 0, EE: 0, MMAE: 0,EP:0, Total: 0 },
 		number_of_students_with_multiple_offers: 0,
-		number_of_students_with_no_offers: { CSE: 0, EE: 0, MMAE: 0, Total: 0 },
+		number_of_students_with_no_offers: { CSE: 0, EE: 0, MMAE: 0,EP:0, Total: 0 },
 	});
 
 	ChartJS.register(
@@ -100,6 +100,12 @@ const ShowTables = ({
 						backgroundColor: '#c4f533',
 						borderColor: '#c4f533',
 						data: res.tier_count['MMAE'],
+					},
+					{
+						label: 'Offers in EP',
+						backgroundColor: '#c4f533',
+						borderColor: '#c4f533',
+						data: res.tier_count['EP'],
 					},
 					{
 						label: 'Total Offers',
@@ -286,6 +292,9 @@ const ShowTables = ({
 										<TableCell align='right' className='stats-table-label'>
 											MMAE
 										</TableCell>
+										<TableCell align='right' className='stats-table-label'>
+											EP
+										</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
@@ -302,6 +311,9 @@ const ShowTables = ({
 										<TableCell align='right' className='stats-table-value'>
 											{stats.number_of_students_placed['MMAE']}
 										</TableCell>
+										<TableCell align='right' className='stats-table-value'>
+											{stats.number_of_students_placed['EP']}
+										</TableCell>
 									</TableRow>
 
 									<TableRow>
@@ -316,6 +328,9 @@ const ShowTables = ({
 										</TableCell>
 										<TableCell align='right' className='stats-table-value'>
 											{stats.number_of_students_with_no_offers['MMAE']}
+										</TableCell>
+										<TableCell align='right' className='stats-table-value'>
+											{stats.number_of_students_with_no_offers['EP']}
 										</TableCell>
 									</TableRow>
 									<TableRow>
@@ -343,6 +358,13 @@ const ShowTables = ({
 												currency: 'INR',
 											})}
 										</TableCell>
+										<TableCell align='right' className='stats-table-value'>
+											{stats.max_CTC['EP'].toLocaleString('en-IN', {
+												maximumFractionDigits: 2,
+												style: 'currency',
+												currency: 'INR',
+											})}
+										</TableCell>
 									</TableRow>
 									<TableRow>
 										<TableCell className='stats-table-label'>
@@ -364,6 +386,13 @@ const ShowTables = ({
 										</TableCell>
 										<TableCell align='right' className='stats-table-value'>
 											{stats.average_CTC['MMAE'].toLocaleString('en-IN', {
+												maximumFractionDigits: 2,
+												style: 'currency',
+												currency: 'INR',
+											})}
+										</TableCell>
+										<TableCell align='right' className='stats-table-value'>
+											{stats.average_CTC['EP'].toLocaleString('en-IN', {
 												maximumFractionDigits: 2,
 												style: 'currency',
 												currency: 'INR',
