@@ -357,6 +357,7 @@ const Header = ({
         show={showAddStudentModal}
         setShow={setShowAddStudentModal}
         token={token}
+        openingType={openingType}
         setError={setError}
         setShowError={setShowError}
         setSuccess={setSuccess}

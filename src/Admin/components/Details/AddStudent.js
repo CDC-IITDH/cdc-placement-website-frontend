@@ -9,7 +9,7 @@ import getApplication from "../../api/getApplication";
 import editApplication from "../../api/editApplication";
 
 
-const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, id, application_details, getApplicationsInfo  }) => {
+const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowError, setSuccess, setShowSuccess, id, application_details, getApplicationsInfo ,openingType }) => {
   let initalResume = application_details ? application_details.application_info.resume.name : "";
   let initialAdditionalInfo = application_details ? JSON.parse(application_details.application_info.additional_info) : {};
   let initialEditoradd = id ? "Edit" : "";
@@ -93,6 +93,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
     var data = {
       student_id: student_id,
       opening_id: reqJobPosting.id,
+      opening_type: openingType
     };
     if (student_id === "") {
       setStudentIdError(true);
@@ -145,6 +146,7 @@ const AddStudent = ({ show, setShow, reqJobPosting, token, setError, setShowErro
       application_id: app_id,
       student_id: searchedId,
       opening_id: reqJobPosting.id,
+      opening_type: openingType,
       resume_file_name: resume,
       additional_info: additionalTextInfo,
     };

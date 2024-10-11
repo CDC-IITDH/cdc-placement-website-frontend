@@ -111,7 +111,7 @@ const ChangeOffer = (token, opening_id, opening_type, offer_accepted) => {
   });
 };
 
-const UpdateDeadline = (token, deadline,opening_id) => {
+const UpdateDeadline = (token, deadline,opening_id ,opening_type) => {
   return new Promise((myResolve, myReject) => {
     if (token) {
       fetch(API_ENDPOINT + "api/admin/updateDeadline/", {
@@ -125,6 +125,8 @@ const UpdateDeadline = (token, deadline,opening_id) => {
         body: JSON.stringify({
           deadline_datetime: deadline,
           opening_id: opening_id,
+          opening_type: opening_type
+
 
         }),
       })

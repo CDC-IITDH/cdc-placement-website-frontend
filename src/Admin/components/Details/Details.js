@@ -78,6 +78,7 @@ const Details = ({
             token={token}
             getDashboardInfo={getDashboardInfo}
             opening_id={opening.id}
+            opening_type={type}
             setError={setError}
             setShowError={setShowError}
             setSuccess={setSuccess}
