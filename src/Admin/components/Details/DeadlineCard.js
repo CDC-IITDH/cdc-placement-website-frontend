@@ -16,6 +16,7 @@ const DeadlineCard = (
         getDashboardInfo,
         token,
         opening_id,
+        opening_type,
         setError,
         setShowError,
         setSuccess,
@@ -38,7 +39,7 @@ const DeadlineCard = (
     const updateDeadlineFun = () => {
         // selectedDate in '%Y-%m-%d %H:%M:%S %z'
         const deadline_datetime = selectedDate.toISOString().slice(0, 19).replace('T', ' ') + " +0000";
-        UpdateDeadline(token, deadline_datetime, opening_id).then(() => {
+        UpdateDeadline(token, deadline_datetime, opening_id , opening_type).then(() => {
 
             getDashboardInfo();
             setShowLoader(false);
