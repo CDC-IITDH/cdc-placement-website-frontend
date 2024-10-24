@@ -6,6 +6,7 @@ import Pagination from "@mui/material/Pagination";
 
 const StudentList = ({
   applicationsInfo,
+  openingType,
   reqJobPosting,
   token,
   setError,
@@ -115,6 +116,7 @@ const StudentList = ({
                       student_id={elem.student}
                       selected={elem.selected}
                       opening_id={openingId}
+                      opening_type={openingType}
                       resume_list={elem.student_details.resume_list}
                       additional_info={elem.additional_info}
                       token={token}
