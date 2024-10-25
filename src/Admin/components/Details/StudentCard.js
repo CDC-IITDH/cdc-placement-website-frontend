@@ -17,6 +17,7 @@ const StudentCard = ({
   phone_no,
   student_id,
   opening_id,
+  opening_type,
   resume_list,
   additional_info,
   token,
@@ -46,7 +47,7 @@ const StudentCard = ({
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          MarkStatus(token, opening_id, student_id, status)
+          MarkStatus(token, opening_id, student_id, status, opening_type)
             .then((res) => {
               if (status) {
                 setSuccess("Student marked as selected");

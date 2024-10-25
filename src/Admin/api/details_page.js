@@ -143,7 +143,7 @@ const UpdateDeadline = (token, deadline,opening_id ,opening_type) => {
   });
 };
 
-const MarkStatus = (token, opening_id, student_id, status) => {
+const MarkStatus = (token, opening_id, student_id, status,opening_type) => {
     return new Promise((myResolve, myReject) => {
         if (token) {
             fetch(API_ENDPOINT + "api/admin/markStatus/", {
@@ -156,6 +156,7 @@ const MarkStatus = (token, opening_id, student_id, status) => {
                 },
                 body: JSON.stringify({
                     "opening_id": opening_id,
+                    "opening_type":opening_type,
                     "student_list": [
                         {
                             "student_id": student_id,

@@ -206,6 +206,7 @@ const DetailsPage = ({
           reqJobPosting={reqJobPosting}
           token={token}
           openingId={openingId}
+          openingType={openingType}
           setError={setError}
           setShowError={setShowError}
           setSuccess={setSuccess}
